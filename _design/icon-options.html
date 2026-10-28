@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Topbar icon options · Davis Writing Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --charcoal:#2C2A28; --cream:#f4f1ea; --muted:#b9b0a4; --line:rgba(201,160,144,.35); }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: Inter, system-ui, sans-serif; background:#1a1918; color:var(--cream); }
+    h1 { font-family: "Cormorant Garamond", Georgia, serif; font-weight:600; font-size:1.75rem; margin:0 0 .35rem; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 1.5rem 1.25rem 2.5rem; }
+    .lead { color: var(--muted); margin: 0 0 1.5rem; line-height:1.45; }
+    .grid { display:grid; gap:1rem; }
+    .opt {
+      display:grid; grid-template-columns: auto 1fr; gap:1rem; align-items:center;
+      padding: 1rem 1.1rem; border:1px solid var(--line); border-radius:14px;
+      background: rgba(44,42,40,.92);
+    }
+    .label { font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin:0 0 .25rem; }
+    .name { font-family:"Cormorant Garamond", Georgia, serif; font-size:1.25rem; margin:0; }
+    .note { margin:.35rem 0 0; color:var(--muted); font-size:.9rem; line-height:1.4; }
+    .fake-top {
+      display:flex; align-items:center; gap:.75rem; min-width:220px;
+      padding:.65rem .85rem; border-radius:10px; background:rgba(44,42,40,.94);
+      border:1px solid rgba(154,92,82,.35);
+    }
+    .mark {
+      width:2.55rem; height:2.55rem; border-radius:999px; flex-shrink:0;
+      display:grid; place-items:center; overflow:hidden;
+      background: rgba(154,92,82,.28); border:1px solid rgba(154,92,82,.45);
+    }
+    .mark img { width:70%; height:70%; object-fit:contain; }
+    .mark.num {
+      color:var(--cream); font-family:"Cormorant Garamond", Georgia, serif;
+      font-weight:600; font-size:.82rem;
+    }
+    .brand strong { display:block; font-size:1.05rem; color:#fff; }
+    .brand small { display:block; margin-top:.1rem; font-size:.68rem; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Topbar icon options</h1>
+    <p class="lead">Same charcoal circle as the course pages. Pick the one you want in the top bar (or keep the course number).</p>
+    <div class="grid">
+      <article class="opt" id="a">
+        <div class="fake-top"><span class="mark"><img src="assets/mark-a-round.svg" alt=""></span><span class="brand"><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span></div>
+        <div><p class="label">Option A</p><p class="name">Round dragon (brighter)</p><p class="note">Current hub mark, cream stroke so it reads on charcoal.</p></div>
+      </article>
+      <article class="opt" id="b">
+        <div class="fake-top"><span class="mark"><img src="assets/mark-b-coil.svg" alt=""></span><span class="brand"><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span></div>
+        <div><p class="label">Option B</p><p class="name">Coil</p><p class="note">Coiled body with a clear eye — a bit more emblem-like.</p></div>
+      </article>
+      <article class="opt" id="c">
+        <div class="fake-top"><span class="mark"><img src="assets/mark-c-wing.svg" alt=""></span><span class="brand"><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span></div>
+        <div><p class="label">Option C</p><p class="name">Wing</p><p class="note">Broader wing silhouette inside the circle.</p></div>
+      </article>
+      <article class="opt" id="d">
+        <div class="fake-top"><span class="mark"><img src="assets/mark-d-flight.svg" alt=""></span><span class="brand"><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span></div>
+        <div><p class="label">Option D</p><p class="name">Flight line</p><p class="note">Open line drawing of a dragon in flight — lighter, more calligraphic.</p></div>
+      </article>
+      <article class="opt" id="e">
+        <div class="fake-top"><span class="mark"><img src="assets/mark-e-letter.svg" alt=""></span><span class="brand"><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span></div>
+        <div><p class="label">Option E</p><p class="name">Letter D</p><p class="note">Simple D monogram with a small wing flick.</p></div>
+      </article>
+      <article class="opt" id="f">
+        <div class="fake-top"><span class="mark num">1301</span><span class="brand"><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span></div>
+        <div><p class="label">Option F</p><p class="name">Course number</p><p class="note">Back to the plain “1301” circle (no dragon in the mark).</p></div>
+      </article>
+    </div>
+  </div>
+</body>
+</html>

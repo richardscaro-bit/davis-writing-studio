@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Topbar icon options · wing / crown</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --charcoal:#2C2A28; --cream:#f4f1ea; --muted:#b9b0a4; --line:rgba(201,160,144,.35); }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: Inter, system-ui, sans-serif; background:#1a1918; color:var(--cream); }
+    h1 { font-family: "Cormorant Garamond", Georgia, serif; font-weight:600; font-size:1.75rem; margin:0 0 .35rem; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 1.5rem 1.25rem 2.5rem; }
+    .lead { color: var(--muted); margin: 0 0 1.5rem; line-height:1.45; }
+    .grid { display:grid; gap:1rem; }
+    .opt {
+      display:grid; grid-template-columns: auto 1fr; gap:1rem; align-items:center;
+      padding: 1rem 1.1rem; border:1px solid var(--line); border-radius:14px;
+      background: rgba(44,42,40,.92);
+    }
+    .label { font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin:0 0 .25rem; }
+    .name { font-family:"Cormorant Garamond", Georgia, serif; font-size:1.25rem; margin:0; }
+    .note { margin:.35rem 0 0; color:var(--muted); font-size:.9rem; line-height:1.4; }
+    .fake-top {
+      display:flex; align-items:center; gap:.75rem; min-width:240px;
+      padding:.65rem .85rem; border-radius:10px; background:rgba(44,42,40,.94);
+      border:1px solid rgba(154,92,82,.35);
+    }
+    .mark {
+      width:2.7rem; height:2.7rem; border-radius:999px; flex-shrink:0;
+      display:grid; place-items:center; overflow:hidden;
+      background: rgba(154,92,82,.22); border:1px solid rgba(154,92,82,.45);
+    }
+    .mark img { width:100%; height:100%; object-fit:cover; display:block; }
+    .brand strong { display:block; font-size:1.05rem; color:#fff; }
+    .brand small { display:block; margin-top:.1rem; font-size:.68rem; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); }
+    .previews { display:flex; gap:.6rem; margin-top:.6rem; }
+    .previews img { width:72px; height:72px; border-radius:999px; object-fit:cover; border:1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Topbar icon options · illustrated</h1>
+    <p class="lead">Trail-School style marks for the charcoal circle — wing, crown, head, or the studio dragon cutout.</p>
+    <div class="grid">
+      <article class="opt" id="g">
+        <div class="fake-top"><span class="mark"><img src="assets/mark-wing-real.jpg" alt=""></span><span class="brand"><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span></div>
+        <div><p class="label">Option G</p><p class="name">Dragon wing</p><p class="note">Illustrated wing, fills the circle.</p>
+          <div class="previews"><img src="assets/mark-wing-real.jpg" alt="Wing mark large"></div></div>
+      </article>
+      <article class="opt" id="h">
+        <div class="fake-top"><span class="mark"><img src="assets/mark-crown-real.jpg" alt=""></span><span class="brand"><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span></div>
+        <div><p class="label">Option H</p><p class="name">Crown / circlet</p><p class="note">Ornate dragon-motif crown.</p>
+          <div class="previews"><img src="assets/mark-crown-real.jpg" alt="Crown mark large"></div></div>
+      </article>
+      <article class="opt" id="i">
+        <div class="fake-top"><span class="mark"><img src="assets/mark-head-real.jpg" alt=""></span><span class="brand"><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span></div>
+        <div><p class="label">Option I</p><p class="name">Dragon head</p><p class="note">Profile head, same storybook look as the floats.</p>
+          <div class="previews"><img src="assets/mark-head-real.jpg" alt="Head mark large"></div></div>
+      </article>
+      <article class="opt" id="j">
+        <div class="fake-top"><span class="mark"><img src="assets/mark-studio-dragon.jpg" alt=""></span><span class="brand"><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span></div>
+        <div><p class="label">Option J</p><p class="name">Studio dragon</p><p class="note">Crop of the soft green 1301 float dragon already on the site.</p>
+          <div class="previews"><img src="assets/mark-studio-dragon.jpg" alt="Studio dragon mark large"></div></div>
+      </article>
+      <article class="opt" id="f">
+        <div class="fake-top"><span class="mark" style="font-family:Cormorant Garamond,Georgia,serif;font-weight:600;font-size:.82rem;color:#f4f1ea;display:grid;place-items:center;">1301</span><span class="brand"><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span></div>
+        <div><p class="label">Option F</p><p class="name">Course number</p><p class="note">Plain “1301” if you’d rather skip a picture mark.</p></div>
+      </article>
+    </div>
+  </div>
+</body>
+</html>

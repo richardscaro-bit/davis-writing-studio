@@ -1,5 +1,5 @@
 /* Davis Writing Studio — ENGL 1301
-   Lean Case Study studio (W11–15). Thin HTML shells fill #studioPanel.
+   Lean Case Study studio (five-step practice path). Thin HTML shells fill #studioPanel.
    Architecture matches Aug Writing Studio: data-studio + renderStudio + localStorage.
    Student UI uses Case Study critical analysis language only.
 */
@@ -63,7 +63,7 @@ const studios = {
   "case-study": {
     key: "case-study",
     label: "Case Study Critical Analysis",
-    due: "Weeks 11–15 practice path",
+    due: "Five-step practice path",
     length: "1,000–1,500 words MLA",
     format: "Clear claim · critical analysis · 3–4 outside sources beyond the packet",
     prompt:
@@ -112,43 +112,38 @@ const studios = {
 
 const caseStudyWeeks = [
   {
-    week: "Week 11",
-    range: "Nov 2–8",
+    week: "Step 1",
     due: "Focus · topic + brainstorm",
     assignment: "Topic selection + Case Study preview",
-    focus: "What this week is for: see one case demo in class (BarkBox / Crumbl models), pick a topic, and brainstorm early ideas. Your case Source Packet and Case Brief are the required unit readings. Do not lock a thesis yet; start with idea generation.",
+    focus: "see one case demo in class (BarkBox / Crumbl models), pick a topic, and brainstorm early ideas. Your case Source Packet and Case Brief are the required unit readings. Do not lock a thesis yet; start with idea generation.",
     also: ["In-class focus: Critical Question Workshop"]
   },
   {
-    week: "Week 12",
-    range: "Nov 9–15",
+    week: "Step 2",
     due: "Focus · packet notes",
     assignment: "Critical analysis reading notes",
-    focus: "What this week is for: active reading of your Source Packet / Case Brief for the problem, stakeholders, evidence, assumptions or biases, and limits. Keep notes you can reuse in the outline and draft.",
+    focus: "active reading of your Source Packet / Case Brief for the problem, stakeholders, evidence, assumptions or biases, and limits. Keep notes you can reuse in the outline and draft.",
     also: ["In-class focus: Evidence Quality"]
   },
   {
-    week: "Week 13",
-    range: "Nov 16–22",
+    week: "Step 3",
     due: "Focus · claim + outline",
     assignment: "Outline + research plan",
-    focus: "What this week is for: shape a 1 to 2 page outline and research plan with a working thesis, and identify 3 to 4 outside sources beyond the packet. This is when the thesis locks after the demo and brainstorm.",
+    focus: "shape a 1 to 2 page outline and research plan with a working thesis, and identify 3 to 4 outside sources beyond the packet. This is when the thesis locks after the demo and brainstorm.",
     also: ["In-class focus: Outline / Thesis / Outside Source"]
   },
   {
-    week: "Week 14",
-    range: "Nov 23–29 · Thanksgiving-aware",
+    week: "Step 4",
     due: "Focus · draft + peer",
     assignment: "Working draft + peer review",
-    focus: "What this week is for: build a working draft toward full essay length, integrate or placeholder the 3 to 4 outside sources, and rehearse one peer review.",
+    focus: "build a working draft toward full essay length, integrate or placeholder the 3 to 4 outside sources, and rehearse one peer review.",
     also: []
   },
   {
-    week: "Week 15",
-    range: "Nov 30–Dec 6",
+    week: "Step 5",
     due: "Focus · polished essay",
     assignment: "Polished critical analysis essay",
-    focus: "What this week is for: finish a 1,000 to 1,500 word MLA critical analysis (Works Cited not in the word count) with packet evidence primary and 3 to 4 outside sources beyond the packet.",
+    focus: "finish a 1,000 to 1,500 word MLA critical analysis (Works Cited not in the word count) with packet evidence primary and 3 to 4 outside sources beyond the packet.",
     also: ["In-class focus: Limits / Ethics"]
   }
 ];
@@ -206,10 +201,10 @@ function renderStudioAiPolicy(key) {
 function renderWritingProcessMap(key) {
   const steps = [
     ["1", "Overview", "Know the unit task.", `#${key}Overview`],
-    ["2", "Weeks", "See what each week is for.", `#${key}Schedule`],
+    ["2", "Practice path", "See what each step is for.", `#${key}Schedule`],
     ["3", "Topic", "Open packet + folder links.", `#${key}Topics`],
     ["4", "Practice", "Brainstorm → notes → outline → draft.", `#${key}Workspace`],
-    ["5", "Peer", "One peer review (W14).", `#${key}Peer`],
+    ["5", "Peer", "One peer review (Step 4).", `#${key}Peer`],
     ["6", "Check", "Run the practice checklist.", `#${key}Checklist`]
   ];
   return `
@@ -233,8 +228,8 @@ function renderWeekStepper(key) {
     <section class="studio-week-plan" id="${key}Schedule" aria-labelledby="${key}WeeklyPlanTitle">
       <div class="workspace-heading">
         <div>
-          <p class="eyebrow">Sunday spine · Nov 8 / 15 / 22 / 29 / Dec 6</p>
-          <h4 id="${key}WeeklyPlanTitle">Weeks 11–15 · what each week is for</h4>
+          <p class="eyebrow">Case Study · five steps</p>
+          <h4 id="${key}WeeklyPlanTitle">Practice path · what each step is for</h4>
         </div>
       </div>
       <div class="week-stepper">
@@ -243,7 +238,7 @@ function renderWeekStepper(key) {
             (item, index) => `
           <article class="week-card${index === caseStudyWeeks.length - 1 ? " active" : ""}">
             <header>
-              <h5>${escapeHtml(item.week)} · ${escapeHtml(item.range)}</h5>
+              <h5>${escapeHtml(item.week)}</h5>
               <span class="pill">${escapeHtml(item.due)}</span>
             </header>
             <p><strong>${escapeHtml(item.assignment)}</strong></p>
@@ -257,7 +252,7 @@ function renderWeekStepper(key) {
           )
           .join("")}
       </div>
-      <p class="callout"><strong>Week 16 Final Reflection</strong> lives on a separate path — this studio covers Weeks 11–15 only.</p>
+      <p class="callout"><strong>Course Final Reflection</strong> has its own essay block on the 1301 home — this studio covers the Case Study steps only.</p>
     </section>
   `;
 }
@@ -318,7 +313,7 @@ function renderWorkspaceFields(key, workspace) {
         <strong>Practice framing.</strong>
         Aim for a 1,000–1,500 word MLA critical analysis.
         Use 3–4 credible outside sources beyond the packet (packet stays primary).
-        Outline is 1–2 pages. One clear claim. One peer review rehearsal (Week 14).
+        Outline is 1–2 pages. One clear claim. One peer review rehearsal (Step 4).
       </div>
       <div class="field-grid">
         <label class="field">Topic / case preview notes
@@ -326,7 +321,7 @@ function renderWorkspaceFields(key, workspace) {
           <textarea data-field="previewNotes" placeholder="Case name, topic folder, first critical question…">${escapeHtml(workspace.previewNotes)}</textarea>
         </label>
         <label class="field">Brainstorming (before a working thesis)
-          <span class="hint">Early idea generation after the in-class demo — questions, angles, stakeholders, tensions. Do this before you lock a thesis in Week 13.</span>
+          <span class="hint">Early idea generation after the in-class demo — questions, angles, stakeholders, tensions. Do this before you lock a thesis in Step 3.</span>
           <textarea data-field="brainstorm" placeholder="Freewrite: possible claims, surprising evidence, who is affected, what still confuses you…">${escapeHtml(workspace.brainstorm)}</textarea>
         </label>
         <label class="field">Critical analysis reading notes
@@ -348,7 +343,7 @@ function renderWorkspaceFields(key, workspace) {
     <section class="workspace-block" id="${key}Peer" aria-labelledby="${key}PeerTitle">
       <div class="workspace-heading">
         <div>
-          <p class="eyebrow">Week 14 · one peer review only</p>
+          <p class="eyebrow">Step 4 · one peer review only</p>
           <h4 id="${key}PeerTitle">Peer Review Notes</h4>
         </div>
       </div>
@@ -368,7 +363,7 @@ function renderFinalChecklist(key, workspace) {
     ["sources", "I used 3–4 credible outside sources beyond the packet."],
     ["packet", "Packet evidence remains primary and is integrated fairly."],
     ["analysis", "I address problem, stakeholders, evidence, assumptions/biases, and limits."],
-    ["peer", "I completed one Week 14 peer-review rehearsal."],
+    ["peer", "I completed one Step 4 peer-review rehearsal."],
     ["ai", "Any AI use followed Level 2 rules (support, not composition)."]
   ];
   const checks = workspace.checklist || {};
@@ -414,10 +409,10 @@ function renderCaseStudyStudio(key) {
         </div>
         <aside class="studio-launch-card" aria-label="Jump to a studio block">
           <strong>Jump to a block</strong>
-          <span>Topic picker → brainstorm / notes / outline / draft → peer notes → practice checklist. Weeks, Tools, and Resources stay linked from the top of the page.</span>
+          <span>Topic picker → brainstorm / notes / outline / draft → peer notes → practice checklist. Practice path, Tools, and Resources stay linked from the top of the page.</span>
           <div class="studio-launch-actions">
             <a class="button small primary" href="#${key}Topics">Topic picker</a>
-            <a class="button small ghost" href="weeks.html">Weeks page</a>
+            <a class="button small ghost" href="weeks.html">Practice path</a>
             <a class="button small ghost" href="#${key}Workspace">Practice workspace</a>
             <a class="button small ghost" href="tools/">Tools</a>
             <a class="button small ghost" href="guides/ai.html">AI Level 2</a>
