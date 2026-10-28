@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Davis Writing Studio · Alt</title>
+    <meta name="description" content="Alternate charcoal literary hub for Davis Writing Studio (local preview).">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --paper: #f4f1ea;
+        --card: #ffffff;
+        --charcoal: #2c2a28;
+        --terracotta: #9a5c52;
+        --sage: #5a7356;
+        --ink: #2c2a28;
+        --muted: #6b635a;
+        --line: #d9d2c4;
+        --wash: #ece7df;
+        --font-display: "Cormorant Garamond", Georgia, serif;
+        --font-body: Inter, ui-sans-serif, system-ui, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: var(--font-body); color: var(--ink); background: var(--paper); line-height: 1.55; }
+      a { color: var(--terracotta); }
+      .skip-link { position: absolute; left: -999px; top: 0; background: var(--charcoal); color: #fff; padding: .6rem 1rem; }
+      .skip-link:focus { left: .75rem; top: .75rem; }
+      .top {
+        background: var(--charcoal); color: #f4f1ea;
+        padding: 1rem clamp(1rem, 3vw, 2rem);
+        display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; align-items: center;
+      }
+      .top a.brand { color: #f4f1ea; text-decoration: none; font-family: var(--font-display); font-size: 1.45rem; }
+      .top nav { margin-left: auto; display: flex; flex-wrap: wrap; gap: .35rem 1rem; }
+      .top nav a { color: #d9d2c4; text-decoration: none; font-size: .9rem; }
+      .top nav a[aria-current="page"], .top nav a:hover { color: #fff; border-bottom: 2px solid var(--terracotta); }
+      main { width: min(1040px, 100%); margin: 0 auto; padding: 2rem 1rem 3rem; }
+      .hero {
+        background: var(--charcoal); color: #f4f1ea; border-radius: 12px;
+        padding: clamp(1.5rem, 4vw, 2.5rem); margin-bottom: 1.5rem;
+      }
+      .hero .eyebrow { margin: 0 0 .4rem; color: #c9a090; font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+      .hero h1 { margin: 0 0 .7rem; font-family: var(--font-display); font-weight: 500; font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1.08; }
+      .hero p { margin: 0 0 1rem; color: #d9d2c4; max-width: 36rem; }
+      h2 { font-family: var(--font-display); font-weight: 500; font-size: 1.7rem; margin: 0 0 1rem; }
+      .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; }
+      @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+      .card {
+        background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--sage);
+        border-radius: 12px; padding: 1.15rem 1.25rem; text-decoration: none; color: inherit;
+        display: flex; flex-direction: column; gap: .3rem; min-height: 9rem;
+      }
+      .card.c1302 { border-left-color: #4a6b7a; }
+      .card.c2311 { border-left-color: #3c4a5c; }
+      .card.c2328 { border-left-color: #6b4a5c; }
+      .card span.k { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+      .card strong { font-family: var(--font-display); font-size: 1.55rem; font-weight: 500; }
+      .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+      .chip { align-self: flex-start; margin-top: .5rem; font-size: .7rem; font-weight: 700; text-transform: uppercase; padding: .2rem .5rem; border-radius: 999px; background: var(--wash); color: var(--sage); border: 1px solid var(--line); }
+      .chip.soon { color: #7a4840; background: #f5f0e4; }
+      footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 1.25rem; border-top: 1px solid var(--line); }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <header class="top">
+      <a class="brand" href="../index.html">Davis Writing Studio</a>
+      <nav aria-label="Primary">
+        <a href="../index.html">Courses</a>
+        <a href="../1301/index.html">1301</a>
+        <a href="../1302/index.html">1302</a>
+        <a href="../2311/index.html">2311</a>
+        <a href="../2328/index.html">2328</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="hero">
+        <p class="eyebrow">Alternate · local preview · not published</p>
+        <h1>Davis Writing Studio</h1>
+        <p>Resource hub for all of Professor Davis’s classes. A quieter charcoal door to the same four courses. Literary type, warm accents, no botanical hub brand.</p>
+      </section>
+      <h2>Course resource rooms</h2>
+      <div class="grid">
+        <a class="card" href="../1301/index.html">
+          <span class="k">Composition I</span>
+          <strong>ENGL 1301</strong>
+          <p>Studio open. Composition I resources. Fall Case Study critical analysis lives inside this course, not on the hub.</p>
+          <span class="chip">Studio open</span>
+        </a>
+        <a class="card c1302" href="../1302/index.html">
+          <span class="k">Composition II</span>
+          <strong>ENGL 1302</strong>
+          <p>Coming soon.</p>
+          <span class="chip soon">Coming soon</span>
+        </a>
+        <a class="card c2311" href="../2311/index.html">
+          <span class="k">Technical &amp; Business Writing</span>
+          <strong>ENGL 2311</strong>
+          <p>Coming soon.</p>
+          <span class="chip soon">Coming soon</span>
+        </a>
+        <a class="card c2328" href="../2328/index.html">
+          <span class="k">American Literature</span>
+          <strong>ENGL 2328</strong>
+          <p>Coming soon.</p>
+          <span class="chip soon">Coming soon</span>
+        </a>
+      </div>
+    </main>
+    <footer>Alternate charcoal literary hub · botanical stays in Fall 1301 Case Study only</footer>
+  </body>
+</html>

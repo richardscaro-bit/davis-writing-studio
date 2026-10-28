@@ -1,0 +1,57 @@
+/* ENGL 1301 section styles — charcoal hub family + topic accents.
+   Botanical/forest header removed; Canvas Case Study pack keeps botanical separately. */
+@import url("../_design/section-charcoal.css");
+
+/* Per-topic accents (readable on charcoal chrome) */
+.topic-business { --topic: #4a9a9a; }
+.topic-climate { --topic: #5a9a9a; }
+.topic-education { --topic: #9a6a9a; }
+.topic-environmental { --topic: #7aaa7a; }
+.topic-film { --topic: #b05a6a; }
+.topic-forensics { --topic: #7a849a; }
+.topic-government { --topic: #6a7fa0; }
+.topic-health { --topic: #c07070; }
+.topic-mortuary { --topic: #9a708a; }
+.topic-public-health { --topic: #6a9a7a; }
+.topic-social { --topic: #c08070; }
+.topic-technology { --topic: #5a7ab0; }
+.topic-urban { --topic: #c09060; }
+.topic-examples { --topic: #c08070; }
+
+/* Course home: 2–3 cards per row, comfortable desktop scale */
+.home-card-grid.student-path-grid,
+.home-card-grid.dashboard-link-grid {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.1rem;
+  align-items: stretch;
+}
+.home-card-grid.student-path-grid a,
+.home-card-grid.dashboard-link-card {
+  min-height: 9.5rem;
+  padding: 1.4rem 1.45rem;
+}
+.home-card-grid.student-path-grid small,
+.home-card-grid.dashboard-link-card small {
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+@media (min-width: 900px) {
+  .home-card-grid.student-path-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .home-card-grid.dashboard-link-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1100px) {
+  .home-card-grid.student-path-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Section headings a touch larger on course pages */
+.section-heading h1,
+.section-heading h2,
+main > .section > h1 {
+  font-size: clamp(1.85rem, 3.4vw, 2.45rem);
+}

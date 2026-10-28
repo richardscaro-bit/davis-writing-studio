@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Peer-review checklist | ENGL 1301 Tools</title>
+    <meta name="description" content="Practice peer-review checklist for ENGL 1301 Case Study: claim clarity, packet + outside sources, MLA, organization, and AI Level 2 honesty.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+<a class="skip-link" href="#main">Skip to main content</a>
+    <header class="topbar" aria-label="Course navigation">
+      <a class="brand" href="../index.html"><span class="brand-mark">1301</span><span><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span></a>
+      <nav class="nav-links" aria-label="Primary sections">
+        <a href="../index.html">Home</a>
+        <a href="../resources.html">Resources</a>
+        <a href="../weeks.html">Weeks</a>
+        <a href="index.html" aria-current="page">Tools</a>
+        <a href="../case-study-studio.html">Case Study</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </header>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="../index.html">Home</a>
+      <a href="../resources.html">Resources</a>
+      <a href="../weeks.html">Weeks</a>
+      <a href="index.html" aria-current="page">Tools</a>
+      <a href="../case-study-studio.html">Case Study</a>
+    </nav>
+
+    <main id="main">
+      <section class="section" aria-labelledby="prTitle">
+        <p class="eyebrow">Practice tool · Week 14 · Case Study</p>
+        <h1 id="prTitle">Peer-review checklist</h1>
+        <p class="lead">Rehearse feedback on a Case Study draft (about 1,000 to 1,500 words MLA, packet plus 3 to 4 outside sources, AI Level 2). Check what is working, leave a short note, then copy or print a summary for your partner.</p>
+
+        <div class="callout ai" style="margin-top:1rem;">
+          <strong>Be specific · be kind · be honest</strong>
+          <p style="margin:0;">Point to a sentence or section when you can. Name strengths first. Flag AI Level 2 honesty without policing — ask where AI helped and whether the writer still owns the claim and evidence.</p>
+        </div>
+
+        <div class="tool-panel" style="margin-top:1.25rem;">
+          <div class="peer-meta-grid">
+            <label class="field">Your name (reviewer) <span class="hint">Optional</span>
+              <input type="text" id="prReviewer" placeholder="Jordan" autocomplete="off">
+            </label>
+            <label class="field">Writer / draft name <span class="hint">Optional</span>
+              <input type="text" id="prWriter" placeholder="Alex — BarkBox draft" autocomplete="off">
+            </label>
+            <label class="field span-2" style="grid-column:1/-1;">Working claim (as you read it) <span class="hint">Quote or paraphrase the thesis you see</span>
+              <textarea id="prClaim" style="min-height:3.5rem;" placeholder="Although the BarkBox packet presents…"></textarea>
+            </label>
+          </div>
+
+          <div class="outline-toolbar" style="margin-top:0.75rem;">
+            <h2 class="eyebrow" style="margin:0;">Checklist</h2>
+            <p class="source-count-pill" id="prProgress" aria-live="polite">0 / 8 checked</p>
+          </div>
+
+          <ul class="peer-check-list" id="prList" aria-label="Peer-review items"></ul>
+
+          <label class="field" style="margin-top:1rem;">Overall note to the writer <span class="hint">2–4 sentences: one strength + one priority revision</span>
+            <textarea id="prOverall" style="min-height:5rem;" placeholder="Love the clear tension around subscription fatigue. Next, add a second outside source that complicates the packet’s success story…"></textarea>
+          </label>
+
+          <div class="hero-actions">
+            <button type="button" class="button primary" id="prCopy">Copy summary</button>
+            <button type="button" class="button ghost" id="prPrint">Print / save PDF</button>
+            <button type="button" class="button ghost" id="prClear">Clear</button>
+            <a class="button ghost" href="source-log.html">← Source log</a>
+            <a class="button ghost" href="thesis-helper.html">Thesis / claim →</a>
+            <a class="button ghost" href="../case-study-studio.html">Case Study studio</a>
+          </div>
+          <p class="save-status" id="prSaveStatus" aria-live="polite"></p>
+
+          <div id="prSummaryWrap" hidden>
+            <div class="outline-toolbar" style="margin-top:1rem;">
+              <h2 class="eyebrow" style="margin:0;">Copy / print summary</h2>
+            </div>
+            <pre class="peer-summary" id="prSummary" aria-live="polite"></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Peer-review rehearsal · AI Level 2</p></footer>
+    <script src="../app.js"></script>
+    <script src="tools.js"></script>
+  </body>
+</html>

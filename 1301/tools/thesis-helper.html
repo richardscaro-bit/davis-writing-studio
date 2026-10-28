@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Thesis / claim generator | ENGL 1301 Tools</title>
+    <meta name="description" content="Practice Case Study claim generator for ENGL 1301. Structured templates only — no LLM.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+<a class="skip-link" href="#main">Skip to main content</a>
+    <header class="topbar" aria-label="Course navigation">
+      <a class="brand" href="../index.html"><span class="brand-mark">1301</span><span><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span></a>
+      <nav class="nav-links" aria-label="Primary sections">
+        <a href="../index.html">Home</a>
+        <a href="../resources.html">Resources</a>
+        <a href="../weeks.html">Weeks</a>
+        <a href="index.html" aria-current="page">Tools</a>
+        <a href="../case-study-studio.html">Case Study</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </header>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="../index.html">Home</a>
+      <a href="../resources.html">Resources</a>
+      <a href="../weeks.html">Weeks</a>
+      <a href="index.html" aria-current="page">Tools</a>
+      <a href="../case-study-studio.html">Case Study</a>
+    </nav>
+
+    <main id="main">
+      <section class="section" aria-labelledby="thTitle">
+        <p class="eyebrow">Practice tool · Week 13+ · Case Study</p>
+        <h1 id="thTitle">Thesis / claim generator</h1>
+        <p class="lead">Fill in what you noticed in your Source Packet / Case Brief. This tool builds 2 to 4 draft thesis options from structured templates (AI Level 2; no chatbot). You own the thesis: edit it, verify it against the packet, then carry it into the outline helper or Case Study studio.</p>
+
+        <div class="callout ai" style="margin-top:1rem;">
+          <strong>Practice only · you own the claim</strong>
+          <p style="margin:0;">Optional early play is fine, but thesis work lands in Week 13 after demo + brainstorm. Avoid announcement theses (“This paper will…”). Purpose stays simple: one clear claim + packet evidence + 3–4 outside sources later.</p>
+        </div>
+
+        <div class="tool-panel" style="margin-top:1.25rem;">
+          <div class="field-grid">
+            <label class="field">Case / packet name <span class="hint">Required. e.g. BarkBox Subscription Box</span>
+              <input type="text" id="caseName" placeholder="BarkBox" autocomplete="off">
+            </label>
+            <label class="field">Topic folder <span class="hint">Optional — matches Drive topic folders</span>
+              <select id="topicFolder">
+                <option value="">— select or leave blank —</option>
+                <option value="Business & Marketing">Business & Marketing</option>
+                <option value="Climate">Climate</option>
+                <option value="Education">Education</option>
+                <option value="Environmental">Environmental</option>
+                <option value="Film / TV">Film / TV</option>
+                <option value="Forensics & Psychology">Forensics & Psychology</option>
+                <option value="Government">Government</option>
+                <option value="Health Science">Health Science</option>
+                <option value="Mortuary Science">Mortuary Science</option>
+                <option value="Public Health">Public Health</option>
+                <option value="Social Media">Social Media</option>
+                <option value="Technology & Media">Technology & Media</option>
+                <option value="Urban Studies">Urban Studies</option>
+                <option value="Other / custom">Other / custom</option>
+              </select>
+            </label>
+            <label class="field">What the packet seems to argue or present <span class="hint">Required. 1–2 sentences in your words.</span>
+              <textarea id="packetArgues" style="min-height:5rem;" placeholder="The packet presents BarkBox as a customer-loyalty success that turns monthly dog toys into brand devotion…"></textarea>
+            </label>
+            <label class="field">Tension / limit / stakeholder conflict / assumption you noticed <span class="hint">Required. What a careful reader could push back on.</span>
+              <textarea id="tensionInput" style="min-height:5rem;" placeholder="It underplays how subscription fatigue and rising shipping costs squeeze less-affluent pet owners…"></textarea>
+            </label>
+            <label class="field">Your critical question <span class="hint">Optional, but used when present.</span>
+              <textarea id="criticalQuestion" style="min-height:4rem;" placeholder="Does the packet’s success story hold once we ask who the subscription model excludes?"></textarea>
+            </label>
+            <fieldset class="field angle-fieldset">
+              <legend>Preferred angle <span class="hint">Pick one or more — shapes which templates run</span></legend>
+              <div class="angle-chips" id="angleChips" role="group" aria-label="Claim angles">
+                <button type="button" class="angle-chip" data-angle="framing" aria-pressed="false">Framing</button>
+                <button type="button" class="angle-chip" data-angle="stakeholders" aria-pressed="false">Stakeholders</button>
+                <button type="button" class="angle-chip" data-angle="evidence" aria-pressed="false">Evidence quality</button>
+                <button type="button" class="angle-chip" data-angle="assumptions" aria-pressed="false">Assumptions</button>
+                <button type="button" class="angle-chip" data-angle="limits" aria-pressed="false">Limits</button>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="hero-actions">
+            <button type="button" class="button primary" id="claimGenerate">Generate claim options</button>
+            <button type="button" class="button ghost" id="claimClear">Clear</button>
+            <a class="button ghost" href="outline-helper.html">Outline / topic sentences →</a>
+            <a class="button ghost" href="mla-citation.html">MLA citation →</a>
+            <a class="button ghost" href="../case-study-studio.html">Case Study studio</a>
+          </div>
+          <p class="save-status" id="claimSaveStatus" aria-live="polite"></p>
+
+          <div id="claimResults" class="claim-results" hidden>
+            <h2 class="eyebrow" style="margin-top:1.25rem;">Draft claim options</h2>
+            <p class="hint-block">Copy one you like, edit it in your own voice, then <strong>Use this claim</strong> to carry it into the outline helper. These are templates — verify against your packet.</p>
+            <div id="claimOptions" class="claim-options" aria-live="polite"></div>
+            <div class="callout" id="claimChecklist" style="margin-top:1rem;">
+              <strong>After you pick one — cue check</strong>
+              <ul class="cue-list">
+                <li>Is it <em>arguable</em> (a reader could disagree)?</li>
+                <li>Is it <em>specific</em> to this packet / case (not a vague opinion)?</li>
+                <li>Does it stay <em>tied to the packet</em> (naming the case + a real tension)?</li>
+                <li>Did you drop announcement openings (“This paper will…”)?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Thesis / claim practice · AI Level 2 template generator</p></footer>
+    <script src="../app.js"></script>
+    <script src="tools.js"></script>
+  </body>
+</html>

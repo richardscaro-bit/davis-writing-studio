@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ENGL 2311 | Davis Writing Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../_design/section-charcoal.css">
+  </head>
+  <body>
+<a class="skip-link" href="#main">Skip to main content</a>
+    <header class="topbar" aria-label="Course navigation">
+      <a class="brand" href="../index.html"><span class="brand-mark">2311</span><span><strong>ENGL 2311</strong><small>Davis Writing Studio</small></span></a>
+      <nav class="nav-links" aria-label="Primary sections">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="resources.html">Resources</a>
+        <a href="weeks.html">Weeks</a>
+        <a href="tools/">Tools</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </header>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="resources.html">Resources</a>
+      <a href="weeks.html">Weeks</a>
+      <a href="tools/">Tools</a>
+    </nav>
+    <main id="main">
+      <section class="dashboard welcome-dashboard" aria-labelledby="dashTitle">
+        <p class="eyebrow">Technical &amp; Business Writing</p>
+        <h1 id="dashTitle">ENGL 2311 Writing Studio</h1>
+        <p class="lead">Coming soon. This course room will mirror the ENGL 1301 structure: Home, Resources, Weeks, and Tools — practice here, submit in Canvas.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="../index.html">Back to course hub</a>
+          <a class="button ghost" href="../1301/">Open ENGL 1301</a>
+        </div>
+      </section>
+      <section class="section" aria-labelledby="pathTitle">
+        <div class="section-heading"><div><p class="eyebrow">Same structure as 1301</p><h2 id="pathTitle">Course sections</h2></div></div>
+        <div class="student-path-grid">
+          <a href="resources.html"><span>1</span><strong>Resources</strong><small>Handouts and guides — coming soon.</small></a>
+          <a href="weeks.html"><span>2</span><strong>Weeks</strong><small>Schedule checkpoints — coming soon.</small></a>
+          <a href="tools/"><span>3</span><strong>Tools</strong><small>Practice helpers — coming soon.</small></a>
+          <a href="../1301/case-study-studio.html"><span>4</span><strong>See 1301 model</strong><small>Case Study studio is live under ENGL 1301.</small></a>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Davis Writing Studio · ENGL 2311 · local preview</p></footer>
+    <script>
+      document.querySelector('.nav-toggle')?.addEventListener('click', () => {
+        const m = document.getElementById('mobileNav');
+        const open = m.classList.toggle('open');
+        document.querySelector('.nav-toggle').setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    </script>
+  </body>
+</html>
