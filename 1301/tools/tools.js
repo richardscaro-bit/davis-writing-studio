@@ -1292,7 +1292,7 @@
         <ul class="research-search-list">${searches}</ul>
         <div class="hero-actions" style="margin-top:0.75rem;">
           <a class="button small primary" href="${escapeHtml(research.libraryUrl)}" target="_blank" rel="noopener">SAC Library</a>
-          <a class="button small ghost" href="${escapeHtml(research.databasesUrl)}" target="_blank" rel="noopener">A–Z databases</a>
+          <a class="button small ghost" href="${escapeHtml(research.databasesUrl)}" target="_blank" rel="noopener">A to Z databases</a>
           <a class="button small ghost" href="${escapeHtml(research.keywordToolUrl)}">Keyword generator</a>
         </div>`;
       researchHost.hidden = false;
@@ -2369,7 +2369,319 @@
     "Public Health": ["health equity", "prevention", "community health", "epidemiology"],
     "Social Media": ["platform design", "algorithmic amplification", "online community", "digital labor"],
     "Technology & Media": ["platform economy", "digital privacy", "media literacy", "surveillance"],
-    "Urban Studies": ["urban planning", "housing", "public space", "gentrification"]
+    "Urban Studies": ["urban planning", "housing", "public space", "gentrification"],
+    "Kaiju / giant creatures": [
+      "kaiju cinema",
+      "giant monster",
+      "city destruction",
+      "spectacle and scale",
+      "nuclear allegory",
+      "monster as metaphor",
+      "Godzilla",
+      "King Kong"
+    ],
+    Vampires: [
+      "vampire lore",
+      "gothic horror",
+      "blood and desire",
+      "immortality",
+      "predator and prey",
+      "Dracula",
+      "sympathy for the monster",
+      "adaptation"
+    ],
+    "Werewolves / shapeshifters": [
+      "lycanthropy",
+      "shapeshifter",
+      "human and animal",
+      "transformation",
+      "dual nature",
+      "body horror",
+      "curse narrative",
+      "monstrosity"
+    ],
+    "Zombies / undead": [
+      "zombie narrative",
+      "undead",
+      "contagion",
+      "apocalypse fiction",
+      "living dead",
+      "crowd and fear",
+      "survival narrative",
+      "monstrosity"
+    ],
+    "Folk / cryptid figures": [
+      "folklore monster",
+      "cryptid",
+      "urban legend",
+      "oral tradition",
+      "local myth",
+      "folk horror",
+      "belief and fear",
+      "monstrosity"
+    ],
+    "Film / TV monsters": [
+      "film monster",
+      "screen horror",
+      "audience fear",
+      "adaptation",
+      "special effects spectacle",
+      "media representation",
+      "monster as metaphor",
+      "gothic cinema"
+    ],
+    "Literary monsters": [
+      "literary monster",
+      "gothic novel",
+      "monstrosity",
+      "creator and creation",
+      "sympathy and blame",
+      "beauty and monstrosity",
+      "moral responsibility",
+      "double and doubling"
+    ],
+    "Belonging / identity": [
+      "belonging",
+      "identity",
+      "community",
+      "outsider",
+      "self and other",
+      "personal narrative",
+      "recognition"
+    ],
+    "Work or school": [
+      "workplace",
+      "campus life",
+      "first job",
+      "student experience",
+      "labor",
+      "learning curve",
+      "professional identity"
+    ],
+    Family: [
+      "family ritual",
+      "kinship",
+      "intergenerational",
+      "home",
+      "caregiving",
+      "family conflict",
+      "belonging"
+    ],
+    "Fear / courage": [
+      "fear",
+      "courage",
+      "risk",
+      "bravery",
+      "anxiety",
+      "facing danger",
+      "personal growth"
+    ],
+    "Monster or hero figure": [
+      "monster figure",
+      "hero figure",
+      "role model",
+      "villain",
+      "archetype",
+      "identification",
+      "story and self"
+    ],
+    "Place / home": [
+      "place",
+      "home",
+      "displacement",
+      "sense of place",
+      "migration",
+      "local community",
+      "belonging"
+    ],
+    "Deep ocean / extreme environments": [
+      "deep ocean",
+      "extreme environment",
+      "pressure physiology",
+      "exploration",
+      "human limits",
+      "deep-sea research",
+      "adaptation"
+    ],
+    "Space / cosmos": [
+      "space exploration",
+      "astronomy",
+      "cosmology",
+      "black hole",
+      "outer space",
+      "human in space",
+      "scientific explanation"
+    ],
+    "The body under stress": [
+      "physiological stress",
+      "human body",
+      "heat stress",
+      "cold exposure",
+      "endurance",
+      "homeostasis",
+      "medical science"
+    ],
+    "Disease / public health unknowns": [
+      "disease transmission",
+      "public health",
+      "epidemiology",
+      "outbreak",
+      "prevention",
+      "health literacy",
+      "scientific uncertainty"
+    ],
+    "Technology / AI unknowns": [
+      "artificial intelligence",
+      "machine learning",
+      "algorithm",
+      "automation",
+      "AI error",
+      "technology ethics",
+      "explainable AI"
+    ],
+    "Natural disasters": [
+      "natural disaster",
+      "hurricane",
+      "earthquake",
+      "risk reduction",
+      "emergency response",
+      "climate hazard",
+      "preparedness"
+    ],
+    "Unexplained phenomena (explain, don’t argue)": [
+      "scientific explanation",
+      "anomaly",
+      "evidence evaluation",
+      "misconception",
+      "critical thinking",
+      "research methods",
+      "uncertainty"
+    ],
+    "Historical mysteries": [
+      "historical mystery",
+      "archaeology",
+      "primary source",
+      "historiography",
+      "evidence",
+      "interpretation",
+      "unsolved history"
+    ],
+    "Local visitors": [
+      "local tourism",
+      "visitor guide",
+      "place explanation",
+      "cultural practice",
+      "newcomer",
+      "public space"
+    ],
+    "Campus community": [
+      "campus culture",
+      "student life",
+      "college community",
+      "orientation",
+      "shared space",
+      "campus ritual"
+    ],
+    "Newcomers to the city": [
+      "newcomer",
+      "city orientation",
+      "urban navigation",
+      "local knowledge",
+      "access",
+      "cultural practice"
+    ],
+    "Classmates / peers": [
+      "peer audience",
+      "classroom community",
+      "shared knowledge",
+      "student guide",
+      "how it works"
+    ],
+    "Online readers": [
+      "online audience",
+      "digital guide",
+      "public writing",
+      "clear explanation",
+      "accessible language"
+    ],
+    "Technology & media": [
+      "media literacy",
+      "digital media",
+      "public debate",
+      "platform power",
+      "communication policy"
+    ],
+    "Public policy": [
+      "public policy",
+      "regulation",
+      "civic debate",
+      "policy evidence",
+      "governance"
+    ],
+    "Campus life": [
+      "campus policy",
+      "student rights",
+      "college community",
+      "institutional rules",
+      "access"
+    ],
+    Health: [
+      "public health",
+      "healthcare access",
+      "wellbeing",
+      "medical ethics",
+      "health policy"
+    ],
+    "Criminal justice": [
+      "criminal justice",
+      "policing",
+      "courts",
+      "incarceration",
+      "due process",
+      "reform"
+    ],
+    "Thesis / claims": [
+      "thesis statement",
+      "arguable claim",
+      "controlling idea",
+      "specificity",
+      "revision"
+    ],
+    "Research / sources": [
+      "source evaluation",
+      "research process",
+      "citation",
+      "evidence use",
+      "library research"
+    ],
+    Organization: [
+      "organization",
+      "topic sentence",
+      "paragraph structure",
+      "coherence",
+      "outline"
+    ],
+    "Revision habits": [
+      "revision",
+      "drafting process",
+      "feedback",
+      "rewriting",
+      "writing habits"
+    ],
+    "AI Level 2 use": [
+      "AI literacy",
+      "responsible AI use",
+      "brainstorming support",
+      "writer ownership",
+      "academic integrity"
+    ],
+    "MLA / citation": [
+      "MLA style",
+      "Works Cited",
+      "in-text citation",
+      "source credit",
+      "documentation"
+    ]
   };
 
   const GENERIC_SYNONYMS = {
@@ -2386,7 +2698,22 @@
     marketing: ["branding", "advertising", "promotion", "consumer marketing"],
     health: ["wellbeing", "public health", "healthcare", "medical"],
     student: ["learner", "undergraduate", "first-year student"],
-    policy: ["regulation", "governance", "legislation", "institutional policy"]
+    policy: ["regulation", "governance", "legislation", "institutional policy"],
+    monster: ["monstrosity", "creature", "figure", "horror figure"],
+    monstrosity: ["the monstrous", "abjection", "otherness", "monster as metaphor"],
+    gothic: ["gothic novel", "gothic horror", "gothic literature", "dark romanticism"],
+    creator: ["maker", "author figure", "scientist-creator", "creator and creation"],
+    creation: ["creature", "created being", "invention", "creator and creation"],
+    sympathy: ["pity", "compassion", "reader sympathy", "identification"],
+    blame: ["guilt", "responsibility", "moral judgment", "culpability"],
+    fear: ["terror", "dread", "anxiety", "audience fear"],
+    beauty: ["aestheticism", "appearance", "the beautiful", "beauty and monstrosity"],
+    adaptation: ["film adaptation", "retelling", "screen version", "remake"],
+    double: ["doubling", "doppelganger", "double life", "split self"],
+    doubling: ["double", "doppelganger", "mirror figure", "split identity"],
+    desire: ["want", "ambition", "appetite", "longing"],
+    power: ["control", "authority", "domination", "influence"],
+    responsibility: ["moral responsibility", "duty", "accountability", "obligation"]
   };
 
   function tokenizeKeywords(text) {
@@ -2425,41 +2752,137 @@
     return /\s/.test(t) ? `"${t}"` : t;
   }
 
+  function essayBoostTerms(essay, caseName) {
+    const id = (essay && essay.id) || "";
+    const kind = (essay && essay.claimKind) || "";
+    const boost = [];
+    const s = String(caseName || "").toLowerCase();
+    if (id === "monster-comparison" || kind === "comparison") {
+      boost.push(
+        "monstrosity",
+        "gothic",
+        "creator and creation",
+        "sympathy",
+        "blame",
+        "adaptation"
+      );
+      if (/frankenstein/.test(s) && /dorian/.test(s)) {
+        boost.push(
+          "Frankenstein",
+          "The Picture of Dorian Gray",
+          "creature",
+          "Victor Frankenstein",
+          "aestheticism",
+          "moral responsibility",
+          "beauty and monstrosity",
+          "creator and creation",
+          "sympathy",
+          "blame"
+        );
+      }
+      if (/godzilla/.test(s) && /kong/.test(s)) {
+        boost.push("Godzilla", "King Kong", "kaiju", "spectacle", "monster as metaphor");
+      }
+      if (/dracula/.test(s)) {
+        boost.push("Dracula", "vampire lore", "gothic horror", "desire");
+      }
+    }
+    return boost;
+  }
+
+  function essaySearchCluster(essay) {
+    const id = (essay && essay.id) || "";
+    const kind = (essay && essay.claimKind) || "";
+    if (id === "case-study" || kind === "case-study") {
+      return {
+        bool: '(stakeholder* OR consumer* OR customer*)',
+        scholar: '(ethics OR equity OR "consumer protection")',
+        label: "stakeholder OR consumer OR customer"
+      };
+    }
+    if (id === "monster-comparison" || kind === "comparison") {
+      return {
+        bool: '(monstrosity OR gothic OR "creator and creation" OR sympathy OR blame OR adaptation)',
+        scholar: '(monstrosity OR gothic OR sympathy OR blame OR adaptation)',
+        label: "monstrosity OR gothic OR sympathy"
+      };
+    }
+    if (kind === "exposition" || id === "facing-unknown" || id === "field-guide") {
+      return {
+        bool: "(explain OR process OR cause OR mechanism)",
+        scholar: "(explain OR process OR cause OR definition)",
+        label: "explain OR process OR cause"
+      };
+    }
+    if (kind === "argument" || id === "classical-argument") {
+      return {
+        bool: "(claim OR evidence OR counterargument OR stake*)",
+        scholar: "(claim OR evidence OR counterargument OR policy)",
+        label: "claim OR evidence OR counterargument"
+      };
+    }
+    if (kind === "narrative" || id === "narrative-quest") {
+      return {
+        bool: "(narrative OR scene OR insight OR belonging)",
+        scholar: "(personal narrative OR memoir OR insight OR identity)",
+        label: "narrative OR insight OR identity"
+      };
+    }
+    if (kind === "reflection" || id === "final-reflection") {
+      return {
+        bool: "(reflection OR revision OR growth OR writing process)",
+        scholar: "(writing process OR revision OR metacognition)",
+        label: "reflection OR revision OR growth"
+      };
+    }
+    return {
+      bool: "(analysis OR interpretation OR evidence)",
+      scholar: "(analysis OR interpretation OR criticism)",
+      label: "analysis OR interpretation"
+    };
+  }
+
   function buildKeywordPacket(inputs) {
+    const essay = activeEssay();
     const caseName = (inputs.caseName || "").trim();
     const claim = (inputs.claim || "").trim();
     const topic = (inputs.topic || "").trim();
     const tensionList = splitCommaList(inputs.tension);
     const extraList = splitCommaList(inputs.extra);
+    const boost = essayBoostTerms(essay, caseName);
+    const cluster = essaySearchCluster(essay);
 
     const claimTokens = tokenizeKeywords(claim);
-    // Prefer multi-word tension/extra as phrases; single tokens from claim
+    // Preserve caseName and typed tension/extra casing; claim tokens stay lowercase from tokenizer
     const core = uniqueKeepOrder([
       caseName,
+      ...boost.filter((t) => /[A-Z]/.test(t[0]) || /\s/.test(t)),
       ...tensionList,
       ...extraList,
+      ...boost,
       ...claimTokens.slice(0, 12)
-    ]).slice(0, 16);
+    ]).slice(0, 18);
 
     const syn = [];
     const lowerCore = core.map((c) => c.toLowerCase());
+    // Topic-folder phrases first so essay categories shape related terms
+    if (topic && TOPIC_RELATED[topic]) syn.push(...TOPIC_RELATED[topic]);
     for (const [stem, alts] of Object.entries(GENERIC_SYNONYMS)) {
       if (lowerCore.some((c) => c === stem || c.includes(stem) || stem.includes(c))) {
         syn.push(...alts);
       }
     }
-    // also scan claim text for synonym stems
     const claimLower = claim.toLowerCase();
+    const caseLower = caseName.toLowerCase();
     for (const [stem, alts] of Object.entries(GENERIC_SYNONYMS)) {
-      if (claimLower.includes(stem)) syn.push(...alts);
+      if (claimLower.includes(stem) || caseLower.includes(stem)) syn.push(...alts);
     }
-    if (topic && TOPIC_RELATED[topic]) syn.push(...TOPIC_RELATED[topic]);
     const synonyms = uniqueKeepOrder(syn.filter((s) => !lowerCore.includes(s.toLowerCase()))).slice(
       0,
       18
     );
 
-    const a = phraseQuotes(caseName || core[0] || "your case");
+    const a = phraseQuotes(caseName || core[0] || "your subject");
     const b = phraseQuotes(tensionList[0] || core[1] || synonyms[0] || "key concept");
     const c = phraseQuotes(tensionList[1] || core[2] || synonyms[1] || "related concept");
     const synOr =
@@ -2470,22 +2893,25 @@
       `${a} AND (${b} OR ${c})`,
       `(${a}) AND (${synOr})`,
       `${a} AND ${b} NOT review`,
-      `${phraseQuotes(caseName || "case")} AND (stakeholder* OR consumer* OR customer*)`
+      `${phraseQuotes(caseName || "subject")} AND ${cluster.bool}`
     ]);
 
+    const scholarFocus = (tensionList[0] || core[1] || "analysis").replace(/"/g, "");
     const scholar = uniqueKeepOrder([
       `${a} ${b}`,
       `${a} AND ${b}`,
-      `author: — leave blank — try: ${a} "${(tensionList[0] || core[1] || "analysis").replace(/"/g, "")}"`,
-      `${a} (ethics OR equity OR "consumer protection")`,
+      `try: ${a} "${scholarFocus}"`,
+      `${a} ${cluster.scholar}`,
       `intitle:${a.replace(/"/g, "")} ${b}`
     ]);
 
+    const tensionWord = (tensionList[0] || "focus").replace(/"/g, "");
+    const synWord = (synonyms[0] || "related").replace(/"/g, "");
     const library = uniqueKeepOrder([
       `${a} AND ${b}`,
       `SU ${a} AND ${b}`,
-      `TX ${caseName || "case name"} AND (${(tensionList[0] || "tension").replace(/"/g, "")} OR ${(synonyms[0] || "related").replace(/"/g, "")})`,
-      `${a} AND (peer-reviewed OR scholarly) — use database filters after search`,
+      `TX ${caseName || "subject"} AND (${tensionWord} OR ${synWord})`,
+      `${a} AND (peer-reviewed OR scholarly); use database filters after search`,
       `AB ${b} AND ${c}`
     ]);
 

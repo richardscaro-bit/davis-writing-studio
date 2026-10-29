@@ -185,7 +185,7 @@
         "Vampires",
         "Werewolves / shapeshifters",
         "Zombies / undead",
-        "Folk / cryptid",
+        "Folk / cryptid figures",
         "Film / TV monsters",
         "Literary monsters",
         "Other / custom"
@@ -266,7 +266,7 @@
         { id: "ai", title: "AI Level 2 honesty", prompt: "Does the writer own the comparison and insight?", placeholder: "Ownership looks… / Ask about…" }
       ],
       thesisCue: "Name both figures. Choose three criteria you will apply to both. State one clear insight (not a trait list). Generate thesis options, then open the outline.",
-      outlineCue: "Each body section uses one of your three criteria on both figures. Edit every topic sentence in your voice.",
+      outlineCue: "Each body section uses one of your three criteria on both figures. Topic sentences appear on body sections only; intro and conclusion use opening and closing plans.",
       mlaCue: "Cite films, shows, or readings you quote or paraphrase."
     },
     {
@@ -859,16 +859,17 @@
     setPh("criticalQuestion", essay.questionPlaceholder);
     setPh("outlineTension", essay.tensionPlaceholder);
 
-    const topicSelect = document.getElementById("topicFolder");
-    if (topicSelect && topicSelect.tagName === "SELECT") {
+    const topicOpts = Array.isArray(essay.topicOptions) ? essay.topicOptions.slice() : [];
+    ["topicFolder", "kwTopic"].forEach((selectId) => {
+      const topicSelect = document.getElementById(selectId);
+      if (!topicSelect || topicSelect.tagName !== "SELECT") return;
       const prev = topicSelect.value;
-      const opts = Array.isArray(essay.topicOptions) ? essay.topicOptions.slice() : [];
       while (topicSelect.firstChild) topicSelect.removeChild(topicSelect.firstChild);
       const blank = document.createElement("option");
       blank.value = "";
       blank.textContent = "— select or leave blank —";
       topicSelect.appendChild(blank);
-      opts.forEach((opt) => {
+      topicOpts.forEach((opt) => {
         const v = String(opt);
         const o = document.createElement("option");
         o.value = v;
@@ -876,8 +877,8 @@
         if (v === prev) o.selected = true;
         topicSelect.appendChild(o);
       });
-      if (prev && opts.indexOf(prev) === -1) topicSelect.value = "";
-    }
+      if (prev && topicOpts.indexOf(prev) === -1) topicSelect.value = "";
+    });
 
     const cue = document.getElementById("essayToolCue");
     if (cue) cue.textContent = essay.thesisCue || essay.outlineCue || essay.purpose;
