@@ -95,7 +95,7 @@
       studioLabel: "Tools (Classical Argument)",
       label: "Classical Argument Essay",
       purpose:
-        "Take a clear stand on a debatable issue (On Trial theme in Flex). Support the claim with reasons and evidence; address at least one opposing view.",
+        "Take a clear stand on a debatable issue (On Trial theme in Flex). Support the claim with reasons and evidence; address at least one opposing view. Aim for an 850 to 1,000 word MLA essay (not counting Works Cited). Drafts should reach at least 700 words (AI Level 2: support, not composition).",
       subjectLabel: "Issue / case under debate",
       subjectHint: "Required. Name the issue or “defendant.”",
       subjectPlaceholder: "e.g. school phone bans / a public figure or policy “on trial”",
