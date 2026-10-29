@@ -947,6 +947,75 @@
     };
   }
 
+  function renderResearchNextSteps(host, research, opts) {
+    if (!host) return;
+    opts = opts || {};
+    if (!research) {
+      host.innerHTML = "";
+      host.hidden = true;
+      return;
+    }
+    const articles = (research.articles || [])
+      .map((art) => {
+        return `<li><a href="${escapeHtml(art.url)}" target="_blank" rel="noopener">${escapeHtml(art.title)}</a>
+          <span class="hint-block" style="display:block;margin:0.15rem 0 0.55rem;">${escapeHtml(art.note || "")}</span></li>`;
+      })
+      .join("");
+    const searches = (research.searches || [])
+      .map((s) => `<li><a href="${escapeHtml(s.url)}" target="_blank" rel="noopener">${escapeHtml(s.label)}</a></li>`)
+      .join("");
+    const keywordBtn = opts.omitKeywordLink
+      ? ""
+      : `<a class="button small ghost" href="${escapeHtml(research.keywordToolUrl)}">Keyword generator</a>`;
+    const tip = opts.omitKeywordLink
+      ? `<p class="hint-block" style="margin-top:0.65rem;">Use the keyword chips and Boolean tips above with Scholar and A to Z databases.</p>`
+      : "";
+    host.innerHTML = `
+      <h2 class="eyebrow" style="margin-top:1.5rem;">Research for ${escapeHtml(research.pairLabel || "your pair")}</h2>
+      <p class="hint-block">${escapeHtml(research.hint || "")}</p>
+      ${articles ? `<h3 class="idea-column-title">Starter readings (open access)</h3><ul class="research-article-list">${articles}</ul>` : ""}
+      <h3 class="idea-column-title">Search these next</h3>
+      <ul class="research-search-list">${searches}</ul>
+      <div class="hero-actions" style="margin-top:0.75rem;">
+        <a class="button small primary" href="${escapeHtml(research.libraryUrl)}" target="_blank" rel="noopener">SAC Library</a>
+        <a class="button small ghost" href="${escapeHtml(research.databasesUrl)}" target="_blank" rel="noopener">A to Z databases</a>
+        ${keywordBtn}
+      </div>
+      ${tip}`;
+    host.hidden = false;
+  }
+
+  function shouldShowPairResearch(inputs, essay) {
+    const id = (essay && essay.id) || "";
+    const kind = (essay && essay.claimKind) || "";
+    if (id === "monster-comparison" || kind === "comparison") return true;
+    const caseName = (inputs && inputs.caseName) || "";
+    if (detectPairResearchKey(caseName)) return true;
+    return !!splitPair(caseName).paired;
+  }
+
+  function gatherResearchInputs(base) {
+    const chosen = loadJSON(KEYS.chosenClaim, null) || {};
+    const thesis = loadJSON(KEYS.thesisInputs, null) || {};
+    const outline = loadJSON(KEYS.outlineInputs, null) || {};
+    const caseName = (base && base.caseName) || chosen.caseName || outline.caseName || thesis.caseName || "";
+    let criteria = [];
+    if (base && Array.isArray(base.criteria) && base.criteria.length) criteria = base.criteria;
+    else if (Array.isArray(chosen.criteria) && chosen.criteria.length) criteria = chosen.criteria;
+    else if (Array.isArray(thesis.criteria) && thesis.criteria.length) criteria = thesis.criteria;
+    else if (Array.isArray(outline.criteria) && outline.criteria.length) criteria = outline.criteria;
+    const essay = activeEssay();
+    if ((!criteria || !criteria.length) && essay && essay.claimKind === "comparison") {
+      criteria = comparisonDefaults({ caseName, criteria: [] }, essay).criteria;
+    }
+    return {
+      caseName,
+      criteria: Array.isArray(criteria) ? criteria.filter(Boolean).slice(0, 3) : [],
+      tension: (base && base.tension) || chosen.tension || outline.tension || "",
+      claim: (base && base.claim) || chosen.claim || outline.claim || ""
+    };
+  }
+
   function buildOutline(inputs) {
     const essay = activeEssay();
     const kind = (essay && essay.claimKind) || "generic";
@@ -1225,7 +1294,6 @@
       };
     });
 
-    const research = buildResearchNextSteps(inputs, essay);
     return {
       claim,
       caseName,
@@ -1234,8 +1302,7 @@
       topicFolder: topicFolder || "",
       essayId: (essay && essay.id) || "",
       essayLabel: essayLabel(),
-      sections,
-      research
+      sections
     };
   }
 
@@ -1273,32 +1340,28 @@
       researchHost.className = "outline-research";
       results.appendChild(researchHost);
     }
-    const research = skeleton.research;
-    if (research) {
-      const articles = (research.articles || [])
-        .map((art) => {
-          return `<li><a href="${escapeHtml(art.url)}" target="_blank" rel="noopener">${escapeHtml(art.title)}</a>
-            <span class="hint-block" style="display:block;margin:0.15rem 0 0.55rem;">${escapeHtml(art.note || "")}</span></li>`;
-        })
-        .join("");
-      const searches = (research.searches || [])
-        .map((s) => `<li><a href="${escapeHtml(s.url)}" target="_blank" rel="noopener">${escapeHtml(s.label)}</a></li>`)
-        .join("");
+    const essay = activeEssay();
+    const showPush = essay && (essay.id === "monster-comparison" || essay.claimKind === "comparison");
+    const pairLabel = skeleton.caseName
+      ? (splitPair(skeleton.caseName).paired
+          ? splitPair(skeleton.caseName).a + " and " + splitPair(skeleton.caseName).b
+          : skeleton.caseName)
+      : "your pair";
+    if (showPush) {
       researchHost.innerHTML = `
-        <h2 class="eyebrow" style="margin-top:1.5rem;">Next: research for ${escapeHtml(research.pairLabel || "your pair")}</h2>
-        <p class="hint-block">${escapeHtml(research.hint || "")}</p>
-        ${articles ? `<h3 class="idea-column-title">Starter readings (open access)</h3><ul class="research-article-list">${articles}</ul>` : ""}
-        <h3 class="idea-column-title">Search these next</h3>
-        <ul class="research-search-list">${searches}</ul>
+        <h2 class="eyebrow" style="margin-top:1.5rem;">Next: research</h2>
+        <p class="hint-block">Open Keyword generator for research next steps for ${escapeHtml(pairLabel)}. It uses your essay and pair when saved on this device.</p>
         <div class="hero-actions" style="margin-top:0.75rem;">
-          <a class="button small primary" href="${escapeHtml(research.libraryUrl)}" target="_blank" rel="noopener">SAC Library</a>
-          <a class="button small ghost" href="${escapeHtml(research.databasesUrl)}" target="_blank" rel="noopener">A to Z databases</a>
-          <a class="button small ghost" href="${escapeHtml(research.keywordToolUrl)}">Keyword generator</a>
+          <a class="button small primary" href="keyword-generator.html">Keyword generator / research</a>
         </div>`;
       researchHost.hidden = false;
     } else {
-      researchHost.innerHTML = "";
-      researchHost.hidden = true;
+      researchHost.innerHTML = `
+        <p class="hint-block" style="margin-top:1rem;">For search keywords and library queries next, open the Keyword generator.</p>
+        <div class="hero-actions" style="margin-top:0.5rem;">
+          <a class="button small ghost" href="keyword-generator.html">Keyword generator</a>
+        </div>`;
+      researchHost.hidden = false;
     }
     results.hidden = false;
   }
@@ -1312,16 +1375,8 @@
       (sec.bullets || sec.cues || []).forEach((b) => lines.push("  - " + b));
       lines.push("");
     });
-    if (skeleton.research) {
-      lines.push("Research next steps for " + (skeleton.research.pairLabel || "your pair"));
-      (skeleton.research.articles || []).forEach((art) => {
-        lines.push("  - " + art.title + " | " + art.url);
-      });
-      (skeleton.research.searches || []).forEach((s) => {
-        lines.push("  - Search: " + s.label + " | " + s.url);
-      });
-      lines.push("");
-    }
+    lines.push("Next: Keyword generator / research for search tips, starter readings, and library links.");
+    lines.push("");
     return lines.join("\n");
   }
 
@@ -1373,15 +1428,19 @@
       const thesisIn = loadJSON(KEYS.thesisInputs, null) || {};
       inputs.question = inputs.question || chosenNow.question || thesisIn.question || "";
       inputs.topicFolder = inputs.topicFolder || chosenNow.topicFolder || thesisIn.topicFolder || "";
+      inputs.criteria = inputs.criteria || chosenNow.criteria || thesisIn.criteria || [];
       const skeleton = buildOutline(inputs);
       saveJSON(KEYS.outlineInputs, inputs);
       saveJSON(KEYS.outlineSkeleton, skeleton);
-      saveJSON(KEYS.chosenClaim, {
+      saveJSON(KEYS.chosenClaim, Object.assign({}, chosenNow, {
         claim: inputs.claim,
         caseName: inputs.caseName,
         tension: inputs.tension,
+        topicFolder: inputs.topicFolder || chosenNow.topicFolder || "",
+        question: inputs.question || chosenNow.question || "",
+        criteria: inputs.criteria || chosenNow.criteria || [],
         savedAt: Date.now()
-      });
+      }));
       renderOutline(skeleton);
       setStatus($("#outlineSaveStatus"), "Outline + topic sentences generated · saved locally.", true);
     });
@@ -2991,6 +3050,17 @@
     const sumWrap = $("#kwSummaryWrap");
     if (summary) summary.textContent = kwPacketText(packet);
     if (sumWrap) sumWrap.hidden = false;
+    const researchHost = $("#kwResearch");
+    if (researchHost) {
+      const essay = activeEssay();
+      const base = packet.inputs || readKwInputs();
+      const rInputs = gatherResearchInputs(base);
+      if (shouldShowPairResearch(rInputs, essay)) {
+        renderResearchNextSteps(researchHost, buildResearchNextSteps(rInputs, essay), { omitKeywordLink: true });
+      } else {
+        renderResearchNextSteps(researchHost, null);
+      }
+    }
   }
 
   function readKwInputs() {
@@ -3017,20 +3087,25 @@
 
     let lastPacket = null;
     const saved = loadJSON(KEYS.keywordGen, null);
+    const chosen = loadJSON(KEYS.chosenClaim, null) || {};
+    const outlineSaved = loadJSON(KEYS.outlineInputs, null) || {};
+    function mergeKwPrefill(base) {
+      const next = Object.assign({}, base || {});
+      if (!next.caseName) next.caseName = chosen.caseName || outlineSaved.caseName || "";
+      if (!next.claim) next.claim = chosen.claim || outlineSaved.claim || "";
+      if (!next.topic) next.topic = chosen.topicFolder || outlineSaved.topicFolder || "";
+      if (!next.tension) next.tension = chosen.tension || outlineSaved.tension || "";
+      return next;
+    }
     if (saved?.inputs) {
-      writeKwInputs(saved.inputs);
+      writeKwInputs(mergeKwPrefill(saved.inputs));
       if (saved.packet) {
         lastPacket = saved.packet;
         showKeywordResults(saved.packet);
         setStatus($("#kwSaveStatus"), "Restored keyword packet from this device.", true);
       }
     } else {
-      const chosen = loadJSON(KEYS.chosenClaim, null);
-      if (chosen) {
-        if ($("#kwCase") && chosen.caseName) $("#kwCase").value = chosen.caseName;
-        if ($("#kwClaim") && chosen.claim) $("#kwClaim").value = chosen.claim;
-        if ($("#kwTopic") && chosen.topicFolder) $("#kwTopic").value = chosen.topicFolder;
-      }
+      writeKwInputs(mergeKwPrefill({ caseName: "", topic: "", claim: "", tension: "", extra: "" }));
     }
 
     function persist(packet, announce) {
@@ -3074,6 +3149,7 @@
       saveJSON(KEYS.keywordGen, { inputs: readKwInputs(), packet: null, savedAt: Date.now() });
       if ($("#kwResults")) $("#kwResults").hidden = true;
       if ($("#kwSummaryWrap")) $("#kwSummaryWrap").hidden = true;
+      renderResearchNextSteps($("#kwResearch"), null);
       setStatus($("#kwSaveStatus"), "Cleared.", false);
     });
 
@@ -3146,7 +3222,17 @@
       pktBtn.textContent = "Add " + (essay.sourcePacketLabel || "course packet / handout") + " row";
     }
     const outlineHint = $("#outlineHint");
-    if (outlineHint && essay && essay.outlineCue) outlineHint.textContent = essay.outlineCue;
+    if (outlineHint) {
+      if (essay && (essay.id === "monster-comparison" || essay.claimKind === "comparison")) {
+        outlineHint.textContent = "Topic sentences appear on body sections only. Intro and conclusion use opening and closing plans. For research next steps for your pair, open Keyword generator.";
+      } else if (essay && essay.outlineCue) {
+        outlineHint.textContent = essay.outlineCue;
+      }
+    }
+    if ($("#kwResults") && !$("#kwResults").hidden) {
+      const packet = loadJSON(KEYS.keywordGen, null)?.packet;
+      if (packet) showKeywordResults(packet);
+    }
     if ($("#prList")) {
       let state = loadJSON(KEYS.peerChecklist, null);
       if (!state) state = { checks: {}, notes: {}, reviewer: "", writer: "", claim: "", overall: "" };
