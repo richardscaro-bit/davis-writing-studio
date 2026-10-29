@@ -968,19 +968,82 @@
         const { a, b } = d.pair;
         const crit = d.criteria;
         const insight = trimSnippet(d.tension, 120);
+        const category = d.category;
+
+        function similarityUnder(criterion) {
+          const c = String(criterion || "").toLowerCase();
+          if (/creat|origin|chang|made|born|becom/.test(c)) {
+            return `${a} and ${b} are alike in that both are reshaped by a force outside ordinary life`;
+          }
+          if (/want|desire|ambition|goal/.test(c)) {
+            return `${a} and ${b} are alike in that both pursue something they treat as necessary`;
+          }
+          if (/judge|sympath|fear|blame|reader|audience|pity/.test(c)) {
+            return `${a} and ${b} are alike in that both invite a strong response from readers`;
+          }
+          if (/power|control|domin/.test(c)) {
+            return `${a} and ${b} are alike in that both hold or seek power over others`;
+          }
+          if (/public|private|image|face|secret/.test(c)) {
+            return `${a} and ${b} are alike in that both maintain a public face and a private reality`;
+          }
+          if (/harm|violence|damage|threat/.test(c)) {
+            return `${a} and ${b} are alike in that both cause harm that the story must explain`;
+          }
+          if (/responsib|guilt|blame/.test(c)) {
+            return `${a} and ${b} are alike in that both raise a question of who is responsible`;
+          }
+          return `${a} and ${b} are alike in that both can be judged under “${criterion}”`;
+        }
+
+        function differenceUnder(criterion, idx) {
+          const c = String(criterion || "").toLowerCase();
+          const raw = String(inputs.tension || insight || "").trim();
+          const split = raw.split(/\s*;\s*|\s+while\s+|\s+whereas\s+/i);
+          if (split.length >= 2) {
+            const left = trimSnippet(split[0], 70);
+            const right = trimSnippet(split[1], 70);
+            if (idx === 0) return `${left}, unlike ${right}`;
+            if (idx === 1) return `${a} and ${b} part ways here: ${left}; ${right}`;
+            return `the contrast under this lens is that ${lowerFirst(left)}, while ${lowerFirst(right)}`;
+          }
+          if (/creat|origin|chang|made|born|becom/.test(c)) {
+            return `${a} is shaped mainly by another person's act, while ${b} is shaped mainly by chosen self-fashioning`;
+          }
+          if (/want|desire|ambition|goal/.test(c)) {
+            return `${a} seeks recognition or belonging, while ${b} seeks pleasure, beauty, or escape from consequence`;
+          }
+          if (/judge|sympath|fear|blame|reader|audience|pity/.test(c)) {
+            return `readers are pushed to sympathize with ${a} more readily than with ${b}, or to assign blame differently`;
+          }
+          if (/power|control|domin/.test(c)) {
+            return `${a} and ${b} use power for different ends and with different visibility`;
+          }
+          if (/public|private|image|face|secret/.test(c)) {
+            return `${a}'s private truth is forced into the open, while ${b} works to keep private truth hidden`;
+          }
+          if (/harm|violence|damage|threat/.test(c)) {
+            return `the harm around ${a} is explained differently from the harm around ${b}`;
+          }
+          return `${a} and ${b} do not end in the same place under “${criterion}”`;
+        }
+
         if (role === "intro") {
-          return `This comparison of ${a} and ${b} is controlled by one insight: ${insight}.`;
+          return `This essay compares ${a} and ${b} as figures in ${category}, using three shared criteria to support one insight: ${insight}.`;
         }
         if (role === "conclusion") {
-          return `Taken together under the same criteria, ${a} and ${b} support this conclusion: ${insight}.`;
+          return `After the same three criteria, the useful takeaway is not a trait list; it is that ${lowerFirst(insight)}.`;
         }
+
         let cIdx = 0;
         if (/criterion 2/i.test(lens.title || "") || i === 2) cIdx = 1;
         else if (/criterion 3/i.test(lens.title || "") || i === 3) cIdx = 2;
         else if (/criterion 1/i.test(lens.title || "") || i === 1) cIdx = 0;
         else cIdx = Math.min(Math.max(i - 1, 0), crit.length - 1);
         const criterion = crit[cIdx] || crit[0];
-        return `Using the same criterion (${criterion}), ${a} and ${b} can be compared in parallel to support this insight: ${insight}.`;
+        const sim = similarityUnder(criterion);
+        const diff = differenceUnder(criterion, cIdx);
+        return `${sim}, but they differ in that ${lowerFirst(diff)}.`;
       }
 
       if (kind === "narrative") {
@@ -1029,13 +1092,44 @@
     }
 
     const sections = list.map((lens, i) => {
-      const cues = (lens.cues || []).slice();
-      if (i === 0 && claim) cues.unshift("Working thesis: " + claim);
-      if (question && i === 0) cues.push("Focusing question: " + question);
-      if (sourcesNote && /source/i.test(lens.title || "")) cues.push(sourcesNote);
-      if (!cues.length) cues.push("Evidence", "Analysis", "Link to thesis");
+      let cues = (lens.cues || []).slice();
       const topic = topicSentence(lens, i);
-      // Always expose bullets for renderOutline / outlinePlainText (fix cues/bullets mismatch)
+      if (kind === "comparison") {
+        const d = comparisonDefaults(inputs, essay);
+        const { a, b } = d.pair;
+        const crit = d.criteria;
+        let cIdx = -1;
+        if (/criterion 1/i.test(lens.title || "") || i === 1) cIdx = 0;
+        else if (/criterion 2/i.test(lens.title || "") || i === 2) cIdx = 1;
+        else if (/criterion 3/i.test(lens.title || "") || i === 3) cIdx = 2;
+        if (i === 0) {
+          cues = [
+            "Working thesis: " + claim,
+            "Name both figures and the shared category in one or two sentences",
+            "Preview the three criteria without listing every trait",
+            question ? "Focusing question: " + question : ""
+          ].filter(Boolean);
+        } else if (cIdx >= 0) {
+          cues = [
+            "Shared point under this criterion (what is alike about " + a + " and " + b + ")",
+            "Difference under this criterion (where " + a + " and " + b + " part ways)",
+            "Evidence for " + a,
+            "Evidence for " + b,
+            "One sentence linking this criterion to the insight (do not only restate the full thesis)"
+          ];
+        } else if (i === list.length - 1) {
+          cues = [
+            "Restate the insight in fresh words",
+            "Say what the comparison shows beyond a trait list",
+            "No new figures or new criteria"
+          ];
+        }
+      } else {
+        if (i === 0 && claim) cues.unshift("Working thesis: " + claim);
+        if (question && i === 0) cues.push("Focusing question: " + question);
+        if (sourcesNote && /source/i.test(lens.title || "")) cues.push(sourcesNote);
+        if (!cues.length) cues.push("Evidence", "Analysis", "Link to thesis");
+      }
       return { title: lens.title, topic, cues, bullets: cues.slice() };
     });
 
