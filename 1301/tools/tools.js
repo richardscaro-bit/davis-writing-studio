@@ -133,8 +133,23 @@
     if (!data) return;
     if ($("#caseName")) $("#caseName").value = data.caseName || "";
     if ($("#topicFolder")) $("#topicFolder").value = data.topicFolder || "";
-    if ($("#packetArgues")) $("#packetArgues").value = data.packetArgues || "";
-    if ($("#tensionInput")) $("#tensionInput").value = data.tension || "";
+    if ($("#packetArgues")) {
+      let presents = data.packetArgues || "";
+      presents = scrubComparisonPresents(presents, data);
+      $("#packetArgues").value = presents;
+    }
+    if ($("#tensionInput")) {
+      let tension = data.tension || "";
+      if (activeEssay() && activeEssay().claimKind === "comparison" && isVagueComparisonBit(tension)) {
+        tension = comparisonDefaults({
+          caseName: data.caseName || ($("#caseName") && $("#caseName").value) || "",
+          tension: "",
+          packetArgues: data.packetArgues || "",
+          topicFolder: data.topicFolder || ""
+        }, activeEssay()).tension;
+      }
+      $("#tensionInput").value = tension;
+    }
     if ($("#criticalQuestion")) $("#criticalQuestion").value = data.question || "";
     const set = new Set(data.angles || []);
     $$(".angle-chip").forEach((btn) => {
@@ -421,6 +436,14 @@
     });
 
     $("#claimGenerate").addEventListener("click", () => {
+      // Scrub stale vague comparison starters left in localStorage/form
+      if ($("#packetArgues")) {
+        $("#packetArgues").value = scrubComparisonPresents($("#packetArgues").value, readThesisInputs());
+      }
+      if ($("#tensionInput") && activeEssay() && activeEssay().claimKind === "comparison" && isVagueComparisonBit($("#tensionInput").value)) {
+        const d = comparisonDefaults(readThesisInputs(), activeEssay());
+        $("#tensionInput").value = d.tension;
+      }
       const inputs = readThesisInputs();
       const missing = [];
       if (!inputs.caseName) missing.push("subject / focus");
@@ -501,12 +524,34 @@
     return arr.slice(n).concat(arr.slice(0, n));
   }
 
+
+  const BAD_PRESENTS = [
+    "Both figures are often treated as belonging to the same category for similar reasons.",
+    "Both figures are often grouped in one category, but a trait list is not an insight.",
+    "similarities",
+    "Similarities",
+    "differences",
+    "Differences",
+    "similarities and differences",
+    "Similarities and differences"
+  ];
+
+  function scrubComparisonPresents(value, inputs) {
+    const essay = activeEssay();
+    if (!essay || essay.claimKind !== "comparison") return value;
+    const v = String(value || "").trim();
+    if (!v || BAD_PRESENTS.some((b) => b.toLowerCase() === v.toLowerCase()) || isVagueComparisonBit(v)) {
+      return presentsStarter("comparison");
+    }
+    return value;
+  }
+
   function presentsStarter(kind) {
     switch (kind) {
       case "argument":
         return "Many people argue that the familiar position on this issue should stand.";
       case "comparison":
-        return "Both figures are often grouped in one category, but a trait list is not an insight.";
+        return "Readers often lump both figures into one monster category and stop at shared traits.";
       case "exposition":
         return "Readers often assume a simple story about this topic, but the process is less settled.";
       case "narrative":
@@ -610,8 +655,11 @@
     if (idea && $("#tensionInput")) $("#tensionInput").value = idea;
     if (question && $("#criticalQuestion")) $("#criticalQuestion").value = question;
 
-    if ($("#packetArgues") && !($("#packetArgues").value || "").trim()) {
-      $("#packetArgues").value = presentsStarter(kind);
+    if ($("#packetArgues")) {
+      const cur = ($("#packetArgues").value || "").trim();
+      if (!cur || kind === "comparison" && (BAD_PRESENTS.some((b) => b.toLowerCase() === cur.toLowerCase()) || isVagueComparisonBit(cur))) {
+        $("#packetArgues").value = presentsStarter(kind);
+      }
     }
 
     persistThesisInputs();
