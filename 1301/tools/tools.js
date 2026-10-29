@@ -938,8 +938,8 @@
       pairLabel: pair.paired ? a + " and " + b : (inputs.caseName || "your figures"),
       articles,
       searches,
-      libraryUrl: "https://www.alamo.edu/sac/experience-sac/campus-life/library/",
-      databasesUrl: "https://alamo.libguides.com/az.php",
+      libraryUrl: "https://www.alamo.edu/sac/library/",
+      databasesUrl: "https://alamo.libguides.com/az/SAC",
       keywordToolUrl: "keyword-generator.html",
       hint: articles.length
         ? "Start with the linked readings below, then use Scholar and the SAC library to confirm peer-reviewed sources that fit your criteria."
