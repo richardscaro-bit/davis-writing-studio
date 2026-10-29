@@ -13,6 +13,15 @@
       subjectHint: "Required. What the narrative centers on.",
       subjectPlaceholder: "e.g. first night shift at the hospital",
       topicLabel: "Optional theme tag",
+      topicOptions: [
+        "Belonging / identity",
+        "Work or school",
+        "Family",
+        "Fear / courage",
+        "Monster or hero figure",
+        "Place / home",
+        "Other / custom"
+      ],
       presentsLabel: "What happens or what you noticed",
       presentsHint: "Required. Key events or moments in your words.",
       presentsPlaceholder: "I expected X, but Y happened when…",
@@ -60,6 +69,15 @@
       subjectHint: "Required. Name the issue or “defendant.”",
       subjectPlaceholder: "e.g. school phone bans / a public figure or policy “on trial”",
       topicLabel: "Optional topic area",
+      topicOptions: [
+        "Education",
+        "Technology & media",
+        "Public policy",
+        "Campus life",
+        "Health",
+        "Criminal justice",
+        "Other / custom"
+      ],
       presentsLabel: "Common view or opposing claim",
       presentsHint: "Required. What others often argue.",
       presentsPlaceholder: "Many people argue that…",
@@ -108,6 +126,16 @@
       subjectHint: "Required. Name both figures.",
       subjectPlaceholder: "e.g. Godzilla and King Kong",
       topicLabel: "Shared category (optional)",
+      topicOptions: [
+        "Kaiju / giant creatures",
+        "Vampires",
+        "Werewolves / shapeshifters",
+        "Zombies / undead",
+        "Folk / cryptid",
+        "Film / TV monsters",
+        "Literary monsters",
+        "Other / custom"
+      ],
       presentsLabel: "Shared ground / category",
       presentsHint: "Required. Why these two belong in one comparison.",
       presentsPlaceholder: "Both are city-scale screen monsters used to…",
@@ -154,6 +182,15 @@
       subjectHint: "Required. Narrow topic or focused how/why question.",
       subjectPlaceholder: "e.g. how deep-sea pressure affects the human body",
       topicLabel: "Optional subject area",
+      topicOptions: [
+        "Science / nature",
+        "Body / health",
+        "Technology",
+        "History",
+        "Culture",
+        "Place / environment",
+        "Other / custom"
+      ],
       presentsLabel: "What readers often misunderstand",
       presentsHint: "Required. The confusion or unknown you will clarify.",
       presentsPlaceholder: "Readers often think… but the process actually…",
@@ -201,6 +238,14 @@
       subjectHint: "Required. One focused subject.",
       subjectPlaceholder: "e.g. a neighborhood mercado / a campus ritual",
       topicLabel: "Audience (optional here)",
+      topicOptions: [
+        "Local visitors",
+        "Campus community",
+        "Newcomers to the city",
+        "Classmates / peers",
+        "Online readers",
+        "Other / custom"
+      ],
       presentsLabel: "Named audience & what they need explained",
       presentsHint: "Required. Who the guide is for and what they need.",
       presentsPlaceholder: "For new students who need to understand how…",
@@ -248,6 +293,22 @@
       subjectHint: "Required. e.g. BarkBox Subscription Box",
       subjectPlaceholder: "BarkBox",
       topicLabel: "Topic folder",
+      topicOptions: [
+        "Business & Marketing",
+        "Climate",
+        "Education",
+        "Environmental",
+        "Film / TV",
+        "Forensics & Psychology",
+        "Government",
+        "Health Science",
+        "Mortuary Science",
+        "Public Health",
+        "Social Media",
+        "Technology & Media",
+        "Urban Studies",
+        "Other / custom"
+      ],
       presentsLabel: "What the packet seems to argue or present",
       presentsHint: "Required. 1–2 sentences in your words.",
       presentsPlaceholder: "The packet presents BarkBox as a customer-loyalty success…",
@@ -300,6 +361,15 @@
       subjectHint: "Required. Skill, habit, or essay arc you will examine.",
       subjectPlaceholder: "e.g. how my thesis statements changed from Essay 1 to now",
       topicLabel: "Optional course theme",
+      topicOptions: [
+        "Thesis / claims",
+        "Research / sources",
+        "Organization",
+        "Revision habits",
+        "AI Level 2 use",
+        "MLA / citation",
+        "Other / custom"
+      ],
       presentsLabel: "Where you started",
       presentsHint: "Required. Early habit, draft, or belief.",
       presentsPlaceholder: "At first I usually…",
@@ -349,6 +419,18 @@
     subjectHint: "Required. Name the topic, case, pair, or focus.",
     subjectPlaceholder: "Your subject",
     topicLabel: "Optional topic tag",
+    topicOptions: [
+      "Business & Marketing",
+      "Climate",
+      "Education",
+      "Environmental",
+      "Film / TV",
+      "Government",
+      "Health",
+      "Social Media",
+      "Technology & Media",
+      "Other / custom"
+    ],
     presentsLabel: "What sources or experience present",
     presentsHint: "Required. 1–2 sentences in your words.",
     presentsPlaceholder: "Readers or sources present…",
@@ -539,6 +621,22 @@
     setPh("tensionInput", essay.tensionPlaceholder);
     setPh("criticalQuestion", essay.questionPlaceholder);
     setPh("outlineTension", essay.tensionPlaceholder);
+
+    const topicSelect = document.getElementById("topicFolder");
+    if (topicSelect && topicSelect.tagName === "SELECT") {
+      const prev = topicSelect.value;
+      const opts = Array.isArray(essay.topicOptions) ? essay.topicOptions : [];
+      topicSelect.innerHTML =
+        '<option value="">— select or leave blank —</option>' +
+        opts
+          .map((opt) => {
+            const v = String(opt);
+            const sel = v === prev ? " selected" : "";
+            return `<option value="${escapeHtml(v)}"${sel}>${escapeHtml(v)}</option>`;
+          })
+          .join("");
+      if (prev && !opts.includes(prev)) topicSelect.value = "";
+    }
 
     const cue = document.getElementById("essayToolCue");
     if (cue) cue.textContent = essay.thesisCue || essay.outlineCue || essay.purpose;
