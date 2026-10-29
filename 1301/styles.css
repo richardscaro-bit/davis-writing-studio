@@ -182,3 +182,52 @@ main > .section > h1 {
 .research-search-list a {
   font-weight: 600;
 }
+
+
+/* On-page Drive replacements: collapsible studio panels */
+details.studio-drop {
+  margin: 0.65rem 0 0;
+  padding: 0.55rem 0.75rem 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.22);
+}
+details.studio-drop > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: rgba(255, 248, 240, 0.95);
+  list-style: none;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+details.studio-drop > summary::-webkit-details-marker { display: none; }
+details.studio-drop > summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 0.45rem;
+  color: var(--topic, #c08070);
+  transition: transform 0.15s ease;
+}
+details.studio-drop[open] > summary::before { transform: rotate(90deg); }
+details.studio-drop .studio-drop-body {
+  margin-top: 0.7rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+details.studio-drop .studio-drop-body p { margin: 0 0 0.7rem; }
+details.studio-drop .sample-essay { max-width: 48rem; }
+details.studio-drop .sample-essay .sample-header {
+  font-size: 0.92rem;
+  color: var(--cream-dim, rgba(255,248,240,0.75));
+  margin-bottom: 0.85rem;
+}
+details.studio-drop .sample-essay h4 {
+  margin: 1rem 0 0.45rem;
+  font-size: 1.05rem;
+  color: #fff;
+}
+.resource-list .resource-card details.studio-drop .cue-list,
+.resource-list .resource-card details.studio-drop .hint-block {
+  color: var(--cream-dim, rgba(255,248,240,0.78));
+}
