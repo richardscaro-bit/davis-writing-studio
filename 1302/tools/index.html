@@ -4,33 +4,65 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tools | ENGL 1302 · Davis Writing Studio</title>
+    <meta name="description" content="Practice writing tools for ENGL 1302.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../_design/section-charcoal.css">
+    <link rel="stylesheet" href="../styles.css">
   </head>
   <body>
 <a class="skip-link" href="#main">Skip to main content</a>
     <header class="topbar" aria-label="Course navigation">
-      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true"><img src="../../_design/assets/mark-crown-real.jpg" alt="" width="40" height="40"></span><span><strong>ENGL 1302</strong><small>Davis Writing Studio</small></span></a>
+      <a class="brand" href="../index.html" aria-label="ENGL 1302 home">
+        <span class="brand-mark" aria-hidden="true"><img src="../../_design/assets/mark-crown-real.jpg" alt="" width="40" height="40"></span>
+        <span>
+          <strong>ENGL 1302</strong>
+          <small>Davis Writing Studio</small>
+        </span>
+      </a>
       <nav class="nav-links" aria-label="Primary sections">
+        <a href="../../index.html">Hub</a>
         <a href="../index.html">Home</a>
         <a href="../resources.html">Resources</a>
-        <a href="../weeks.html">Weeks</a>
-        <a href="index.html" aria-current="page">Tools</a>
+        <a href="../weeks.html">Practice path</a>
+        <a href="../tools/" aria-current="page">Tools</a>
       </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation">
+        <span></span><span></span><span></span>
+      </button>
     </header>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="../../index.html">Hub</a>
+        <a href="../index.html">Home</a>
+        <a href="../resources.html">Resources</a>
+        <a href="../weeks.html">Practice path</a>
+        <a href="../tools/" aria-current="page">Tools</a>
+    </nav>
+
     <main id="main">
-      <section class="section stub-section" aria-labelledby="stubTitle">
-        <p class="eyebrow">Coming soon</p>
-        <h1 id="stubTitle">Tools</h1>
-        <p class="lead">Practice tools for ENGL 1302 will land here later. For a working model, see the ENGL 1301 tools (thesis helper, MLA practice generator).</p>
-        <p class="hero-actions">
-          <a class="button primary" href="../../1301/tools/">Open 1301 tools</a>
-          <a class="button ghost" href="../index.html">ENGL 1302 home</a>
-        </p>
+      <section class="section" aria-labelledby="toolsTitle">
+        <p class="eyebrow">Practice helpers · any project</p>
+        <h1 id="toolsTitle">Writing tools</h1>
+        <p class="lead">Generic helpers for whichever project you are on. These open the shared practice tools (same helpers used in ENGL 1301). No tool assumes Case Study unless you select it.</p>
+        <div class="callout" style="margin-top:1rem;">
+          <strong>Purpose</strong>
+          <p style="margin:0.35rem 0 0;">Practice a thesis, outline, MLA entry, source note, peer note, or keyword set. Project studios live on Home under Projects.</p>
+        </div>
+        <div class="tool-grid" style="margin-top:1.5rem;">
+          <a class="tool-card" href="../../1301/tools/thesis-helper.html"><span class="pill">Ready</span><strong>Thesis generator</strong><small>Draft 2 to 4 theses to edit and carry into the outline.</small></a>
+          <a class="tool-card" href="../../1301/tools/outline-helper.html"><span class="pill">Ready</span><strong>Outline / topic sentences</strong><small>Carry your thesis into an outline.</small></a>
+          <a class="tool-card" href="../../1301/tools/mla-citation.html"><span class="pill">Ready</span><strong>MLA citation generator</strong><small>Practice Works Cited and in-text entries. Verify every entry.</small></a>
+          <a class="tool-card" href="../../1301/tools/source-log.html"><span class="pill">Ready</span><strong>Source log</strong><small>Track sources, notes, and how each helps the thesis.</small></a>
+          <a class="tool-card" href="../../1301/tools/peer-review-checklist.html"><span class="pill">Ready</span><strong>Peer-review checklist</strong><small>Rehearse feedback before you revise.</small></a>
+          <a class="tool-card" href="../../1301/tools/keyword-generator.html"><span class="pill">Ready</span><strong>Keyword generator</strong><small>Topic or thesis to keywords and search query drafts.</small></a>
+          <a class="tool-card" href="../index.html#projects"><span>07</span><strong>Projects on Home</strong><small>Open the studio for the project you are practicing.</small></a>
+        </div>
       </section>
     </main>
-    <footer class="site-footer"><p>Davis Writing Studio · ENGL 1302 Tools · local preview</p></footer>
+
+    <footer class="site-footer">
+      <p>Davis Writing Studio · ENGL 1302 · local preview</p>
+    </footer>
+    <script src="../app.js"></script>
   </body>
 </html>
