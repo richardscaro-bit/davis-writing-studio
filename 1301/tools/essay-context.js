@@ -57,12 +57,12 @@
           "What insight is more than a plot summary?"
         ],
         ideas: [
-          "Courage looked smaller and more ordinary than I expected",
+          "Courage showed up as a small, ordinary action, not a dramatic speech",
           "Belonging required a cost I had not named",
           "The obstacle was partly my own assumption",
           "Change started before the climax, in a quiet choice",
           "Home meant something different after {topic}",
-          "The insight is what I almost refused to notice"
+          "The insight is something I nearly ignored at the time"
         ]
       },
       outlineLenses: [
@@ -145,7 +145,7 @@
           "Even granting the other side’s best point, the evidence still favors a different judgment",
           "Treating {topic} as settled hides who pays the price",
           "Policy convenience is not the same as a fair outcome",
-          "A careful reader should reject the familiar claim once the stakes are clear",
+          "A careful reader should reject the familiar position once the stakes are clear",
           "The debate turns on which definition of harm we accept"
         ]
       },
@@ -221,16 +221,16 @@
           "What does the contrast between these figures show about audience fear or power?",
           "Which shared criterion reveals the sharpest difference?",
           "Why do these two belong in one category, and where does that category break?",
-          "What insight goes past a list of traits about {topic}?",
+          "What insight about {topic} goes past a list of traits?",
           "What does the audience root for, and why does that matter?"
         ],
         ideas: [
-          "One figure turns fear outward (city, nation) while the other turns it inward (body, desire)",
+          "One figure turns fear outward toward a city or nation, while the other turns it inward toward body or desire",
           "Similarity in scale or genre only sharpens a difference in sympathy",
           "The pair shows how culture names a threat more than how monsters look",
           "Power works differently in each figure even when both are “monstrous”",
           "The comparison reveals an audience value, not a costume catalog",
-          "Read side by side, {topic} diverge most clearly in who they protect or punish"
+          "Read side by side, the figures in {topic} diverge most clearly in who they protect or punish"
         ]
       },
       outlineLenses: [
@@ -311,7 +311,7 @@
         ],
         ideas: [
           "Readers often treat this as mystery or myth; the process is more concrete once terms are clear",
-          "The key is explaining how X leads to Y without taking a policy side",
+          "The job is to explain how X leads to Y, without taking a policy side",
           "A common oversimplification hides the mechanism that matters",
           "Understanding {topic} means tracing cause and effect, not arguing which side is right",
           "The unknown becomes teachable when scoped to one how/why question",
@@ -387,13 +387,13 @@
         questions: [
           "How does this place work for a named newcomer audience?",
           "Why does this practice matter to the people who use it?",
-          "What should a newcomer notice first about {topic}?",
+          "What does a newcomer notice first about {topic}?",
           "Which 2–3 working parts must the plate and essay both cover?",
           "What caution or tip is useful without preaching?"
         ],
         ideas: [
           "For newcomers, the place makes sense once daily routines are explained",
-          "The guide’s job is how it works, not whether the place “should” exist",
+          "The guide’s job is how the place works, not whether the place ought to exist",
           "Audience need + concrete parts of the system are the controlling focus",
           "Plate labels and essay subtopics must name the same place and audience",
           "Significance for this audience comes from use and access, not policy debate",
@@ -477,18 +477,18 @@
         ],
         questions: [
           "Does the packet’s success story hold once we ask who the model excludes?",
-          "How does the packet frame the problem, and what does that frame soft-pedal?",
+          "How does the packet frame the problem, and what does that frame leave out or downplay?",
           "Whose interests count as evidence in {topic}?",
           "What assumption does the packet treat as obvious?",
           "Where is the packet persuasive, and where does the evidence thin out?",
-          "What would outside sources need to pressure-test?"
+          "What would outside sources need to challenge or test?"
         ],
         ideas: [
           "The packet frames a clean success while underplaying a stakeholder cost",
           "Evidence that looks settled still leaves a key tension unresolved",
           "The packet assumes readers will accept its definition of success",
           "Limits around {topic} weaken the overall claim even when parts persuade",
-          "Stakeholders at the margins change how the “win” should be read",
+          "Stakeholders at the margins change how the win should be read",
           "Outside research should complicate the packet, not decorate it"
         ]
       },
@@ -571,10 +571,10 @@
           "How do I prove growth with concrete draft evidence?"
         ],
         ideas: [
-          "I moved from announcement theses toward specific, contestable claims",
-          "I used to summarize; now I pressure-test evidence—but I still rush warrants",
+          "I moved from announcement theses toward specific, contestable theses",
+          "I used to summarize; now I test evidence closely, but I still rush warrants",
           "Feedback became useful when I revised structure, not only sentences",
-          "AI stayed support-only once I owned the claim and outline",
+          "AI stayed support-only once I owned the thesis and outline",
           "Growth shows in named drafts, not in vague “I got better”",
           "My next goal is concrete: one habit tied to evidence from this term"
         ]
@@ -660,8 +660,8 @@
       ],
       ideas: [
         "Although the familiar story says X, a closer look shows Y",
-        "The controlling idea is how/why this works—not which side wins",
-        "The claim names a limit, stakeholder cost, or insight worth earning",
+        "The controlling idea is how or why this works, not which side wins",
+        "The thesis names a limit, stakeholder cost, or insight worth earning",
         "Comparison or contrast reveals more than a list of traits",
         "Growth or change needs concrete evidence, not vague summary",
         "Readers need definitions and scope before the main points"

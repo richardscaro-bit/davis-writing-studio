@@ -308,7 +308,7 @@
             <span class="pill">${escapeHtml(label)}</span>
             <div class="claim-option-actions">
               <button type="button" class="button small ghost" data-copy="${i}">Copy</button>
-              <button type="button" class="button small primary" data-use="${i}">Use this claim</button>
+              <button type="button" class="button small primary" data-use="${i}">Use this thesis</button>
             </div>
           </header>
           <p class="claim-option-text">${escapeHtml(opt.text)}</p>
@@ -371,7 +371,7 @@
       saveJSON(KEYS.thesisInputs, inputs);
       saveJSON(KEYS.thesisDrafts, options);
       renderClaimOptions(options);
-      setStatus($("#claimSaveStatus"), "Generated " + options.length + " claim options · saved locally.", true);
+      setStatus($("#claimSaveStatus"), "Generated " + options.length + " thesis options · saved locally.", true);
     });
 
     $("#claimClear")?.addEventListener("click", () => {
@@ -416,7 +416,7 @@
           savedAt: Date.now()
         };
         saveJSON(KEYS.chosenClaim, payload);
-        setStatus($("#claimSaveStatus"), "Claim saved for the outline helper — opening it…", true);
+        setStatus($("#claimSaveStatus"), "Thesis saved for the outline helper — opening it…", true);
         window.location.href = "outline-helper.html";
       }
     });
@@ -821,7 +821,7 @@
 
     const sections = list.map((lens, i) => {
       const cues = (lens.cues || []).slice();
-      if (i === 0 && claim) cues.unshift("Working claim: " + claim);
+      if (i === 0 && claim) cues.unshift("Working thesis: " + claim);
       if (question && i === 0) cues.push("Focusing question: " + question);
       if (sourcesNote && /source/i.test(lens.title || "")) cues.push(sourcesNote);
       if (!cues.length) cues.push("Evidence", "Analysis", "Link to thesis");
@@ -868,7 +868,7 @@
 
   function outlinePlainText(skeleton) {
     if (!skeleton) return "";
-    const lines = ["Working claim: " + skeleton.claim, ""];
+    const lines = ["Working thesis: " + skeleton.claim, ""];
     skeleton.sections.forEach((sec) => {
       lines.push(sec.title);
       lines.push("Topic sentence: " + sec.topic);
@@ -890,7 +890,7 @@
         tension: chosen.tension || "",
         sourcesNote: ""
       });
-      setStatus($("#outlineSaveStatus"), "Loaded claim from thesis generator.", true);
+      setStatus($("#outlineSaveStatus"), "Loaded thesis from thesis generator.", true);
     } else if (saved) {
       writeOutlineInputs(saved);
     } else if (chosen) {
@@ -919,7 +919,7 @@
     $("#outlineGenerate").addEventListener("click", () => {
       const inputs = readOutlineInputs();
       if (!inputs.claim) {
-        setStatus($("#outlineSaveStatus"), "Add a working claim first (or generate one in the thesis tool).", false);
+        setStatus($("#outlineSaveStatus"), "Add a working thesis first (or generate one in the thesis tool).", false);
         return;
       }
       const chosenNow = loadJSON(KEYS.chosenClaim, null) || {};
@@ -1519,7 +1519,7 @@
     const lines = [];
     lines.push("ENGL 1301 · " + essayLabel() + " · Source log (practice)");
     if (state.caseName) lines.push("Subject / focus: " + state.caseName);
-    if (state.claim) lines.push("Working claim: " + state.claim);
+    if (state.claim) lines.push("Working thesis: " + state.claim);
     lines.push("");
     if (!state.sources.length) {
       lines.push("(No sources yet.)");

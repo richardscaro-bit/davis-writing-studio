@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Thesis / claim generator | ENGL 1301 · Davis Writing Studio</title>
+    <title>Thesis generator | ENGL 1301 · Davis Writing Studio</title>
     <meta name="description" content="Practice thesis generator for any ENGL 1301 essay. Pick an essay to adapt templates, or use generic mode.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,13 +34,13 @@
     <main id="main">
       <section class="section" aria-labelledby="thTitle">
         <p class="eyebrow" data-essay-eyebrow>Practice tool · any essay</p>
-        <h1 id="thTitle">Thesis / claim generator</h1>
-        <p class="lead">Choose the essay you are practicing, then fill what you noticed in readings or notes. This tool builds 2 to 4 draft thesis options from structured templates (AI Level 2; no chatbot). Edit in your voice, verify against your sources, then carry a claim into the outline helper.</p>
+        <h1 id="thTitle">Thesis generator</h1>
+        <p class="lead">Choose the essay you are practicing, then fill what you noticed in readings or notes. This tool builds 2 to 4 draft thesis options from structured templates (AI Level 2; no chatbot). Edit in your voice, verify against your sources, then carry a thesis into the outline helper.</p>
 
         <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
 
         <div class="callout ai" style="margin-top:1rem;">
-          <strong>Practice only · you own the claim</strong>
+          <strong>Practice only · you own the thesis</strong>
           <p style="margin:0;" id="essayToolCue">Avoid announcement theses (“This paper will…”). Pick an essay above for matched labels, or stay in generic mode.</p>
         </div>
 
@@ -69,7 +69,7 @@
               <textarea id="criticalQuestion" style="min-height:4rem;" placeholder="What question guides this draft?"></textarea>
             </label>
             <fieldset class="field angle-fieldset">
-              <legend>Preferred angle <span class="hint">Pick one or more — shapes which templates run</span></legend>
+              <legend>Preferred angle <span class="hint">Pick one or more; this shapes which templates run</span></legend>
               <div class="angle-chips" id="angleChips" role="group" aria-label="Claim angles">
                 <button type="button" class="angle-chip" data-angle="framing" aria-pressed="false">Framing</button>
                 <button type="button" class="angle-chip" data-angle="evidence" aria-pressed="false">Evidence</button>
@@ -82,7 +82,7 @@
           <div class="idea-generator" id="ideaGenerator">
             <div class="idea-generator-head">
               <h2 class="eyebrow" style="margin:0;">Topics, questions &amp; ideas</h2>
-              <p class="hint-block" style="margin:0.35rem 0 0;">Pick an essay first if you want matched starters. Suggestions are templates to edit — you own the claim (AI Level 2).</p>
+              <p class="hint-block" style="margin:0.35rem 0 0;">Pick an essay first if you want matched starters. Suggestions are templates to edit; you own the thesis (AI Level 2).</p>
             </div>
             <div class="hero-actions" style="margin-top:0.75rem;">
               <button type="button" class="button primary" id="ideaGenerate">Suggest topics, questions &amp; ideas</button>
@@ -106,12 +106,12 @@
                 <button type="button" class="button primary" id="ideaApply">Fill form from picks</button>
                 <button type="button" class="button ghost" id="ideaToOutline">Build outline from picks</button>
               </div>
-              <p class="hint-block" style="margin-top:0.5rem;">Select at least a topic and an idea (question optional). <strong>Fill form</strong> writes into the fields below. <strong>Build outline</strong> saves a working claim and opens the outline helper with topic sentences.</p>
+              <p class="hint-block" style="margin-top:0.5rem;">Select at least a topic and an idea (question optional). Fill form writes into the fields below. Build outline saves a working thesis and opens the outline helper with topic sentences.</p>
             </div>
           </div>
 
           <div class="hero-actions">
-            <button type="button" class="button primary" id="claimGenerate">Generate claim options</button>
+            <button type="button" class="button primary" id="claimGenerate">Generate thesis options</button>
             <button type="button" class="button ghost" id="claimClear">Clear</button>
             <a class="button ghost" href="outline-helper.html">Outline / topic sentences →</a>
             <a class="button ghost" href="mla-citation.html">MLA citation →</a>
@@ -120,11 +120,11 @@
           <p class="save-status" id="claimSaveStatus" aria-live="polite"></p>
 
           <div id="claimResults" class="claim-results" hidden>
-            <h2 class="eyebrow" style="margin-top:1.25rem;">Draft claim options</h2>
-            <p class="hint-block">Copy one you like, edit it in your own voice, then <strong>Use this claim</strong> to carry it into the outline helper. These are templates — verify against your notes and sources.</p>
+            <h2 class="eyebrow" style="margin-top:1.25rem;">Draft thesis options</h2>
+            <p class="hint-block">Copy one you like, edit it in your own voice, then <strong>Use this thesis</strong> to carry it into the outline helper. These are templates; verify against your notes and sources.</p>
             <div id="claimOptions" class="claim-options" aria-live="polite"></div>
             <div class="callout" id="claimChecklist" style="margin-top:1rem;">
-              <strong>After you pick one — cue check</strong>
+              <strong>After you pick one, cue check</strong>
               <ul class="cue-list">
                 <li>Is it <em>specific</em> to this essay’s job (not a vague opinion)?</li>
                 <li>Could a careful reader push back or ask for evidence?</li>
@@ -135,9 +135,9 @@
         </div>
       </section>
     </main>
-    <footer class="site-footer"><p>Thesis / claim practice · AI Level 2 template generator</p></footer>
+    <footer class="site-footer"><p>Thesis practice · AI Level 2 template generator</p></footer>
     <script src="../app.js"></script>
-    <script src="essay-context.js?v=ideas1"></script>
-    <script src="tools.js?v=ideas1"></script>
+    <script src="essay-context.js?v=poe1"></script>
+    <script src="tools.js?v=poe1"></script>
   </body>
 </html>
