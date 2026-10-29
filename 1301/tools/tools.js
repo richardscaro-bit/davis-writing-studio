@@ -56,15 +56,27 @@
     return { a: raw, b: "the other figure", paired: false };
   }
 
+  function lowerFirst(text) {
+    const s = String(text || "").trim();
+    if (!s) return s;
+    return s.charAt(0).toLowerCase() + s.slice(1);
+  }
+
   function isVagueComparisonBit(text) {
     const t = String(text || "").trim().toLowerCase();
     if (!t) return true;
     if (t.length < 12) return true;
+    if (/same category for similar/.test(t)) return true;
+    if (/belonging to the same category/.test(t)) return true;
+    if (/grouped (together|in one category)/.test(t) && /trait list|shared traits|similar reasons/.test(t)) return true;
+    if (/readers often lump both figures/.test(t)) return true;
+    if (/both figures are often/.test(t)) return true;
     return /^(similarit(y|ies)|differences?|alike|the same|they are (similar|different)|both are monsters|compare|comparison)\b/.test(t)
       || /^(they )?(share|have) (many |some )?(similarit(y|ies)|things in common)\b/.test(t)
       || t === "similarities and differences"
       || t === "similarities & differences";
   }
+
 
   function comparisonDefaults(inputs, essay) {
     const pair = splitPair(inputs.caseName);
@@ -215,8 +227,8 @@
       },
       comparison: {
         criteria: {
-          text: `Although ${caseName} are often grouped together, the same criteria show that ${tension}.`,
-          why: "Keeps one insight; avoids a vague “they share similarities” thesis."
+          text: `Although ${caseName} are often tossed into one monster category, judging them by the same criteria shows that ${lowerFirst(tension)}.`,
+          why: "Keeps one insight; never pastes the shared-category starter into the thesis."
         },
         similarity: {
           text: `${caseName} share a category, but that likeness only sharpens a real split: ${tension}.`,
@@ -227,7 +239,7 @@
           why: "Leads with the contrast that earns the thesis."
         },
         insight: {
-          text: `Comparing ${caseName} reveals ${tension}, not a catalog of shared traits.`,
+          text: `Comparing ${caseName} reveals that ${lowerFirst(tension)}, not a catalog of shared traits.`,
           why: "States the audience or cultural insight the essay will earn."
         }
       },
@@ -423,6 +435,24 @@
     if (!$("#claimGenerate")) return;
     bindAngleChips();
     bindIdeaGenerator();
+
+    // One-time scrub of drafts that glued the old shared-category starter into theses
+    const COPY_VER = "compare-scrub-3";
+    if (localStorage.getItem("dws1301-thesis-copy-ver") !== COPY_VER) {
+      try {
+        const raw = loadJSON(KEYS.thesisInputs, null);
+        if (raw) {
+          const pa = String(raw.packetArgues || "");
+          if (isVagueComparisonBit(pa) || /same category for similar|Both figures are often/i.test(pa)) {
+            raw.packetArgues = "";
+          }
+          if (isVagueComparisonBit(raw.tension)) raw.tension = "";
+          saveJSON(KEYS.thesisInputs, raw);
+        }
+        localStorage.removeItem(KEYS.thesisDrafts);
+      } catch (e) {}
+      localStorage.setItem("dws1301-thesis-copy-ver", COPY_VER);
+    }
 
     const saved = loadJSON(KEYS.thesisInputs, null);
     if (saved) writeThesisInputs(saved);
