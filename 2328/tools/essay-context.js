@@ -7,8 +7,8 @@
     {
       id: "major-essay-1",
       studioHref: "../major-essay-1-studio.html",
-      studioLabel: "Major Essay 1 studio",
-      label: "Major Essay 1",
+      studioLabel: "Essay 1 studio",
+      label: "Essay 1",
       purpose:
         "Write a 1,500 to 2,000 word essay on reality versus illusion in one or two early-arc stories. Engage themes, narrative techniques, and character with a clear thesis; apply relevant theory; situate the text historically or culturally; revise with peer feedback.",
       subjectLabel: "Primary text(s) / focus",
@@ -89,8 +89,8 @@
     {
       id: "major-essay-2",
       studioHref: "../major-essay-2-studio.html",
-      studioLabel: "Major Essay 2 studio",
-      label: "Major Essay 2",
+      studioLabel: "Essay 2 studio",
+      label: "Essay 2",
       purpose:
         "Write a 1,500 to 2,000 word MLA thematic comparison on 20th-century American literature (at least three scholarly sources). Choose a theme (identity, alienation, the American Dream, or confrontation with norms) across works by two authors from the course list (Jackson, Matheson, Bradbury, Plath, O’Connor, or Capote).",
       subjectLabel: "Author pair + theme",

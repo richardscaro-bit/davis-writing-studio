@@ -1,5 +1,5 @@
 /* Shared essay context for ENGL 2311 practice tools.
-   Student picks which major; tools adapt labels/templates. No default major. */
+   Student picks which project; tools adapt labels/templates. No default project. */
 (function (global) {
   const STORAGE_KEY = "dws2311-essay";
 
@@ -486,7 +486,7 @@
       { title: "III. Main point 1", topic: "Develop the first main point with evidence.", cues: ["Topic sentence", "Evidence", "Analysis"] },
       { title: "IV. Main point 2", topic: "Develop the second main point without repeating point 1.", cues: ["Distinct point", "Evidence", "Link to thesis"] },
       { title: "V. Main point 3 / complication", topic: "Add depth, a complication, or a contrasting view.", cues: ["Complication", "Evidence", "Return to thesis"] },
-      { title: "VI. Conclusion", topic: "Restate the thesis in fresh words and name the so-what.", cues: ["Fresh restatement", "So-what", "No new major claim"] }
+      { title: "VI. Conclusion", topic: "Restate the thesis in fresh words and name the so-what.", cues: ["Fresh restatement", "So-what", "No new project claim"] }
     ],
     sourceAim: "Log every source you plan to cite. Match the count your essay prompt requires.",
     sourcePacketLabel: "Course packet / handout",
@@ -557,9 +557,9 @@
     host.classList.add("essay-picker");
     host.innerHTML = `
       <label class="field essay-picker-field" for="dwsEssaySelect">
-        <span class="essay-picker-label">Which major are you practicing?</span>
+        <span class="essay-picker-label">Which project are you practicing?</span>
         <select id="dwsEssaySelect" autocomplete="off">
-          <option value="">Generic (any major)</option>
+          <option value="">Generic (any project)</option>
           ${ESSAYS.map(
             (e) =>
               `<option value="${e.id}"${e.id === activeId ? " selected" : ""}>${escapeHtml(e.label)}</option>`
@@ -685,7 +685,7 @@
     if (eyebrow) {
       eyebrow.textContent = essay.id
         ? `Practice tool · ${essay.label}`
-        : "Practice tool · any major";
+        : "Practice tool · any project";
     }
 
     const critBox = document.getElementById("comparisonCriteriaBox");
