@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Outline / topic sentences | ENGL 1302 · Davis Writing Studio</title>
+    <meta name="description" content="Practice outline helper for any ENGL 1302 essay. Pick an essay to adapt section lenses, or use generic mode.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+<a class="skip-link" href="#main">Skip to main content</a>
+    <header class="topbar" aria-label="Course navigation">
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true"><img src="../../_design/assets/mark-crown-real.jpg" alt="" width="40" height="40"></span><span><strong>ENGL 1302</strong><small>Davis Writing Studio</small></span></a>
+      <nav class="nav-links" aria-label="Primary sections">
+        <a href="../../index.html">Hub</a>
+        <a href="../index.html">Home</a>
+        <a href="../resources.html">Resources</a>
+        <a href="../weeks.html">Practice path</a>
+        <a href="index.html" aria-current="page">Tools</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </header>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="../../index.html">Hub</a>
+      <a href="../index.html">Home</a>
+      <a href="../resources.html">Resources</a>
+      <a href="../weeks.html">Practice path</a>
+      <a href="index.html" aria-current="page">Tools</a>
+    </nav>
+
+    <main id="main">
+      <section class="section" aria-labelledby="olTitle">
+        <p class="eyebrow" data-essay-eyebrow>Practice tool · any essay</p>
+        <h1 id="olTitle">Outline / topic sentences</h1>
+        <p class="lead">Paste or auto-carry the thesis you chose. For Monster Comparison, each body section should use one shared criterion on both figures. Choose an essay to match section lenses, or stay in generic mode.</p>
+
+        <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
+
+        <div class="callout ai">
+          <strong>Practice outline · edit in your voice</strong>
+          <p style="margin:0;" id="essayToolCue">Generate → revise topic sentences → copy into your essay room or your own doc.</p>
+        </div>
+
+        <div class="tool-panel" style="margin-top:1.25rem;">
+          <div class="field-grid">
+            <label class="field">Working claim <span class="hint">Required. Auto-fills if you clicked “Use this claim” on the thesis generator.</span>
+              <textarea id="outlineClaim" style="min-height:5.5rem;" placeholder="Paste your working thesis or controlling idea…"></textarea>
+            </label>
+            <label class="field" data-essay-field="subjectLabel" data-essay-placeholder="subjectPlaceholder">
+              <span data-essay-title>Subject / focus</span> <span class="hint">Optional if already in the claim</span>
+              <input type="text" id="outlineCase" placeholder="Your subject">
+            </label>
+            <label class="field" data-essay-field="tensionLabel" data-essay-placeholder="tensionPlaceholder">
+              <span data-essay-title>Tension / insight to keep visible</span> <span class="hint">Optional — sharpens topic sentences</span>
+              <textarea id="outlineTension" style="min-height:4rem;" placeholder="Key tension or insight…"></textarea>
+            </label>
+            <label class="field">Source reminders <span class="hint">Optional notes for sources you still need</span>
+              <textarea id="outlineSourcesNote" style="min-height:3.5rem;" placeholder="e.g. library article on…; course reading on…"></textarea>
+            </label>
+          </div>
+
+          <div class="hero-actions">
+            <button type="button" class="button primary" id="outlineGenerate">Generate outline + topic sentences</button>
+            <button type="button" class="button ghost" id="outlineClear">Clear</button>
+            <a class="button ghost" href="thesis-helper.html">← Thesis generator</a>
+            <a class="button ghost" href="keyword-generator.html">Keyword generator / research →</a>
+            <a class="button ghost" href="mla-citation.html">MLA citation →</a>
+            <a class="button ghost" href="../index.html#essays">Essays on Home</a>
+          </div>
+          <p class="save-status" id="outlineSaveStatus" aria-live="polite"></p>
+
+          <div id="outlineResults" class="outline-results" hidden>
+            <div class="outline-toolbar">
+              <h2 class="eyebrow" style="margin:0;">Practice outline skeleton</h2>
+              <button type="button" class="button small ghost" id="outlineCopyAll">Copy all</button>
+            </div>
+            <div id="outlineBody" class="outline-body" aria-live="polite"></div>
+            <p class="hint-block" style="margin-top:1rem;" id="outlineHint">Topic sentences appear on body sections only. Intro and conclusion use opening and closing plans. For research next steps for your pair, open Keyword generator.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Outline / topic-sentence practice · AI Level 2 template generator</p></footer>
+    <script src="../app.js"></script>
+    <script src="essay-context.js?v=compare10"></script>
+    <script src="tools.js?v=compare10"></script>
+  </body>
+</html>

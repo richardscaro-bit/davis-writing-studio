@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Peer-review checklist | ENGL 1302 · Davis Writing Studio</title>
+    <meta name="description" content="Practice peer-review checklist for any ENGL 1302 essay. Pick an essay to adapt checklist items.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+<a class="skip-link" href="#main">Skip to main content</a>
+    <header class="topbar" aria-label="Course navigation">
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true"><img src="../../_design/assets/mark-crown-real.jpg" alt="" width="40" height="40"></span><span><strong>ENGL 1302</strong><small>Davis Writing Studio</small></span></a>
+      <nav class="nav-links" aria-label="Primary sections">
+        <a href="../../index.html">Hub</a>
+        <a href="../index.html">Home</a>
+        <a href="../resources.html">Resources</a>
+        <a href="../weeks.html">Practice path</a>
+        <a href="index.html" aria-current="page">Tools</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </header>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="../../index.html">Hub</a>
+      <a href="../index.html">Home</a>
+      <a href="../resources.html">Resources</a>
+      <a href="../weeks.html">Practice path</a>
+      <a href="index.html" aria-current="page">Tools</a>
+    </nav>
+
+    <main id="main">
+      <section class="section" aria-labelledby="prTitle">
+        <p class="eyebrow" data-essay-eyebrow>Practice tool · peer rehearsal · any essay</p>
+        <h1 id="prTitle">Peer-review checklist</h1>
+        <p class="lead">Rehearse feedback on a draft for the essay you are practicing. Choose an essay to load matched checklist items, or use the generic list. Check what is working, leave a short note, then copy or print a summary for your partner.</p>
+
+        <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
+
+        <div class="callout ai" style="margin-top:1rem;">
+          <strong>Be specific · be kind · be honest</strong>
+          <p style="margin:0;" id="essayToolCue">Point to a sentence or section when you can. Name strengths first. Ask where AI helped and whether the writer still owns the ideas and evidence.</p>
+        </div>
+
+        <div class="tool-panel" style="margin-top:1.25rem;">
+          <div class="peer-meta-grid">
+            <label class="field">Your name (reviewer) <span class="hint">Optional</span>
+              <input type="text" id="prReviewer" placeholder="Jordan" autocomplete="off">
+            </label>
+            <label class="field">Writer / draft name <span class="hint">Optional</span>
+              <input type="text" id="prWriter" placeholder="Alex — draft title" autocomplete="off">
+            </label>
+            <label class="field span-2" style="grid-column:1/-1;">Working claim (as you read it) <span class="hint">Quote or paraphrase the thesis you see</span>
+              <textarea id="prClaim" style="min-height:3.5rem;" placeholder="The draft’s main idea seems to be…"></textarea>
+            </label>
+          </div>
+
+          <div class="outline-toolbar" style="margin-top:0.75rem;">
+            <h2 class="eyebrow" style="margin:0;">Checklist</h2>
+            <p class="source-count-pill" id="prProgress" aria-live="polite">0 checked</p>
+          </div>
+
+          <ul class="peer-check-list" id="prList" aria-label="Peer-review items"></ul>
+
+          <label class="field" style="margin-top:1rem;">Overall note to the writer <span class="hint">2–4 sentences: one strength + one priority revision</span>
+            <textarea id="prOverall" style="min-height:5rem;" placeholder="One strength I noticed… One priority revision…"></textarea>
+          </label>
+
+          <div class="hero-actions">
+            <button type="button" class="button primary" id="prCopy">Copy summary</button>
+            <button type="button" class="button ghost" id="prPrint">Print / save PDF</button>
+            <button type="button" class="button ghost" id="prClear">Clear</button>
+            <a class="button ghost" href="source-log.html">← Source log</a>
+            <a class="button ghost" href="thesis-helper.html">Thesis / claim →</a>
+            <a class="button ghost" href="../index.html#essays">Essays on Home</a>
+          </div>
+          <p class="save-status" id="prSaveStatus" aria-live="polite"></p>
+
+          <div id="prSummaryWrap" hidden>
+            <div class="outline-toolbar" style="margin-top:1rem;">
+              <h2 class="eyebrow" style="margin:0;">Copy / print summary</h2>
+            </div>
+            <pre class="peer-summary" id="prSummary" aria-live="polite"></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Peer-review rehearsal · AI Level 2</p></footer>
+    <script src="../app.js"></script>
+    <script src="essay-context.js?v=topicfix1"></script>
+    <script src="tools.js?v=topicfix1"></script>
+  </body>
+</html>
