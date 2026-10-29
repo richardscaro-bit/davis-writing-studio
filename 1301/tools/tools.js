@@ -45,6 +45,50 @@
     }
   }
 
+
+  function splitPair(name) {
+    const raw = String(name || "").trim();
+    if (!raw) return { a: "Figure A", b: "Figure B", paired: false };
+    const parts = raw.split(/\s+(?:and|vs\.?|versus|\/|&)\s+/i);
+    if (parts.length >= 2) {
+      return { a: parts[0].trim(), b: parts.slice(1).join(" and ").trim(), paired: true };
+    }
+    return { a: raw, b: "the other figure", paired: false };
+  }
+
+  function isVagueComparisonBit(text) {
+    const t = String(text || "").trim().toLowerCase();
+    if (!t) return true;
+    if (t.length < 12) return true;
+    return /^(similarit(y|ies)|differences?|alike|the same|they are (similar|different)|both are monsters|compare|comparison)\b/.test(t)
+      || /^(they )?(share|have) (many |some )?(similarit(y|ies)|things in common)\b/.test(t)
+      || t === "similarities and differences"
+      || t === "similarities & differences";
+  }
+
+  function comparisonDefaults(inputs, essay) {
+    const pair = splitPair(inputs.caseName);
+    const folder = (inputs.topicFolder || "").trim();
+    const category = folder
+      || (essay && essay.id === "monster-comparison" ? "literary or screen monsters in one meaningful category" : "the same meaningful category");
+    let argues = (inputs.packetArgues || "").trim();
+    let tension = (inputs.tension || "").trim();
+    if (isVagueComparisonBit(argues)) {
+      argues = `both belong to ${category} and are often reduced to a trait list`;
+    }
+    if (isVagueComparisonBit(tension)) {
+      tension = `${pair.a} and ${pair.b} diverge in who the audience is asked to blame or pity, and in what each figure desires or threatens`;
+    }
+    const criteria = (essay && Array.isArray(essay.comparisonCriteria) && essay.comparisonCriteria.length)
+      ? essay.comparisonCriteria.slice(0, 3)
+      : [
+          "origin / how each figure becomes “monstrous”",
+          "what each figure desires or threatens",
+          "who the audience fears, blames, or pities"
+        ];
+    return { pair, category, argues, tension, criteria };
+  }
+
   function trimSnippet(text, max) {
     const t = (text || "").replace(/\s+/g, " ").trim();
     if (!t) return "";
@@ -103,13 +147,33 @@
   function buildClaimOptions(inputs) {
     const essay = activeEssay();
     const kind = (essay && essay.claimKind) || "generic";
-    const caseName = inputs.caseName;
-    const argues = trimSnippet(inputs.packetArgues, 110);
-    const tension = trimSnippet(inputs.tension, 110);
+    let caseName = inputs.caseName;
+    let argues = trimSnippet(inputs.packetArgues, 110);
+    let tension = trimSnippet(inputs.tension, 110);
     const question = trimSnippet(inputs.question, 100);
-    const angles = inputs.angles.length
-      ? inputs.angles
-      : (essay && essay.defaultAngles) || ["framing", "evidence", "limits"];
+    let pairLabel = caseName;
+    let criteriaList = null;
+    if (kind === "comparison") {
+      const d = comparisonDefaults(inputs, essay);
+      caseName = d.pair.paired ? `${d.pair.a} and ${d.pair.b}` : caseName;
+      pairLabel = caseName;
+      argues = trimSnippet(d.argues, 120);
+      tension = trimSnippet(d.tension, 140);
+      criteriaList = d.criteria;
+    }
+    let angles = inputs.angles.length
+      ? inputs.angles.slice()
+      : ((essay && essay.defaultAngles) || ["framing", "evidence", "limits"]).slice();
+    if (kind === "comparison") {
+      // Prefer insight-bearing angles; demote bare "similarity" lists
+      angles = angles.filter((a) => a !== "similarity");
+      if (!angles.length) angles = ["criteria", "difference", "insight"];
+      if (angles.length < 3) {
+        ["criteria", "difference", "insight"].forEach((a) => {
+          if (!angles.includes(a)) angles.push(a);
+        });
+      }
+    }
 
     const catalogs = {
       "case-study": {
@@ -136,20 +200,20 @@
       },
       comparison: {
         criteria: {
-          text: `Although ${caseName} share ${argues}, comparing them through consistent criteria shows that ${tension}.`,
-          why: "Names shared ground and the insight beyond a trait list."
+          text: `Although ${caseName} are often grouped together, the same criteria show that ${tension}.`,
+          why: "Keeps one insight; avoids a vague “they share similarities” thesis."
         },
         similarity: {
-          text: `${caseName} look alike in ${argues}, but that similarity only sharpens how ${tension}.`,
-          why: "Uses likeness to set up a meaningful difference."
+          text: `${caseName} share a category, but that likeness only sharpens a real split: ${tension}.`,
+          why: "Uses likeness as a setup, not as the thesis."
         },
         difference: {
-          text: `Read side by side, ${caseName} diverge most clearly in ${tension}, even though both belong to ${argues}.`,
+          text: `Read side by side, ${caseName} diverge most clearly in this way: ${tension}.`,
           why: "Leads with the contrast that earns the thesis."
         },
         insight: {
-          text: `Comparing ${caseName} reveals ${tension} rather than a simple list of traits about ${argues}.`,
-          why: "States the cultural or audience insight the essay will earn."
+          text: `Comparing ${caseName} reveals ${tension} — not a catalog of shared traits.`,
+          why: "States the audience or cultural insight the essay will earn."
         }
       },
       exposition: {
@@ -442,7 +506,7 @@
       case "argument":
         return "Many people argue that the familiar position on this issue should stand.";
       case "comparison":
-        return "Both figures are often treated as belonging to the same category for similar reasons.";
+        return "Both figures are often grouped in one category, but a trait list is not an insight.";
       case "exposition":
         return "Readers often assume a simple story about this topic, but the process is less settled.";
       case "narrative":
@@ -763,15 +827,33 @@
       }
 
       if (kind === "comparison") {
-        if (role === "intro") return `Comparing ${focus} yields one insight: ${claim}`;
-        if (role === "conclusion") return `Beyond a trait list, the comparison of ${focus} shows that ${tension}.`;
-        if (/criterion 1/i.test(lens.title || "") || i === 1) {
-          return `Under the first shared criterion, ${focus} look alike in one way but already hint that ${tension}.`;
+        const d = comparisonDefaults(
+          { caseName, tension: inputs.tension, packetArgues: inputs.packetArgues || "", topicFolder },
+          essay
+        );
+        const { a, b } = d.pair;
+        const crit = d.criteria;
+        const insight = trimSnippet(d.tension, 120);
+        if (role === "intro") {
+          return `Although ${a} and ${b} invite a trait-by-trait list, one insight should control the essay: ${insight}.`;
         }
-        if (/criterion 2/i.test(lens.title || "") || i === 2) {
-          return `Under a second parallel criterion, the difference in ${focus} sharpens around ${tension}.`;
+        if (role === "conclusion") {
+          return `Beyond “they are similar” or “they are different,” comparing ${a} and ${b} shows that ${insight}.`;
         }
-        return `Applied evenly to both figures, this criterion for ${focus} advances the insight that ${tension}.`;
+        // Named criteria — never “similarities”
+        let cIdx = 0;
+        if (/criterion 2/i.test(lens.title || "") || i === 2) cIdx = 1;
+        else if (/criterion 3/i.test(lens.title || "") || i === 3) cIdx = 2;
+        else if (/criterion 1/i.test(lens.title || "") || i === 1) cIdx = 0;
+        else cIdx = Math.min(Math.max(i - 1, 0), crit.length - 1);
+        const criterion = crit[cIdx] || crit[0];
+        if (cIdx === 0) {
+          return `On ${criterion}, ${a} and ${b} should be judged by the same standard — and the contrast already points toward ${insight}.`;
+        }
+        if (cIdx === 1) {
+          return `On ${criterion}, ${a} and ${b} diverge in ways that deepen the insight that ${insight}.`;
+        }
+        return `On ${criterion}, comparing ${a} and ${b} in parallel locks in the insight that ${insight}.`;
       }
 
       if (kind === "narrative") {

@@ -192,7 +192,7 @@
       ],
       presentsLabel: "Shared ground / category",
       presentsHint: "Required. Why these two belong in one comparison.",
-      presentsPlaceholder: "Both are city-scale screen monsters used to…",
+      presentsPlaceholder: "Both are literary figures of corrupted creation or desire used to…",
       tensionLabel: "Key difference or insight",
       tensionHint: "Required. What the split reveals.",
       tensionPlaceholder: "One figures fear of… while the other…",
@@ -206,16 +206,21 @@
       ],
       defaultAngles: ["criteria", "difference", "insight"],
       claimKind: "comparison",
+      comparisonCriteria: [
+        "origin / how each figure becomes “monstrous”",
+        "what each figure desires or threatens",
+        "who the audience fears, blames, or pities"
+      ],
       ideaSeeds: {
         topics: [
+          "Frankenstein’s creature and Dorian Gray",
           "Godzilla and King Kong",
           "Dracula and a modern vampire figure",
           "Two werewolf or shapeshifter stories",
           "Two zombie or undead portrayals",
           "A folk monster and a screen cryptid",
           "Two literary monsters from the same tradition",
-          "A classic film monster and its remake",
-          "Two kaiju used to figure city-scale fear"
+          "A classic film monster and its remake"
         ],
         questions: [
           "What does the contrast between these figures show about audience fear or power?",
@@ -225,20 +230,20 @@
           "What does the audience root for, and why does that matter?"
         ],
         ideas: [
-          "One figure turns fear outward toward a city or nation, while the other turns it inward toward body or desire",
-          "Similarity in scale or genre only sharpens a difference in sympathy",
+          "One figure is rejected after creation and seeks recognition; the other hides moral decay behind a polished public face",
+          "Both look “monstrous,” but they diverge in who the audience is asked to blame or pity",
+          "One turns fear outward toward a city or nation; the other turns it inward toward body or desire",
+          "Shared category only sharpens a difference in sympathy and power",
           "The pair shows how culture names a threat more than how monsters look",
-          "Power works differently in each figure even when both are “monstrous”",
-          "The comparison reveals an audience value, not a costume catalog",
           "Read side by side, the figures in {topic} diverge most clearly in who they protect or punish"
         ]
       },
       outlineLenses: [
-        { title: "I. Introduction", topic: "Name both figures, the shared category, and the insight thesis.", cues: ["Pair + category", "Thesis insight", "Preview criteria"] },
-        { title: "II. Criterion 1", topic: "Apply the first criterion to both figures in parallel.", cues: ["Same lens for A and B", "Evidence for each", "Mini-insight"] },
-        { title: "III. Criterion 2", topic: "Apply the second criterion the same way to both.", cues: ["Parallel structure", "Evidence", "How this deepens the thesis"] },
-        { title: "IV. Criterion 3", topic: "Apply a third criterion or deepen the sharpest contrast.", cues: ["Keep criteria consistent", "Avoid laundry lists", "Point toward the insight"] },
-        { title: "V. Conclusion", topic: "State what the comparison reveals beyond “they are different.”", cues: ["Insight, not summary only", "Audience or culture so-what", "No new monsters"] }
+        { title: "I. Introduction", topic: "Name both figures, the shared category, and one insight thesis (not a similarity list).", cues: ["Pair + category", "One insight", "Preview 3 criteria"] },
+        { title: "II. Criterion 1: origin / becoming monstrous", topic: "Compare how each figure becomes “monstrous,” using the same lens for both.", cues: ["Same criterion for A and B", "Concrete evidence for each", "Mini-insight toward the thesis"] },
+        { title: "III. Criterion 2: desire or threat", topic: "Compare what each figure desires or threatens, still in parallel.", cues: ["Parallel structure", "Evidence", "How this deepens the insight"] },
+        { title: "IV. Criterion 3: blame, fear, or pity", topic: "Compare who the audience is asked to fear, blame, or pity.", cues: ["Keep the criterion consistent", "Avoid trait laundry lists", "Point toward the insight"] },
+        { title: "V. Conclusion", topic: "State what the comparison reveals beyond “they are similar” or “they are different.”", cues: ["Insight, not summary only", "Audience or culture so-what", "No new monsters"] }
       ],
       sourceAim: "Log any course samples or outside sources you cite. Many drafts rely mainly on the two figures plus class materials.",
       sourcePacketLabel: "Course sample / handout",
