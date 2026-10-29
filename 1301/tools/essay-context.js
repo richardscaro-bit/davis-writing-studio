@@ -453,7 +453,7 @@
       studioLabel: "Case Study studio",
       label: "Case Study Critical Analysis",
       purpose:
-        "Write a critical analysis with one clear claim, evidence from a Source Packet / Case Brief, and 3 to 4 credible outside sources. Aim for about 1,000 to 1,500 words MLA (AI Level 2: support, not composition).",
+        "One clear thesis plus evidence from your Source Packet / Case Brief plus 3 to 4 credible outside sources beyond the packet. Aim for a 1,000 to 1,500 word MLA critical analysis (AI Level 2: support, not composition).",
       subjectLabel: "Case / packet name",
       subjectHint: "Required. e.g. BarkBox Subscription Box",
       subjectPlaceholder: "BarkBox",

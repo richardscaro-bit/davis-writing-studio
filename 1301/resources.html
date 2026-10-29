@@ -48,13 +48,47 @@
           <a class="button ghost" href="index.html">1301 Home</a>
         </p>
 
-        <div class="callout" style="margin-top:1.25rem;">
-          <strong>Purpose</strong>
-          <p style="margin:0.35rem 0 0;">One clear thesis plus evidence from your Source Packet / Case Brief plus 3 to 4 credible outside sources beyond the packet. Aim for a 1,000 to 1,500 word MLA critical analysis (AI Level 2: support, not composition).</p>
-        </div>
+        <div id="essayPicker" class="essay-picker" aria-label="Essay selector" style="margin-top:1.25rem;"></div>
 
         <div class="resource-list" style="margin-top:1.5rem;">
-          <article class="resource-card" id="packet">
+          <article class="resource-card" id="packet-none" data-essay-panel="none">
+            <h3>Required readings (pick an essay)</h3>
+            <p>Required reading cards follow the essay you select above. They do not default to Case Study. Pick your essay to see packet pointers, studio samples, or class reading guidance for that assignment.</p>
+            <details class="studio-drop">
+              <summary>What you will see after you pick</summary>
+              <ul class="cue-list">
+                <li><strong>Case Study</strong> · Source Packet, Case Brief, topic folders, and essay handouts</li>
+                <li><strong>Monster Comparison</strong> · sample essays and guides on the comparison studios (no Case Study packet)</li>
+                <li><strong>Other essays</strong> · that essay’s studio materials and class readings</li>
+              </ul>
+            </details>
+            <div class="resource-links">
+              <a class="button small primary" href="#essayPicker">Choose an essay above</a>
+              <a class="button small ghost" href="index.html#essays">Essays on Home</a>
+              <a class="button small ghost" href="weeks.html">Practice path</a>
+            </div>
+          </article>
+
+          <article class="resource-card" id="packet-other" data-essay-panel="other" hidden>
+            <h3 id="otherReadingsTitle">Required readings</h3>
+            <p id="otherReadingsLead">Use this essay’s studio page (when one exists) and any class readings your instructor names. This path is not the Case Study Source Packet.</p>
+            <details class="studio-drop">
+              <summary>How to use readings for this essay</summary>
+              <ol class="cue-list">
+                <li>Read the Purpose in the selector above.</li>
+                <li>Open this essay’s studio or Tools links for models and practice helpers.</li>
+                <li>Use library, Scholar, and keyword tools below when the essay needs outside sources.</li>
+                <li>Keep AI at Level 2 (support, not composition).</li>
+              </ol>
+            </details>
+            <div class="resource-links" id="otherReadingsLinks">
+              <a class="button small primary" id="otherStudioBtn" href="index.html#essays">Open essay room</a>
+              <a class="button small ghost" href="tools/">Practice tools</a>
+              <a class="button small ghost" href="weeks.html">Practice path</a>
+            </div>
+          </article>
+
+          <article class="resource-card" id="packet" data-essay-panel="case-study" hidden>
             <h3>Packet readings (required essay reading)</h3>
             <p>After you choose a topic, read that topic’s <strong>Source Packet</strong> and <strong>Case Brief</strong> (plus Case Options). Those materials are the primary readings for this essay. In class you will see a BarkBox or Crumbl model demo; Whole-Class Examples are practice models only.</p>
             <details class="studio-drop">
@@ -95,8 +129,7 @@
               <a class="button small ghost" href="#handouts">Essay handouts on this page</a>
             </div>
           </article>
-
-          <article class="resource-card" id="handouts">
+          <article class="resource-card" id="handouts" data-essay-panel="case-study" hidden>
             <h3>Essay handouts</h3>
             <p>Topic options, student prompts, and the research-folder map for the Case Study essay. Open a panel below to read on this page; then do the real reading in your packet materials.</p>
             <details class="studio-drop">
@@ -177,6 +210,63 @@
               </div>
             </details>
           </article>
+          <article class="resource-card" id="packet-monster" data-essay-panel="monster-comparison" hidden>
+            <h3>Required readings (Monster Comparison)</h3>
+            <p>Your primary materials are the sample comparison essays and comparison guides on the Monster Comparison studio page. Open that studio and use the panels there. This essay does not use a Case Study Source Packet or Case Brief.</p>
+            <details class="studio-drop">
+              <summary>How to use Monster Comparison materials</summary>
+              <ol class="cue-list">
+                <li>Open <strong>Monster Comparison studio</strong> (essay-first room).</li>
+                <li>Read the sample comparisons for structure, shared ground, parallel criteria, and one insight beyond a list. Do not copy sample prose.</li>
+                <li>Use the comparison moves on that page: shared category, the same criteria on both figures, and a clear insight.</li>
+                <li>If your section uses character cards, open <strong>Monster Cards Comparison studio</strong> for card guidance and outline models. Useful even when your draft stays essay-first.</li>
+                <li>Keep AI at Level 2 (support, not composition).</li>
+              </ol>
+            </details>
+            <details class="studio-drop">
+              <summary>What counts as primary evidence</summary>
+              <p class="hint-block">The two figures you compare, plus class samples and any sources you cite. Character cards (when your section uses them) also count as primary evidence for the reflection path.</p>
+              <ul class="cue-list">
+                <li><strong>Essay-first path</strong> · samples and criteria on Monster Comparison studio</li>
+                <li><strong>Cards path (optional)</strong> · two character cards, then a reflection that uses the cards</li>
+                <li><strong>Not used here</strong> · Case Study Source Packets and Case Briefs</li>
+              </ul>
+            </details>
+            <div class="resource-links">
+              <a class="button small primary" href="spring-monster-comparison-studio.html">Monster Comparison studio</a>
+              <a class="button small ghost" href="comparison-studio.html">Monster Cards studio</a>
+              <a class="button small ghost" href="tools/">Practice tools</a>
+              <a class="button small ghost" href="#handouts-monster">Guides on this page</a>
+            </div>
+          </article>
+
+          <article class="resource-card" id="handouts-monster" data-essay-panel="monster-comparison" hidden>
+            <h3>Guides and sample essays</h3>
+            <p>Practice guidance, outline models, and sample comparisons live on the studio pages. Open a panel there when you need it; keep AI at Level 2 (support, not composition).</p>
+            <details class="studio-drop">
+              <summary>Where the materials live</summary>
+              <p class="hint-block">Prefer the on-page studio panels. Sample essay bodies stay on the studio pages so you read them in context.</p>
+              <ul class="cue-list">
+                <li><strong>Monster Comparison studio</strong> · sample comparisons A / B / C and comparison moves</li>
+                <li><strong>Monster Cards studio</strong> · practice guidance for two cards + reflection, block and point-by-point outline models, and the same sample pair</li>
+              </ul>
+            </details>
+            <details class="studio-drop">
+              <summary>Quick checklist before you draft</summary>
+              <ol class="cue-list">
+                <li>Name two figures that share meaningful ground.</li>
+                <li>List 3 to 4 criteria you can apply to both.</li>
+                <li>Draft one insight thesis (not a trait list).</li>
+                <li>Skim one sample for structure only, then close it and write in your own words.</li>
+              </ol>
+            </details>
+            <div class="resource-links">
+              <a class="button small primary" href="spring-monster-comparison-studio.html#samples">Samples on Monster Comparison</a>
+              <a class="button small ghost" href="comparison-studio.html#handouts">Guides on Monster Cards</a>
+              <a class="button small ghost" href="tools/thesis-helper.html">Thesis helper</a>
+              <a class="button small ghost" href="tools/outline-helper.html">Outline helper</a>
+            </div>
+          </article>
 
           <article class="resource-card" id="library-search">
             <h3>Library search tips</h3>
@@ -211,14 +301,14 @@
           </article>
 
           <article class="resource-card" id="libguide">
-            <h3>LibGuide · Case Study research</h3>
-            <p>LibGuides are librarian-built maps for a class or assignment: databases, search tips, citation help. Browse SAC Academic Guides by subject or instructor. If a Davis Case Study guide is published later, swap the placeholder link below.</p>
+            <h3 id="libguideTitle">LibGuide · research maps</h3>
+            <p id="libguideLead">LibGuides are librarian-built maps for a class or assignment: databases, search tips, citation help. Browse SAC Academic Guides by subject or instructor.</p>
             <div class="resource-links">
               <a class="button small primary" href="https://alamo.libguides.com/sac/academic-guides" target="_blank" rel="noopener">SAC Academic Guides</a>
-              <a class="button small ghost" href="https://alamo.libguides.com/sac/engl1301_davis_casestudy" title="Placeholder — replace when a Davis Case Study LibGuide is published">Davis · Case Study LibGuide (placeholder)</a>
+              <a class="button small ghost" id="libguideDavisLink" href="https://alamo.libguides.com/sac/engl1301_davis_casestudy" title="Placeholder until a Davis Case Study LibGuide is published" hidden>Davis · Case Study LibGuide (placeholder)</a>
               <a class="button small ghost" href="https://sac.libanswers.com/" target="_blank" rel="noopener">Ask a SAC librarian</a>
             </div>
-            <p class="hint-block" style="margin-top:0.65rem;">Placeholder URL pattern for Caroline to edit when live: <code>https://alamo.libguides.com/sac/engl1301_davis_casestudy</code></p>
+            <p class="hint-block" id="libguideHint" style="margin-top:0.65rem;" hidden>Placeholder URL pattern for Caroline to edit when live: <code>https://alamo.libguides.com/sac/engl1301_davis_casestudy</code></p>
           </article>
 
           <article class="resource-card" id="keywords">
@@ -235,7 +325,7 @@
             <p>Helpers for this essay. Draft a practice thesis, draft topic sentences, build keywords, log sources, practice MLA, and rehearse peer feedback. Each tool page explains how to use it.</p>
             <div class="resource-links">
               <a class="button small primary" href="tools/">All tools</a>
-              <a class="button small ghost" href="tools/thesis-helper.html">Thesis / claim</a>
+              <a class="button small ghost" href="tools/thesis-helper.html">Thesis helper</a>
               <a class="button small ghost" href="tools/outline-helper.html">Outline / topic sentences</a>
               <a class="button small ghost" href="tools/keyword-generator.html">Keyword generator</a>
               <a class="button small ghost" href="tools/source-log.html">Source log</a>
@@ -301,5 +391,80 @@
 
     <footer class="site-footer"><p>Davis Writing Studio · ENGL 1301 Resources</p></footer>
     <script src="app.js"></script>
+    <script src="tools/essay-context.js?v=res1"></script>
+    <script>
+      (function () {
+        const ctx = window.DWSEssayContext;
+        if (!ctx) return;
+
+        function setPanels(mode) {
+          document.querySelectorAll("[data-essay-panel]").forEach((el) => {
+            const panel = el.getAttribute("data-essay-panel");
+            const show = panel === mode;
+            el.hidden = !show;
+          });
+        }
+
+        function refreshResources() {
+          const id = ctx.getSelectedId();
+          const essay = ctx.getActive();
+          const purposeText = document.getElementById("dwsEssayPurposeText");
+
+          if (!id) {
+            setPanels("none");
+            if (purposeText) {
+              purposeText.textContent =
+                "Pick the essay you are practicing. Purpose and required-reading cards below follow that essay. Shared research help (library, Scholar, keywords, MLA, AI) stays useful for every essay.";
+            }
+          } else if (id === "case-study") {
+            setPanels("case-study");
+          } else if (id === "monster-comparison") {
+            setPanels("monster-comparison");
+          } else {
+            setPanels("other");
+            const title = document.getElementById("otherReadingsTitle");
+            const lead = document.getElementById("otherReadingsLead");
+            const studioBtn = document.getElementById("otherStudioBtn");
+            if (title) title.textContent = "Required readings (" + essay.label + ")";
+            if (lead) {
+              lead.textContent =
+                "Use materials for " +
+                essay.label +
+                " on its studio page (when one exists) and any class readings your instructor names. This path is not the Case Study Source Packet.";
+            }
+            if (studioBtn) {
+              studioBtn.href = ctx.getStudioHref(essay);
+              studioBtn.textContent = "Open " + ctx.getStudioLabel(essay);
+            }
+          }
+
+          const libTitle = document.getElementById("libguideTitle");
+          const libLead = document.getElementById("libguideLead");
+          const libDavis = document.getElementById("libguideDavisLink");
+          const libHint = document.getElementById("libguideHint");
+          if (id === "case-study") {
+            if (libTitle) libTitle.textContent = "LibGuide · Case Study research";
+            if (libLead) {
+              libLead.textContent =
+                "LibGuides are librarian-built maps for a class or assignment: databases, search tips, citation help. Browse SAC Academic Guides by subject or instructor. If a Davis Case Study guide is published later, swap the placeholder link below.";
+            }
+            if (libDavis) libDavis.hidden = false;
+            if (libHint) libHint.hidden = false;
+          } else {
+            if (libTitle) libTitle.textContent = "LibGuide · research maps";
+            if (libLead) {
+              libLead.textContent =
+                "LibGuides are librarian-built maps for a class or assignment: databases, search tips, citation help. Browse SAC Academic Guides by subject or instructor.";
+            }
+            if (libDavis) libDavis.hidden = true;
+            if (libHint) libHint.hidden = true;
+          }
+        }
+
+        ctx.mountPicker("#essayPicker");
+        ctx.onChange(refreshResources);
+        refreshResources();
+      })();
+    </script>
   </body>
 </html>
