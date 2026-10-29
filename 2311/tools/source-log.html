@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Source log | ENGL 2311 · Davis Writing Studio</title>
+    <meta name="description" content="Practice source tracker for any ENGL 2311 essay: notes, how each source helps the thesis, MLA draft slots.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+<a class="skip-link" href="#main">Skip to main content</a>
+    <header class="topbar" aria-label="Course navigation">
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true"><img src="../../_design/assets/mark-crown-real.jpg" alt="" width="40" height="40"></span><span><strong>ENGL 2311</strong><small>Davis Writing Studio</small></span></a>
+      <nav class="nav-links" aria-label="Primary sections">
+        <a href="../../index.html">Hub</a>
+        <a href="../index.html">Home</a>
+        <a href="../resources.html">Resources</a>
+        <a href="../weeks.html">Practice path</a>
+        <a href="index.html" aria-current="page">Tools</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </header>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="../../index.html">Hub</a>
+      <a href="../index.html">Home</a>
+      <a href="../resources.html">Resources</a>
+      <a href="../weeks.html">Practice path</a>
+      <a href="index.html" aria-current="page">Tools</a>
+    </nav>
+
+    <main id="main">
+      <section class="section" aria-labelledby="slTitle">
+        <p class="eyebrow" data-essay-eyebrow>Practice tool · research tracker · any essay</p>
+        <h1 id="slTitle">Source log</h1>
+        <p class="lead">Track sources for whichever essay you are practicing. Log what each source says, how it helps your thesis or controlling idea, and a rough MLA draft, then polish citations in the MLA tool.</p>
+
+        <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
+
+        <div class="callout ai" style="margin-top:1rem;">
+          <strong>AI Level 2 · local practice</strong>
+          <p style="margin:0;" id="essayToolCue">Templates and notes stay on your device. Verify every paraphrase and citation against the source. Match the source count your essay prompt requires.</p>
+        </div>
+
+        <div class="tool-panel" style="margin-top:1.25rem;">
+          <div class="field-grid">
+            <label class="field">Working claim <span class="hint">Optional — keeps “how it helps” grounded</span>
+              <textarea id="slClaim" style="min-height:4rem;" placeholder="Paste your working thesis or controlling idea…"></textarea>
+            </label>
+            <label class="field" data-essay-field="subjectLabel" data-essay-placeholder="subjectPlaceholder">
+              <span data-essay-title>Subject / focus</span> <span class="hint">Optional label for this log</span>
+              <input type="text" id="slCase" placeholder="Your subject" autocomplete="off">
+            </label>
+          </div>
+
+          <div class="outline-toolbar" style="margin-top:1rem;">
+            <div>
+              <h2 class="eyebrow" style="margin:0;">Sources</h2>
+              <p class="source-count-pill" id="slCount" aria-live="polite">0 sources</p>
+            </div>
+            <div class="claim-option-actions">
+              <button type="button" class="button small primary" id="slAdd">Add source</button>
+              <button type="button" class="button small ghost" id="slAddPacket">Add course packet / handout</button>
+            </div>
+          </div>
+
+          <div id="slList" class="source-log-list" aria-live="polite"></div>
+
+          <div class="hero-actions">
+            <button type="button" class="button primary" id="slCopy">Copy summary</button>
+            <button type="button" class="button ghost" id="slClear">Clear all</button>
+            <a class="button ghost" href="mla-citation.html">MLA citation →</a>
+            <a class="button ghost" href="outline-helper.html">Outline / topic sentences →</a>
+            <a class="button ghost" href="peer-review-checklist.html">Peer-review checklist →</a>
+            <a class="button ghost" href="../index.html#essays">Essays on Home</a>
+          </div>
+          <p class="save-status" id="slSaveStatus" aria-live="polite"></p>
+
+          <div id="slSummaryWrap" hidden>
+            <div class="outline-toolbar" style="margin-top:1rem;">
+              <h2 class="eyebrow" style="margin:0;">Copy-friendly summary</h2>
+            </div>
+            <pre class="source-summary" id="slSummary" aria-live="polite"></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Source log practice · AI Level 2</p></footer>
+    <script src="../app.js"></script>
+    <script src="essay-context.js?v=topicfix1"></script>
+    <script src="tools.js?v=topicfix1"></script>
+  </body>
+</html>

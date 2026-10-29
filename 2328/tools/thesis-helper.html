@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Thesis generator | ENGL 2328 · Davis Writing Studio</title>
+    <meta name="description" content="Practice thesis generator for any ENGL 2328 essay. Pick an essay to adapt templates, or use generic mode.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+<a class="skip-link" href="#main">Skip to main content</a>
+    <header class="topbar" aria-label="Course navigation">
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true"><img src="../../_design/assets/mark-crown-real.jpg" alt="" width="40" height="40"></span><span><strong>ENGL 2328</strong><small>Davis Writing Studio</small></span></a>
+      <nav class="nav-links" aria-label="Primary sections">
+        <a href="../../index.html">Hub</a>
+        <a href="../index.html">Home</a>
+        <a href="../resources.html">Resources</a>
+        <a href="../weeks.html">Practice path</a>
+        <a href="index.html" aria-current="page">Tools</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </header>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="../../index.html">Hub</a>
+      <a href="../index.html">Home</a>
+      <a href="../resources.html">Resources</a>
+      <a href="../weeks.html">Practice path</a>
+      <a href="index.html" aria-current="page">Tools</a>
+    </nav>
+
+    <main id="main">
+      <section class="section" aria-labelledby="thTitle">
+        <p class="eyebrow" data-essay-eyebrow>Practice tool · any essay</p>
+        <h1 id="thTitle">Thesis generator</h1>
+        <p class="lead">Choose the essay you are practicing. For Monster Comparison, name both figures, choose three criteria you will apply to both, and state one clear insight. This tool builds 2 to 4 draft thesis options from structured templates (AI Level 2; no chatbot). Edit in your voice, then carry a thesis into the outline helper.</p>
+
+        <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
+
+        <div class="callout ai" style="margin-top:1rem;">
+          <strong>Practice only · you own the thesis</strong>
+          <p style="margin:0;" id="essayToolCue">Avoid announcement theses (“This paper will…”). Pick an essay above for matched labels, or stay in generic mode.</p>
+        </div>
+
+        <div class="tool-panel" style="margin-top:1.25rem;">
+          <div class="field-grid">
+            <label class="field" data-essay-field="subjectLabel" data-essay-hint="subjectHint" data-essay-placeholder="subjectPlaceholder">
+              <span data-essay-title>Subject / focus</span> <span class="hint">Required.</span>
+              <input type="text" id="caseName" placeholder="Your subject" autocomplete="off">
+            </label>
+            <label class="field" data-essay-field="topicLabel">
+              <span data-essay-title>Optional topic tag</span> <span class="hint">Optional</span>
+              <select id="topicFolder">
+                <option value="">— select or leave blank —</option>
+              </select>
+            </label>
+            <label class="field" data-essay-field="presentsLabel" data-essay-hint="presentsHint" data-essay-placeholder="presentsPlaceholder">
+              <span data-essay-title>What sources or experience present</span> <span class="hint">Required.</span>
+              <textarea id="packetArgues" style="min-height:5rem;" placeholder="Readers or sources present…"></textarea>
+            </label>
+            <label class="field" data-essay-field="tensionLabel" data-essay-hint="tensionHint" data-essay-placeholder="tensionPlaceholder">
+              <span data-essay-title>Tension, insight, or controlling idea</span> <span class="hint">Required.</span>
+              <textarea id="tensionInput" style="min-height:5rem;" placeholder="The key tension or insight is…"></textarea>
+            </label>
+            <label class="field" data-essay-field="questionLabel" data-essay-placeholder="questionPlaceholder">
+              <span data-essay-title>Optional focusing question</span> <span class="hint">Optional</span>
+              <textarea id="criticalQuestion" style="min-height:4rem;" placeholder="What question guides this draft?"></textarea>
+            </label>
+
+            <fieldset class="field criteria-fieldset" id="comparisonCriteriaBox" hidden>
+              <legend>Comparison criteria <span class="hint">Required for Monster Comparison. Apply the same three lenses to both figures.</span></legend>
+              <p class="hint-block" style="margin:0 0 0.65rem;">Pick presets or type your own. The outline uses one criterion per body section.</p>
+              <div class="idea-chips" id="criteriaPresets" role="group" aria-label="Criteria presets"></div>
+              <div class="field-grid" style="margin-top:0.75rem;">
+                <label class="field">Criterion 1
+                  <input type="text" id="criterion1" placeholder="e.g. how each figure is created or changed" autocomplete="off">
+                </label>
+                <label class="field">Criterion 2
+                  <input type="text" id="criterion2" placeholder="e.g. what each figure wants" autocomplete="off">
+                </label>
+                <label class="field">Criterion 3
+                  <input type="text" id="criterion3" placeholder="e.g. who readers are asked to judge or sympathize with" autocomplete="off">
+                </label>
+              </div>
+            </fieldset>
+            <fieldset class="field angle-fieldset">
+              <legend>Preferred angle <span class="hint">Pick one or more; this shapes which templates run</span></legend>
+              <div class="angle-chips" id="angleChips" role="group" aria-label="Claim angles">
+                <button type="button" class="angle-chip" data-angle="framing" aria-pressed="false">Framing</button>
+                <button type="button" class="angle-chip" data-angle="evidence" aria-pressed="false">Evidence</button>
+                <button type="button" class="angle-chip" data-angle="stakeholders" aria-pressed="false">Audience / stakes</button>
+                <button type="button" class="angle-chip" data-angle="limits" aria-pressed="false">Limits / insight</button>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="idea-generator" id="ideaGenerator">
+            <div class="idea-generator-head">
+              <h2 class="eyebrow" style="margin:0;">Topics, questions &amp; ideas</h2>
+              <p class="hint-block" style="margin:0.35rem 0 0;">Pick an essay first if you want matched starters. Suggestions are templates to edit; you own the thesis (AI Level 2).</p>
+            </div>
+            <div class="hero-actions" style="margin-top:0.75rem;">
+              <button type="button" class="button primary" id="ideaGenerate">Suggest topics, questions &amp; ideas</button>
+            </div>
+            <div id="ideaResults" class="idea-results" hidden>
+              <div class="idea-columns">
+                <section class="idea-column" aria-labelledby="ideaTopicsHeading">
+                  <h3 id="ideaTopicsHeading" class="idea-column-title">Topics</h3>
+                  <div id="ideaTopics" class="idea-chips" role="group" aria-label="Suggested topics"></div>
+                </section>
+                <section class="idea-column" aria-labelledby="ideaQuestionsHeading">
+                  <h3 id="ideaQuestionsHeading" class="idea-column-title">Questions</h3>
+                  <div id="ideaQuestions" class="idea-chips" role="group" aria-label="Suggested questions"></div>
+                </section>
+                <section class="idea-column" aria-labelledby="ideaIdeasHeading">
+                  <h3 id="ideaIdeasHeading" class="idea-column-title">Ideas / controlling ideas</h3>
+                  <div id="ideaIdeas" class="idea-chips" role="group" aria-label="Suggested ideas"></div>
+                </section>
+              </div>
+              <div class="hero-actions" style="margin-top:0.85rem;">
+                <button type="button" class="button primary" id="ideaApply">Fill form from picks</button>
+                <button type="button" class="button ghost" id="ideaToOutline">Build outline from picks</button>
+              </div>
+              <p class="hint-block" style="margin-top:0.5rem;">Select at least a topic and an idea (question optional). Fill form writes into the fields below. Build outline saves a working thesis and opens the outline helper with topic sentences.</p>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <button type="button" class="button primary" id="claimGenerate">Generate thesis options</button>
+            <button type="button" class="button ghost" id="claimClear">Clear</button>
+            <a class="button ghost" href="outline-helper.html">Outline / topic sentences →</a>
+            <a class="button ghost" href="mla-citation.html">MLA citation →</a>
+            <a class="button ghost" href="../index.html#essays">Essays on Home</a>
+          </div>
+          <p class="save-status" id="claimSaveStatus" aria-live="polite"></p>
+
+          <div id="claimResults" class="claim-results" hidden>
+            <h2 class="eyebrow" style="margin-top:1.25rem;">Draft thesis options</h2>
+            <p class="hint-block">Copy one you like, edit it in your own voice, then <strong>Use this thesis</strong> to carry it into the outline helper. These are templates; verify against your notes and sources.</p>
+            <div id="claimOptions" class="claim-options" aria-live="polite"></div>
+            <div class="callout" id="claimChecklist" style="margin-top:1rem;">
+              <strong>After you pick one, cue check</strong>
+              <ul class="cue-list">
+                <li>Is it <em>specific</em> to this essay’s job (not a vague opinion)?</li>
+                <li>Could a careful reader push back or ask for evidence?</li>
+                <li>Did you drop announcement openings (“This paper will…”)?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Thesis practice · AI Level 2 template generator</p></footer>
+    <script src="../app.js"></script>
+    <script src="essay-context.js?v=compare10"></script>
+    <script src="tools.js?v=compare10"></script>
+  </body>
+</html>

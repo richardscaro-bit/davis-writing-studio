@@ -1,0 +1,1 @@
+- Oct 28, 2026 6:40 PM CT: Poe copy applied to 1301 preview from 59-poe-practice-path-pass.md (index, weeks, resources, spring-monster, facing-the-unknown, field-guide, tools/index, guides/ai). Not pushed. comparison-studio.html and flex-to-assignments.html untouched.

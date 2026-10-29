@@ -1,0 +1,121 @@
+/* Course section styles - charcoal hub family */
+@import url("../_design/section-charcoal.css");
+
+/* Essay picker on practice tools */
+.essay-picker {
+  margin: 1.15rem 0 0.35rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.18);
+}
+.essay-picker-field { display: grid; gap: 0.4rem; margin: 0; }
+.essay-picker-label {
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: rgba(255, 248, 240, 0.92);
+}
+.essay-picker select { max-width: 36rem; }
+.essay-picker-purpose { margin-top: 0.85rem; }
+
+.idea-generator {
+  margin: 1.1rem 0 0.35rem;
+  padding: 1rem 1.05rem 1.05rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.16);
+}
+.idea-generator-head .hint-block { max-width: 46rem; }
+.idea-results { margin-top: 0.85rem; }
+.idea-columns { display: grid; gap: 0.85rem; }
+@media (min-width: 900px) {
+  .idea-columns { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+}
+.idea-column {
+  background: rgba(244, 241, 234, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.75rem 0.8rem 0.9rem;
+}
+.idea-column-title {
+  margin: 0 0 0.55rem;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 248, 240, 0.78);
+}
+.idea-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.idea-chip {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(244, 241, 234, 0.04);
+  color: rgba(255, 248, 240, 0.88);
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+  max-width: 100%;
+}
+.idea-chip:hover { border-color: rgba(196, 122, 110, 0.85); color: #fff; }
+.idea-chip.active, .idea-chip[aria-pressed="true"] {
+  background: rgba(154, 92, 82, 0.22);
+  border-color: rgba(196, 122, 110, 0.95);
+  color: #fff;
+}
+.criteria-fieldset {
+  margin-top: 0.75rem;
+  padding: 0.85rem 1rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+}
+.criteria-fieldset .criteria-preset { margin: 0.25rem 0.35rem 0.25rem 0; }
+.outline-research {
+  margin-top: 0.5rem;
+  padding-top: 0.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* On-page reading dropdowns */
+details.studio-drop {
+  margin: 0.65rem 0 0;
+  padding: 0.55rem 0.75rem 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.22);
+}
+details.studio-drop > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: rgba(255, 248, 240, 0.95);
+  list-style: none;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+details.studio-drop > summary::-webkit-details-marker { display: none; }
+details.studio-drop > summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 0.45rem;
+  color: var(--topic, #c08070);
+  transition: transform 0.15s ease;
+}
+details.studio-drop[open] > summary::before { transform: rotate(90deg); }
+details.studio-drop .studio-drop-body {
+  margin-top: 0.7rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+details.studio-drop .studio-drop-body p { margin: 0 0 0.7rem; }
+.resource-list .resource-card details.studio-drop .cue-list,
+.resource-list .resource-card details.studio-drop .hint-block {
+  color: var(--cream-dim, rgba(255,248,240,0.78));
+}
