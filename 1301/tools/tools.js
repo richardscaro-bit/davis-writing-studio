@@ -12,7 +12,8 @@
     mlaLast: "engl1301.tools.mla.last",
     sourceLog: "engl1301.tools.sourceLog",
     peerChecklist: "engl1301.tools.peerChecklist",
-    keywordGen: "engl1301.tools.keywordGen"
+    keywordGen: "engl1301.tools.keywordGen",
+    ideaPicks: "engl1301.tools.thesis.ideaPicks"
   };
 
   function essayCtx() {
@@ -342,6 +343,7 @@
   function bindClaimGenerator() {
     if (!$("#claimGenerate")) return;
     bindAngleChips();
+    bindIdeaGenerator();
 
     const saved = loadJSON(KEYS.thesisInputs, null);
     if (saved) writeThesisInputs(saved);
@@ -377,7 +379,15 @@
       saveJSON(KEYS.thesisInputs, readThesisInputs());
       saveJSON(KEYS.thesisDrafts, []);
       localStorage.removeItem(KEYS.chosenClaim);
+      localStorage.removeItem(KEYS.ideaPicks);
       renderClaimOptions([]);
+      if ($("#ideaResults")) {
+        $("#ideaResults").hidden = true;
+        ["ideaTopics", "ideaQuestions", "ideaIdeas"].forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.innerHTML = "";
+        });
+      }
       setStatus($("#claimSaveStatus"), "Cleared.", false);
     });
 
@@ -412,6 +422,248 @@
     });
   }
 
+
+  /* ---------- Idea packs: topics / questions / ideas (AI Level 2) ---------- */
+
+  function expandIdeaText(str, topic) {
+    const t = (topic || "this topic").trim() || "this topic";
+    return String(str || "").replace(/\{topic\}/g, t);
+  }
+
+  function rotateList(list, salt) {
+    const arr = (list || []).slice();
+    if (arr.length < 2) return arr;
+    const n = Math.abs(salt | 0) % arr.length;
+    return arr.slice(n).concat(arr.slice(0, n));
+  }
+
+  function presentsStarter(kind) {
+    switch (kind) {
+      case "argument":
+        return "Many people argue that the familiar position on this issue should stand.";
+      case "comparison":
+        return "Both figures are often treated as belonging to the same category for similar reasons.";
+      case "exposition":
+        return "Readers often assume a simple story about this topic, but the process is less settled.";
+      case "narrative":
+        return "I expected one outcome going in, but the events did not match that expectation.";
+      case "reflection":
+        return "At first I usually drafted in a habit that limited clarity.";
+      case "case-study":
+        return "The packet presents the case as a clean success story with settled evidence.";
+      default:
+        return "Readers or sources often present this subject as settled or simple.";
+    }
+  }
+
+  function buildIdeaSuggestions(essay, inputs) {
+    const seeds = (essay && essay.ideaSeeds) || (essayCtx() && essayCtx().GENERIC && essayCtx().GENERIC.ideaSeeds) || {
+      topics: ["A focused subject for this draft"],
+      questions: ["What question guides this draft about {topic}?"],
+      ideas: ["Although the familiar story says X, a closer look shows Y"]
+    };
+    const typed = (inputs && inputs.caseName) || "";
+    const topicHint = typed || ((inputs && inputs.topicFolder) || "") || "this topic";
+    const salt = Date.now();
+    const topics = rotateList(seeds.topics || [], salt).slice(0, 8).map((t) => expandIdeaText(t, topicHint));
+    // Prefer concrete topics; if student already typed a subject, keep it first as a pickable option
+    const topicList = typed && !topics.some((t) => t.toLowerCase() === typed.toLowerCase())
+      ? [typed].concat(topics).slice(0, 8)
+      : topics;
+    const questions = rotateList(seeds.questions || [], salt + 1).slice(0, 6).map((q) => expandIdeaText(q, topicHint));
+    const ideas = rotateList(seeds.ideas || [], salt + 2).slice(0, 6).map((idea) => expandIdeaText(idea, topicHint));
+    return { topics: topicList, questions, ideas, essayId: (essay && essay.id) || "", generatedAt: salt };
+  }
+
+  function readIdeaPicks() {
+    const host = $("#ideaResults");
+    if (!host) return { topic: "", question: "", idea: "" };
+    const topic = host.querySelector("#ideaTopics .idea-chip[aria-pressed='true']")?.dataset?.value || "";
+    const question = host.querySelector("#ideaQuestions .idea-chip[aria-pressed='true']")?.dataset?.value || "";
+    const idea = host.querySelector("#ideaIdeas .idea-chip[aria-pressed='true']")?.dataset?.value || "";
+    return { topic, question, idea };
+  }
+
+  function renderIdeaChipGroup(container, items, selectedValue) {
+    if (!container) return;
+    container.innerHTML = (items || [])
+      .map((text) => {
+        const on = selectedValue && selectedValue === text;
+        return `<button type="button" class="idea-chip${on ? " active" : ""}" data-value="${escapeHtml(text)}" aria-pressed="${on ? "true" : "false"}">${escapeHtml(text)}</button>`;
+      })
+      .join("");
+  }
+
+  function renderIdeaSuggestions(packet, picks) {
+    const results = $("#ideaResults");
+    if (!results || !packet) return;
+    const p = picks || loadJSON(KEYS.ideaPicks, {}) || {};
+    renderIdeaChipGroup($("#ideaTopics"), packet.topics, p.topic);
+    renderIdeaChipGroup($("#ideaQuestions"), packet.questions, p.question);
+    renderIdeaChipGroup($("#ideaIdeas"), packet.ideas, p.idea);
+    results.hidden = false;
+  }
+
+  function applyIdeaPicksToForm(picks) {
+    const essay = activeEssay();
+    const kind = (essay && essay.claimKind) || "generic";
+    const topic = (picks && picks.topic) || "";
+    const question = (picks && picks.question) || "";
+    const idea = (picks && picks.idea) || "";
+    if (!topic && !idea) return false;
+
+    if (topic && $("#caseName")) $("#caseName").value = topic;
+
+    // Match topicFolder option when possible (exact or includes)
+    const sel = $("#topicFolder");
+    if (sel && topic) {
+      const opts = Array.from(sel.options || []).map((o) => o.value).filter(Boolean);
+      let match = opts.find((o) => o.toLowerCase() === topic.toLowerCase());
+      if (!match) match = opts.find((o) => topic.toLowerCase().includes(o.toLowerCase()) || o.toLowerCase().includes(topic.toLowerCase().slice(0, 18)));
+      // Facing the Unknown: map concrete topics into subject areas
+      if (!match && opts.length) {
+        const tl = topic.toLowerCase();
+        const heuristics = [
+          [/ocean|sea|deep|pressure|extreme env/i, "Deep ocean / extreme environments"],
+          [/space|cosmos|black hole|planet/i, "Space / cosmos"],
+          [/body|heat|cold|stress/i, "The body under stress"],
+          [/disease|health|spread|population/i, "Disease / public health unknowns"],
+          [/\bai\b|model|technology/i, "Technology / AI unknowns"],
+          [/hurricane|disaster|storm/i, "Natural disasters"],
+          [/mystery|phenomenon|unexplained/i, "Unexplained phenomena (explain, don’t argue)"],
+          [/archaeolog|historical/i, "Historical mysteries"]
+        ];
+        for (const [re, label] of heuristics) {
+          if (re.test(tl) && opts.includes(label)) {
+            match = label;
+            break;
+          }
+        }
+      }
+      if (match) sel.value = match;
+    }
+
+    if (idea && $("#tensionInput")) $("#tensionInput").value = idea;
+    if (question && $("#criticalQuestion")) $("#criticalQuestion").value = question;
+
+    if ($("#packetArgues") && !($("#packetArgues").value || "").trim()) {
+      $("#packetArgues").value = presentsStarter(kind);
+    }
+
+    persistThesisInputs();
+    return true;
+  }
+
+  function claimFromIdeaPicks(picks, inputs) {
+    const options = buildClaimOptions(inputs);
+    if (options.length) return options[0];
+    const topic = picks.topic || inputs.caseName || "this subject";
+    const idea = picks.idea || inputs.tension || "a clear insight";
+    const q = picks.question || inputs.question;
+    const text = q
+      ? `Responding to “${trimSnippet(q, 100)},” work on ${topic} shows that ${trimSnippet(idea, 110)}.`
+      : `Although ${topic} is often treated as settled, a closer look shows that ${trimSnippet(idea, 110)}.`;
+    return { angle: "idea", text, why: "Built from your topic and idea picks." };
+  }
+
+  function bindIdeaGenerator() {
+    if (!$("#ideaGenerate")) return;
+
+    const savedPacket = loadJSON(KEYS.ideaPicks, null);
+    // ideaPicks stores {topic, question, idea, packet?}
+    if (savedPacket && savedPacket.packet) {
+      renderIdeaSuggestions(savedPacket.packet, savedPacket);
+    }
+
+    $("#ideaGenerate").addEventListener("click", () => {
+      const essay = activeEssay();
+      const inputs = readThesisInputs();
+      const packet = buildIdeaSuggestions(essay, inputs);
+      const prev = loadJSON(KEYS.ideaPicks, {}) || {};
+      renderIdeaSuggestions(packet, prev);
+      saveJSON(KEYS.ideaPicks, Object.assign({}, prev, { packet, generatedAt: packet.generatedAt }));
+      setStatus($("#claimSaveStatus"), "Suggested topics, questions, and ideas — pick what fits, then edit.", true);
+    });
+
+    $("#ideaResults")?.addEventListener("click", onIdeaChipClick);
+
+    $("#ideaApply")?.addEventListener("click", () => {
+      const picks = readIdeaPicks();
+      if (!picks.topic && !picks.idea) {
+        setStatus($("#claimSaveStatus"), "Pick at least a topic or an idea first.", false);
+        return;
+      }
+      applyIdeaPicksToForm(picks);
+      const packet = loadJSON(KEYS.ideaPicks, {})?.packet;
+      saveJSON(KEYS.ideaPicks, Object.assign({}, picks, { packet, savedAt: Date.now() }));
+      setStatus($("#claimSaveStatus"), "Form filled from your picks — edit anything that needs your voice.", true);
+    });
+
+    $("#ideaToOutline")?.addEventListener("click", () => {
+      const picks = readIdeaPicks();
+      if (!picks.topic || !picks.idea) {
+        setStatus($("#claimSaveStatus"), "Pick a topic and an idea (question optional) before building an outline.", false);
+        return;
+      }
+      applyIdeaPicksToForm(picks);
+      const inputs = readThesisInputs();
+      if (!inputs.packetArgues) {
+        inputs.packetArgues = presentsStarter((activeEssay() && activeEssay().claimKind) || "generic");
+        if ($("#packetArgues")) $("#packetArgues").value = inputs.packetArgues;
+      }
+      const opt = claimFromIdeaPicks(picks, inputs);
+      const payload = {
+        claim: opt.text,
+        caseName: inputs.caseName,
+        tension: inputs.tension,
+        topicFolder: inputs.topicFolder,
+        question: inputs.question,
+        angle: opt.angle || "idea",
+        fromIdeas: true,
+        savedAt: Date.now()
+      };
+      saveJSON(KEYS.chosenClaim, payload);
+      saveJSON(KEYS.thesisInputs, inputs);
+      saveJSON(KEYS.thesisDrafts, [opt]);
+      const packet = loadJSON(KEYS.ideaPicks, {})?.packet;
+      saveJSON(KEYS.ideaPicks, Object.assign({}, picks, { packet, savedAt: Date.now() }));
+
+      const outlineInputs = {
+        claim: opt.text,
+        caseName: inputs.caseName,
+        tension: inputs.tension,
+        question: inputs.question,
+        topicFolder: inputs.topicFolder,
+        sourcesNote: ""
+      };
+      const skeleton = buildOutline(outlineInputs);
+      saveJSON(KEYS.outlineInputs, outlineInputs);
+      saveJSON(KEYS.outlineSkeleton, skeleton);
+      setStatus($("#claimSaveStatus"), "Outline + topic sentences ready — opening outline helper…", true);
+      window.location.href = "outline-helper.html";
+    });
+  }
+
+  function onIdeaChipClick(e) {
+    const chip = e.target.closest(".idea-chip");
+    const host = $("#ideaResults");
+    if (!chip || !host || !host.contains(chip)) return;
+    const group = chip.parentElement;
+    const wasOn = chip.getAttribute("aria-pressed") === "true";
+    group.querySelectorAll(".idea-chip").forEach((b) => {
+      b.setAttribute("aria-pressed", "false");
+      b.classList.remove("active");
+    });
+    if (!wasOn) {
+      chip.setAttribute("aria-pressed", "true");
+      chip.classList.add("active");
+    }
+    const picks = readIdeaPicks();
+    const prev = loadJSON(KEYS.ideaPicks, {}) || {};
+    saveJSON(KEYS.ideaPicks, Object.assign({}, prev, picks, { savedAt: Date.now() }));
+  }
+
+
   /* ---------- Outline / topic sentences ---------- */
 
   function readOutlineInputs() {
@@ -433,41 +685,157 @@
 
   function buildOutline(inputs) {
     const essay = activeEssay();
+    const kind = (essay && essay.claimKind) || "generic";
     const caseName = inputs.caseName || "this subject";
-    const tension = trimSnippet(inputs.tension, 100) || "the central tension or insight";
-    const claim = trimSnippet(inputs.claim, 180) || "Working thesis / controlling idea";
+    const tension = trimSnippet(inputs.tension, 110) || "the central tension or insight";
+    const claim = trimSnippet(inputs.claim, 200) || "Working thesis / controlling idea";
+    const question = trimSnippet(inputs.question || "", 120);
+    const topicFolder = trimSnippet(inputs.topicFolder || "", 80);
     const sourcesNote = trimSnippet(inputs.sourcesNote, 160);
     const lenses = (essay && essay.outlineLenses && essay.outlineLenses.length)
       ? essay.outlineLenses
       : null;
 
-    const sections = (lenses || [
+    const defaultLenses = [
       { title: "I. Introduction", topic: "Open with context, then state the working thesis or controlling idea.", cues: ["Context", "Thesis / controlling idea", "Preview"] },
       { title: "II. Background", topic: "Give readers what they need before the main points.", cues: ["Definitions", "Scope", "Shared facts"] },
       { title: "III. Main point 1", topic: "Develop the first main point with evidence.", cues: ["Topic sentence", "Evidence", "Analysis"] },
       { title: "IV. Main point 2", topic: "Develop the second main point without repeating point 1.", cues: ["Distinct point", "Evidence", "Link to thesis"] },
       { title: "V. Complication or deeper point", topic: "Address the central tension or insight so the thesis earns complexity.", cues: ["Complication", "Evidence", "Return to thesis"] },
       { title: "VI. Conclusion", topic: "Restate the thesis in fresh words and name the so-what.", cues: ["Fresh restatement", "So-what", "No new major claim"] }
-    ]).map((lens, i) => {
-      let topic = lens.topic || "";
+    ];
+
+    const list = lenses || defaultLenses;
+    const total = list.length;
+
+    function roleOf(title, i) {
+      const t = String(title || "").toLowerCase();
+      if (i === 0 || /intro|opening|opening scene|opening claim/.test(t)) return "intro";
+      if (i === total - 1 || /conclu|closing/.test(t)) return "conclusion";
+      if (/background|context|definition|plate label/.test(t)) return "background";
+      if (/counter|opposing|reply/.test(t)) return "counter";
+      if (/stakeholder/.test(t)) return "stakeholders";
+      if (/evidence quality|outside source/.test(t)) return "evidence";
+      if (/assumption/.test(t)) return "assumptions";
+      if (/limit/.test(t) && !/limited/.test(t)) return "limits";
+      if (/misunderstand|myth|caution|newcomer tip/.test(t)) return "clarify";
+      if (/reflect|remaining goal|turning point|early evidence|later evidence|climax|rising|criterion/.test(t)) return "body";
+      if (/reason|main point|how it works|cause|process|framing|problem/.test(t)) return "body";
+      if (i === 1) return "background";
+      return "body";
+    }
+
+    function topicSentence(lens, i) {
+      const role = roleOf(lens.title, i);
+      const focus = topicFolder ? `${caseName} (${topicFolder})` : caseName;
+      const qBit = question ? ` Guided by “${question},”` : "";
+
+      if (kind === "argument") {
+        if (role === "intro") return `On ${focus}, this draft argues that ${claim}`;
+        if (role === "background") return `Before the reasons, readers need shared facts and terms about ${focus}.`;
+        if (role === "counter") return `A fair opposing view says the common stance on ${focus} should hold; the reply is that ${tension}.`;
+        if (role === "conclusion") return `In short, ${claim} — and the stake for readers is that ${tension}.`;
+        if (i === 2) return `The strongest reason supporting the claim about ${focus} is that ${tension}.`;
+        if (i === 3) return `A second, distinct reason is that evidence about ${focus} still points toward ${tension}.`;
+        return `This section advances the claim on ${focus} by showing how ${tension}.`;
+      }
+
+      if (kind === "exposition") {
+        if (role === "intro") {
+          const lead = question ? `Guided by “${question},” this essay explains ${focus}: ${claim}` : `This essay explains ${focus}: ${claim}`;
+          return lead;
+        }
+        if (role === "background") return `To follow the explanation of ${focus}, readers need clear definitions and a limited scope.`;
+        if (role === "clarify") return `A common misunderstanding about ${focus} is worth correcting with evidence: ${tension}.`;
+        if (role === "conclusion") return `A careful reader should now understand ${focus} as ${tension}, without needing a side to take.`;
+        if (/how it works|main explanation|process/i.test(lens.title || "")) {
+          return /^how\b/i.test(String(caseName))
+            ? `Explaining ${focus} shows why ${tension}.`
+            : `Explaining how ${focus} works shows why ${tension}.`;
+        }
+        if (/cause|effect|mechanism|why it matters/i.test(lens.title || "")) {
+          return `Tracing causes and effects in ${focus} deepens the controlling idea that ${tension}.`;
+        }
+        if (/plate/i.test(lens.title || "")) {
+          return `In clear order, the guide names ${focus} for its audience and matches the plate labels in prose.`;
+        }
+        return `This explanatory section on ${focus} develops the how/why focus: ${tension}.`;
+      }
+
+      if (kind === "comparison") {
+        if (role === "intro") return `Comparing ${focus} yields one insight: ${claim}`;
+        if (role === "conclusion") return `Beyond a trait list, the comparison of ${focus} shows that ${tension}.`;
+        if (/criterion 1/i.test(lens.title || "") || i === 1) {
+          return `Under the first shared criterion, ${focus} look alike in one way but already hint that ${tension}.`;
+        }
+        if (/criterion 2/i.test(lens.title || "") || i === 2) {
+          return `Under a second parallel criterion, the difference in ${focus} sharpens around ${tension}.`;
+        }
+        return `Applied evenly to both figures, this criterion for ${focus} advances the insight that ${tension}.`;
+      }
+
+      if (kind === "narrative") {
+        if (role === "intro") return `The narrative of ${focus} opens in a concrete moment that already points toward ${tension}.`;
+        if (/background/i.test(lens.title || "")) return `Only the background a reader needs about ${focus} belongs here — enough to follow the quest.`;
+        if (/rising/i.test(lens.title || "")) return `In the middle of the quest around ${focus}, scenes show what I wanted versus what happened.`;
+        if (/climax|shift/i.test(lens.title || "")) return `The shift in ${focus} comes when ${tension}.`;
+        if (/reflect/i.test(lens.title || "")) return `Reflection on ${focus} earns the insight that ${tension} without announcing a moral.`;
+        if (role === "conclusion") return `The closing image returns to ${focus} and holds the insight: ${tension}.`;
+        return `This section of the quest narrative keeps ${focus} in scene while moving toward ${tension}.`;
+      }
+
+      if (kind === "case-study") {
+        if (role === "intro") return `This critical analysis of ${focus} claims that ${claim}`;
+        if (role === "background" || /framing|problem/i.test(lens.title || "")) {
+          return `The packet frames ${focus} in a way that soft-pedals ${tension}.`;
+        }
+        if (role === "stakeholders") return `Who the ${focus} materials center — and who they sideline — matters once ${tension} is visible.`;
+        if (role === "evidence") return `The packet’s evidence about ${focus} looks settled until ${tension} pressure-tests what it actually proves.`;
+        if (role === "assumptions") return `The ${focus} packet treats an assumption as obvious; naming it shows how ${tension} unsettles the story.`;
+        if (role === "limits") return `The packet is persuasive in places about ${focus}, yet its limits around ${tension} weaken the overall claim.`;
+        if (/outside/i.test(lens.title || "")) {
+          return `Outside sources should pressure-test the ${focus} packet on ${tension}, not decorate the summary.`;
+        }
+        if (role === "conclusion") return `A careful reader should take away that ${claim} — especially given ${tension}.`;
+        return `This lens on ${focus} advances the claim by keeping ${tension} in view.`;
+      }
+
+      if (kind === "reflection") {
+        if (role === "intro") return `Across this term, my work on ${focus} supports this growth claim: ${claim}`;
+        if (/early/i.test(lens.title || "")) return `Early evidence from ${focus} shows where I started and what limited me then.`;
+        if (/turning/i.test(lens.title || "")) return `A turning point in my process for ${focus} came when ${tension}.`;
+        if (/later/i.test(lens.title || "")) return `Later drafts connected to ${focus} show the new habit without pretending the work is finished.`;
+        if (/goal/i.test(lens.title || "")) return `Remaining goals grow from the evidence above: I still need to keep working on ${tension}.`;
+        if (role === "conclusion") return `Looking back on ${focus}, the takeaway is ${claim} — with honest next steps still attached.`;
+        return `This part of the reflection uses concrete work on ${focus} to support ${tension}.`;
+      }
+
+      // generic
+      if (role === "intro") return `This draft centers ${focus} with a working thesis: ${claim}`;
+      if (role === "background") return `Readers need brief context and scope on ${focus} before the main points.`;
+      if (role === "conclusion") return `In fresh words, ${claim} — so what remains is why ${tension} matters for the reader.`;
+      if (i === 2) return `The first main point about ${focus} is that ${tension}.`;
+      if (i === 3) return `A second point develops ${focus} without repeating the first: evidence still leads toward ${tension}.`;
+      return `This section complicates or deepens the thesis on ${focus} by staying with ${tension}.`;
+    }
+
+    const sections = list.map((lens, i) => {
       const cues = (lens.cues || []).slice();
       if (i === 0 && claim) cues.unshift("Working claim: " + claim);
+      if (question && i === 0) cues.push("Focusing question: " + question);
       if (sourcesNote && /source/i.test(lens.title || "")) cues.push(sourcesNote);
       if (!cues.length) cues.push("Evidence", "Analysis", "Link to thesis");
-      // Light personalization without breaking authored lens copy
-      if (caseName && caseName !== "this subject" && topic && topic.indexOf(caseName) === -1 && i === 1) {
-        topic = topic + " Keep " + caseName + " in view.";
-      }
-      if (tension && topic && topic.indexOf("tension") === -1 && /complicat|limit|insight|differ/i.test(lens.title || "")) {
-        topic = topic + " Stay focused on: " + tension + ".";
-      }
-      return { title: lens.title, topic, cues };
+      const topic = topicSentence(lens, i);
+      // Always expose bullets for renderOutline / outlinePlainText (fix cues/bullets mismatch)
+      return { title: lens.title, topic, cues, bullets: cues.slice() };
     });
 
     return {
       claim,
       caseName,
       tension,
+      question: question || "",
+      topicFolder: topicFolder || "",
       essayId: (essay && essay.id) || "",
       essayLabel: essayLabel(),
       sections
@@ -491,7 +859,7 @@
             <button type="button" class="button small ghost" data-copy-topic="${i}">Copy topic sentence</button>
           </header>
           <p class="topic-sentence"><span class="topic-label">Topic sentence</span>${escapeHtml(sec.topic)}</p>
-          <ul>${sec.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join("")}</ul>
+          <ul>${(sec.bullets || sec.cues || []).map((b) => `<li>${escapeHtml(b)}</li>`).join("")}</ul>
         </article>`;
       })
       .join("");
@@ -504,7 +872,7 @@
     skeleton.sections.forEach((sec) => {
       lines.push(sec.title);
       lines.push("Topic sentence: " + sec.topic);
-      sec.bullets.forEach((b) => lines.push("  - " + b));
+      (sec.bullets || sec.cues || []).forEach((b) => lines.push("  - " + b));
       lines.push("");
     });
     return lines.join("\n");
@@ -554,6 +922,10 @@
         setStatus($("#outlineSaveStatus"), "Add a working claim first (or generate one in the thesis tool).", false);
         return;
       }
+      const chosenNow = loadJSON(KEYS.chosenClaim, null) || {};
+      const thesisIn = loadJSON(KEYS.thesisInputs, null) || {};
+      inputs.question = inputs.question || chosenNow.question || thesisIn.question || "";
+      inputs.topicFolder = inputs.topicFolder || chosenNow.topicFolder || thesisIn.topicFolder || "";
       const skeleton = buildOutline(inputs);
       saveJSON(KEYS.outlineInputs, inputs);
       saveJSON(KEYS.outlineSkeleton, skeleton);

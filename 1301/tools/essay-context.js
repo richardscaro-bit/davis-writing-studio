@@ -38,6 +38,33 @@
       ],
       defaultAngles: ["scene", "change", "insight"],
       claimKind: "narrative",
+      ideaSeeds: {
+        topics: [
+          "First night on a new job or shift",
+          "Moving to a new city or campus",
+          "Standing up to a fear in public",
+          "A family ritual that changed meaning",
+          "Meeting a mentor, rival, or unexpected ally",
+          "A failure that redirected a plan",
+          "Trying to belong in a group that felt closed",
+          "A place that no longer felt like home"
+        ],
+        questions: [
+          "What did this quest reveal about courage or belonging?",
+          "Where did expectation and reality split in {topic}?",
+          "What changed in how I see myself after this experience?",
+          "Which moment should a reader feel most clearly?",
+          "What insight is more than a plot summary?"
+        ],
+        ideas: [
+          "Courage looked smaller and more ordinary than I expected",
+          "Belonging required a cost I had not named",
+          "The obstacle was partly my own assumption",
+          "Change started before the climax, in a quiet choice",
+          "Home meant something different after {topic}",
+          "The insight is what I almost refused to notice"
+        ]
+      },
       outlineLenses: [
         { title: "I. Opening scene", topic: "Open in a concrete moment that puts the reader in the story.", cues: ["Sensory detail", "Who / where / when", "Why this moment matters"] },
         { title: "II. Background", topic: "Give only the background a reader needs to follow the quest.", cues: ["Context before the change", "Stakes for you", "Avoid full biography"] },
@@ -95,6 +122,33 @@
       ],
       defaultAngles: ["claim", "reasons", "counter"],
       claimKind: "argument",
+      ideaSeeds: {
+        topics: [
+          "School or workplace phone bans",
+          "Campus free-speech rules",
+          "Social media age restrictions",
+          "Public camera / surveillance policies",
+          "Standardized testing requirements",
+          "Gig-work classification debates",
+          "Public health mandates in shared spaces",
+          "Local housing or zoning disputes"
+        ],
+        questions: [
+          "What evidence would change a careful reader’s mind about {topic}?",
+          "Who benefits if the common view stays unchallenged?",
+          "What is the strongest fair opposing argument?",
+          "Which stake matters most for the people closest to the issue?",
+          "What judgment should a reader reach, and why?"
+        ],
+        ideas: [
+          "The stronger position is X because the costs of the common view fall unevenly",
+          "Even granting the other side’s best point, the evidence still favors a different judgment",
+          "Treating {topic} as settled hides who pays the price",
+          "Policy convenience is not the same as a fair outcome",
+          "A careful reader should reject the familiar claim once the stakes are clear",
+          "The debate turns on which definition of harm we accept"
+        ]
+      },
       outlineLenses: [
         { title: "I. Introduction & claim", topic: "Open with context, then state one clear arguable claim.", cues: ["Issue in one line", "Working claim", "Why the issue matters now"] },
         { title: "II. Background", topic: "Give definitions and facts a reader needs before the reasons.", cues: ["Key terms", "Relevant history or rules", "What is not in dispute"] },
@@ -152,6 +206,33 @@
       ],
       defaultAngles: ["criteria", "difference", "insight"],
       claimKind: "comparison",
+      ideaSeeds: {
+        topics: [
+          "Godzilla and King Kong",
+          "Dracula and a modern vampire figure",
+          "Two werewolf or shapeshifter stories",
+          "Two zombie or undead portrayals",
+          "A folk monster and a screen cryptid",
+          "Two literary monsters from the same tradition",
+          "A classic film monster and its remake",
+          "Two kaiju used to figure city-scale fear"
+        ],
+        questions: [
+          "What does the contrast between these figures show about audience fear or power?",
+          "Which shared criterion reveals the sharpest difference?",
+          "Why do these two belong in one category, and where does that category break?",
+          "What insight goes past a list of traits about {topic}?",
+          "What does the audience root for, and why does that matter?"
+        ],
+        ideas: [
+          "One figure turns fear outward (city, nation) while the other turns it inward (body, desire)",
+          "Similarity in scale or genre only sharpens a difference in sympathy",
+          "The pair shows how culture names a threat more than how monsters look",
+          "Power works differently in each figure even when both are “monstrous”",
+          "The comparison reveals an audience value, not a costume catalog",
+          "Read side by side, {topic} diverge most clearly in who they protect or punish"
+        ]
+      },
       outlineLenses: [
         { title: "I. Introduction", topic: "Name both figures, the shared category, and the insight thesis.", cues: ["Pair + category", "Thesis insight", "Preview criteria"] },
         { title: "II. Criterion 1", topic: "Apply the first criterion to both figures in parallel.", cues: ["Same lens for A and B", "Evidence for each", "Mini-insight"] },
@@ -209,6 +290,34 @@
       ],
       defaultAngles: ["define", "process", "clarify"],
       claimKind: "exposition",
+      ideaSeeds: {
+        topics: [
+          "How deep-sea pressure affects the human body",
+          "Why black holes bend light and time",
+          "How the body responds to extreme heat or cold",
+          "How a specific disease spreads in a population",
+          "How AI models produce confident wrong answers",
+          "How hurricanes intensify over warm water",
+          "What science can and cannot explain about a named phenomenon",
+          "How archaeologists test a historical mystery"
+        ],
+        questions: [
+          "How does {topic} actually work, step by step?",
+          "Why do readers often misunderstand this unknown?",
+          "What causes or mechanisms matter most?",
+          "Which terms must be defined before the explanation makes sense?",
+          "What would a careful explanation change in a reader’s mental model?",
+          "Where does current research still leave an open question?"
+        ],
+        ideas: [
+          "Readers often treat this as mystery or myth; the process is more concrete once terms are clear",
+          "The key is explaining how X leads to Y without taking a policy side",
+          "A common oversimplification hides the mechanism that matters",
+          "Understanding {topic} means tracing cause and effect, not arguing which side is right",
+          "The unknown becomes teachable when scoped to one how/why question",
+          "Credible sources correct a familiar misconception about this topic"
+        ]
+      },
       outlineLenses: [
         { title: "I. Introduction", topic: "Hook with the unknown, then state the how/why controlling idea.", cues: ["Topic narrow enough", "Controlling idea", "Preview subtopics"] },
         { title: "II. Definitions / context", topic: "Define terms and give context a college reader needs.", cues: ["Key terms", "Scope", "What you will not cover"] },
@@ -264,6 +373,33 @@
       ],
       defaultAngles: ["place", "audience", "how"],
       claimKind: "exposition",
+      ideaSeeds: {
+        topics: [
+          "A neighborhood mercado or plaza",
+          "A campus ritual new students miss",
+          "A local transit hub and how it works",
+          "A community garden or mutual-aid space",
+          "A workplace break-room culture",
+          "A library or tutoring center as a system",
+          "A festival route and its unwritten rules",
+          "A clinic waiting-room practice"
+        ],
+        questions: [
+          "How does this place work for a named newcomer audience?",
+          "Why does this practice matter to the people who use it?",
+          "What should a newcomer notice first about {topic}?",
+          "Which 2–3 working parts must the plate and essay both cover?",
+          "What caution or tip is useful without preaching?"
+        ],
+        ideas: [
+          "For newcomers, the place makes sense once daily routines are explained",
+          "The guide’s job is how it works, not whether the place “should” exist",
+          "Audience need + concrete parts of the system are the controlling focus",
+          "Plate labels and essay subtopics must name the same place and audience",
+          "Significance for this audience comes from use and access, not policy debate",
+          "A practical caution grows out of how {topic} actually operates"
+        ]
+      },
       outlineLenses: [
         { title: "I. Introduction", topic: "Name the place, audience, and how/why controlling idea.", cues: ["Place + audience", "How/why question", "Preview plate/essay match"] },
         { title: "II. Plate labels in prose", topic: "Cover name, location, audience, and first impressions in clear order.", cues: ["Match the plate", "Concrete detail", "No side-taking"] },
@@ -328,6 +464,34 @@
       ],
       defaultAngles: ["framing", "evidence", "limits", "stakeholders"],
       claimKind: "case-study",
+      ideaSeeds: {
+        topics: [
+          "BarkBox subscription model",
+          "A campus wellness campaign packet",
+          "A local business “success story” brief",
+          "A public-health case brief",
+          "A social-media brand case",
+          "An environmental cleanup case packet",
+          "A tech-product launch brief",
+          "An education-program case study"
+        ],
+        questions: [
+          "Does the packet’s success story hold once we ask who the model excludes?",
+          "How does the packet frame the problem, and what does that frame soft-pedal?",
+          "Whose interests count as evidence in {topic}?",
+          "What assumption does the packet treat as obvious?",
+          "Where is the packet persuasive, and where does the evidence thin out?",
+          "What would outside sources need to pressure-test?"
+        ],
+        ideas: [
+          "The packet frames a clean success while underplaying a stakeholder cost",
+          "Evidence that looks settled still leaves a key tension unresolved",
+          "The packet assumes readers will accept its definition of success",
+          "Limits around {topic} weaken the overall claim even when parts persuade",
+          "Stakeholders at the margins change how the “win” should be read",
+          "Outside research should complicate the packet, not decorate it"
+        ]
+      },
       outlineLenses: [
         { title: "I. Introduction", topic: "Context plus a clear claim about how the packet frames the case.", cues: ["Brief context", "Working claim", "Map of lenses"] },
         { title: "II. Framing / problem definition", topic: "How the packet frames the problem or opportunity.", cues: ["Packet’s definition of success", "What it soft-pedals", "Packet evidence"] },
@@ -388,6 +552,33 @@
       ],
       defaultAngles: ["growth", "evidence", "goals"],
       claimKind: "reflection",
+      ideaSeeds: {
+        topics: [
+          "How my thesis statements changed from Essay 1 to now",
+          "My research and source habits across the term",
+          "Organization and topic sentences over time",
+          "Revision habits after feedback",
+          "How I used AI Level 2 support honestly",
+          "MLA and citation confidence",
+          "Moving from summary toward analysis",
+          "Time management in drafting"
+        ],
+        questions: [
+          "Which earlier draft best shows the change in {topic}?",
+          "What habit limited me at the start of the term?",
+          "What turning point (feedback, practice, or failure) shifted my process?",
+          "What still needs work next course?",
+          "How do I prove growth with concrete draft evidence?"
+        ],
+        ideas: [
+          "I moved from announcement theses toward specific, contestable claims",
+          "I used to summarize; now I pressure-test evidence—but I still rush warrants",
+          "Feedback became useful when I revised structure, not only sentences",
+          "AI stayed support-only once I owned the claim and outline",
+          "Growth shows in named drafts, not in vague “I got better”",
+          "My next goal is concrete: one habit tied to evidence from this term"
+        ]
+      },
       outlineLenses: [
         { title: "I. Opening claim", topic: "State what changed in your writing this term.", cues: ["One clear growth claim", "Time span", "Preview evidence"] },
         { title: "II. Early evidence", topic: "Point to a specific early draft or habit.", cues: ["Name the assignment", "Quote or describe a move", "What limited you then"] },
@@ -449,6 +640,33 @@
     ],
     defaultAngles: ["framing", "evidence", "limits"],
     claimKind: "generic",
+    ideaSeeds: {
+      topics: [
+        "A focused local or campus issue",
+        "A process or system that confuses newcomers",
+        "A comparison of two related figures or cases",
+        "A personal turning point with a clear insight",
+        "A packet or source set that frames a “success”",
+        "A research how/why question about an unknown",
+        "A reflection on one writing habit this term",
+        "A debate where stakes fall unevenly"
+      ],
+      questions: [
+        "What question guides a careful draft about {topic}?",
+        "What do sources or experience present that a reader might contest?",
+        "What tension, insight, or how/why focus should stay visible?",
+        "Who is the audience, and what do they need explained or judged?",
+        "What evidence would a careful reader ask for next?"
+      ],
+      ideas: [
+        "Although the familiar story says X, a closer look shows Y",
+        "The controlling idea is how/why this works—not which side wins",
+        "The claim names a limit, stakeholder cost, or insight worth earning",
+        "Comparison or contrast reveals more than a list of traits",
+        "Growth or change needs concrete evidence, not vague summary",
+        "Readers need definitions and scope before the main points"
+      ]
+    },
     outlineLenses: [
       { title: "I. Introduction", topic: "Context plus a clear working thesis or controlling idea.", cues: ["Hook or context", "Thesis / controlling idea", "Preview"] },
       { title: "II. Background", topic: "Give readers what they need before the main points.", cues: ["Definitions", "Scope", "Shared facts"] },

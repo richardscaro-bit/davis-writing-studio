@@ -79,6 +79,37 @@
             </fieldset>
           </div>
 
+          <div class="idea-generator" id="ideaGenerator">
+            <div class="idea-generator-head">
+              <h2 class="eyebrow" style="margin:0;">Topics, questions &amp; ideas</h2>
+              <p class="hint-block" style="margin:0.35rem 0 0;">Pick an essay first if you want matched starters. Suggestions are templates to edit — you own the claim (AI Level 2).</p>
+            </div>
+            <div class="hero-actions" style="margin-top:0.75rem;">
+              <button type="button" class="button primary" id="ideaGenerate">Suggest topics, questions &amp; ideas</button>
+            </div>
+            <div id="ideaResults" class="idea-results" hidden>
+              <div class="idea-columns">
+                <section class="idea-column" aria-labelledby="ideaTopicsHeading">
+                  <h3 id="ideaTopicsHeading" class="idea-column-title">Topics</h3>
+                  <div id="ideaTopics" class="idea-chips" role="group" aria-label="Suggested topics"></div>
+                </section>
+                <section class="idea-column" aria-labelledby="ideaQuestionsHeading">
+                  <h3 id="ideaQuestionsHeading" class="idea-column-title">Questions</h3>
+                  <div id="ideaQuestions" class="idea-chips" role="group" aria-label="Suggested questions"></div>
+                </section>
+                <section class="idea-column" aria-labelledby="ideaIdeasHeading">
+                  <h3 id="ideaIdeasHeading" class="idea-column-title">Ideas / controlling ideas</h3>
+                  <div id="ideaIdeas" class="idea-chips" role="group" aria-label="Suggested ideas"></div>
+                </section>
+              </div>
+              <div class="hero-actions" style="margin-top:0.85rem;">
+                <button type="button" class="button primary" id="ideaApply">Fill form from picks</button>
+                <button type="button" class="button ghost" id="ideaToOutline">Build outline from picks</button>
+              </div>
+              <p class="hint-block" style="margin-top:0.5rem;">Select at least a topic and an idea (question optional). <strong>Fill form</strong> writes into the fields below. <strong>Build outline</strong> saves a working claim and opens the outline helper with topic sentences.</p>
+            </div>
+          </div>
+
           <div class="hero-actions">
             <button type="button" class="button primary" id="claimGenerate">Generate claim options</button>
             <button type="button" class="button ghost" id="claimClear">Clear</button>
@@ -106,7 +137,7 @@
     </main>
     <footer class="site-footer"><p>Thesis / claim practice · AI Level 2 template generator</p></footer>
     <script src="../app.js"></script>
-    <script src="essay-context.js?v=topicfix1"></script>
-    <script src="tools.js?v=topicfix1"></script>
+    <script src="essay-context.js?v=ideas1"></script>
+    <script src="tools.js?v=ideas1"></script>
   </body>
 </html>

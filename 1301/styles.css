@@ -83,3 +83,74 @@ main > .section > h1 {
 .essay-picker-purpose {
   margin-top: 0.85rem;
 }
+
+
+/* Idea packs on Thesis Helper (AI Level 2 templates) */
+.idea-generator {
+  margin: 1.1rem 0 0.35rem;
+  padding: 1rem 1.05rem 1.05rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.16);
+}
+.idea-generator-head .hint-block {
+  max-width: 46rem;
+}
+.idea-results {
+  margin-top: 0.85rem;
+}
+.idea-columns {
+  display: grid;
+  gap: 0.85rem;
+}
+@media (min-width: 900px) {
+  .idea-columns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+.idea-column {
+  background: rgba(244, 241, 234, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.75rem 0.8rem 0.9rem;
+}
+.idea-column-title {
+  margin: 0 0 0.55rem;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 248, 240, 0.78);
+}
+.idea-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.idea-chip {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(244, 241, 234, 0.04);
+  color: rgba(255, 248, 240, 0.88);
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+  max-width: 100%;
+}
+.idea-chip:hover {
+  border-color: rgba(196, 122, 110, 0.85);
+  color: #fff;
+}
+.idea-chip.active,
+.idea-chip[aria-pressed="true"] {
+  background: rgba(154, 92, 82, 0.22);
+  border-color: rgba(196, 122, 110, 0.95);
+  color: #fff;
+}
