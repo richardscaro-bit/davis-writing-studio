@@ -166,3 +166,19 @@ main > .section > h1 {
 .criteria-fieldset .criteria-preset {
   margin: 0.25rem 0.35rem 0.25rem 0;
 }
+
+
+.outline-research {
+  margin-top: 0.5rem;
+  padding-top: 0.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.research-article-list,
+.research-search-list {
+  margin: 0.35rem 0 0.75rem;
+  padding-left: 1.15rem;
+}
+.research-article-list a,
+.research-search-list a {
+  font-weight: 600;
+}

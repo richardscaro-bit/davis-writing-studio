@@ -865,6 +865,88 @@
     if ($("#outlineSourcesNote")) $("#outlineSourcesNote").value = data.sourcesNote || "";
   }
 
+
+  function scholarUrl(q) {
+    return "https://scholar.google.com/scholar?q=" + encodeURIComponent(q);
+  }
+
+  function detectPairResearchKey(caseName) {
+    const s = String(caseName || "").toLowerCase();
+    if (/frankenstein/.test(s) && /dorian/.test(s)) return "frankenstein-dorian";
+    if (/godzilla/.test(s) && /kong/.test(s)) return "godzilla-kong";
+    if (/dracula/.test(s) && /vampire/.test(s)) return "dracula-vampire";
+    return "";
+  }
+
+  const PAIR_RESEARCH_BANK = {
+    "frankenstein-dorian": [
+      {
+        title: "The Making of Monsters: Creativity and Morality in Gothic Novels Frankenstein and The Picture of Dorian Gray",
+        note: "Open-access thesis comparing creation, creativity, and morality in both novels.",
+        url: "https://huskiecommons.lib.niu.edu/cgi/viewcontent.cgi?article=8256&context=allgraduate-thesesdissertations"
+      },
+      {
+        title: "What Makes a Monster and What Makes a Man? Exploring the Relationship between the Creator and the Creation in Three Gothic Novels",
+        note: "Open-access essay on creator-creation responsibility in Frankenstein, Jekyll and Hyde, and Dorian Gray.",
+        url: "https://cupola.gettysburg.edu/cgi/viewcontent.cgi?article=1074&context=student_scholarship"
+      },
+      {
+        title: "The 'Art' of Shaping Identities: Frankenstein and The Picture of Dorian Gray",
+        note: "Open-access thesis on creators, creations, rejection, and identity in both novels.",
+        url: "https://hdl.handle.net/10953.1/8274"
+      },
+      {
+        title: "The Concepts of Beauty and Love in The Picture of Dorian Gray and Frankenstein",
+        note: "Open-access thesis on beauty, love, prejudice, and reader response across both texts.",
+        url: "https://repozitorij.ffos.hr/islandora/object/ffos:5104"
+      }
+    ],
+    "godzilla-kong": [],
+    "dracula-vampire": []
+  };
+
+  function buildResearchNextSteps(inputs, essay) {
+    const pair = splitPair(inputs.caseName || "");
+    const a = pair.a;
+    const b = pair.b;
+    const key = detectPairResearchKey(inputs.caseName || "");
+    const criteria = Array.isArray(inputs.criteria) ? inputs.criteria.filter(Boolean).slice(0, 3) : [];
+    const articles = (PAIR_RESEARCH_BANK[key] || []).slice();
+    const searches = [
+      {
+        label: "Google Scholar: " + a + " AND " + b,
+        url: scholarUrl('"' + a + '" AND "' + b + '"')
+      },
+      {
+        label: "Google Scholar: " + a + " " + b + " comparison OR monstrosity",
+        url: scholarUrl(a + " " + b + " (comparison OR monstrosity OR creator OR creation)")
+      }
+    ];
+    if (criteria[0]) {
+      searches.push({
+        label: "Google Scholar: " + a + " " + b + " " + criteria[0],
+        url: scholarUrl(a + " AND " + b + " AND (" + criteria[0] + ")")
+      });
+    }
+    if (criteria[2]) {
+      searches.push({
+        label: "Google Scholar: " + a + " " + b + " " + criteria[2],
+        url: scholarUrl(a + " AND " + b + " AND (" + criteria[2] + ")")
+      });
+    }
+    return {
+      pairLabel: pair.paired ? a + " and " + b : (inputs.caseName || "your figures"),
+      articles,
+      searches,
+      libraryUrl: "https://www.alamo.edu/sac/experience-sac/campus-life/library/",
+      databasesUrl: "https://alamo.libguides.com/az.php",
+      keywordToolUrl: "keyword-generator.html",
+      hint: articles.length
+        ? "Start with the linked readings below, then use Scholar and the SAC library to confirm peer-reviewed sources that fit your criteria."
+        : "Use the Scholar searches below, then open the SAC library databases to locate peer-reviewed articles on your pair and criteria."
+    };
+  }
+
   function buildOutline(inputs) {
     const essay = activeEssay();
     const kind = (essay && essay.claimKind) || "generic";
@@ -1130,9 +1212,20 @@
         if (sourcesNote && /source/i.test(lens.title || "")) cues.push(sourcesNote);
         if (!cues.length) cues.push("Evidence", "Analysis", "Link to thesis");
       }
-      return { title: lens.title, topic, cues, bullets: cues.slice() };
+      const role = roleOf(lens.title, i);
+      const isTopic = role !== "intro" && role !== "conclusion";
+      return {
+        title: lens.title,
+        topic,
+        cues,
+        bullets: cues.slice(),
+        role,
+        isTopicSentence: isTopic,
+        sentenceLabel: isTopic ? "Topic sentence" : (role === "intro" ? "Opening plan" : "Closing plan")
+      };
     });
 
+    const research = buildResearchNextSteps(inputs, essay);
     return {
       claim,
       caseName,
@@ -1141,7 +1234,8 @@
       topicFolder: topicFolder || "",
       essayId: (essay && essay.id) || "",
       essayLabel: essayLabel(),
-      sections
+      sections,
+      research
     };
   }
 
@@ -1152,20 +1246,60 @@
     if (!skeleton || !skeleton.sections) {
       results.hidden = true;
       body.innerHTML = "";
+      const oldResearch = document.getElementById("outlineResearch");
+      if (oldResearch) oldResearch.remove();
       return;
     }
     body.innerHTML = skeleton.sections
       .map((sec, i) => {
-        return `<article class="outline-section" data-sec="${i}">
+        const label = sec.sentenceLabel || (sec.isTopicSentence === false ? "Section plan" : "Topic sentence");
+        const isTopic = sec.isTopicSentence !== false && label === "Topic sentence";
+        const copyLabel = isTopic ? "Copy topic sentence" : "Copy section plan";
+        return `<article class="outline-section" data-sec="${i}" data-role="${escapeHtml(sec.role || "")}">
           <header class="outline-section-head">
             <h3>${escapeHtml(sec.title)}</h3>
-            <button type="button" class="button small ghost" data-copy-topic="${i}">Copy topic sentence</button>
+            <button type="button" class="button small ghost" data-copy-topic="${i}">${copyLabel}</button>
           </header>
-          <p class="topic-sentence"><span class="topic-label">Topic sentence</span>${escapeHtml(sec.topic)}</p>
+          <p class="topic-sentence"><span class="topic-label">${escapeHtml(label)}</span>${escapeHtml(sec.topic)}</p>
           <ul>${(sec.bullets || sec.cues || []).map((b) => `<li>${escapeHtml(b)}</li>`).join("")}</ul>
         </article>`;
       })
       .join("");
+
+    let researchHost = document.getElementById("outlineResearch");
+    if (!researchHost) {
+      researchHost = document.createElement("div");
+      researchHost.id = "outlineResearch";
+      researchHost.className = "outline-research";
+      results.appendChild(researchHost);
+    }
+    const research = skeleton.research;
+    if (research) {
+      const articles = (research.articles || [])
+        .map((art) => {
+          return `<li><a href="${escapeHtml(art.url)}" target="_blank" rel="noopener">${escapeHtml(art.title)}</a>
+            <span class="hint-block" style="display:block;margin:0.15rem 0 0.55rem;">${escapeHtml(art.note || "")}</span></li>`;
+        })
+        .join("");
+      const searches = (research.searches || [])
+        .map((s) => `<li><a href="${escapeHtml(s.url)}" target="_blank" rel="noopener">${escapeHtml(s.label)}</a></li>`)
+        .join("");
+      researchHost.innerHTML = `
+        <h2 class="eyebrow" style="margin-top:1.5rem;">Next: research for ${escapeHtml(research.pairLabel || "your pair")}</h2>
+        <p class="hint-block">${escapeHtml(research.hint || "")}</p>
+        ${articles ? `<h3 class="idea-column-title">Starter readings (open access)</h3><ul class="research-article-list">${articles}</ul>` : ""}
+        <h3 class="idea-column-title">Search these next</h3>
+        <ul class="research-search-list">${searches}</ul>
+        <div class="hero-actions" style="margin-top:0.75rem;">
+          <a class="button small primary" href="${escapeHtml(research.libraryUrl)}" target="_blank" rel="noopener">SAC Library</a>
+          <a class="button small ghost" href="${escapeHtml(research.databasesUrl)}" target="_blank" rel="noopener">A–Z databases</a>
+          <a class="button small ghost" href="${escapeHtml(research.keywordToolUrl)}">Keyword generator</a>
+        </div>`;
+      researchHost.hidden = false;
+    } else {
+      researchHost.innerHTML = "";
+      researchHost.hidden = true;
+    }
     results.hidden = false;
   }
 
@@ -1174,10 +1308,20 @@
     const lines = ["Working thesis: " + skeleton.claim, ""];
     skeleton.sections.forEach((sec) => {
       lines.push(sec.title);
-      lines.push("Topic sentence: " + sec.topic);
+      lines.push((sec.sentenceLabel || (sec.isTopicSentence === false ? "Section plan" : "Topic sentence")) + ": " + sec.topic);
       (sec.bullets || sec.cues || []).forEach((b) => lines.push("  - " + b));
       lines.push("");
     });
+    if (skeleton.research) {
+      lines.push("Research next steps for " + (skeleton.research.pairLabel || "your pair"));
+      (skeleton.research.articles || []).forEach((art) => {
+        lines.push("  - " + art.title + " | " + art.url);
+      });
+      (skeleton.research.searches || []).forEach((s) => {
+        lines.push("  - Search: " + s.label + " | " + s.url);
+      });
+      lines.push("");
+    }
     return lines.join("\n");
   }
 
