@@ -40,16 +40,18 @@
       <section class="section" aria-labelledby="weeksTitle">
         <p class="eyebrow">How to start practicing · any essay</p>
         <h1 id="weeksTitle">Practice path</h1>
-        <p class="lead">Use this path for whichever essay you are practicing. Open that essay’s block on Home, then work the steps with Tools and Resources. Purpose for each essay lives on its own room (or Tools block). This page is the start-to-practice map only.</p>
+        <p class="lead">Use this path for whichever essay you are practicing. Pick that essay below, read its Purpose, then work the steps with Tools and Resources. Dedicated studios open only for the essay you selected — Case Study is not the default.</p>
         <p class="hero-actions">
-          <a class="button primary" href="index.html#essays">See all essays</a>
+          <a class="button primary" id="pathStudioBtn" href="index.html#essays">See all essays</a>
           <a class="button ghost" href="tools/">Practice tools</a>
           <a class="button ghost" href="resources.html">Resources</a>
         </p>
 
-        <div class="callout" style="margin-top:1.25rem;">
+        <div id="essayPicker" class="essay-picker" aria-label="Essay selector" style="margin-top:1.25rem;"></div>
+
+        <div class="callout" style="margin-top:1.25rem;" id="pathActiveCallout">
           <strong>Start practicing</strong>
-          <p style="margin:0.35rem 0 0;">Pick the essay you are on, read that essay’s Purpose, then move through brainstorm, thesis and outline, draft, then peer review and polish. Tools and Resources support every essay; dedicated studios have their own workspace when one exists.</p>
+          <p style="margin:0.35rem 0 0;" id="pathActiveText">Pick the essay you are on, read that essay’s Purpose, then move through brainstorm, thesis and outline, draft, then peer review and polish. Tools and Resources support every essay; open that essay’s studio only when one exists for it.</p>
         </div>
 
         <div class="week-stepper" style="margin-top:1.5rem;">
@@ -59,9 +61,9 @@
               <span class="pill">Focus · pick essay</span>
             </header>
             <p><strong>Pick your essay</strong></p>
-            <p>Jump to Essays on Home and open the room for the essay you are practicing. If that essay still points to Tools (Narrative Quest, Classical Argument, Final Reflection), start there until a dedicated studio is ready.</p>
+            <p>Use the picker above (or Essays on Home) and open the room for the essay you are practicing. If that essay still points to Tools (Narrative Quest, Classical Argument, Final Reflection), start there until a dedicated studio is ready.</p>
             <div class="resource-links">
-              <a class="button small primary" href="index.html#essays">Essays on Home</a>
+              <a class="button small primary" id="step1StudioBtn" href="index.html#essays">Essays on Home</a>
               <a class="button small ghost" href="tools/">Tools</a>
             </div>
           </article>
@@ -101,7 +103,7 @@
             <p><strong>Thesis + outline</strong></p>
             <p>Shape a working thesis, then a short outline. Practice with the thesis helper and outline helper; carry what you keep into the essay’s studio when it has one.</p>
             <div class="resource-links">
-              <a class="button small primary" href="tools/thesis-helper.html">Thesis / claim tool</a>
+              <a class="button small primary" href="tools/thesis-helper.html">Thesis helper</a>
               <a class="button small ghost" href="tools/outline-helper.html">Outline helper</a>
             </div>
           </article>
@@ -116,7 +118,7 @@
             <div class="resource-links">
               <a class="button small primary" href="tools/source-log.html">Source log</a>
               <a class="button small ghost" href="tools/mla-citation.html">MLA practice</a>
-              <a class="button small ghost" href="index.html#essays">Essay rooms</a>
+              <a class="button small ghost" id="step5StudioBtn" href="index.html#essays">Essay rooms</a>
             </div>
           </article>
 
@@ -139,5 +141,70 @@
 
     <footer class="site-footer"><p>Davis Writing Studio · ENGL 1301 Practice path</p></footer>
     <script src="app.js"></script>
+    <script src="tools/essay-context.js?v=path1"></script>
+    <script>
+      (function () {
+        const ctx = window.DWSEssayContext;
+        if (!ctx) return;
+        const pathStudioBtn = document.getElementById("pathStudioBtn");
+        const step1StudioBtn = document.getElementById("step1StudioBtn");
+        const step5StudioBtn = document.getElementById("step5StudioBtn");
+        const pathActiveText = document.getElementById("pathActiveText");
+
+        function refreshPath() {
+          const essay = ctx.getActive();
+          const id = ctx.getSelectedId();
+          const href = ctx.getStudioHref(essay);
+          const label = ctx.getStudioLabel(essay);
+
+          if (!id) {
+            if (pathStudioBtn) {
+              pathStudioBtn.href = "index.html#essays";
+              pathStudioBtn.textContent = "See all essays";
+              pathStudioBtn.className = "button primary";
+            }
+            if (step1StudioBtn) {
+              step1StudioBtn.href = "index.html#essays";
+              step1StudioBtn.textContent = "Essays on Home";
+            }
+            if (step5StudioBtn) {
+              step5StudioBtn.href = "index.html#essays";
+              step5StudioBtn.textContent = "Essay rooms";
+            }
+            if (pathActiveText) {
+              pathActiveText.textContent =
+                "Pick the essay you are on, read that essay’s Purpose, then move through brainstorm, thesis and outline, draft, then peer review and polish. Tools and Resources support every essay; open that essay’s studio only when one exists for it. Case Study opens only when you select Case Study.";
+            }
+            return;
+          }
+
+          if (pathStudioBtn) {
+            pathStudioBtn.href = href;
+            pathStudioBtn.textContent = "Open " + label;
+            pathStudioBtn.className = "button primary";
+          }
+          if (step1StudioBtn) {
+            step1StudioBtn.href = href;
+            step1StudioBtn.textContent = "Open " + label;
+          }
+          if (step5StudioBtn) {
+            step5StudioBtn.href = href;
+            step5StudioBtn.textContent = "Open " + label;
+          }
+          if (pathActiveText) {
+            pathActiveText.textContent =
+              "You selected " +
+              essay.label +
+              ". Read its Purpose, then work brainstorm → thesis and outline → draft → peer and polish. Open " +
+              label +
+              " for that essay’s workspace. Case Study is only the next step when Case Study is the selected essay.";
+          }
+        }
+
+        ctx.mountPicker("#essayPicker");
+        ctx.onChange(refreshPath);
+        refreshPath();
+      })();
+    </script>
   </body>
 </html>

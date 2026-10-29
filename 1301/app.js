@@ -115,7 +115,7 @@ const caseStudyWeeks = [
     week: "Step 1",
     due: "Focus · topic + brainstorm",
     assignment: "Topic selection + Case Study preview",
-    focus: "see one case demo in class (BarkBox / Crumbl models), pick a topic, and brainstorm early ideas. Your case Source Packet and Case Brief are the required unit readings. Do not lock a thesis yet; start with idea generation.",
+    focus: "see one case demo in class (BarkBox / Crumbl models), pick a topic, and brainstorm early ideas. Your case Source Packet and Case Brief are the required essay readings. Do not lock a thesis yet; start with idea generation.",
     also: ["In-class focus: Critical Question Workshop"]
   },
   {
@@ -200,7 +200,7 @@ function renderStudioAiPolicy(key) {
 
 function renderWritingProcessMap(key) {
   const steps = [
-    ["1", "Overview", "Know the unit task.", `#${key}Overview`],
+    ["1", "Overview", "Know the essay task.", `#${key}Overview`],
     ["2", "Practice path", "See what each step is for.", `#${key}Schedule`],
     ["3", "Topic", "Open packet + folder links.", `#${key}Topics`],
     ["4", "Practice", "Brainstorm → notes → outline → draft.", `#${key}Workspace`],
@@ -268,7 +268,7 @@ function renderTopicPicker(key, workspace) {
         </div>
         <a class="button small primary" href="${PRACTICE_ROOT}" target="_blank" rel="noopener">Open practice root</a>
       </div>
-      <p><strong>Unit readings:</strong> after you pick a topic, open that folder and read your case <strong>Source Packet</strong> and <strong>Case Brief</strong> (plus Case Options). Those packet materials are the primary readings for this unit. Models: BarkBox + Crumbl in class; Tesla alternate; Whole-Class Examples in Drive are practice only.</p>
+      <p><strong>Essay readings:</strong> after you pick a topic, open that folder and read your case <strong>Source Packet</strong> and <strong>Case Brief</strong> (plus Case Options). Those packet materials are the primary readings for this essay. Models: BarkBox + Crumbl in class; Tesla alternate; Whole-Class Examples in Drive are practice only.</p>
       <div class="resource-links">
         <a class="button small ghost" href="${TOPIC_OPTIONS}" target="_blank" rel="noopener">Topic Options doc</a>
         <a class="button small ghost" href="${STUDENT_PROMPTS}" target="_blank" rel="noopener">Student Prompts</a>

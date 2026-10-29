@@ -6,6 +6,8 @@
   const ESSAYS = [
     {
       id: "narrative-quest",
+      studioHref: "tools/",
+      studioLabel: "Tools (Narrative Quest)",
       label: "Narrative Quest Essay",
       purpose:
         "Tell a focused personal narrative about a change or quest (often tied to a monster, hero, or world). Show scene and reflection; end with one clear insight.",
@@ -89,6 +91,8 @@
     },
     {
       id: "classical-argument",
+      studioHref: "tools/",
+      studioLabel: "Tools (Classical Argument)",
       label: "Classical Argument Essay",
       purpose:
         "Take a clear stand on a debatable issue (On Trial theme in Flex). Support the claim with reasons and evidence; address at least one opposing view.",
@@ -173,6 +177,8 @@
     },
     {
       id: "monster-comparison",
+      studioHref: "spring-monster-comparison-studio.html",
+      studioLabel: "Monster Comparison studio",
       label: "Monster Comparison",
       purpose:
         "Compare two iconic monsters from the same meaningful category using the same criteria for both. End with one insight beyond a list of traits. Aim for a short MLA comparison (often 500 to 750 words).",
@@ -271,6 +277,8 @@
     },
     {
       id: "facing-unknown",
+      studioHref: "facing-the-unknown-studio.html",
+      studioLabel: "Facing the Unknown studio",
       label: "Facing the Unknown (Exposition)",
       purpose:
         "Explain an unknown, strange, or frightening topic objectively with research. Inform; do not argue which side is right.",
@@ -357,6 +365,8 @@
     },
     {
       id: "field-guide",
+      studioHref: "field-guide-studio.html",
+      studioLabel: "Field Guide studio",
       label: "Cultural Place Field Guide (Exposition)",
       purpose:
         "Explain a place, practice, or local system for a named audience. Build one Field Guide plate plus a how/why essay that match each other. You explain; you do not take a side.",
@@ -439,6 +449,8 @@
     },
     {
       id: "case-study",
+      studioHref: "case-study-studio.html",
+      studioLabel: "Case Study studio",
       label: "Case Study Critical Analysis",
       purpose:
         "Write a critical analysis with one clear claim, evidence from a Source Packet / Case Brief, and 3 to 4 credible outside sources. Aim for about 1,000 to 1,500 words MLA (AI Level 2: support, not composition).",
@@ -535,6 +547,8 @@
     },
     {
       id: "final-reflection",
+      studioHref: "tools/",
+      studioLabel: "Tools (Final Reflection)",
       label: "Final Reflection",
       purpose:
         "Look back on your writing this term. Use specific earlier work as evidence of growth, habits, and remaining goals.",
@@ -913,6 +927,18 @@
     }
   }
 
+  function getStudioHref(essay) {
+    const e = essay || getActive();
+    if (e && e.studioHref) return e.studioHref;
+    return "index.html#essays";
+  }
+
+  function getStudioLabel(essay) {
+    const e = essay || getActive();
+    if (e && e.studioLabel) return e.studioLabel;
+    return "Essays on Home";
+  }
+
   global.DWSEssayContext = {
     STORAGE_KEY,
     ESSAYS,
@@ -921,6 +947,8 @@
     getSelectedId,
     setSelectedId,
     getActive,
+    getStudioHref,
+    getStudioLabel,
     onChange,
     mountPicker,
     applyThesisLabels,
