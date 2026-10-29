@@ -842,18 +842,19 @@
   function readOutlineInputs() {
     const thesis = loadJSON(KEYS.thesisInputs, null) || {};
     const chosen = loadJSON(KEYS.chosenClaim, null) || {};
+    const prior = loadJSON(KEYS.outlineInputs, null) || {};
     const criteria = (chosen.criteria && chosen.criteria.length)
       ? chosen.criteria
-      : (thesis.criteria || []);
+      : ((prior.criteria && prior.criteria.length) ? prior.criteria : (thesis.criteria || []));
     return {
       claim: ($("#outlineClaim")?.value || "").trim(),
       caseName: ($("#outlineCase")?.value || "").trim(),
       tension: ($("#outlineTension")?.value || "").trim(),
       sourcesNote: ($("#outlineSourcesNote")?.value || "").trim(),
       criteria: Array.isArray(criteria) ? criteria : [],
-      packetArgues: thesis.packetArgues || "",
-      topicFolder: thesis.topicFolder || "",
-      question: thesis.question || ""
+      packetArgues: thesis.packetArgues || prior.packetArgues || "",
+      topicFolder: chosen.topicFolder || prior.topicFolder || thesis.topicFolder || "",
+      question: chosen.question || prior.question || thesis.question || ""
     };
   }
 
@@ -1352,14 +1353,14 @@
         <h2 class="eyebrow" style="margin-top:1.5rem;">Next: research</h2>
         <p class="hint-block">Open Keyword generator for research next steps for ${escapeHtml(pairLabel)}. It uses your essay and pair when saved on this device.</p>
         <div class="hero-actions" style="margin-top:0.75rem;">
-          <a class="button small primary" href="keyword-generator.html">Keyword generator / research</a>
+          <a class="button small primary" href="keyword-generator.html?from=outline">Keyword generator / research</a>
         </div>`;
       researchHost.hidden = false;
     } else {
       researchHost.innerHTML = `
         <p class="hint-block" style="margin-top:1rem;">For search keywords and library queries next, open the Keyword generator.</p>
         <div class="hero-actions" style="margin-top:0.5rem;">
-          <a class="button small ghost" href="keyword-generator.html">Keyword generator</a>
+          <a class="button small ghost" href="keyword-generator.html?from=outline">Keyword generator</a>
         </div>`;
       researchHost.hidden = false;
     }
@@ -3089,23 +3090,84 @@
     const saved = loadJSON(KEYS.keywordGen, null);
     const chosen = loadJSON(KEYS.chosenClaim, null) || {};
     const outlineSaved = loadJSON(KEYS.outlineInputs, null) || {};
-    function mergeKwPrefill(base) {
-      const next = Object.assign({}, base || {});
-      if (!next.caseName) next.caseName = chosen.caseName || outlineSaved.caseName || "";
-      if (!next.claim) next.claim = chosen.claim || outlineSaved.claim || "";
-      if (!next.topic) next.topic = chosen.topicFolder || outlineSaved.topicFolder || "";
-      if (!next.tension) next.tension = chosen.tension || outlineSaved.tension || "";
+    const thesisSaved = loadJSON(KEYS.thesisInputs, null) || {};
+    const fromOutline = new URLSearchParams(location.search).get("from") === "outline";
+
+    function sourceStamp(obj) {
+      const n = Number(obj && obj.savedAt);
+      return Number.isFinite(n) ? n : 0;
+    }
+
+    function outlinePrefill() {
+      return {
+        caseName: outlineSaved.caseName || chosen.caseName || thesisSaved.caseName || "",
+        claim: outlineSaved.claim || chosen.claim || "",
+        topic: outlineSaved.topicFolder || chosen.topicFolder || thesisSaved.topicFolder || "",
+        tension: outlineSaved.tension || chosen.tension || thesisSaved.tension || "",
+        extra: ""
+      };
+    }
+
+    function mergeKwPrefill(base, forceOutline) {
+      const next = Object.assign({ caseName: "", topic: "", claim: "", tension: "", extra: "" }, base || {});
+      const from = outlinePrefill();
+      const outlineNewer =
+        Math.max(sourceStamp(outlineSaved), sourceStamp(chosen), sourceStamp(thesisSaved)) >=
+        sourceStamp(saved);
+      const prefer = forceOutline || outlineNewer || !(next.caseName || next.claim || next.tension);
+      if (prefer) {
+        if (from.caseName) next.caseName = from.caseName;
+        if (from.claim) next.claim = from.claim;
+        if (from.topic) next.topic = from.topic;
+        if (from.tension) next.tension = from.tension;
+      } else {
+        if (!next.caseName && from.caseName) next.caseName = from.caseName;
+        if (!next.claim && from.claim) next.claim = from.claim;
+        if (!next.topic && from.topic) next.topic = from.topic;
+        if (!next.tension && from.tension) next.tension = from.tension;
+      }
       return next;
     }
-    if (saved?.inputs) {
-      writeKwInputs(mergeKwPrefill(saved.inputs));
-      if (saved.packet) {
-        lastPacket = saved.packet;
-        showKeywordResults(saved.packet);
-        setStatus($("#kwSaveStatus"), "Restored keyword packet from this device.", true);
-      }
-    } else {
-      writeKwInputs(mergeKwPrefill({ caseName: "", topic: "", claim: "", tension: "", extra: "" }));
+
+    const prefilled = mergeKwPrefill(saved?.inputs || {}, fromOutline);
+    writeKwInputs(prefilled);
+    // Re-apply topic after essay picker rebuilds options
+    const applyTopic = () => {
+      if ($("#kwTopic") && prefilled.topic) $("#kwTopic").value = prefilled.topic;
+    };
+    applyTopic();
+    setTimeout(applyTopic, 0);
+
+    const outlineHas =
+      !!(prefilled.caseName || prefilled.claim || prefilled.tension);
+    const shouldRegen =
+      fromOutline ||
+      (outlineHas &&
+        (!saved?.packet ||
+          Math.max(sourceStamp(outlineSaved), sourceStamp(chosen)) > sourceStamp(saved)));
+
+    if (shouldRegen && outlineHas) {
+      lastPacket = buildKeywordPacket(readKwInputs());
+      showKeywordResults(lastPacket);
+      saveJSON(KEYS.keywordGen, {
+        inputs: readKwInputs(),
+        packet: lastPacket,
+        savedAt: Date.now(),
+        fromOutline: fromOutline || undefined
+      });
+      setStatus(
+        $("#kwSaveStatus"),
+        fromOutline
+          ? "Loaded subject, thesis, and tension from your outline."
+          : "Updated keywords from your latest outline / thesis.",
+        true
+      );
+    } else if (saved?.packet) {
+      lastPacket = saved.packet;
+      showKeywordResults(saved.packet);
+      setStatus($("#kwSaveStatus"), "Restored keyword packet from this device.", true);
+    } else if (outlineHas) {
+      setStatus($("#kwSaveStatus"), "Loaded fields from your outline / thesis. Generate to build keywords.", true);
     }
 
     function persist(packet, announce) {
@@ -3228,6 +3290,11 @@
       } else if (essay && essay.outlineCue) {
         outlineHint.textContent = essay.outlineCue;
       }
+    }
+    if ($("#kwGenerate")) {
+      const kwSaved = loadJSON(KEYS.keywordGen, null);
+      const topic = (kwSaved && kwSaved.inputs && kwSaved.inputs.topic) || "";
+      if ($("#kwTopic") && topic) $("#kwTopic").value = topic;
     }
     if ($("#kwResults") && !$("#kwResults").hidden) {
       const packet = loadJSON(KEYS.keywordGen, null)?.packet;
