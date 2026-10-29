@@ -55,3 +55,31 @@
 main > .section > h1 {
   font-size: clamp(1.85rem, 3.4vw, 2.45rem);
 }
+
+
+/* Essay picker on practice tools */
+.essay-picker {
+  margin: 1.15rem 0 0.35rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.18);
+}
+.essay-picker-field {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+}
+.essay-picker-label {
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: rgba(255, 248, 240, 0.92);
+}
+.essay-picker select {
+  max-width: 36rem;
+}
+.essay-picker-purpose {
+  margin-top: 0.85rem;
+}

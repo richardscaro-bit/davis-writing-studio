@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Outline / topic sentences | ENGL 1301 · Davis Writing Studio</title>
-    <meta name="description" content="Practice Case Study outline helper that drafts topic sentences from your claim.">
+    <meta name="description" content="Practice outline helper for any ENGL 1301 essay. Pick an essay to adapt section lenses, or use generic mode.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -33,28 +33,32 @@
 
     <main id="main">
       <section class="section" aria-labelledby="olTitle">
-        <p class="eyebrow">Practice tool · after claim · Case Study</p>
+        <p class="eyebrow" data-essay-eyebrow>Practice tool · any essay</p>
         <h1 id="olTitle">Outline / topic sentences</h1>
-        <p class="lead">Paste or auto-carry the thesis you chose. This helper drafts a 1 to 2 page outline skeleton with topic-sentence starters for Case Study lenses (problem or framing, stakeholders, evidence, assumptions, limits) plus slots for 3 to 4 outside sources. Structured templates only; edit everything in your voice.</p>
+        <p class="lead">Paste or auto-carry the thesis you chose. This helper drafts an outline skeleton with topic-sentence starters. Choose an essay to match section lenses to that assignment, or stay in generic mode.</p>
+
+        <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
 
         <div class="callout ai">
           <strong>Practice outline · edit in your voice</strong>
-          <p style="margin:0;">Generate → revise topic sentences → copy into the Case Study studio or your own doc. Packet evidence still has to match; outside sources come next.</p>
+          <p style="margin:0;" id="essayToolCue">Generate → revise topic sentences → copy into your essay room or your own doc.</p>
         </div>
 
         <div class="tool-panel" style="margin-top:1.25rem;">
           <div class="field-grid">
             <label class="field">Working claim <span class="hint">Required. Auto-fills if you clicked “Use this claim” on the thesis generator.</span>
-              <textarea id="outlineClaim" style="min-height:5.5rem;" placeholder="Although the BarkBox packet presents…"></textarea>
+              <textarea id="outlineClaim" style="min-height:5.5rem;" placeholder="Paste your working thesis or controlling idea…"></textarea>
             </label>
-            <label class="field">Case / packet name <span class="hint">Optional if already in the claim</span>
-              <input type="text" id="outlineCase" placeholder="BarkBox">
+            <label class="field" data-essay-field="subjectLabel" data-essay-placeholder="subjectPlaceholder">
+              <span data-essay-title>Subject / focus</span> <span class="hint">Optional if already in the claim</span>
+              <input type="text" id="outlineCase" placeholder="Your subject">
             </label>
-            <label class="field">Packet tension to keep visible <span class="hint">Optional — sharpens topic sentences</span>
-              <textarea id="outlineTension" style="min-height:4rem;" placeholder="Subscription fatigue / who the model excludes…"></textarea>
+            <label class="field" data-essay-field="tensionLabel" data-essay-placeholder="tensionPlaceholder">
+              <span data-essay-title>Tension / insight to keep visible</span> <span class="hint">Optional — sharpens topic sentences</span>
+              <textarea id="outlineTension" style="min-height:4rem;" placeholder="Key tension or insight…"></textarea>
             </label>
-            <label class="field">Outside-source reminders <span class="hint">Optional notes for the 3–4 sources you still need</span>
-              <textarea id="outlineSourcesNote" style="min-height:3.5rem;" placeholder="e.g. industry report on subscription churn; article on pet-economy inequality…"></textarea>
+            <label class="field">Source reminders <span class="hint">Optional notes for sources you still need</span>
+              <textarea id="outlineSourcesNote" style="min-height:3.5rem;" placeholder="e.g. library article on…; course reading on…"></textarea>
             </label>
           </div>
 
@@ -73,13 +77,14 @@
               <button type="button" class="button small ghost" id="outlineCopyAll">Copy all</button>
             </div>
             <div id="outlineBody" class="outline-body" aria-live="polite"></div>
-            <p class="hint-block" style="margin-top:1rem;">Edit every topic sentence before you draft. Keep the claim one clear stance; use body sections to show how the packet frames the case, who is affected, what evidence holds up, what it assumes, and where it falls short — then bring in 3–4 outside sources.</p>
+            <p class="hint-block" style="margin-top:1rem;" id="outlineHint">Edit every topic sentence before you draft. Keep one clear thesis or controlling idea; let body sections earn it.</p>
           </div>
         </div>
       </section>
     </main>
     <footer class="site-footer"><p>Outline / topic-sentence practice · AI Level 2 template generator</p></footer>
     <script src="../app.js"></script>
+    <script src="essay-context.js"></script>
     <script src="tools.js"></script>
   </body>
 </html>

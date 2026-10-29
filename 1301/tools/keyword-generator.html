@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Keyword generator | ENGL 1301 · Davis Writing Studio</title>
-    <meta name="description" content="Practice keyword / search-query generator for ENGL 1301 Case Study: synonyms, Boolean tips, Google Scholar and library draft queries.">
+    <meta name="description" content="Practice keyword and search-query generator for any ENGL 1301 essay: synonyms, Boolean tips, Google Scholar and library drafts.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -33,19 +33,22 @@
 
     <main id="main">
       <section class="section" aria-labelledby="kwTitle">
-        <p class="eyebrow">Practice tool · research search · Case Study</p>
+        <p class="eyebrow" data-essay-eyebrow>Practice tool · research search · any essay</p>
         <h1 id="kwTitle">Keyword generator</h1>
-        <p class="lead">Turn your topic, thesis, or case into search keywords, synonyms, Boolean tip strings, and draft queries for Google Scholar and the SAC Library. Templates run on your device; you still evaluate every source (packet plus 3 to 4 outside).</p>
+        <p class="lead">Turn your topic, thesis, or focus into search keywords, synonyms, Boolean tip strings, and draft queries for Google Scholar and the SAC Library. Templates run on your device; you still evaluate every source.</p>
+
+        <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
 
         <div class="callout ai" style="margin-top:1rem;">
-          <strong>Case Study cue · AI Level 2</strong>
-          <p style="margin:0;">This tool does not search the web for you and does not write your essay. Use the drafts in Scholar / SAC databases, then log keepers in the source log. Verify access and MLA against each source.</p>
+          <strong>AI Level 2 · local practice</strong>
+          <p style="margin:0;" id="essayToolCue">This tool does not search the web for you and does not write your essay. Use the drafts in Scholar / SAC databases, then log keepers in the source log. Verify access and MLA against each source.</p>
         </div>
 
         <div class="tool-panel" style="margin-top:1.25rem;">
           <div class="field-grid">
-            <label class="field">Case / packet name <span class="hint">Strongly recommended. e.g. BarkBox</span>
-              <input type="text" id="kwCase" placeholder="BarkBox" autocomplete="off">
+            <label class="field" data-essay-field="subjectLabel" data-essay-placeholder="subjectPlaceholder">
+              <span data-essay-title>Subject / focus</span> <span class="hint">Strongly recommended</span>
+              <input type="text" id="kwCase" placeholder="Your subject" autocomplete="off">
             </label>
             <label class="field">Topic folder <span class="hint">Optional — shapes related-term suggestions</span>
               <select id="kwTopic">
@@ -67,13 +70,13 @@
               </select>
             </label>
             <label class="field span-2">Working claim or research focus <span class="hint">Paste a draft claim or 1–2 sentences of focus</span>
-              <textarea id="kwClaim" style="min-height:4.5rem;" placeholder="Although the BarkBox packet presents subscription loyalty as pure success, it underplays how subscription fatigue and rising costs squeeze less-affluent pet owners…"></textarea>
+              <textarea id="kwClaim" style="min-height:4.5rem;" placeholder="Paste a draft claim, how/why focus, or research question…"></textarea>
             </label>
             <label class="field">Tension / angle words <span class="hint">Optional. Comma-separated: stakeholders, cost, framing…</span>
-              <input type="text" id="kwTension" placeholder="subscription fatigue, equity, customer retention" autocomplete="off">
+              <input type="text" id="kwTension" placeholder="tension, equity, process, audience…" autocomplete="off">
             </label>
             <label class="field">Extra concepts you already tried <span class="hint">Optional. Words to keep even if not in the claim</span>
-              <input type="text" id="kwExtra" placeholder="pet industry, loyalty program" autocomplete="off">
+              <input type="text" id="kwExtra" placeholder="extra concepts you already tried" autocomplete="off">
             </label>
           </div>
 
@@ -128,7 +131,7 @@
                 <button type="button" class="button small ghost" data-kw-copy="kwLibrary">Copy all</button>
               </div>
               <ul class="kw-query-list" id="kwLibrary" aria-live="polite"></ul>
-              <p class="hint-block">Try these in SAC search or an A–Z database. Filter peer-reviewed / full text when you need scholarly outside sources.</p>
+              <p class="hint-block">Try these in SAC search or an A–Z database. Filter peer-reviewed / full text when your essay needs scholarly sources.</p>
             </div>
 
             <div class="hero-actions" style="margin-top:0.5rem;">
@@ -150,6 +153,7 @@
     </main>
     <footer class="site-footer"><p>Keyword practice · AI Level 2</p></footer>
     <script src="../app.js"></script>
+    <script src="essay-context.js"></script>
     <script src="tools.js"></script>
   </body>
 </html>

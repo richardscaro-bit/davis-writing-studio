@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Peer-review checklist | ENGL 1301 · Davis Writing Studio</title>
-    <meta name="description" content="Practice peer-review checklist for ENGL 1301 Case Study: claim clarity, packet + outside sources, MLA, organization, and AI Level 2 honesty.">
+    <meta name="description" content="Practice peer-review checklist for any ENGL 1301 essay. Pick an essay to adapt checklist items.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -33,13 +33,15 @@
 
     <main id="main">
       <section class="section" aria-labelledby="prTitle">
-        <p class="eyebrow">Practice tool · Step 4 · Case Study</p>
+        <p class="eyebrow" data-essay-eyebrow>Practice tool · peer rehearsal · any essay</p>
         <h1 id="prTitle">Peer-review checklist</h1>
-        <p class="lead">Rehearse feedback on a Case Study draft (about 1,000 to 1,500 words MLA, packet plus 3 to 4 outside sources, AI Level 2). Check what is working, leave a short note, then copy or print a summary for your partner.</p>
+        <p class="lead">Rehearse feedback on a draft for the essay you are practicing. Choose an essay to load matched checklist items, or use the generic list. Check what is working, leave a short note, then copy or print a summary for your partner.</p>
+
+        <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
 
         <div class="callout ai" style="margin-top:1rem;">
           <strong>Be specific · be kind · be honest</strong>
-          <p style="margin:0;">Point to a sentence or section when you can. Name strengths first. Flag AI Level 2 honesty without policing — ask where AI helped and whether the writer still owns the claim and evidence.</p>
+          <p style="margin:0;" id="essayToolCue">Point to a sentence or section when you can. Name strengths first. Ask where AI helped and whether the writer still owns the ideas and evidence.</p>
         </div>
 
         <div class="tool-panel" style="margin-top:1.25rem;">
@@ -48,22 +50,22 @@
               <input type="text" id="prReviewer" placeholder="Jordan" autocomplete="off">
             </label>
             <label class="field">Writer / draft name <span class="hint">Optional</span>
-              <input type="text" id="prWriter" placeholder="Alex — BarkBox draft" autocomplete="off">
+              <input type="text" id="prWriter" placeholder="Alex — draft title" autocomplete="off">
             </label>
             <label class="field span-2" style="grid-column:1/-1;">Working claim (as you read it) <span class="hint">Quote or paraphrase the thesis you see</span>
-              <textarea id="prClaim" style="min-height:3.5rem;" placeholder="Although the BarkBox packet presents…"></textarea>
+              <textarea id="prClaim" style="min-height:3.5rem;" placeholder="The draft’s main idea seems to be…"></textarea>
             </label>
           </div>
 
           <div class="outline-toolbar" style="margin-top:0.75rem;">
             <h2 class="eyebrow" style="margin:0;">Checklist</h2>
-            <p class="source-count-pill" id="prProgress" aria-live="polite">0 / 8 checked</p>
+            <p class="source-count-pill" id="prProgress" aria-live="polite">0 checked</p>
           </div>
 
           <ul class="peer-check-list" id="prList" aria-label="Peer-review items"></ul>
 
           <label class="field" style="margin-top:1rem;">Overall note to the writer <span class="hint">2–4 sentences: one strength + one priority revision</span>
-            <textarea id="prOverall" style="min-height:5rem;" placeholder="Love the clear tension around subscription fatigue. Next, add a second outside source that complicates the packet’s success story…"></textarea>
+            <textarea id="prOverall" style="min-height:5rem;" placeholder="One strength I noticed… One priority revision…"></textarea>
           </label>
 
           <div class="hero-actions">
@@ -87,6 +89,7 @@
     </main>
     <footer class="site-footer"><p>Peer-review rehearsal · AI Level 2</p></footer>
     <script src="../app.js"></script>
+    <script src="essay-context.js"></script>
     <script src="tools.js"></script>
   </body>
 </html>

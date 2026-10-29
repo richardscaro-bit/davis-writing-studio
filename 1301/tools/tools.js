@@ -15,6 +15,18 @@
     keywordGen: "engl1301.tools.keywordGen"
   };
 
+  function essayCtx() {
+    return window.DWSEssayContext || null;
+  }
+  function activeEssay() {
+    const ctx = essayCtx();
+    return ctx ? ctx.getActive() : null;
+  }
+  function essayLabel() {
+    const e = activeEssay();
+    return e && e.id ? e.label : "Any essay";
+  }
+
   function loadJSON(key, fallback) {
     try {
       const raw = localStorage.getItem(key);
@@ -88,58 +100,194 @@
   }
 
   function buildClaimOptions(inputs) {
+    const essay = activeEssay();
+    const kind = (essay && essay.claimKind) || "generic";
     const caseName = inputs.caseName;
     const argues = trimSnippet(inputs.packetArgues, 110);
     const tension = trimSnippet(inputs.tension, 110);
     const question = trimSnippet(inputs.question, 100);
-    const angles = inputs.angles.length ? inputs.angles : ["framing", "evidence", "limits", "stakeholders"];
+    const angles = inputs.angles.length
+      ? inputs.angles
+      : (essay && essay.defaultAngles) || ["framing", "evidence", "limits"];
 
-    const catalog = {
-      framing: {
-        text: `Although the ${caseName} packet presents ${argues}, it frames the case as a clean success story while overlooking ${tension}.`,
-        why: "Names the packet’s frame and the gap a reader can contest."
+    const catalogs = {
+      "case-study": {
+        framing: {
+          text: `Although the ${caseName} packet presents ${argues}, it frames the case as a clean success story while overlooking ${tension}.`,
+          why: "Names the packet’s frame and the gap a reader can contest."
+        },
+        stakeholders: {
+          text: `The ${caseName} materials underplay how ${tension} affects outcomes for stakeholders the packet treats as secondary.`,
+          why: "Centers people the packet sidelines."
+        },
+        evidence: {
+          text: `While the ${caseName} packet pushes ${argues} as settled fact, its evidence overstates that conclusion and leaves ${tension} unresolved.`,
+          why: "Judges evidence quality without announcing the essay’s plan."
+        },
+        assumptions: {
+          text: `The ${caseName} packet assumes readers will accept ${argues} without asking how ${tension} unsettles that story.`,
+          why: "Targets a hidden premise rather than summarizing the packet."
+        },
+        limits: {
+          text: `The ${caseName} packet makes a persuasive case for ${argues}, yet its limits around ${tension} weaken the overall claim.`,
+          why: "Keeps credit for the packet while staking a clear limit."
+        }
       },
-      stakeholders: {
-        text: `The ${caseName} materials underplay how ${tension} affects outcomes for stakeholders the packet treats as secondary.`,
-        why: "Centers who is affected — a stance a reader could push back on."
+      comparison: {
+        criteria: {
+          text: `Although ${caseName} share ${argues}, comparing them through consistent criteria shows that ${tension}.`,
+          why: "Names shared ground and the insight beyond a trait list."
+        },
+        similarity: {
+          text: `${caseName} look alike in ${argues}, but that similarity only sharpens how ${tension}.`,
+          why: "Uses likeness to set up a meaningful difference."
+        },
+        difference: {
+          text: `Read side by side, ${caseName} diverge most clearly in ${tension}, even though both belong to ${argues}.`,
+          why: "Leads with the contrast that earns the thesis."
+        },
+        insight: {
+          text: `Comparing ${caseName} reveals ${tension} rather than a simple list of traits about ${argues}.`,
+          why: "States the cultural or audience insight the essay will earn."
+        }
       },
-      evidence: {
-        text: `While the ${caseName} packet pushes ${argues} as settled fact, its evidence overstates that conclusion and leaves ${tension} unresolved.`,
-        why: "Judges evidence quality without announcing the essay’s plan."
+      exposition: {
+        define: {
+          text: `To understand ${caseName}, readers need a clear account of ${argues}, especially how ${tension}.`,
+          why: "Sets an explanatory controlling idea, not a debate claim."
+        },
+        process: {
+          text: `${caseName} works through ${argues}; explaining that process shows why ${tension}.`,
+          why: "Centers how-it-works explanation."
+        },
+        cause: {
+          text: `${caseName} is best explained by tracing how ${argues} leads to ${tension}.`,
+          why: "Cause/effect controlling idea for exposition."
+        },
+        clarify: {
+          text: `Common views of ${caseName} treat ${argues} as settled; a careful explanation shows instead that ${tension}.`,
+          why: "Corrects a misunderstanding without taking a policy side."
+        },
+        how: {
+          text: `For the audience that needs ${argues}, ${caseName} is best explained by showing how ${tension}.`,
+          why: "Audience-aware how/why focus (Field Guide friendly)."
+        },
+        why: {
+          text: `${caseName} matters to its audience because ${tension}, which becomes clear once ${argues} is explained.`,
+          why: "Significance without side-taking."
+        },
+        place: {
+          text: `A clear field guide to ${caseName} starts from ${argues} and explains how ${tension}.`,
+          why: "Place + explanation controlling idea."
+        },
+        audience: {
+          text: `Readers who need ${argues} understand ${caseName} better when the guide explains ${tension}.`,
+          why: "Keeps the named audience in the controlling idea."
+        }
       },
-      assumptions: {
-        text: `The ${caseName} packet assumes readers will accept ${argues} without asking how ${tension} unsettles that story.`,
-        why: "Targets a hidden premise rather than summarizing the packet."
+      argument: {
+        claim: {
+          text: `Although many argue that ${argues}, ${caseName} should be decided in favor of ${tension}.`,
+          why: "Clear stand against a common view."
+        },
+        reasons: {
+          text: `On the question of ${caseName}, the stronger position is ${tension} because ${argues}.`,
+          why: "Claim plus reason cluster."
+        },
+        evidence: {
+          text: `Evidence about ${caseName} supports ${tension} more convincingly than the familiar claim that ${argues}.`,
+          why: "Leads with evidence pressure."
+        },
+        counter: {
+          text: `Even granting that ${argues}, the better judgment on ${caseName} is still ${tension}.`,
+          why: "Builds in a concession + reply."
+        },
+        stakes: {
+          text: `What is at stake in ${caseName} is ${tension}; treating ${argues} as settled hides that cost.`,
+          why: "Stakes-first claim."
+        }
       },
-      limits: {
-        text: `The ${caseName} packet makes a persuasive case for ${argues}, yet its limits around ${tension} weaken the overall claim.`,
-        why: "Keeps credit for the packet while staking a clear limit."
+      narrative: {
+        scene: {
+          text: `The story of ${caseName} turns on ${argues}, and the detail that matters most is how ${tension}.`,
+          why: "Scene-led insight sentence."
+        },
+        change: {
+          text: `In ${caseName}, I began from ${argues} and changed when ${tension}.`,
+          why: "Before/after growth claim for narrative."
+        },
+        insight: {
+          text: `Looking back on ${caseName}, the insight is ${tension}, not merely that ${argues}.`,
+          why: "Insight beyond plot summary."
+        },
+        audience: {
+          text: `For a reader who needs to understand ${argues}, the quest around ${caseName} shows ${tension}.`,
+          why: "Audience-aware narrative insight."
+        }
       },
-      question: question
-        ? {
-            text: `Responding to the question “${question},” the ${caseName} packet’s portrayal of ${argues} fails to account for ${tension}.`,
-            why: "Turns your critical question into an arguable judgment."
-          }
-        : null
+      reflection: {
+        growth: {
+          text: `Across this course, my work on ${caseName} moved from ${argues} toward ${tension}.`,
+          why: "Growth claim with then → now."
+        },
+        evidence: {
+          text: `Specific drafts of ${caseName} show that I used to ${argues} and now ${tension}.`,
+          why: "Points at draft evidence."
+        },
+        process: {
+          text: `My process for ${caseName} changed when ${argues} stopped working and ${tension} became the habit.`,
+          why: "Process-focused reflection claim."
+        },
+        goals: {
+          text: `The clearest lesson from ${caseName} is ${tension}; I still need to keep working on ${argues}.`,
+          why: "Growth plus remaining goal."
+        }
+      },
+      generic: {
+        framing: {
+          text: `Although ${caseName} is often presented as ${argues}, a closer look shows ${tension}.`,
+          why: "Generic contrast thesis."
+        },
+        evidence: {
+          text: `Evidence about ${caseName} supports ${tension} more than the familiar story that ${argues}.`,
+          why: "Evidence-led thesis."
+        },
+        stakeholders: {
+          text: `For the people most affected by ${caseName}, ${tension} matters more than ${argues}.`,
+          why: "Audience / stakes thesis."
+        },
+        limits: {
+          text: `${caseName} usefully shows ${argues}, yet its limits around ${tension} need attention.`,
+          why: "Credit + limit thesis."
+        }
+      }
     };
 
-    const picked = [];
-    const seen = new Set();
-    function push(key) {
-      const item = catalog[key];
-      if (!item || !item.text || seen.has(item.text)) return;
-      seen.add(item.text);
-      picked.push({ angle: key, text: item.text, why: item.why });
-    }
-
-    angles.forEach(push);
-    if (question) push("question");
-    ["framing", "evidence", "limits", "stakeholders", "assumptions"].forEach((k) => {
-      if (picked.length >= 4) return;
-      push(k);
+    const catalog = catalogs[kind] || catalogs.generic;
+    const options = [];
+    angles.forEach((angle) => {
+      const row = catalog[angle];
+      if (row) options.push({ angle, text: row.text, why: row.why });
     });
-
-    return picked.slice(0, 4);
+    if (!options.length) {
+      Object.keys(catalog).slice(0, 4).forEach((angle) => {
+        const row = catalog[angle];
+        options.push({ angle, text: row.text, why: row.why });
+      });
+    }
+    if (question) {
+      options.push({
+        angle: "question",
+        text: `Responding to “${question},” work on ${caseName} shows that ${tension || argues}.`,
+        why: "Uses your focusing question as the spine."
+      });
+    }
+    const seen = new Set();
+    return options.filter((o) => {
+      if (seen.has(o.text)) return false;
+      seen.add(o.text);
+      return true;
+    }).slice(0, 4);
   }
 
   function renderClaimOptions(options) {
@@ -170,14 +318,18 @@
     results.hidden = false;
   }
 
+  let angleChipsBound = false;
   function bindAngleChips() {
-    $$(".angle-chip").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const on = btn.getAttribute("aria-pressed") !== "true";
-        btn.setAttribute("aria-pressed", on ? "true" : "false");
-        btn.classList.toggle("active", on);
-        persistThesisInputs();
-      });
+    const host = $("#angleChips");
+    if (!host || angleChipsBound) return;
+    angleChipsBound = true;
+    host.addEventListener("click", (e) => {
+      const btn = e.target.closest(".angle-chip");
+      if (!btn || !host.contains(btn)) return;
+      const on = btn.getAttribute("aria-pressed") !== "true";
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+      btn.classList.toggle("active", on);
+      persistThesisInputs();
     });
   }
 
@@ -205,9 +357,9 @@
     $("#claimGenerate").addEventListener("click", () => {
       const inputs = readThesisInputs();
       const missing = [];
-      if (!inputs.caseName) missing.push("case / packet name");
-      if (!inputs.packetArgues) missing.push("what the packet argues");
-      if (!inputs.tension) missing.push("tension / limit / conflict");
+      if (!inputs.caseName) missing.push("subject / focus");
+      if (!inputs.packetArgues) missing.push("what sources or experience present");
+      if (!inputs.tension) missing.push("tension, insight, or controlling idea");
       if (missing.length) {
         setStatus($("#claimSaveStatus"), "Add required fields first: " + missing.join(", ") + ".", false);
         $("#claimResults").hidden = true;
@@ -280,90 +432,46 @@
   }
 
   function buildOutline(inputs) {
-    const claim = inputs.claim;
-    const caseName = inputs.caseName || "this case";
-    const tension = trimSnippet(inputs.tension, 100) || "the packet’s unresolved tension";
-    const sourcesNote = inputs.sourcesNote;
+    const essay = activeEssay();
+    const caseName = inputs.caseName || "this subject";
+    const tension = trimSnippet(inputs.tension, 100) || "the central tension or insight";
+    const claim = trimSnippet(inputs.claim, 180) || "Working thesis / controlling idea";
+    const sourcesNote = trimSnippet(inputs.sourcesNote, 160);
+    const lenses = (essay && essay.outlineLenses && essay.outlineLenses.length)
+      ? essay.outlineLenses
+      : null;
 
-    const sections = [
-      {
-        title: "I. Introduction + working claim",
-        topic: `Open by situating ${caseName} and lead to this working claim: ${claim}`,
-        bullets: [
-          "Brief context: what the Source Packet / Case Brief is asking readers to believe",
-          "Working claim (revise in your own words): " + claim,
-          "Map: the body will test framing, stakeholders, evidence, assumptions, and limits"
-        ]
-      },
-      {
-        title: "II. Problem / framing",
-        topic: `The ${caseName} packet frames the problem in a way that privileges one reading of success while soft-pedaling ${tension}.`,
-        bullets: [
-          "How the packet defines the “problem” or opportunity",
-          "What that framing makes visible — and what it hides",
-          "Packet evidence: cite 1–2 moments from the Source Packet / Case Brief"
-        ]
-      },
-      {
-        title: "III. Stakeholders",
-        topic: `Stakeholders the packet centers are not the only ones affected by ${tension}; those left at the margins complicate the packet’s story.`,
-        bullets: [
-          "Who benefits / who bears cost according to the packet",
-          "Who is missing or minimized",
-          "Packet evidence + one careful inference"
-        ]
-      },
-      {
-        title: "IV. Evidence quality",
-        topic: `The evidence the ${caseName} packet offers only partly supports its presentation once ${tension} is taken seriously.`,
-        bullets: [
-          "Strongest piece of packet evidence — and what it actually proves",
-          "Weak, selective, or overstated evidence",
-          "What a skeptical reader would still need to see"
-        ]
-      },
-      {
-        title: "V. Assumptions / biases",
-        topic: `The ${caseName} materials rely on assumptions that ${tension} puts under pressure.`,
-        bullets: [
-          "Name one clear assumption or bias in the packet",
-          "Show where the packet treats that assumption as obvious",
-          "Explain why a reader could reject it"
-        ]
-      },
-      {
-        title: "VI. Limits",
-        topic: `Even where the ${caseName} packet is persuasive, its limits around ${tension} weaken the overall claim it advances.`,
-        bullets: [
-          "Acknowledge what the packet does well",
-          "State the limit that matters most for your claim",
-          "Tie the limit back to the working claim"
-        ]
-      },
-      {
-        title: "VII. Outside sources (3–4 beyond the packet)",
-        topic: `Outside research should pressure-test the packet’s story about ${caseName}, not merely decorate it.`,
-        bullets: [
-          "Source 1 slot — purpose: corroborate / complicate / historicize",
-          "Source 2 slot — purpose: corroborate / complicate / historicize",
-          "Source 3 slot — purpose: corroborate / complicate / historicize",
-          "Source 4 slot (optional) — purpose: corroborate / complicate / historicize",
-          sourcesNote
-            ? "Your reminder: " + sourcesNote
-            : "Add 3–4 credible sources beyond the packet before you call the draft done."
-        ]
-      },
-      {
-        title: "VIII. Closing",
-        topic: `Return to the claim without repeating it word-for-word: what should a careful reader conclude about ${caseName} after weighing framing, stakeholders, evidence, assumptions, and limits?`,
-        bullets: [
-          "Restate the judgment in fresher language",
-          "One implication or remaining question (not a brand-new argument)"
-        ]
+    const sections = (lenses || [
+      { title: "I. Introduction", topic: "Open with context, then state the working thesis or controlling idea.", cues: ["Context", "Thesis / controlling idea", "Preview"] },
+      { title: "II. Background", topic: "Give readers what they need before the main points.", cues: ["Definitions", "Scope", "Shared facts"] },
+      { title: "III. Main point 1", topic: "Develop the first main point with evidence.", cues: ["Topic sentence", "Evidence", "Analysis"] },
+      { title: "IV. Main point 2", topic: "Develop the second main point without repeating point 1.", cues: ["Distinct point", "Evidence", "Link to thesis"] },
+      { title: "V. Complication or deeper point", topic: "Address the central tension or insight so the thesis earns complexity.", cues: ["Complication", "Evidence", "Return to thesis"] },
+      { title: "VI. Conclusion", topic: "Restate the thesis in fresh words and name the so-what.", cues: ["Fresh restatement", "So-what", "No new major claim"] }
+    ]).map((lens, i) => {
+      let topic = lens.topic || "";
+      const cues = (lens.cues || []).slice();
+      if (i === 0 && claim) cues.unshift("Working claim: " + claim);
+      if (sourcesNote && /source/i.test(lens.title || "")) cues.push(sourcesNote);
+      if (!cues.length) cues.push("Evidence", "Analysis", "Link to thesis");
+      // Light personalization without breaking authored lens copy
+      if (caseName && caseName !== "this subject" && topic && topic.indexOf(caseName) === -1 && i === 1) {
+        topic = topic + " Keep " + caseName + " in view.";
       }
-    ];
+      if (tension && topic && topic.indexOf("tension") === -1 && /complicat|limit|insight|differ/i.test(lens.title || "")) {
+        topic = topic + " Stay focused on: " + tension + ".";
+      }
+      return { title: lens.title, topic, cues };
+    });
 
-    return { claim, caseName, tension, sections };
+    return {
+      claim,
+      caseName,
+      tension,
+      essayId: (essay && essay.id) || "",
+      essayLabel: essayLabel(),
+      sections
+    };
   }
 
   function renderOutline(skeleton) {
@@ -498,7 +606,7 @@
     journal: "Scholarly journal article. Include volume, issue, pages, and DOI when you have them.",
     book: "Print or ebook. Book title italicized; publisher + year.",
     film: "Film or TV episode/series. Title italicized; director or key contributor; studio/year; optional platform.",
-    packet: "Your Case Study Source Packet / Case Brief (often a Drive/Docs container). Treat like a web document: title, organization/collection, date if known, URL."
+    packet: "Course packet, case brief, or handout (often a Drive/Docs container). Treat like a web document: title, organization/collection, date if known, URL."
   };
 
   const MLA_TITLE_HINTS = {
@@ -507,14 +615,14 @@
     journal: "Article title",
     book: "Book title",
     film: "Film or episode / series title",
-    packet: "Packet or Case Brief title (e.g. BarkBox Subscription Box)"
+    packet: "Packet, case brief, or handout title"
   };
 
   const MLA_CONTAINER_HINTS = {
     website: "Website name",
     article: "Newspaper or magazine name",
     journal: "Journal name",
-    packet: "Collection / course folder (e.g. ENGL 1301 Source Packets)"
+    packet: "Collection / course folder name"
   };
 
   const MLA_PUBLISHER_HINTS = {
@@ -637,7 +745,7 @@
         journal: "Title of the Article",
         book: "Title of the Book",
         film: "Title of the Film or Episode",
-        packet: "BarkBox Subscription Box"
+        packet: "Title of the Packet or Handout"
       };
       titleEl.placeholder = placeholders[type] || "Title";
     }
@@ -682,7 +790,7 @@
     if (type === "film") {
       if (!title) missing.push("film / episode title");
     } else if (!title && !author) {
-      missing.push(type === "packet" ? "packet title (or author)" : "author or title");
+      missing.push(type === "packet" ? "packet / handout title (or author)" : "author or title");
     }
 
     const htmlParts = [];
@@ -1022,21 +1130,23 @@
     if (!el) return;
     const packet = sources.filter((s) => s.kind === "packet").length;
     const outside = sources.filter((s) => s.kind === "outside").length;
+    const aim = (activeEssay() && activeEssay().sourceAim) || "Match the source count your essay prompt requires.";
     el.textContent =
       sources.length +
       " source" +
       (sources.length === 1 ? "" : "s") +
       " · " +
       packet +
-      " packet · " +
+      " packet/handout · " +
       outside +
-      " outside (aim for packet + 3–4 outside)";
+      " other · " +
+      aim;
   }
 
   function sourceSummaryText(state) {
     const lines = [];
-    lines.push("ENGL 1301 Case Study · Source log (practice)");
-    if (state.caseName) lines.push("Case / packet: " + state.caseName);
+    lines.push("ENGL 1301 · " + essayLabel() + " · Source log (practice)");
+    if (state.caseName) lines.push("Subject / focus: " + state.caseName);
     if (state.claim) lines.push("Working claim: " + state.claim);
     lines.push("");
     if (!state.sources.length) {
@@ -1044,7 +1154,7 @@
       return lines.join("\n");
     }
     state.sources.forEach((s, i) => {
-      lines.push((i + 1) + ". [" + (s.kind === "packet" ? "PACKET" : "OUTSIDE") + "] " + (s.title || "(untitled)"));
+      lines.push((i + 1) + ". [" + (s.kind === "packet" ? "PACKET/HANDOUT" : "SOURCE") + "] " + (s.title || "(untitled)"));
       if (s.author) lines.push("   Author: " + s.author);
       if (s.container) lines.push("   Container / site: " + s.container);
       if (s.date) lines.push("   Date: " + s.date);
@@ -1074,10 +1184,11 @@
 
   function renderSourceRow(source) {
     const kind = source.kind === "packet" ? "packet" : "outside";
-    const label = kind === "packet" ? "Packet" : "Outside";
+    const packetLabel = (activeEssay() && activeEssay().sourcePacketLabel) || "Course packet / handout";
+    const label = kind === "packet" ? packetLabel : "Source";
     return `<article class="source-row" data-id="${escapeHtml(source.id)}">
       <header class="source-row-head">
-        <h3><span class="pill">${label}</span> Source</h3>
+        <h3><span class="pill">${escapeHtml(label)}</span></h3>
         <div class="claim-option-actions">
           <button type="button" class="button small ghost" data-remove="${escapeHtml(source.id)}">Remove</button>
         </div>
@@ -1085,8 +1196,8 @@
       <div class="field-grid">
         <label class="field">Type
           <select data-field="kind">
-            <option value="packet"${kind === "packet" ? " selected" : ""}>Packet / Case Brief</option>
-            <option value="outside"${kind === "outside" ? " selected" : ""}>Outside source</option>
+            <option value="packet"${kind === "packet" ? " selected" : ""}>${escapeHtml(packetLabel)}</option>
+            <option value="outside"${kind === "outside" ? " selected" : ""}>Other / outside source</option>
           </select>
         </label>
         <label class="field">Author <span class="hint">Last, First if you have it</span>
@@ -1121,8 +1232,9 @@
     const list = $("#slList");
     if (!list) return;
     if (!state.sources.length) {
+      const aimEmpty = (activeEssay() && activeEssay().sourceAim) || "Add the sources your essay prompt requires.";
       list.innerHTML =
-        '<p class="hint-block">No sources yet. Add a packet row, then 3–4 outside sources. Fields save automatically on this device.</p>';
+        '<p class="hint-block">No sources yet. ' + aimEmpty + ' Fields save automatically on this device.</p>';
     } else {
       list.innerHTML = state.sources.map(renderSourceRow).join("");
     }
@@ -1132,6 +1244,11 @@
 
   function bindSourceLog() {
     if (!$("#slList")) return;
+    const pktBtn = $("#slAddPacket");
+    if (pktBtn) {
+      const lab = (activeEssay() && activeEssay().sourcePacketLabel) || "course packet / handout";
+      pktBtn.textContent = "Add " + lab + " row";
+    }
 
     let state = loadJSON(KEYS.sourceLog, null);
     if (!state || !Array.isArray(state.sources)) {
@@ -1216,61 +1333,23 @@
 
   /* ---------- Peer-review checklist ---------- */
 
-  const PEER_ITEMS = [
-    {
-      id: "claim",
-      title: "Claim clarity",
-      prompt: "Is the working claim arguable, specific to this packet/case, and free of announcement openings (“This paper will…”)?",
-      placeholder: "The claim is clear about… / Still sounds like a summary because…"
-    },
-    {
-      id: "packet",
-      title: "Packet evidence",
-      prompt: "Does the draft use the Source Packet / Case Brief with concrete moments (not vague summary only)?",
-      placeholder: "Strongest packet moment I noticed… / Needs a tighter quote or paraphrase on…"
-    },
-    {
-      id: "outside",
-      title: "Outside sources (3–4)",
-      prompt: "Are there 3–4 outside sources beyond the packet, and do they pressure-test or deepen the claim (not decorate)?",
-      placeholder: "Outside sources that help… / Still missing a source that complicates…"
-    },
-    {
-      id: "mlaWorks",
-      title: "MLA Works Cited",
-      prompt: "Is there a practice Works Cited with the packet + each outside source, hanging-indent ready?",
-      placeholder: "Entries look complete for… / Double-check container / date on…"
-    },
-    {
-      id: "mlaIntext",
-      title: "MLA in-text citations",
-      prompt: "Do body paragraphs credit sources in-text (author or short title) where evidence appears?",
-      placeholder: "In-text works in… / Missing attribution near…"
-    },
-    {
-      id: "org",
-      title: "Organization / topic sentences",
-      prompt: "Do topic sentences guide framing, stakeholders, evidence, assumptions, and/or limits toward the claim?",
-      placeholder: "Clearest topic sentence… / Section that still drifts…"
-    },
-    {
-      id: "analysis",
-      title: "Analysis over summary",
-      prompt: "Does the draft judge the packet’s framing/evidence (not only retell it)?",
-      placeholder: "Best analytical move… / Still summarizing when it could argue…"
-    },
-    {
-      id: "ai",
-      title: "AI Level 2 honesty",
-      prompt: "Does the writer own the claim and evidence? If AI helped (brainstorm, outline cues, citation practice), is that disclosed appropriately for Level 2 (support, not composition)?",
-      placeholder: "Disclosure / ownership looks… / Ask the writer to clarify…"
-    }
-  ];
+  function getPeerItems() {
+    const essay = activeEssay();
+    if (essay && essay.peerItems && essay.peerItems.length) return essay.peerItems;
+    return [
+      { id: "claim", title: "Thesis / controlling idea", prompt: "Is the main idea clear, specific, and free of announcement openings?", placeholder: "Clear about… / Still vague because…" },
+      { id: "evidence", title: "Evidence", prompt: "Do body sections use concrete evidence tied to the main idea?", placeholder: "Strongest evidence… / Needs support at…" },
+      { id: "org", title: "Organization", prompt: "Do topic sentences guide the reader through a clear order?", placeholder: "Clearest section… / Drifts at…" },
+      { id: "analysis", title: "Analysis", prompt: "Does the draft explain or argue (not only summarize)?", placeholder: "Best analytical move… / Still summary at…" },
+      { id: "mla", title: "MLA", prompt: "If sources are used, are in-text citations and Works Cited matched?", placeholder: "MLA looks… / Check…" },
+      { id: "ai", title: "AI Level 2 honesty", prompt: "Does the writer own the ideas and sentences? AI support only?", placeholder: "Ownership looks… / Ask about…" }
+    ];
+  }
 
   function defaultPeerState() {
     const checks = {};
     const notes = {};
-    PEER_ITEMS.forEach((item) => {
+    getPeerItems().forEach((item) => {
       checks[item.id] = false;
       notes[item.id] = "";
     });
@@ -1288,7 +1367,7 @@
   function readPeerStateFromDom() {
     const checks = {};
     const notes = {};
-    PEER_ITEMS.forEach((item) => {
+    getPeerItems().forEach((item) => {
       checks[item.id] = !!document.getElementById("prCheck-" + item.id)?.checked;
       notes[item.id] = (document.getElementById("prNote-" + item.id)?.value || "").trim();
     });
@@ -1306,19 +1385,20 @@
   function updatePeerProgress(state) {
     const el = $("#prProgress");
     if (!el) return;
-    const total = PEER_ITEMS.length;
-    const done = PEER_ITEMS.filter((item) => state.checks[item.id]).length;
+    const items = getPeerItems();
+    const total = items.length;
+    const done = items.filter((item) => state.checks[item.id]).length;
     el.textContent = done + " / " + total + " checked";
   }
 
   function peerSummaryText(state) {
     const lines = [];
-    lines.push("ENGL 1301 Case Study · Peer-review checklist (practice)");
+    lines.push("ENGL 1301 · " + essayLabel() + " · Peer-review checklist (practice)");
     if (state.reviewer) lines.push("Reviewer: " + state.reviewer);
     if (state.writer) lines.push("Writer / draft: " + state.writer);
     if (state.claim) lines.push("Working claim (as read): " + state.claim);
     lines.push("");
-    PEER_ITEMS.forEach((item) => {
+    getPeerItems().forEach((item) => {
       const mark = state.checks[item.id] ? "[x]" : "[ ]";
       lines.push(mark + " " + item.title);
       lines.push("    " + item.prompt);
@@ -1345,7 +1425,7 @@
   function renderPeerList(state) {
     const list = $("#prList");
     if (!list) return;
-    list.innerHTML = PEER_ITEMS.map((item) => {
+    list.innerHTML = getPeerItems().map((item) => {
       const checked = !!state.checks[item.id];
       const note = state.notes[item.id] || "";
       return `<li class="peer-check-item${checked ? " is-checked" : ""}" data-peer="${item.id}">
@@ -1380,7 +1460,7 @@
 
     let state = loadJSON(KEYS.peerChecklist, null);
     if (!state || !state.checks) state = defaultPeerState();
-    PEER_ITEMS.forEach((item) => {
+    getPeerItems().forEach((item) => {
       if (typeof state.checks[item.id] !== "boolean") state.checks[item.id] = false;
       if (typeof state.notes[item.id] !== "string") state.notes[item.id] = "";
     });
@@ -1596,7 +1676,7 @@
   function renderKwChips(el, items) {
     if (!el) return;
     if (!items.length) {
-      el.innerHTML = '<span class="hint-block">None yet — add a case name or claim.</span>';
+      el.innerHTML = '<span class="hint-block">None yet — add a subject or claim.</span>';
       return;
     }
     el.innerHTML = items
@@ -1629,8 +1709,8 @@
 
   function kwPacketText(packet) {
     const lines = [];
-    lines.push("ENGL 1301 · Keyword packet (practice)");
-    if (packet.inputs?.caseName) lines.push("Case: " + packet.inputs.caseName);
+    lines.push("ENGL 1301 · " + essayLabel() + " · Keyword packet (practice)");
+    if (packet.inputs?.caseName) lines.push("Subject / focus: " + packet.inputs.caseName);
     if (packet.inputs?.topic) lines.push("Topic: " + packet.inputs.topic);
     if (packet.inputs?.claim) lines.push("Focus: " + packet.inputs.claim);
     lines.push("");
@@ -1735,7 +1815,7 @@
     $("#kwGenerate")?.addEventListener("click", () => {
       const inputs = readKwInputs();
       if (!inputs.caseName && !inputs.claim && !inputs.tension && !inputs.extra) {
-        setStatus($("#kwSaveStatus"), "Add a case name, claim, or tension words first.", false);
+        setStatus($("#kwSaveStatus"), "Add a subject, claim, or tension words first.", false);
         return;
       }
       lastPacket = buildKeywordPacket(inputs);
@@ -1803,10 +1883,56 @@
   }
 
 
-  bindClaimGenerator();
-  bindOutlineHelper();
-  bindMla();
-  bindSourceLog();
-  bindPeerChecklist();
-  bindKeywordGenerator();
+  function refreshEssayBoundUi() {
+    const ctx = essayCtx();
+    if (ctx && typeof ctx.applyThesisLabels === "function") ctx.applyThesisLabels();
+    if ($("#claimGenerate") && typeof bindAngleChips === "function") bindAngleChips();
+    const essay = activeEssay();
+    const cue = $("#essayToolCue");
+    if (cue && essay) {
+      if ($("#claimGenerate")) cue.textContent = essay.thesisCue || cue.textContent;
+      else if ($("#outlineGenerate")) cue.textContent = essay.outlineCue || cue.textContent;
+      else if ($("#mlaBuild")) cue.textContent = essay.mlaCue || cue.textContent;
+      else if ($("#slList")) cue.textContent = essay.sourceAim || cue.textContent;
+      else if ($("#kwGenerate")) cue.textContent = essay.thesisCue || cue.textContent;
+    }
+    const pktBtn = $("#slAddPacket");
+    if (pktBtn && essay) {
+      pktBtn.textContent = "Add " + (essay.sourcePacketLabel || "course packet / handout") + " row";
+    }
+    const outlineHint = $("#outlineHint");
+    if (outlineHint && essay && essay.outlineCue) outlineHint.textContent = essay.outlineCue;
+    if ($("#prList")) {
+      let state = loadJSON(KEYS.peerChecklist, null);
+      if (!state) state = { checks: {}, notes: {}, reviewer: "", writer: "", claim: "", overall: "" };
+      state.checks = state.checks || {};
+      state.notes = state.notes || {};
+      getPeerItems().forEach((item) => {
+        if (typeof state.checks[item.id] !== "boolean") state.checks[item.id] = false;
+        if (typeof state.notes[item.id] !== "string") state.notes[item.id] = "";
+      });
+      if ($("#prReviewer")) $("#prReviewer").value = state.reviewer || "";
+      if ($("#prWriter")) $("#prWriter").value = state.writer || "";
+      if ($("#prClaim")) $("#prClaim").value = state.claim || "";
+      if ($("#prOverall")) $("#prOverall").value = state.overall || "";
+      renderPeerList(state);
+    }
+  }
+
+  function bootTools() {
+    const ctx = essayCtx();
+    if (ctx) {
+      ctx.mountPicker("#essayPicker");
+      ctx.onChange(() => refreshEssayBoundUi());
+      refreshEssayBoundUi();
+    }
+    bindClaimGenerator();
+    bindOutlineHelper();
+    bindMla();
+    bindSourceLog();
+    bindPeerChecklist();
+    bindKeywordGenerator();
+  }
+
+  bootTools();
 })();

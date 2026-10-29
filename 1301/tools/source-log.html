@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Source log | ENGL 1301 · Davis Writing Studio</title>
-    <meta name="description" content="Practice source tracker for ENGL 1301 Case Study: packet evidence plus 3–4 outside sources, with paraphrase notes and MLA draft slots.">
+    <meta name="description" content="Practice source tracker for any ENGL 1301 essay: notes, how each source helps the thesis, MLA draft slots.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -33,33 +33,36 @@
 
     <main id="main">
       <section class="section" aria-labelledby="slTitle">
-        <p class="eyebrow">Practice tool · research tracker · Case Study</p>
+        <p class="eyebrow" data-essay-eyebrow>Practice tool · research tracker · any essay</p>
         <h1 id="slTitle">Source log</h1>
-        <p class="lead">Track your Source Packet / Case Brief and the 3 to 4 outside sources your Case Study needs. Log what each source says, how it helps your thesis, and a rough MLA draft, then polish citations in the MLA tool.</p>
+        <p class="lead">Track sources for whichever essay you are practicing. Log what each source says, how it helps your thesis or controlling idea, and a rough MLA draft, then polish citations in the MLA tool.</p>
+
+        <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
 
         <div class="callout ai" style="margin-top:1rem;">
-          <strong>Case Study cue · AI Level 2</strong>
-          <p style="margin:0;">Use this log to plan evidence beside your draft. Templates and notes stay on your device (localStorage). Verify every paraphrase and citation against the source.</p>
+          <strong>AI Level 2 · local practice</strong>
+          <p style="margin:0;" id="essayToolCue">Templates and notes stay on your device. Verify every paraphrase and citation against the source. Match the source count your essay prompt requires.</p>
         </div>
 
         <div class="tool-panel" style="margin-top:1.25rem;">
           <div class="field-grid">
             <label class="field">Working claim <span class="hint">Optional — keeps “how it helps” grounded</span>
-              <textarea id="slClaim" style="min-height:4rem;" placeholder="Although the BarkBox packet presents…"></textarea>
+              <textarea id="slClaim" style="min-height:4rem;" placeholder="Paste your working thesis or controlling idea…"></textarea>
             </label>
-            <label class="field">Case / packet name <span class="hint">Optional label for this log</span>
-              <input type="text" id="slCase" placeholder="BarkBox" autocomplete="off">
+            <label class="field" data-essay-field="subjectLabel" data-essay-placeholder="subjectPlaceholder">
+              <span data-essay-title>Subject / focus</span> <span class="hint">Optional label for this log</span>
+              <input type="text" id="slCase" placeholder="Your subject" autocomplete="off">
             </label>
           </div>
 
           <div class="outline-toolbar" style="margin-top:1rem;">
             <div>
               <h2 class="eyebrow" style="margin:0;">Sources</h2>
-              <p class="source-count-pill" id="slCount" aria-live="polite">0 sources · aim for packet + 3–4 outside</p>
+              <p class="source-count-pill" id="slCount" aria-live="polite">0 sources</p>
             </div>
             <div class="claim-option-actions">
               <button type="button" class="button small primary" id="slAdd">Add source</button>
-              <button type="button" class="button small ghost" id="slAddPacket">Add packet row</button>
+              <button type="button" class="button small ghost" id="slAddPacket">Add course packet / handout</button>
             </div>
           </div>
 
@@ -86,6 +89,7 @@
     </main>
     <footer class="site-footer"><p>Source log practice · AI Level 2</p></footer>
     <script src="../app.js"></script>
+    <script src="essay-context.js"></script>
     <script src="tools.js"></script>
   </body>
 </html>

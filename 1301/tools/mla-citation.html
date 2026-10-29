@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MLA citation generator | ENGL 1301 · Davis Writing Studio</title>
-    <meta name="description" content="Practice MLA 9 Works Cited and in-text citations for Case Study sources — website, article, journal, book, film/TV, and Source Packet / Case Brief.">
+    <meta name="description" content="Practice MLA 9 Works Cited and in-text citations for any ENGL 1301 essay — website, article, journal, book, film/TV, and course packet / handout.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -33,13 +33,15 @@
 
     <main id="main">
       <section class="section" aria-labelledby="mlaTitle">
-        <p class="eyebrow">Practice tool · MLA 9 cues · Case Study</p>
+        <p class="eyebrow" data-essay-eyebrow>Practice tool · MLA 9 · any essay</p>
         <h1 id="mlaTitle">MLA citation generator</h1>
         <p class="lead">Pick a source type, fill the fields you have, and build a practice Works Cited entry (hanging-indent preview) plus a sample in-text citation. Templates only; no chatbot. You own accuracy: verify every entry against the source and Purdue OWL or your handbook.</p>
 
+        <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
+
         <div class="callout ai" style="margin-top:1rem;">
-          <strong>Case Study reminder · packet + outside research</strong>
-          <p style="margin:0;">Your critical analysis needs evidence from <strong>one Source Packet / Case Brief</strong> plus <strong>3–4 outside sources</strong>. Cite the packet itself (use the Packet / Case Brief type) and each outside source.</p>
+          <strong>Purpose · citations for this essay</strong>
+          <p style="margin:0;" id="essayToolCue">Cite every source you use. Match the count and types your essay prompt requires. Course packet / handout remains available as a source type when you need it.</p>
         </div>
 
         <div class="tool-panel" style="margin-top:1.25rem;">
@@ -51,7 +53,7 @@
               <button type="button" class="angle-chip mla-type-chip" role="tab" data-type="journal" aria-selected="false" aria-pressed="false">Journal article</button>
               <button type="button" class="angle-chip mla-type-chip" role="tab" data-type="book" aria-selected="false" aria-pressed="false">Book</button>
               <button type="button" class="angle-chip mla-type-chip" role="tab" data-type="film" aria-selected="false" aria-pressed="false">Film / TV</button>
-              <button type="button" class="angle-chip mla-type-chip" role="tab" data-type="packet" aria-selected="false" aria-pressed="false">Source Packet / Case Brief</button>
+              <button type="button" class="angle-chip mla-type-chip" role="tab" data-type="packet" aria-selected="false" aria-pressed="false">Course packet / handout</button>
             </div>
           </fieldset>
 
@@ -133,7 +135,7 @@
               <ul class="cue-list">
                 <li>Author in Works Cited = last name first; in-text uses last name only (or short title if no author).</li>
                 <li>Titles of short works (articles, pages, episodes) use quotation marks; books, journals, films, sites are italicized.</li>
-                <li>Case Study: cite your <em>packet</em> once, then each of your 3–4 outside sources.</li>
+                <li>If your essay uses a course packet or handout, cite it once, then each outside source.</li>
                 <li>Hanging indent in your real doc: first line flush left; following lines indented 0.5&quot;.</li>
               </ul>
             </div>
@@ -143,6 +145,7 @@
     </main>
     <footer class="site-footer"><p>MLA 9 practice templates · verify every entry</p></footer>
     <script src="../app.js"></script>
+    <script src="essay-context.js"></script>
     <script src="tools.js"></script>
   </body>
 </html>
