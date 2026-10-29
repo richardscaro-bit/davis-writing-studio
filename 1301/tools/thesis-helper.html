@@ -35,7 +35,7 @@
       <section class="section" aria-labelledby="thTitle">
         <p class="eyebrow" data-essay-eyebrow>Practice tool · any essay</p>
         <h1 id="thTitle">Thesis generator</h1>
-        <p class="lead">Choose the essay you are practicing, then fill what you noticed in readings or notes. This tool builds 2 to 4 draft thesis options from structured templates (AI Level 2; no chatbot). Edit in your voice, verify against your sources, then carry a thesis into the outline helper.</p>
+        <p class="lead">Choose the essay you are practicing. For Monster Comparison, name both figures, choose three criteria you will apply to both, and state one clear insight. This tool builds 2 to 4 draft thesis options from structured templates (AI Level 2; no chatbot). Edit in your voice, then carry a thesis into the outline helper.</p>
 
         <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
 
@@ -68,6 +68,23 @@
               <span data-essay-title>Optional focusing question</span> <span class="hint">Optional</span>
               <textarea id="criticalQuestion" style="min-height:4rem;" placeholder="What question guides this draft?"></textarea>
             </label>
+
+            <fieldset class="field criteria-fieldset" id="comparisonCriteriaBox" hidden>
+              <legend>Comparison criteria <span class="hint">Required for Monster Comparison. Apply the same three lenses to both figures.</span></legend>
+              <p class="hint-block" style="margin:0 0 0.65rem;">Pick presets or type your own. The outline uses one criterion per body section.</p>
+              <div class="idea-chips" id="criteriaPresets" role="group" aria-label="Criteria presets"></div>
+              <div class="field-grid" style="margin-top:0.75rem;">
+                <label class="field">Criterion 1
+                  <input type="text" id="criterion1" placeholder="e.g. how each figure is created or changed" autocomplete="off">
+                </label>
+                <label class="field">Criterion 2
+                  <input type="text" id="criterion2" placeholder="e.g. what each figure wants" autocomplete="off">
+                </label>
+                <label class="field">Criterion 3
+                  <input type="text" id="criterion3" placeholder="e.g. who readers are asked to judge or sympathize with" autocomplete="off">
+                </label>
+              </div>
+            </fieldset>
             <fieldset class="field angle-fieldset">
               <legend>Preferred angle <span class="hint">Pick one or more; this shapes which templates run</span></legend>
               <div class="angle-chips" id="angleChips" role="group" aria-label="Claim angles">
@@ -137,7 +154,7 @@
     </main>
     <footer class="site-footer"><p>Thesis practice · AI Level 2 template generator</p></footer>
     <script src="../app.js"></script>
-    <script src="essay-context.js?v=compare3"></script>
-    <script src="tools.js?v=compare3"></script>
+    <script src="essay-context.js?v=compare4"></script>
+    <script src="tools.js?v=compare4"></script>
   </body>
 </html>

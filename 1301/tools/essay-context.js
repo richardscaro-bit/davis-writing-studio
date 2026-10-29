@@ -192,10 +192,10 @@
       ],
       presentsLabel: "Shared ground / category",
       presentsHint: "Required. Why these two belong in one comparison.",
-      presentsPlaceholder: "Both are literary figures of corrupted creation or desire used to…",
+      presentsPlaceholder: "Both belong to one category because…",
       tensionLabel: "Key difference or insight",
       tensionHint: "Required. What the split reveals.",
-      tensionPlaceholder: "One figures fear of… while the other…",
+      tensionPlaceholder: "They differ most in… because…",
       questionLabel: "Optional focusing question",
       questionPlaceholder: "What does the contrast show about audience fear or power?",
       angles: [
@@ -207,9 +207,19 @@
       defaultAngles: ["criteria", "difference", "insight"],
       claimKind: "comparison",
       comparisonCriteria: [
-        "origin / how each figure becomes “monstrous”",
-        "what each figure desires or threatens",
-        "who the audience fears, blames, or pities"
+        "how each figure is created or changed",
+        "what each figure wants",
+        "who readers are asked to judge or sympathize with"
+      ],
+      comparisonCriteriaBank: [
+        "how each figure is created or changed",
+        "what each figure wants",
+        "who readers are asked to judge or sympathize with",
+        "how each figure uses power",
+        "how each figure is seen in public versus in private",
+        "what harm each figure causes",
+        "how each story explains responsibility",
+        "what readers are asked to fear"
       ],
       ideaSeeds: {
         topics: [
@@ -223,27 +233,27 @@
           "A classic film monster and its remake"
         ],
         questions: [
-          "What does the contrast between these figures show about audience fear or power?",
-          "Which shared criterion reveals the sharpest difference?",
-          "Why do these two belong in one category, and where does that category break?",
+          "What clear difference between these two figures matters most for readers?",
+          "Which shared criterion shows the sharpest contrast?",
+          "Why do these two belong in one category, and where does that category fail?",
           "What insight about {topic} goes past a list of traits?",
-          "What does the audience root for, and why does that matter?"
+          "Who are readers asked to judge, and why does that matter?"
         ],
         ideas: [
-          "One figure is rejected after creation and seeks recognition; the other hides moral decay behind a polished public face",
-          "Both look “monstrous,” but they diverge in who the audience is asked to blame or pity",
-          "One turns fear outward toward a city or nation; the other turns it inward toward body or desire",
-          "Shared category only sharpens a difference in sympathy and power",
-          "The pair shows how culture names a threat more than how monsters look",
-          "Read side by side, the figures in {topic} diverge most clearly in who they protect or punish"
+          "One figure is rejected after being created and seeks recognition; the other hides wrongdoing behind a public image",
+          "Both are labeled monstrous, but readers are asked to judge them in different ways",
+          "One figure’s threat is public and large-scale; the other’s threat is private and moral",
+          "A shared category still leaves a clear difference in sympathy and power",
+          "The comparison shows how a story assigns blame, not only how a figure looks",
+          "Side by side, the figures in {topic} differ most in who they protect or punish"
         ]
       },
       outlineLenses: [
-        { title: "I. Introduction", topic: "Name both figures, the shared category, and one insight thesis (not a similarity list).", cues: ["Pair + category", "One insight", "Preview 3 criteria"] },
-        { title: "II. Criterion 1: origin / becoming monstrous", topic: "Compare how each figure becomes “monstrous,” using the same lens for both.", cues: ["Same criterion for A and B", "Concrete evidence for each", "Mini-insight toward the thesis"] },
-        { title: "III. Criterion 2: desire or threat", topic: "Compare what each figure desires or threatens, still in parallel.", cues: ["Parallel structure", "Evidence", "How this deepens the insight"] },
-        { title: "IV. Criterion 3: blame, fear, or pity", topic: "Compare who the audience is asked to fear, blame, or pity.", cues: ["Keep the criterion consistent", "Avoid trait laundry lists", "Point toward the insight"] },
-        { title: "V. Conclusion", topic: "State what the comparison reveals beyond “they are similar” or “they are different.”", cues: ["Insight, not summary only", "Audience or culture so-what", "No new monsters"] }
+        { title: "I. Introduction", topic: "Name both figures, the shared category, and one insight thesis.", cues: ["Pair + category", "One insight", "Preview three criteria"] },
+        { title: "II. Criterion 1", topic: "Apply criterion 1 to both figures in the same way.", cues: ["Same criterion for A and B", "Evidence for each", "Link to the insight"] },
+        { title: "III. Criterion 2", topic: "Apply criterion 2 to both figures in the same way.", cues: ["Parallel structure", "Evidence", "Deepen the insight"] },
+        { title: "IV. Criterion 3", topic: "Apply criterion 3 to both figures in the same way.", cues: ["Keep the criterion consistent", "Avoid trait lists", "Return to the insight"] },
+        { title: "V. Conclusion", topic: "State what the comparison shows beyond a trait list.", cues: ["Insight, not summary only", "So-what for readers", "No new figures"] }
       ],
       sourceAim: "Log any course samples or outside sources you cite. Many drafts rely mainly on the two figures plus class materials.",
       sourcePacketLabel: "Course sample / handout",
@@ -255,8 +265,8 @@
         { id: "mla", title: "MLA", prompt: "If sources appear, are citations complete and matched?", placeholder: "MLA looks… / Check…" },
         { id: "ai", title: "AI Level 2 honesty", prompt: "Does the writer own the comparison and insight?", placeholder: "Ownership looks… / Ask about…" }
       ],
-      thesisCue: "Draft a thesis that names both figures and the insight, not a trait list.",
-      outlineCue: "Keep criteria parallel. Edit topic sentences so each section serves the insight.",
+      thesisCue: "Name both figures. Choose three criteria you will apply to both. State one clear insight (not a trait list). Generate thesis options, then open the outline.",
+      outlineCue: "Each body section uses one of your three criteria on both figures. Edit every topic sentence in your voice.",
       mlaCue: "Cite films, shows, or readings you quote or paraphrase."
     },
     {
@@ -877,6 +887,28 @@
       eyebrow.textContent = essay.id
         ? `Practice tool · ${essay.label}`
         : "Practice tool · any essay";
+    }
+
+    const critBox = document.getElementById("comparisonCriteriaBox");
+    if (critBox) {
+      const isComp = essay.claimKind === "comparison";
+      critBox.hidden = !isComp;
+      if (isComp) {
+        const defaults = Array.isArray(essay.comparisonCriteria) ? essay.comparisonCriteria.slice(0, 3) : [];
+        ["criterion1", "criterion2", "criterion3"].forEach((id, i) => {
+          const el = document.getElementById(id);
+          if (el && !el.value.trim() && defaults[i]) el.value = defaults[i];
+        });
+        const bank = document.getElementById("criteriaPresets");
+        if (bank) {
+          const presets = Array.isArray(essay.comparisonCriteriaBank) && essay.comparisonCriteriaBank.length
+            ? essay.comparisonCriteriaBank
+            : defaults;
+          bank.innerHTML = presets
+            .map((p) => `<button type="button" class="angle-chip criteria-preset" data-criterion="${escapeHtml(p)}">${escapeHtml(p)}</button>`)
+            .join("");
+        }
+      }
     }
   }
 

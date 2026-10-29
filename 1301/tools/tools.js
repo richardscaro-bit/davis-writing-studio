@@ -82,22 +82,27 @@
     const pair = splitPair(inputs.caseName);
     const folder = (inputs.topicFolder || "").trim();
     const category = folder
-      || (essay && essay.id === "monster-comparison" ? "literary or screen monsters in one meaningful category" : "the same meaningful category");
+      || (essay && essay.id === "monster-comparison" ? "related literary or screen figures in one category" : "the same category");
     let argues = (inputs.packetArgues || "").trim();
     let tension = (inputs.tension || "").trim();
     if (isVagueComparisonBit(argues)) {
-      argues = `both belong to ${category} and are often reduced to a trait list`;
+      argues = `both belong to ${category}`;
     }
-    if (isVagueComparisonBit(tension)) {
-      tension = `${pair.a} asks the audience for blame or pity in a different way than ${pair.b}, especially in what each figure desires or threatens`;
-    }
-    const criteria = (essay && Array.isArray(essay.comparisonCriteria) && essay.comparisonCriteria.length)
+    const fromInputs = Array.isArray(inputs.criteria)
+      ? inputs.criteria.map((c) => String(c || "").trim()).filter(Boolean).slice(0, 3)
+      : [];
+    const fromEssay = (essay && Array.isArray(essay.comparisonCriteria) && essay.comparisonCriteria.length)
       ? essay.comparisonCriteria.slice(0, 3)
       : [
-          "origin / how each figure becomes “monstrous”",
-          "what each figure desires or threatens",
-          "who the audience fears, blames, or pities"
+          "how each figure is created or changed",
+          "what each figure wants",
+          "who readers are asked to judge or sympathize with"
         ];
+    const criteria = (fromInputs.length ? fromInputs : fromEssay).slice(0, 3);
+    while (criteria.length < 3) criteria.push(fromEssay[criteria.length] || `criterion ${criteria.length + 1}`);
+    if (isVagueComparisonBit(tension)) {
+      tension = `${pair.a} and ${pair.b} differ most under “${criteria[2]}” and “${criteria[1]}”`;
+    }
     return { pair, category, argues, tension, criteria };
   }
 
@@ -137,6 +142,11 @@
       packetArgues: ($("#packetArgues")?.value || "").trim(),
       tension: ($("#tensionInput")?.value || "").trim(),
       question: ($("#criticalQuestion")?.value || "").trim(),
+      criteria: [
+        ($("#criterion1")?.value || "").trim(),
+        ($("#criterion2")?.value || "").trim(),
+        ($("#criterion3")?.value || "").trim()
+      ].filter(Boolean),
       angles: selectedAngles()
     };
   }
@@ -163,6 +173,10 @@
       $("#tensionInput").value = tension;
     }
     if ($("#criticalQuestion")) $("#criticalQuestion").value = data.question || "";
+    const crits = Array.isArray(data.criteria) ? data.criteria : [];
+    if ($("#criterion1")) $("#criterion1").value = crits[0] || "";
+    if ($("#criterion2")) $("#criterion2").value = crits[1] || "";
+    if ($("#criterion3")) $("#criterion3").value = crits[2] || "";
     const set = new Set(data.angles || []);
     $$(".angle-chip").forEach((btn) => {
       const on = set.has(btn.dataset.angle);
@@ -227,20 +241,20 @@
       },
       comparison: {
         criteria: {
-          text: `Although ${caseName} are often tossed into one monster category, judging them by the same criteria shows that ${lowerFirst(tension)}.`,
-          why: "Keeps one insight; never pastes the shared-category starter into the thesis."
+          text: `Although ${caseName} are often studied as related figures, the same criteria (${(criteriaList || []).slice(0, 3).join("; ") || "shared criteria"}) show that ${lowerFirst(tension)}.`,
+          why: "Names the shared criteria and one insight."
         },
         similarity: {
-          text: `${caseName} share a category, but that likeness only sharpens a real split: ${tension}.`,
-          why: "Uses likeness as a setup, not as the thesis."
+          text: `${caseName} belong to one category, but that shared category is not the thesis: ${tension}.`,
+          why: "Keeps the category as background, not the claim."
         },
         difference: {
-          text: `Read side by side, ${caseName} diverge most clearly in this way: ${tension}.`,
-          why: "Leads with the contrast that earns the thesis."
+          text: `Read side by side under the same criteria, ${caseName} differ most in this way: ${tension}.`,
+          why: "Leads with the contrast the essay will prove."
         },
         insight: {
-          text: `Comparing ${caseName} reveals that ${lowerFirst(tension)}, not a catalog of shared traits.`,
-          why: "States the audience or cultural insight the essay will earn."
+          text: `A comparison of ${caseName} supports this insight: ${lowerFirst(tension)}.`,
+          why: "States one clear insight instead of a trait list."
         }
       },
       exposition: {
@@ -436,8 +450,21 @@
     bindAngleChips();
     bindIdeaGenerator();
 
+    $("#criteriaPresets")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-criterion]");
+      if (!btn) return;
+      const val = btn.getAttribute("data-criterion") || "";
+      const slots = ["criterion1", "criterion2", "criterion3"].map((id) => document.getElementById(id));
+      const empty = slots.find((el) => el && !el.value.trim());
+      const target = empty || slots[2];
+      if (target) {
+        target.value = val;
+        persistThesisInputs();
+      }
+    });
+
     // One-time scrub of drafts that glued the old shared-category starter into theses
-    const COPY_VER = "compare-scrub-3";
+    const COPY_VER = "compare-scrub-4";
     if (localStorage.getItem("dws1301-thesis-copy-ver") !== COPY_VER) {
       try {
         const raw = loadJSON(KEYS.thesisInputs, null);
@@ -459,7 +486,7 @@
     const drafts = loadJSON(KEYS.thesisDrafts, []);
     if (drafts.length) renderClaimOptions(drafts);
 
-    ["caseName", "topicFolder", "packetArgues", "tensionInput", "criticalQuestion"].forEach((id) => {
+    ["caseName", "topicFolder", "packetArgues", "tensionInput", "criticalQuestion", "criterion1", "criterion2", "criterion3"].forEach((id) => {
       const el = document.getElementById(id);
       el?.addEventListener("change", persistThesisInputs);
       el?.addEventListener("blur", persistThesisInputs);
@@ -479,6 +506,9 @@
       if (!inputs.caseName) missing.push("subject / focus");
       if (!inputs.packetArgues) missing.push("what sources or experience present");
       if (!inputs.tension) missing.push("tension, insight, or controlling idea");
+      if (activeEssay() && activeEssay().claimKind === "comparison" && (inputs.criteria || []).length < 3) {
+        missing.push("three comparison criteria");
+      }
       if (missing.length) {
         setStatus($("#claimSaveStatus"), "Add required fields first: " + missing.join(", ") + ".", false);
         $("#claimResults").hidden = true;
@@ -492,7 +522,7 @@
     });
 
     $("#claimClear")?.addEventListener("click", () => {
-      writeThesisInputs({ caseName: "", topicFolder: "", packetArgues: "", tension: "", question: "", angles: [] });
+      writeThesisInputs({ caseName: "", topicFolder: "", packetArgues: "", tension: "", question: "", criteria: [], angles: [] });
       saveJSON(KEYS.thesisInputs, readThesisInputs());
       saveJSON(KEYS.thesisDrafts, []);
       localStorage.removeItem(KEYS.chosenClaim);
@@ -529,6 +559,7 @@
           caseName: inputs.caseName,
           tension: inputs.tension,
           topicFolder: inputs.topicFolder,
+          criteria: inputs.criteria || [],
           angle: opt.angle,
           savedAt: Date.now()
         };
@@ -581,7 +612,7 @@
       case "argument":
         return "Many people argue that the familiar position on this issue should stand.";
       case "comparison":
-        return "Readers often lump both figures into one monster category and stop at shared traits.";
+        return "Both figures are often placed in one category, but a list of shared traits is not an insight.";
       case "exposition":
         return "Readers often assume a simple story about this topic, but the process is less settled.";
       case "narrative":
@@ -809,11 +840,20 @@
   /* ---------- Outline / topic sentences ---------- */
 
   function readOutlineInputs() {
+    const thesis = loadJSON(KEYS.thesisInputs, null) || {};
+    const chosen = loadJSON(KEYS.chosenClaim, null) || {};
+    const criteria = (chosen.criteria && chosen.criteria.length)
+      ? chosen.criteria
+      : (thesis.criteria || []);
     return {
       claim: ($("#outlineClaim")?.value || "").trim(),
       caseName: ($("#outlineCase")?.value || "").trim(),
       tension: ($("#outlineTension")?.value || "").trim(),
-      sourcesNote: ($("#outlineSourcesNote")?.value || "").trim()
+      sourcesNote: ($("#outlineSourcesNote")?.value || "").trim(),
+      criteria: Array.isArray(criteria) ? criteria : [],
+      packetArgues: thesis.packetArgues || "",
+      topicFolder: thesis.topicFolder || "",
+      question: thesis.question || ""
     };
   }
 
@@ -847,7 +887,17 @@
       { title: "VI. Conclusion", topic: "Restate the thesis in fresh words and name the so-what.", cues: ["Fresh restatement", "So-what", "No new major claim"] }
     ];
 
-    const list = lenses || defaultLenses;
+    let list = (lenses || defaultLenses).map((lens) => ({ ...lens, cues: (lens.cues || []).slice() }));
+    if (kind === "comparison") {
+      const dCrit = comparisonDefaults(inputs, essay).criteria;
+      list = list.map((lens, idx) => {
+        const title = String(lens.title || "");
+        if (/criterion 1/i.test(title) && dCrit[0]) return { ...lens, title: `II. Criterion 1: ${dCrit[0]}` };
+        if (/criterion 2/i.test(title) && dCrit[1]) return { ...lens, title: `III. Criterion 2: ${dCrit[1]}` };
+        if (/criterion 3/i.test(title) && dCrit[2]) return { ...lens, title: `IV. Criterion 3: ${dCrit[2]}` };
+        return lens;
+      });
+    }
     const total = list.length;
 
     function roleOf(title, i) {
@@ -906,32 +956,31 @@
 
       if (kind === "comparison") {
         const d = comparisonDefaults(
-          { caseName, tension: inputs.tension, packetArgues: inputs.packetArgues || "", topicFolder },
+          {
+            caseName,
+            tension: inputs.tension,
+            packetArgues: inputs.packetArgues || "",
+            topicFolder,
+            criteria: inputs.criteria || []
+          },
           essay
         );
         const { a, b } = d.pair;
         const crit = d.criteria;
         const insight = trimSnippet(d.tension, 120);
         if (role === "intro") {
-          return `Although ${a} and ${b} invite a trait-by-trait list, one insight should control the essay: ${insight}.`;
+          return `This comparison of ${a} and ${b} is controlled by one insight: ${insight}.`;
         }
         if (role === "conclusion") {
-          return `Beyond “they are similar” or “they are different,” comparing ${a} and ${b} shows that ${insight}.`;
+          return `Taken together under the same criteria, ${a} and ${b} support this conclusion: ${insight}.`;
         }
-        // Named criteria — never “similarities”
         let cIdx = 0;
         if (/criterion 2/i.test(lens.title || "") || i === 2) cIdx = 1;
         else if (/criterion 3/i.test(lens.title || "") || i === 3) cIdx = 2;
         else if (/criterion 1/i.test(lens.title || "") || i === 1) cIdx = 0;
         else cIdx = Math.min(Math.max(i - 1, 0), crit.length - 1);
         const criterion = crit[cIdx] || crit[0];
-        if (cIdx === 0) {
-          return `Judged by the same standard on ${criterion}, ${a} and ${b} already support this insight: ${insight}.`;
-        }
-        if (cIdx === 1) {
-          return `On ${criterion}, ${a} and ${b} diverge in ways that deepen this insight: ${insight}.`;
-        }
-        return `On ${criterion}, a parallel look at ${a} and ${b} locks in this insight: ${insight}.`;
+        return `Using the same criterion (${criterion}), ${a} and ${b} can be compared in parallel to support this insight: ${insight}.`;
       }
 
       if (kind === "narrative") {
