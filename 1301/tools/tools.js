@@ -77,7 +77,7 @@
       argues = `both belong to ${category} and are often reduced to a trait list`;
     }
     if (isVagueComparisonBit(tension)) {
-      tension = `${pair.a} and ${pair.b} diverge in who the audience is asked to blame or pity, and in what each figure desires or threatens`;
+      tension = `${pair.a} asks the audience for blame or pity in a different way than ${pair.b}, especially in what each figure desires or threatens`;
     }
     const criteria = (essay && Array.isArray(essay.comparisonCriteria) && essay.comparisonCriteria.length)
       ? essay.comparisonCriteria.slice(0, 3)
@@ -212,7 +212,7 @@
           why: "Leads with the contrast that earns the thesis."
         },
         insight: {
-          text: `Comparing ${caseName} reveals ${tension} — not a catalog of shared traits.`,
+          text: `Comparing ${caseName} reveals ${tension}, not a catalog of shared traits.`,
           why: "States the audience or cultural insight the essay will earn."
         }
       },
@@ -848,12 +848,12 @@
         else cIdx = Math.min(Math.max(i - 1, 0), crit.length - 1);
         const criterion = crit[cIdx] || crit[0];
         if (cIdx === 0) {
-          return `On ${criterion}, ${a} and ${b} should be judged by the same standard — and the contrast already points toward ${insight}.`;
+          return `Judged by the same standard on ${criterion}, ${a} and ${b} already support this insight: ${insight}.`;
         }
         if (cIdx === 1) {
-          return `On ${criterion}, ${a} and ${b} diverge in ways that deepen the insight that ${insight}.`;
+          return `On ${criterion}, ${a} and ${b} diverge in ways that deepen this insight: ${insight}.`;
         }
-        return `On ${criterion}, comparing ${a} and ${b} in parallel locks in the insight that ${insight}.`;
+        return `On ${criterion}, a parallel look at ${a} and ${b} locks in this insight: ${insight}.`;
       }
 
       if (kind === "narrative") {
