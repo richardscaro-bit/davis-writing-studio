@@ -825,6 +825,13 @@ textarea:focus, input:focus, select:focus {
   gap: 0.5rem;
 }
 .mla-f[hidden] { display: none !important; }
+/* HTML hidden is overridden by .resource-card { display: flex } — force hide */
+.resource-card[hidden],
+[data-essay-panel][hidden],
+.resource-card.is-hidden,
+[data-essay-panel].is-hidden {
+  display: none !important;
+}
 .cue-list {
   margin: 0.4rem 0 0;
   padding-left: 1.15rem;

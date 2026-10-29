@@ -231,3 +231,11 @@ details.studio-drop .sample-essay h4 {
 .resource-list .resource-card details.studio-drop .hint-block {
   color: var(--cream-dim, rgba(255,248,240,0.78));
 }
+
+/* Resources essay panels: display:flex on .resource-card wins over [hidden] without this */
+.resource-card[hidden],
+[data-essay-panel][hidden],
+.resource-card.is-hidden,
+[data-essay-panel].is-hidden {
+  display: none !important;
+}
