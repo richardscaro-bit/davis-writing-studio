@@ -547,9 +547,11 @@
       const id = setSelectedId(select.value);
       const essay = byId(id) || GENERIC;
       if (purposeText) purposeText.textContent = essay.purpose;
+      applyThesisLabels();
       emit(essay);
     });
 
+    applyThesisLabels();
     return { select, getActive, host };
   }
 
@@ -627,17 +629,21 @@
     const topicSelect = document.getElementById("topicFolder");
     if (topicSelect && topicSelect.tagName === "SELECT") {
       const prev = topicSelect.value;
-      const opts = Array.isArray(essay.topicOptions) ? essay.topicOptions : [];
-      topicSelect.innerHTML =
-        '<option value="">— select or leave blank —</option>' +
-        opts
-          .map((opt) => {
-            const v = String(opt);
-            const sel = v === prev ? " selected" : "";
-            return `<option value="${escapeHtml(v)}"${sel}>${escapeHtml(v)}</option>`;
-          })
-          .join("");
-      if (prev && !opts.includes(prev)) topicSelect.value = "";
+      const opts = Array.isArray(essay.topicOptions) ? essay.topicOptions.slice() : [];
+      while (topicSelect.firstChild) topicSelect.removeChild(topicSelect.firstChild);
+      const blank = document.createElement("option");
+      blank.value = "";
+      blank.textContent = "— select or leave blank —";
+      topicSelect.appendChild(blank);
+      opts.forEach((opt) => {
+        const v = String(opt);
+        const o = document.createElement("option");
+        o.value = v;
+        o.textContent = v;
+        if (v === prev) o.selected = true;
+        topicSelect.appendChild(o);
+      });
+      if (prev && opts.indexOf(prev) === -1) topicSelect.value = "";
     }
 
     const cue = document.getElementById("essayToolCue");
