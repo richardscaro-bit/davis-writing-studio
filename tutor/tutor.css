@@ -27,6 +27,12 @@
   font-size: 1.45rem;
 }
 .tutor-small { font-size: 0.86rem; color: var(--muted-on-dark); margin: 0.8rem 0 0; }
+.stage-field select {
+  width: 100%;
+  margin-top: 0.35rem;
+  font-size: 1rem;
+  min-height: 2.6rem;
+}
 
 .tutor-chat-head {
   display: flex;

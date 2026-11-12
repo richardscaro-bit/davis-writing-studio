@@ -10,7 +10,16 @@
   const COURSE_NAMES = {
     "1301": "ENGL 1301", "1302": "ENGL 1302", "2311": "ENGL 2311", "2328": "ENGL 2328",
   };
-  const CITATION = { "1301": "MLA 9", "1302": "MLA 9", "2311": "APA 7", "2328": "MLA 9" };
+  const STAGES = [
+    "Getting started / choosing a topic",
+    "Question or thesis",
+    "Research and sources",
+    "Outline",
+    "Drafting",
+    "Revision",
+    "Citations",
+    "Final check",
+  ];
 
   const FERPA_NOTE =
     "Please don't paste your name, student ID, grades, or anyone else's personal information. " +
@@ -23,7 +32,6 @@
     "Paste the sentence or part you want to work on, and tell me what you want your reader to understand from it.";
 
   const $ = (id) => document.getElementById(id);
-  const courseSel = $("courseSelect");
   const stageSel = $("stageSelect");
   const log = $("chatLog");
   const input = $("chatInput");
@@ -55,24 +63,18 @@
     }
   }
 
-  // ---------- course and optional stage ----------
-  // The tutor needs a course so the proxy can load that course's instructions.
-  // There is no assignment picker. Students say what they are working on in the chat.
-  function setCitationHint() {
-    $("citationHint").textContent =
-      "Citation style for " + COURSE_NAMES[courseSel.value] + ": " + CITATION[courseSel.value] + ". Check your assignment page in Canvas too.";
-  }
-
+  // ---------- process stage (step 1) ----------
+  // There is no course picker. Students name the class and assignment in the chat.
+  // A course page may still pass ?course=1301; that is sent as a hint, not shown as a picker.
   const params = new URLSearchParams(location.search);
-  const startCourse = params.get("course") || state.course || "1301";
-  if (COURSE_NAMES[startCourse]) courseSel.value = startCourse;
-  setCitationHint();
-  if (state.stage) stageSel.value = state.stage;
+  const hintCourse = COURSE_NAMES[params.get("course")] ? params.get("course") : "";
+  state.course = hintCourse;
+  if (state.stage && STAGES.includes(state.stage)) stageSel.value = state.stage;
+  else { state.stage = ""; stageSel.value = ""; }
 
-  courseSel.addEventListener("change", () => { setCitationHint(); state.course = courseSel.value; save(); });
   stageSel.addEventListener("change", () => { state.stage = stageSel.value; save(); });
 
-  // Optional context sent in the assignment field (the worker treats it as optional).
+  // Process stage sent in the assignment field (the worker treats it as optional).
   function contextLabel() {
     return stageSel.value ? "stage: " + stageSel.value : "";
   }
@@ -90,7 +92,7 @@
     if (!state.messages.length) {
       const p = document.createElement("p");
       p.className = "tutor-empty";
-      p.textContent = "Pick your course, then tell the tutor what you are working on. Example: \"I have a draft question for my Question Lock. Can you help me check it?\"";
+      p.textContent = "Choose where you are in the writing process, then tell the tutor your class and assignment. Example: \"I'm in ENGL 1301, working on a Monster Comparison thesis.\"";
       log.appendChild(p);
       return;
     }
@@ -130,19 +132,21 @@
     /\bout of (10|100)\b/i,
   ];
   function demoReply(text, firstTurn) {
-    const course = COURSE_NAMES[courseSel.value];
+    const named = (text.match(/\b(?:ENGL\s*)?(1301|1302|2311|2328)\b/i) || [])[1];
+    const course = named ? "ENGL " + named : (COURSE_NAMES[hintCourse] || "");
     const what = stageSel.value || "your work";
+    const where = course ? (what + " in " + course) : what;
     let body;
     if (WRITE_FOR_ME.some((r) => r.test(text))) {
       body = NO_WRITE_REPLY;
     } else if (GRADE_ASK.some((r) => r.test(text))) {
       body = "I don't grade, and I can't predict a grade. Professor Davis grades in Canvas. " +
-        "I can tell you what " + what + " asks for and whether I can find each part in your draft. " +
+        "I can tell you what the assignment asks for and whether I can find each part in your draft. " +
         "Which requirement do you want to check first?";
     } else {
-      body = "What I see: you are working on " + what + " in " + course + ". I don't have your text yet, so I can't point to a specific spot.\n\n" +
+      body = "What I see: you are working on " + where + ". I don't have your text yet, so I can't point to a specific spot.\n\n" +
         "Why it matters: feedback is most useful when it is tied to your own words and to what the assignment asks for.\n\n" +
-        "One next move: paste one short part of your own work (a question, a thesis, or one paragraph) and name the requirement you want to check.\n\n" +
+        "One next move: paste one short part of your own work (a question, a thesis, or one paragraph). If you have not named your class and assignment, add those too.\n\n" +
         "One question: what is the single thing you most want your reader to understand from this part?\n\n" +
         "You've got this!";
     }
@@ -168,7 +172,7 @@
     if (!raw) return;
     const text = scrub(raw);
     const firstTurn = !state.messages.some((m) => m.role === "assistant" && !m.error);
-    state.course = courseSel.value;
+    state.course = hintCourse;
     state.messages.push({ role: "user", content: text });
     input.value = "";
     render();
@@ -187,7 +191,7 @@
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            course: courseSel.value,
+            ...(hintCourse ? { course: hintCourse } : {}),
             assignment: contextLabel(),
             messages: state.messages.filter((m) => !m.error).map((m) => ({ role: m.role, content: m.content })),
           }),
@@ -223,14 +227,15 @@
   // ---------- downloads ----------
   function heading() {
     const ctx = contextLabel();
-    return "Davis Writing Studio Tutor chat\n" + COURSE_NAMES[courseSel.value] + (ctx ? ", " + ctx : "") +
+    const courseLine = COURSE_NAMES[hintCourse] || "Course named in the chat";
+    return "Davis Writing Studio Tutor chat\n" + courseLine + (ctx ? ", " + ctx : "") +
       "\nDownloaded " + new Date().toLocaleString() + (TEST_MODE ? "\nTest mode: replies are samples." : "");
   }
   function asText() {
     return heading() + "\n\n" + state.messages.map((m) => (m.role === "user" ? "You" : "Tutor") + ":\n" + m.content).join("\n\n") + "\n";
   }
   function fileName(ext) {
-    return "writing-studio-tutor-" + courseSel.value + "-" + new Date().toISOString().slice(0, 10) + "." + ext;
+    return "writing-studio-tutor-" + (hintCourse || "chat") + "-" + new Date().toISOString().slice(0, 10) + "." + ext;
   }
   function download(blob, name) {
     const a = document.createElement("a");

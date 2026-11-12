@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="tutor.css">
+    <link rel="stylesheet" href="tutor.css?v=20261112-stage">
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
@@ -45,7 +45,7 @@
       <section class="section tutor-intro" aria-labelledby="tutorTitle">
         <p class="eyebrow">Writing coach · all four courses</p>
         <h1 id="tutorTitle">Writing Studio Tutor</h1>
-        <p class="lead">Ask about your own draft, question, outline, sources, or citations. The tutor asks questions and points to one next step. It does not write for you.</p>
+        <p class="lead">Tell the tutor your class and assignment, then ask about your own draft, question, outline, sources, or citations. The tutor asks questions and points to one next step. It does not write for you.</p>
         <div class="callout warn tutor-note" role="note">
           <strong>Before you start</strong>
           Live test. Do not paste names or other identifying details. Grading stays in Canvas.
@@ -55,31 +55,22 @@
 
       <section class="section tutor-layout" aria-label="Tutor">
         <form class="tool-panel tutor-setup" id="tutorSetup" aria-labelledby="setupTitle">
-          <h2 id="setupTitle">1. Pick your course</h2>
-          <div class="field-grid">
-            <label class="field" for="courseSelect">Course
-              <select id="courseSelect" required>
-                <option value="1301">ENGL 1301 · Composition I</option>
-                <option value="1302">ENGL 1302 · Composition II</option>
-                <option value="2311">ENGL 2311 · Technical and Business Writing</option>
-                <option value="2328">ENGL 2328 · American Literature</option>
-              </select>
-            </label>
-            <label class="field" for="stageSelect">Stage <span class="hint">Optional</span>
-              <select id="stageSelect">
-                <option value="">Any stage</option>
-                <option>Brainstorm or topic</option>
-                <option>Question Lock (how or why question) or thesis</option>
-                <option>Outline or plan</option>
-                <option>Draft feedback</option>
-                <option>Revision</option>
-                <option>Citation check</option>
-                <option>Process Record or AI use statement</option>
-              </select>
-            </label>
-          </div>
-          <p class="tutor-small" id="citationHint"></p>
-          <p class="tutor-small">Using the tutor counts as AI use. Say how you used it in the AI use statement in your Process Record.</p>
+          <h2 id="setupTitle">1. Where are you in the writing process?</h2>
+          <label class="field stage-field" for="stageSelect">Choose the part you are working on
+            <select id="stageSelect">
+              <option value="">Choose a stage</option>
+              <option>Getting started / choosing a topic</option>
+              <option>Question or thesis</option>
+              <option>Research and sources</option>
+              <option>Outline</option>
+              <option>Drafting</option>
+              <option>Revision</option>
+              <option>Citations</option>
+              <option>Final check</option>
+            </select>
+          </label>
+          <p class="tutor-small">In the chat, name your class and assignment if you have not already. Use the citation style your assignment asks for, and check that page in Canvas.</p>
+          <p class="tutor-small">Using the tutor counts as AI use. Note what you asked and what you kept or rejected.</p>
         </form>
 
         <div class="tool-panel tutor-chat" aria-labelledby="chatTitle">
@@ -117,7 +108,7 @@
     <footer class="site-footer">
       <p>Davis Writing Studio · Tutor</p>
     </footer>
-    <script src="config.js"></script>
-    <script src="tutor.js"></script>
+    <script src="config.js?v=20261112-stage"></script>
+    <script src="tutor.js?v=20261112-stage"></script>
   </body>
 </html>
