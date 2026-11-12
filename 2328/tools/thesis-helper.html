@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Thesis generator | ENGL 2328 · Davis Writing Studio</title>
-    <meta name="description" content="Practice thesis generator for any ENGL 2328 essay. Pick an essay to adapt templates, or use generic mode.">
+    <meta name="description" content="Practice thesis generator for any ENGL 2328 stage. Pick a stage to adapt templates, or use generic mode.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -20,6 +20,7 @@
         <a href="../resources.html">Resources</a>
         <a href="../weeks.html">Practice path</a>
         <a href="index.html" aria-current="page">Tools</a>
+        <a href="../../tutor/?course=2328">Tutor</a>
       </nav>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation"><span></span><span></span><span></span></button>
     </header>
@@ -29,19 +30,20 @@
       <a href="../resources.html">Resources</a>
       <a href="../weeks.html">Practice path</a>
       <a href="index.html" aria-current="page">Tools</a>
+      <a href="../../tutor/?course=2328">Tutor</a>
     </nav>
 
     <main id="main">
       <section class="section" aria-labelledby="thTitle">
-        <p class="eyebrow" data-essay-eyebrow>Practice tool · any essay</p>
+        <p class="eyebrow" data-essay-eyebrow>Practice tool · any stage</p>
         <h1 id="thTitle">Thesis generator</h1>
-        <p class="lead">Choose the essay you are practicing. For Monster Comparison, name both figures, choose three criteria you will apply to both, and state one clear insight. This tool builds 2 to 4 draft thesis options from structured templates (AI Level 2; no chatbot). Edit in your voice, then carry a thesis into the outline helper.</p>
+        <p class="lead">Choose the stage you are on, fill the fields in your own words, and state one clear insight. This tool builds 2 to 4 draft thesis options from structured templates (AI Level 2; no chatbot). Edit in your voice, then carry a thesis into the outline helper.</p>
 
         <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
 
         <div class="callout ai" style="margin-top:1rem;">
           <strong>Practice only · you own the thesis</strong>
-          <p style="margin:0;" id="essayToolCue">Avoid announcement theses (“This paper will…”). Pick an essay above for matched labels, or stay in generic mode.</p>
+          <p style="margin:0;" id="essayToolCue">Avoid announcement theses (“This paper will…”). Pick a stage above for matched labels, or stay in generic mode.</p>
         </div>
 
         <div class="tool-panel" style="margin-top:1.25rem;">
@@ -53,7 +55,7 @@
             <label class="field" data-essay-field="topicLabel">
               <span data-essay-title>Optional topic tag</span> <span class="hint">Optional</span>
               <select id="topicFolder">
-                <option value="">— select or leave blank —</option>
+                <option value="">Select or leave blank</option>
               </select>
             </label>
             <label class="field" data-essay-field="presentsLabel" data-essay-hint="presentsHint" data-essay-placeholder="presentsPlaceholder">
@@ -99,7 +101,7 @@
           <div class="idea-generator" id="ideaGenerator">
             <div class="idea-generator-head">
               <h2 class="eyebrow" style="margin:0;">Topics, questions &amp; ideas</h2>
-              <p class="hint-block" style="margin:0.35rem 0 0;">Pick an essay first if you want matched starters. Suggestions are templates to edit; you own the thesis (AI Level 2).</p>
+              <p class="hint-block" style="margin:0.35rem 0 0;">Pick a stage first if you want matched starters. Suggestions are templates to edit; you own the thesis (AI Level 2).</p>
             </div>
             <div class="hero-actions" style="margin-top:0.75rem;">
               <button type="button" class="button primary" id="ideaGenerate">Suggest topics, questions &amp; ideas</button>
@@ -132,7 +134,7 @@
             <button type="button" class="button ghost" id="claimClear">Clear</button>
             <a class="button ghost" href="outline-helper.html">Outline / topic sentences →</a>
             <a class="button ghost" href="mla-citation.html">MLA citation →</a>
-            <a class="button ghost" href="../index.html#essays">Essays on Home</a>
+            <a class="button ghost" href="../index.html#projects">Essays on Home</a>
           </div>
           <p class="save-status" id="claimSaveStatus" aria-live="polite"></p>
 

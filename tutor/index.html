@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tutor | Davis Writing Studio</title>
+    <meta name="description" content="Davis Writing Studio Tutor: a writing coach for ENGL 1301, 1302, 2311, and 2328 (test version).">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tutor.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <header class="topbar" aria-label="Studio navigation">
+      <a class="brand" href="../index.html" aria-label="Davis Writing Studio home">
+        <span class="brand-mark" aria-hidden="true"><img src="../_design/assets/mark-crown-real.jpg" alt="" width="40" height="40"></span>
+        <span>
+          <strong>Tutor</strong>
+          <small>Davis Writing Studio</small>
+        </span>
+      </a>
+      <nav class="nav-links" aria-label="Primary sections">
+        <a href="../index.html">Hub</a>
+        <a href="../1301/">1301</a>
+        <a href="../1302/">1302</a>
+        <a href="../2311/">2311</a>
+        <a href="../2328/">2328</a>
+        <a href="index.html" aria-current="page">Tutor</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="../index.html">Hub</a>
+      <a href="../1301/">1301</a>
+      <a href="../1302/">1302</a>
+      <a href="../2311/">2311</a>
+      <a href="../2328/">2328</a>
+      <a href="index.html" aria-current="page">Tutor</a>
+    </nav>
+
+    <main id="main">
+      <section class="section tutor-intro" aria-labelledby="tutorTitle">
+        <p class="eyebrow">Writing coach · all four courses</p>
+        <h1 id="tutorTitle">Writing Studio Tutor</h1>
+        <p class="lead">Ask about your own draft, question, outline, sources, or citations. The tutor asks questions and points to one next step. It does not write for you.</p>
+        <div class="callout warn tutor-note" role="note">
+          <strong>Before you start</strong>
+          Test version. Do not paste names or other identifying details. Grading stays in Canvas.
+        </div>
+        <p class="tutor-mode" id="tutorMode" hidden></p>
+      </section>
+
+      <section class="section tutor-layout" aria-label="Tutor">
+        <form class="tool-panel tutor-setup" id="tutorSetup" aria-labelledby="setupTitle">
+          <h2 id="setupTitle">1. Pick your course</h2>
+          <div class="field-grid">
+            <label class="field" for="courseSelect">Course
+              <select id="courseSelect" required>
+                <option value="1301">ENGL 1301 · Composition I</option>
+                <option value="1302">ENGL 1302 · Composition II</option>
+                <option value="2311">ENGL 2311 · Technical and Business Writing</option>
+                <option value="2328">ENGL 2328 · American Literature</option>
+              </select>
+            </label>
+            <label class="field" for="assignmentSelect">Assignment <span class="hint">Optional</span>
+              <select id="assignmentSelect"></select>
+            </label>
+            <label class="field" for="stageSelect">Stage <span class="hint">Optional</span>
+              <select id="stageSelect">
+                <option value="">Any stage</option>
+                <option>Brainstorm or topic</option>
+                <option>Question Lock or thesis</option>
+                <option>Outline or plan</option>
+                <option>Draft feedback</option>
+                <option>Revision</option>
+                <option>Citation check</option>
+                <option>Process Record or AI use statement</option>
+              </select>
+            </label>
+          </div>
+          <p class="tutor-small" id="citationHint"></p>
+          <p class="tutor-small">Using the tutor counts as AI use. Say how you used it in your AI use statement and Process Record.</p>
+        </form>
+
+        <div class="tool-panel tutor-chat" aria-labelledby="chatTitle">
+          <div class="tutor-chat-head">
+            <h2 id="chatTitle">2. Chat</h2>
+            <div class="tutor-actions">
+              <button class="button ghost small" type="button" id="downloadDocx">Download .docx</button>
+              <button class="button ghost small" type="button" id="downloadTxt">Download .txt</button>
+              <button class="button ghost small" type="button" id="printChat">Print or save PDF</button>
+              <button class="button ghost small" type="button" id="clearChat">Clear chat</button>
+            </div>
+          </div>
+          <p class="print-only" id="printHeader"></p>
+          <div class="tutor-log" id="chatLog" role="log" aria-live="polite" aria-label="Conversation"></div>
+          <form class="tutor-compose" id="chatForm">
+            <label class="field" for="chatInput">Your message
+              <textarea id="chatInput" rows="4" maxlength="6000" placeholder="Paste a short part of your own draft, or ask a question about your assignment."></textarea>
+            </label>
+            <div class="tutor-compose-row">
+              <span class="save-status" id="chatStatus">Saved only in this browser.</span>
+              <button class="button primary" type="submit" id="sendBtn">Send</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="section tutor-help" aria-labelledby="helpTitle">
+        <div class="callout">
+          <strong id="helpTitle">Where your chat goes</strong>
+          The chat stays only in this browser on this device. Nothing is saved on the Studio's side. On a shared or library computer, download the chat if you want it, then press Clear chat. For grades, due dates, or what an assignment requires, ask Professor Davis in Canvas.
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Davis Writing Studio · Tutor · local preview</p>
+    </footer>
+    <script src="config.js"></script>
+    <script src="assignments.js"></script>
+    <script src="tutor.js"></script>
+  </body>
+</html>

@@ -3,7 +3,7 @@
 (function (global) {
   const STORAGE_KEY = "dws2328-essay";
 
-  const ESSAYS = [
+  const BASE_ESSAYS = [
     {
       id: "major-essay-1",
       studioHref: "../major-essay-1-studio.html",
@@ -265,11 +265,73 @@
     }
   ];
 
+  // Seven-stage project (redesign approved Nov 12, 2026). Each stage borrows tool settings from the closest older assignment.
+  const STAGES = [
+    {
+      "id": "stage-1-literature-inquiry-proposal",
+      "base": "major-essay-1",
+      "studioHref": "../stage-1-literature-inquiry-proposal-studio.html",
+      "studioLabel": "Stage 1 studio",
+      "label": "Stage 1: Literature Inquiry Proposal",
+      "purpose": "One primary story from the early readings (Bierce through Toomer), one named detail, one how or why question, why it matters, and an AI use statement. Length: 400 to 600 words. MLA 9."
+    },
+    {
+      "id": "stage-2-evidence-lens-note",
+      "base": "major-essay-1",
+      "studioHref": "../stage-2-evidence-lens-note-studio.html",
+      "studioLabel": "Stage 2 studio",
+      "label": "Stage 2: Evidence and Lens Note",
+      "purpose": "Three quoted passages on your named detail with MLA in-text citations, and one named critical approach explained from one credible source. Length: Three passages plus one lens explanation. MLA 9."
+    },
+    {
+      "id": "stage-3-close-reading",
+      "base": "major-essay-1",
+      "studioHref": "../stage-3-close-reading-studio.html",
+      "studioLabel": "Stage 3 studio",
+      "label": "Stage 3: Reality versus Illusion Close Reading",
+      "purpose": "Analyze how the narrative technique shapes your named detail and the reader's sense of what is real. Length: About 1,000 to 1,200 words. MLA 9."
+    },
+    {
+      "id": "stage-4-source-conversation-map",
+      "base": "major-essay-2",
+      "studioHref": "../stage-4-source-conversation-map-studio.html",
+      "studioLabel": "Stage 4 studio",
+      "label": "Stage 4: Source Conversation Map",
+      "purpose": "Your second text (any course reading from a different period, movement, or form), three scholarly sources labeled Supports, Complicates, or Counters, one historical or cultural context source, and a working MLA Works Cited. Length: Map plus working Works Cited. MLA 9."
+    },
+    {
+      "id": "stage-5-thematic-comparison-draft",
+      "base": "major-essay-2",
+      "studioHref": "../stage-5-thematic-comparison-draft-studio.html",
+      "studioLabel": "Stage 5 studio",
+      "label": "Stage 5: Thematic Comparison Draft",
+      "purpose": "Build from Stage 3: the comparison, context, your three scholarly sources, and one counter or limitation. Length: About 1,800 to 2,500 words. MLA 9."
+    },
+    {
+      "id": "stage-6-revision-memo-showcase-plan",
+      "base": "major-essay-2",
+      "studioHref": "../stage-6-revision-memo-showcase-plan-studio.html",
+      "studioLabel": "Stage 6 studio",
+      "label": "Stage 6: Integration Revision Memo and Showcase Plan",
+      "purpose": "Tie each planned revision to a named comment from your conference, the tutor, or peer review, plus one paragraph choosing your Showcase format. Length: Memo plus one Showcase paragraph. MLA 9."
+    },
+    {
+      "id": "stage-7-final-packet",
+      "base": "final-project",
+      "studioHref": "../stage-7-final-packet-studio.html",
+      "studioLabel": "Stage 7 studio",
+      "label": "Stage 7: Final Packet",
+      "purpose": "Your revised comparative paper (MLA), a Process Record with three required sentences and an AI use statement, and a checklist pointing to evidence for all five outcomes. Length: Revised paper plus Process Record. MLA 9."
+    }
+  ];
+  const ESSAYS = STAGES.map((st) => Object.assign({}, BASE_ESSAYS.find((b) => b.id === st.base) || {}, st));
+
+
   const GENERIC = {
     id: "",
-    label: "Any essay (generic)",
+    label: "Any stage (generic)",
     purpose:
-      "Pick an essay above if you want labels and templates matched to that assignment. Or leave this on generic mode and fill the fields in your own words.",
+      "Pick a stage above if you want labels and templates matched to that stage. Or leave this on generic mode and fill the fields in your own words.",
     subjectLabel: "Subject / focus",
     subjectHint: "Required. Name the topic, case, pair, or focus.",
     subjectPlaceholder: "Your subject",
@@ -287,7 +349,7 @@
       "Other / custom"
     ],
     presentsLabel: "What sources or experience present",
-    presentsHint: "Required. 1–2 sentences in your words.",
+    presentsHint: "Required. 1 to 2 sentences in your words.",
     presentsPlaceholder: "Readers or sources present…",
     tensionLabel: "Tension, insight, or controlling idea",
     tensionHint: "Required. What you will argue, explain, or reveal.",
@@ -406,9 +468,9 @@
     host.classList.add("essay-picker");
     host.innerHTML = `
       <label class="field essay-picker-field" for="dwsEssaySelect">
-        <span class="essay-picker-label">Which essay are you practicing?</span>
+        <span class="essay-picker-label">Which stage are you on?</span>
         <select id="dwsEssaySelect" autocomplete="off">
-          <option value="">Generic (any essay)</option>
+          <option value="">Generic (any stage)</option>
           ${ESSAYS.map(
             (e) =>
               `<option value="${e.id}"${e.id === activeId ? " selected" : ""}>${escapeHtml(e.label)}</option>`
@@ -514,7 +576,7 @@
       while (topicSelect.firstChild) topicSelect.removeChild(topicSelect.firstChild);
       const blank = document.createElement("option");
       blank.value = "";
-      blank.textContent = "— select or leave blank —";
+      blank.textContent = "Select or leave blank";
       topicSelect.appendChild(blank);
       topicOpts.forEach((opt) => {
         const v = String(opt);

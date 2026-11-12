@@ -25,7 +25,7 @@
   }
   function essayLabel() {
     const e = activeEssay();
-    return e && e.id ? e.label : "Any essay";
+    return e && e.id ? e.label : "Any stage";
   }
 
   function loadJSON(key, fallback) {

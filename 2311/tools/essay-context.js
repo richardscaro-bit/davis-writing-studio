@@ -3,7 +3,7 @@
 (function (global) {
   const STORAGE_KEY = "dws2311-essay";
 
-  const ESSAYS = [
+  const BASE_ESSAYS = [
     {
       id: "audience-analysis",
       studioHref: "../audience-analysis-studio.html",
@@ -315,7 +315,7 @@
       outlineLenses: [
         { title: "I. Role & research", topic: "Name the role and summarize employer expectations.", cues: ["Role", "Research methods", "Key expectations"] },
         { title: "II. Resume plan", topic: "Map sections and proof points for the resume.", cues: ["Education", "Experience", "Tech writing skills"] },
-        { title: "III. Cover letter plan", topic: "Outline a tailored letter that argues fit.", cues: ["Hook", "2–3 proof points", "Close"] },
+        { title: "III. Cover letter plan", topic: "Outline a tailored letter that argues fit.", cues: ["Hook", "2 to 3 proof points", "Close"] },
         { title: "IV. LinkedIn brand", topic: "Plan photo, summary, experience, skills, and networking moves.", cues: ["Summary", "Skills", "Groups / posts"] },
         { title: "V. Portfolio placement", topic: "Decide how the packet appears on your site.", cues: ["Page sections", "Links", "Polish pass"] },
         { title: "VI. Feedback & revise", topic: "Note who will review the letter and what you will revise.", cues: ["Reviewer", "Revision focus", "Consistency check"] }
@@ -395,7 +395,7 @@
       outlineLenses: [
         { title: "I. Brand & bio", topic: "Plan the introduction visitors see first.", cues: ["One-line brand", "Short bio", "Contact"] },
         { title: "II. Curated work", topic: "Select documents that show skill and range.", cues: ["Why each piece", "Order", "Job packet included"] },
-        { title: "III. Progress report", topic: "Draft the 800–1000 word growth narrative.", cues: ["Starting skills", "Challenges", "Learnings", "Feedback impact", "Next goals"] },
+        { title: "III. Progress report", topic: "Draft the 800 to 1000 word growth narrative.", cues: ["Starting skills", "Challenges", "Learnings", "Feedback impact", "Next goals"] },
         { title: "IV. Design & navigation", topic: "Choose template, colors, fonts, and sections.", cues: ["Clean template", "Sections", "Mobile check"] },
         { title: "V. Interactive elements", topic: "Add working links, embeds, or before/after notes.", cues: ["PDFs / video", "Function check", "Accessibility"] },
         { title: "VI. Final review", topic: "Proof, test links, and confirm the site is viewable.", cues: ["Proofread", "Links", "Public access"] }
@@ -416,11 +416,73 @@
     }
   ];
 
+  // Seven-stage project (redesign approved Nov 12, 2026). Each stage borrows tool settings from the closest older assignment.
+  const STAGES = [
+    {
+      "id": "stage-1-problem-memo",
+      "base": "audience-analysis",
+      "studioHref": "../stage-1-problem-memo-studio.html",
+      "studioLabel": "Stage 1 studio",
+      "label": "Stage 1: Problem Memo and Audience Profile",
+      "purpose": "A 1 to 2 page memo to Professor Davis naming the problem, the decision maker, the stakeholders affected, and your locked question; the completed Audience Profile Sheet; and an AI use statement. Length: 1 to 2 page memo plus the Audience Profile Sheet. APA 7."
+    },
+    {
+      "id": "stage-2-research-proposal",
+      "base": "research-proposal",
+      "studioHref": "../stage-2-research-proposal-studio.html",
+      "studioLabel": "Stage 2 studio",
+      "label": "Stage 2: Research Proposal",
+      "purpose": "A proposal to your decision maker: the problem, your proposed research (secondary sources plus one primary method), a task schedule, and how the results will be judged. Use the Canvas \"How to Write Your Proposal\" guide and sample. Length: 3 to 4 pages. APA 7."
+    },
+    {
+      "id": "stage-3-annotated-sources",
+      "base": "research-proposal",
+      "studioHref": "../stage-3-annotated-sources-studio.html",
+      "studioLabel": "Stage 3 studio",
+      "label": "Stage 3: Annotated Sources and Research Notes",
+      "purpose": "Five sources: at least three credible secondary sources and one primary source (a short interview, questionnaire, or observation). Annotate each one for what it means for your reader's decision. Length: Five annotated sources plus primary source notes. APA 7."
+    },
+    {
+      "id": "stage-4-options-criteria-memo",
+      "base": "recommendation-report",
+      "studioHref": "../stage-4-options-criteria-memo-studio.html",
+      "studioLabel": "Stage 4 studio",
+      "label": "Stage 4: Options and Criteria Memo",
+      "purpose": "Two or three options, the shared criteria (one must be an ethics or stakeholder criterion), and which source supports each judgment. The criteria table is your first graphic. Length: Memo with one criteria table. APA 7."
+    },
+    {
+      "id": "stage-5-recommendation-report-draft",
+      "base": "recommendation-report",
+      "studioHref": "../stage-5-recommendation-report-draft-studio.html",
+      "studioLabel": "Stage 5 studio",
+      "label": "Stage 5: Recommendation Report Draft",
+      "purpose": "Problem, method, options, criteria, analysis, recommendation, references in APA, and at least two purposeful graphics. Length: Suggested 1,500 to 2,500 words in the body. APA 7."
+    },
+    {
+      "id": "stage-6-usability-test",
+      "base": "recommendation-report",
+      "studioHref": "../stage-6-usability-test-studio.html",
+      "studioLabel": "Stage 6 studio",
+      "label": "Stage 6: Usability Test Report and Revision Memo",
+      "purpose": "Two or three readers (classmates acting as your audience, plus one real reader if possible) try three short tasks with your draft, such as \"find the cost\" or \"find the recommendation.\" Log what they could and could not do, then write a memo naming each planned change and an editing pass. Length: Test log plus revision memo. APA 7."
+    },
+    {
+      "id": "stage-7-final-packet",
+      "base": "recommendation-report",
+      "studioHref": "../stage-7-final-packet-studio.html",
+      "studioLabel": "Stage 7 studio",
+      "label": "Stage 7: Final Packet",
+      "purpose": "Your revised Recommendation Report (APA), a Process Record with three required sentences and an AI use statement, and a checklist pointing to evidence for all seven outcomes. A packet missing evidence for any outcome does not pass yet. Length: Revised report plus Process Record. APA 7."
+    }
+  ];
+  const ESSAYS = STAGES.map((st) => Object.assign({}, BASE_ESSAYS.find((b) => b.id === st.base) || {}, st));
+
+
   const GENERIC = {
     id: "",
-    label: "Any essay (generic)",
+    label: "Any stage (generic)",
     purpose:
-      "Pick an essay above if you want labels and templates matched to that assignment. Or leave this on generic mode and fill the fields in your own words.",
+      "Pick a stage above if you want labels and templates matched to that stage. Or leave this on generic mode and fill the fields in your own words.",
     subjectLabel: "Subject / focus",
     subjectHint: "Required. Name the topic, case, pair, or focus.",
     subjectPlaceholder: "Your subject",
@@ -438,7 +500,7 @@
       "Other / custom"
     ],
     presentsLabel: "What sources or experience present",
-    presentsHint: "Required. 1–2 sentences in your words.",
+    presentsHint: "Required. 1 to 2 sentences in your words.",
     presentsPlaceholder: "Readers or sources present…",
     tensionLabel: "Tension, insight, or controlling idea",
     tensionHint: "Required. What you will argue, explain, or reveal.",
@@ -557,9 +619,9 @@
     host.classList.add("essay-picker");
     host.innerHTML = `
       <label class="field essay-picker-field" for="dwsEssaySelect">
-        <span class="essay-picker-label">Which project are you practicing?</span>
+        <span class="essay-picker-label">Which stage are you on?</span>
         <select id="dwsEssaySelect" autocomplete="off">
-          <option value="">Generic (any project)</option>
+          <option value="">Generic (any stage)</option>
           ${ESSAYS.map(
             (e) =>
               `<option value="${e.id}"${e.id === activeId ? " selected" : ""}>${escapeHtml(e.label)}</option>`
@@ -665,7 +727,7 @@
       while (topicSelect.firstChild) topicSelect.removeChild(topicSelect.firstChild);
       const blank = document.createElement("option");
       blank.value = "";
-      blank.textContent = "— select or leave blank —";
+      blank.textContent = "Select or leave blank";
       topicSelect.appendChild(blank);
       topicOpts.forEach((opt) => {
         const v = String(opt);

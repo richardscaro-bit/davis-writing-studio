@@ -1,5 +1,8 @@
 # 2311 / 2328 / 1302 — gap-fill pass (preview hold)
 
+> **Update Nov 12, 2026, 1:15 PM CT.** Caroline approved all 15 redesign recommendations (via Ulysses). King sub-choice resolved (via Ulysses, 1:11 PM CT: "Use the swaps as required and King as optional library reading."): Week 12 required readings are Poe, "The Black Cat" (Project Gutenberg #2148) and Wharton, The Writing of Fiction (Project Gutenberg #72446). King's "The Cat from Hell" and "What Is Writing" are optional SAC Library reading, title only, with no King full text in the Studio or tutor. Removing the King scans from Canvas still needs Caroline's own OK. The Google Doc Tutor Readings Inventory carries the full update.
+
+
 **Date:** 2026-10-28 (America/Chicago)
 **Status:** Preview only. **Do not push** to GitHub Pages until Caroline OK.
 
