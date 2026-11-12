@@ -18,7 +18,7 @@
 | `/1302/` | ENGL 1302 | Same subpage skeleton (Coming soon) |
 | `/2311/` | ENGL 2311 | Same subpage skeleton (Coming soon) |
 | `/2328/` | ENGL 2328 | Same subpage skeleton (Coming soon) |
-| `/tutor/` | Tutor (test) | Course and assignment picker, chat saved only in the browser, Test mode until `tutor/config.js` has a proxy URL. Proxy code in `_tutor_proxy/`. |
+| `/tutor/` | Tutor (test) | Course picker and optional stage, chat saved only in the browser, Test mode until `tutor/config.js` has a proxy URL. Proxy code in `_tutor_proxy/`. |
 
 ### ENGL 1301 subpages
 

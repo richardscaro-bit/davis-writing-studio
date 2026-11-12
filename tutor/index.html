@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tutor | Davis Writing Studio</title>
-    <meta name="description" content="Davis Writing Studio Tutor: a writing coach for ENGL 1301, 1302, 2311, and 2328 (test version).">
+    <meta name="description" content="Davis Writing Studio Tutor: a writing coach for ENGL 1301, 1302, 2311, and 2328 (live test).">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -48,7 +48,7 @@
         <p class="lead">Ask about your own draft, question, outline, sources, or citations. The tutor asks questions and points to one next step. It does not write for you.</p>
         <div class="callout warn tutor-note" role="note">
           <strong>Before you start</strong>
-          Test version. Do not paste names or other identifying details. Grading stays in Canvas.
+          Live test. Do not paste names or other identifying details. Grading stays in Canvas.
         </div>
         <p class="tutor-mode" id="tutorMode" hidden></p>
       </section>
@@ -65,14 +65,11 @@
                 <option value="2328">ENGL 2328 · American Literature</option>
               </select>
             </label>
-            <label class="field" for="assignmentSelect">Assignment <span class="hint">Optional</span>
-              <select id="assignmentSelect"></select>
-            </label>
             <label class="field" for="stageSelect">Stage <span class="hint">Optional</span>
               <select id="stageSelect">
                 <option value="">Any stage</option>
                 <option>Brainstorm or topic</option>
-                <option>Question Lock or thesis</option>
+                <option>Question Lock (how or why question) or thesis</option>
                 <option>Outline or plan</option>
                 <option>Draft feedback</option>
                 <option>Revision</option>
@@ -82,7 +79,7 @@
             </label>
           </div>
           <p class="tutor-small" id="citationHint"></p>
-          <p class="tutor-small">Using the tutor counts as AI use. Say how you used it in your AI use statement and Process Record.</p>
+          <p class="tutor-small">Using the tutor counts as AI use. Say how you used it in the AI use statement in your Process Record.</p>
         </form>
 
         <div class="tool-panel tutor-chat" aria-labelledby="chatTitle">
@@ -112,7 +109,7 @@
       <section class="section tutor-help" aria-labelledby="helpTitle">
         <div class="callout">
           <strong id="helpTitle">Where your chat goes</strong>
-          The chat stays only in this browser on this device. Nothing is saved on the Studio's side. On a shared or library computer, download the chat if you want it, then press Clear chat. For grades, due dates, or what an assignment requires, ask Professor Davis in Canvas.
+          Your messages are sent to an AI service to get a reply. Nothing is saved on our side. Your copy stays only in this browser on this device. On a shared or library computer, download the chat if you want it, then press Clear chat. For grades, due dates, or what an assignment requires, ask Professor Davis in Canvas.
         </div>
       </section>
     </main>
@@ -121,7 +118,6 @@
       <p>Davis Writing Studio · Tutor</p>
     </footer>
     <script src="config.js"></script>
-    <script src="assignments.js"></script>
     <script src="tutor.js"></script>
   </body>
 </html>

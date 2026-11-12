@@ -6,7 +6,6 @@
   const CONFIG = window.TUTOR_CONFIG || {};
   const PROXY_URL = (CONFIG.PROXY_URL || "").trim();
   const TEST_MODE = !PROXY_URL;
-  const ASSIGNMENTS = window.TUTOR_ASSIGNMENTS || {};
   const STORE_KEY = "dws-tutor-chat-v1";
   const COURSE_NAMES = {
     "1301": "ENGL 1301", "1302": "ENGL 1302", "2311": "ENGL 2311", "2328": "ENGL 2328",
@@ -15,11 +14,16 @@
 
   const FERPA_NOTE =
     "Please don't paste your name, student ID, grades, or anyone else's personal information. " +
-    "Nothing you type is saved on our side. The chat stays only in this browser, and you can download it.";
+    "Your messages are sent to an AI service to get a reply. Nothing is saved on our side. " +
+    "Your copy stays only in this browser on this device, and you can download it.";
+  const AI_USE_NOTE =
+    "Using this tutor counts as AI use. Note what you asked and what you kept or rejected.";
+  const NO_WRITE_REPLY =
+    "I can't write, rewrite, or polish your text for you. " +
+    "Paste the sentence or part you want to work on, and tell me what you want your reader to understand from it.";
 
   const $ = (id) => document.getElementById(id);
   const courseSel = $("courseSelect");
-  const assignSel = $("assignmentSelect");
   const stageSel = $("stageSelect");
   const log = $("chatLog");
   const input = $("chatInput");
@@ -39,7 +43,7 @@
       const s = JSON.parse(localStorage.getItem(STORE_KEY) || "null");
       if (s && Array.isArray(s.messages)) return s;
     } catch (e) { /* ignore */ }
-    return { course: "", assignment: "", stage: "", messages: [] };
+    return { course: "", stage: "", messages: [] };
   }
   let state = load();
   function save() {
@@ -51,20 +55,10 @@
     }
   }
 
-  // ---------- pickers ----------
-  function fillAssignments() {
-    const list = ASSIGNMENTS[courseSel.value] || [];
-    assignSel.innerHTML = "";
-    const general = document.createElement("option");
-    general.value = "";
-    general.textContent = "General question";
-    assignSel.appendChild(general);
-    list.forEach((a) => {
-      const o = document.createElement("option");
-      o.value = a.label;
-      o.textContent = a.label;
-      assignSel.appendChild(o);
-    });
+  // ---------- course and optional stage ----------
+  // The tutor needs a course so the proxy can load that course's instructions.
+  // There is no assignment picker. Students say what they are working on in the chat.
+  function setCitationHint() {
     $("citationHint").textContent =
       "Citation style for " + COURSE_NAMES[courseSel.value] + ": " + CITATION[courseSel.value] + ". Check your assignment page in Canvas too.";
   }
@@ -72,26 +66,22 @@
   const params = new URLSearchParams(location.search);
   const startCourse = params.get("course") || state.course || "1301";
   if (COURSE_NAMES[startCourse]) courseSel.value = startCourse;
-  fillAssignments();
-  if (state.assignment && [...assignSel.options].some((o) => o.value === state.assignment)) assignSel.value = state.assignment;
+  setCitationHint();
   if (state.stage) stageSel.value = state.stage;
 
-  courseSel.addEventListener("change", () => { fillAssignments(); state.course = courseSel.value; state.assignment = ""; save(); });
-  assignSel.addEventListener("change", () => { state.assignment = assignSel.value; save(); });
+  courseSel.addEventListener("change", () => { setCitationHint(); state.course = courseSel.value; save(); });
   stageSel.addEventListener("change", () => { state.stage = stageSel.value; save(); });
 
+  // Optional context sent in the assignment field (the worker treats it as optional).
   function contextLabel() {
-    const parts = [];
-    if (assignSel.value) parts.push(assignSel.value);
-    if (stageSel.value) parts.push("stage: " + stageSel.value);
-    return parts.join(", ");
+    return stageSel.value ? "stage: " + stageSel.value : "";
   }
 
   // ---------- mode badge ----------
   const mode = $("tutorMode");
   mode.hidden = false;
   mode.innerHTML = TEST_MODE
-    ? "<strong>Test mode.</strong> Replies are samples so the page can be tried. The live tutor is not connected yet."
+    ? "<strong>Live test.</strong> Replies are samples so the page can be tried. The live tutor is not connected yet."
     : "<strong>Live test.</strong> Replies come from the tutor. Check anything important with Professor Davis.";
 
   // ---------- render ----------
@@ -141,12 +131,10 @@
   ];
   function demoReply(text, firstTurn) {
     const course = COURSE_NAMES[courseSel.value];
-    const what = assignSel.value || "your assignment";
+    const what = stageSel.value || "your work";
     let body;
     if (WRITE_FOR_ME.some((r) => r.test(text))) {
-      body = "I can't write or rewrite your text for you, but I can help you build it yourself. " +
-        "Paste the part you are working on and tell me what you want your reader to understand from it. " +
-        "What is the one point that part needs to make?";
+      body = NO_WRITE_REPLY;
     } else if (GRADE_ASK.some((r) => r.test(text))) {
       body = "I don't grade, and I can't predict a grade. Professor Davis grades in Canvas. " +
         "I can tell you what " + what + " asks for and whether I can find each part in your draft. " +
@@ -155,9 +143,12 @@
       body = "What I see: you are working on " + what + " in " + course + ". I don't have your text yet, so I can't point to a specific spot.\n\n" +
         "Why it matters: feedback is most useful when it is tied to your own words and to what the assignment asks for.\n\n" +
         "One next move: paste one short part of your own work (a question, a thesis, or one paragraph) and name the requirement you want to check.\n\n" +
-        "One question: what is the single thing you most want your reader to understand from this part?";
+        "One question: what is the single thing you most want your reader to understand from this part?\n\n" +
+        "You've got this!";
     }
-    return (firstTurn ? FERPA_NOTE + "\n\n" : "") + body;
+    const prefix = firstTurn ? FERPA_NOTE + "\n\n" : "";
+    const suffix = firstTurn ? "\n\n" + AI_USE_NOTE : "";
+    return prefix + body + suffix;
   }
 
   // ---------- send ----------

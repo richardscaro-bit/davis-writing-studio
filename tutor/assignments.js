@@ -1,5 +1,5 @@
-// Assignment and stage lists for the Tutor, taken from the studio pages in each course folder.
-// Rebuild with _build/tutor_assignments.py when a studio page is added or renamed.
+// Assignment lists kept for reference. The Tutor page no longer uses an assignment picker.
+// Students name the work in the chat. Rebuild with _build/tutor_assignments.py if this list is needed again.
 window.TUTOR_ASSIGNMENTS = {
   "1301": [
     {
