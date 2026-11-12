@@ -17,6 +17,7 @@
     "Outline",
     "Drafting",
     "Revision",
+    "Grammar and punctuation",
     "Citations",
     "Final check",
   ];
