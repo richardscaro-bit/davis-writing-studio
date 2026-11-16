@@ -211,3 +211,110 @@
   .msg { max-width: 100%; background: none !important; color: #000 !important; border: 1px solid #999 !important; break-inside: avoid; }
   .msg .who { color: #000 !important; }
 }
+
+/* === Tutor resting note (16 November 2026) =================================
+   Cream and sage two-box callout with a gold top bar, matching the
+   Case Study botanical boxes. Port THIS BLOCK with the matching tutor.js
+   resting helpers (TUTOR_RESTING, isTutorUnavailable, restingNoteEl,
+   showRestingBanner, and the 502/503 error path).
+   ======================================================================== */
+.tutor-resting-banner {
+  max-width: 72rem;
+  margin: 0 auto 0.25rem;
+}
+.tutor-log .tutor-resting-wrap {
+  align-self: stretch;
+  width: 100%;
+  max-width: 100%;
+}
+.dws-twobox.tutor-resting-note,
+.tutor-resting-banner .dws-twobox {
+  display: flex;
+  gap: 0.85rem;
+  margin: 0;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+.dws-twobox.tutor-resting-note > .dws-box,
+.tutor-resting-banner .dws-twobox > .dws-box {
+  flex: 1 1 16rem;
+  min-width: 0;
+  background: #fffdf6;
+  color: #2e2622;
+  border-width: 5px 1px 1px;
+  border-style: solid;
+  border-color: #C9AE7A;
+  border-radius: 14px;
+  padding: 0.75rem 0.95rem 0.85rem;
+}
+.dws-twobox.tutor-resting-note > .dws-box.sage,
+.tutor-resting-banner .dws-twobox > .dws-box.sage {
+  background: #eef2ec;
+  border-color: #C9AE7A;
+}
+.dws-twobox.tutor-resting-note > .dws-box h3,
+.tutor-resting-banner .dws-twobox > .dws-box h3 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #354838;
+  border-bottom: 1px solid #c4a56a;
+  padding-bottom: 0.3rem;
+  margin: 0 0 0.5rem;
+  line-height: 1.2;
+}
+.dws-twobox.tutor-resting-note > .dws-box p,
+.tutor-resting-banner .dws-twobox > .dws-box p {
+  margin: 0 0 0.45rem;
+  font-size: 0.98rem;
+  color: #2e2622;
+  line-height: 1.45;
+}
+.dws-twobox.tutor-resting-note > .dws-box p:last-child,
+.tutor-resting-banner .dws-twobox > .dws-box p:last-child {
+  margin-bottom: 0;
+}
+.dws-twobox.tutor-resting-note > .dws-box ul,
+.tutor-resting-banner .dws-twobox > .dws-box ul {
+  margin: 0.15rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+.dws-twobox.tutor-resting-note > .dws-box li,
+.tutor-resting-banner .dws-twobox > .dws-box li {
+  margin: 0 0 0.35rem;
+  color: #2e2622;
+}
+.dws-twobox.tutor-resting-note > .dws-box li:last-child,
+.tutor-resting-banner .dws-twobox > .dws-box li:last-child {
+  margin-bottom: 0;
+}
+.dws-twobox.tutor-resting-note > .dws-box a,
+.tutor-resting-banner .dws-twobox > .dws-box a {
+  color: #354838;
+  font-weight: 600;
+  text-decoration: underline;
+}
+.dws-twobox.tutor-resting-note > .dws-box a:hover,
+.tutor-resting-banner .dws-twobox > .dws-box a:focus-visible,
+.tutor-resting-banner .dws-twobox > .dws-box a:hover,
+.dws-twobox.tutor-resting-note > .dws-box a:focus-visible {
+  color: #2a382c;
+}
+@media (max-width: 700px) {
+  .dws-twobox.tutor-resting-note,
+  .tutor-resting-banner .dws-twobox {
+    flex-direction: column;
+  }
+}
+@media print {
+  .tutor-resting-banner,
+  .tutor-log .tutor-resting-wrap { display: block !important; }
+  .dws-twobox.tutor-resting-note > .dws-box,
+  .tutor-resting-banner .dws-twobox > .dws-box {
+    background: #fff !important;
+    color: #000 !important;
+    border: 1px solid #333 !important;
+  }
+}

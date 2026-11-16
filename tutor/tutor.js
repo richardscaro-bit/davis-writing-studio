@@ -32,6 +32,57 @@
     "I can't write, rewrite, or polish your text for you. " +
     "Paste the sentence or part you want to work on, and tell me what you want your reader to understand from it.";
 
+  // Manual site-wide flag. When true, the resting note appears at the top of
+  // the tutor with no request to the AI service. Leave this false unless the
+  // tutor needs to rest before a student tries a message.
+  const TUTOR_RESTING = false;
+
+  const RESTING_PLAIN =
+    "The tutor is taking a short rest right now. Your work is still here! Try again later. " +
+    "In the meantime, the lens guide, thesis helper, and outline tools on this site still work, " +
+    "and you can reach Professor Davis in Canvas. " +
+    "Open 1301 Resources or 1301 Tools from this site.";
+
+  const RESTING_NOTE_INNER =
+    '<div class="dws-box">' +
+      "<h3>The tutor is resting</h3>" +
+      "<p>The tutor is taking a short rest right now. Your work is still here! Try again later.</p>" +
+    "</div>" +
+    '<div class="dws-box sage">' +
+      "<h3>What still works</h3>" +
+      "<p>In the meantime, the lens guide, thesis helper, and outline tools on this site still work, and you can reach Professor Davis in Canvas.</p>" +
+      "<ul>" +
+        '<li><a href="../1301/resources.html">1301 Resources</a></li>' +
+        '<li><a href="../1301/tools/">1301 Tools</a></li>' +
+      "</ul>" +
+    "</div>";
+
+  function isTutorUnavailable(res, data, err) {
+    if (res && (res.status === 502 || res.status === 503)) return true;
+    var msg = "";
+    if (data && data.error) msg += " " + data.error;
+    if (err && err.message) msg += " " + err.message;
+    return /ai service is unavailable|the ai service is unavailable|service is unavailable/i.test(msg);
+  }
+
+  function restingNoteEl() {
+    var wrap = document.createElement("div");
+    wrap.className = "dws-twobox tutor-resting-note";
+    wrap.setAttribute("role", "status");
+    wrap.innerHTML = RESTING_NOTE_INNER;
+    return wrap;
+  }
+
+  function showRestingBanner() {
+    if (document.getElementById("tutorRestingBanner")) return;
+    var banner = document.createElement("div");
+    banner.id = "tutorRestingBanner";
+    banner.className = "section tutor-resting-banner";
+    banner.appendChild(restingNoteEl());
+    var main = document.getElementById("main");
+    if (main) main.insertBefore(banner, main.firstChild);
+  }
+
   const $ = (id) => document.getElementById(id);
   const stageSel = $("stageSelect");
   const log = $("chatLog");
@@ -106,6 +157,13 @@
       return;
     }
     state.messages.forEach((m) => {
+      if (m.resting) {
+        const wrap = document.createElement("div");
+        wrap.className = "tutor-resting-wrap";
+        wrap.appendChild(restingNoteEl());
+        log.appendChild(wrap);
+        return;
+      }
       const div = document.createElement("div");
       div.className = "msg " + m.role + (m.error ? " error" : "");
       const who = document.createElement("span");
@@ -130,6 +188,7 @@
     log.scrollTop = log.scrollHeight;
   }
   render();
+  if (TUTOR_RESTING) showRestingBanner();
 
   // ---------- Test mode replies ----------
   // Same checks the proxy runs (see _tutor_proxy/worker.js).
@@ -232,11 +291,20 @@
           }),
         });
         const data = await res.json().catch(() => ({}));
-        if (!res.ok || !data.reply) throw new Error(data.error || "The tutor could not answer right now.");
-        state.messages.push({ role: "assistant", content: data.reply });
+        if (isTutorUnavailable(res, data)) {
+          state.messages.push({ role: "assistant", content: RESTING_PLAIN, error: true, resting: true });
+        } else if (!res.ok || !data.reply) {
+          throw new Error(data.error || "The tutor could not answer right now.");
+        } else {
+          state.messages.push({ role: "assistant", content: data.reply });
+        }
       }
     } catch (err) {
-      state.messages.push({ role: "assistant", content: (err && err.message) || "The tutor could not answer right now. Try again in a minute.", error: true });
+      if (isTutorUnavailable(null, null, err)) {
+        state.messages.push({ role: "assistant", content: RESTING_PLAIN, error: true, resting: true });
+      } else {
+        state.messages.push({ role: "assistant", content: (err && err.message) || "The tutor could not answer right now. Try again in a minute.", error: true });
+      }
     } finally {
       busy = false;
       sendBtn.disabled = false;
