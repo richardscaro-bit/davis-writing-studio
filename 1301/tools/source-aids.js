@@ -278,9 +278,29 @@
     root.addEventListener("blur", persist, true);
   }
 
-  function mount() {
-    const host = document.getElementById("dwsSourceAids");
-    if (!host) return;
+  function alwaysShowOnThisPage() {
+    const path = location.pathname || "";
+    return /case-study-studio\.html/.test(path)
+      || /case-study-research-guide\.html/.test(path)
+      || /source-log\.html/.test(path);
+  }
+
+  function selectedIsCaseStudy() {
+    const ctx = window.DWSEssayContext;
+    if (ctx && typeof ctx.getActive === "function") {
+      const essay = ctx.getActive();
+      if (essay && essay.id) return essay.id === "case-study";
+    }
+    const sel = document.getElementById("dwsEssaySelect");
+    if (sel) return sel.value === "case-study";
+    return false;
+  }
+
+  function shouldShowAids() {
+    return alwaysShowOnThisPage() || selectedIsCaseStudy();
+  }
+
+  function fillHost(host) {
     const state = loadState();
     host.innerHTML = `
       <div class="dws-source-aids-inner">
@@ -289,6 +309,26 @@
       </div>
     `;
     bind(host);
+    host.dataset.csMounted = "true";
+  }
+
+  function syncAidsVisibility(host) {
+    const show = shouldShowAids();
+    host.hidden = !show;
+    if (show && host.dataset.csMounted !== "true") fillHost(host);
+  }
+
+  function mount() {
+    const host = document.getElementById("dwsSourceAids");
+    if (!host) return;
+    syncAidsVisibility(host);
+    if (alwaysShowOnThisPage()) return;
+    const ctx = window.DWSEssayContext;
+    if (ctx && typeof ctx.onChange === "function") {
+      ctx.onChange(function () { syncAidsVisibility(host); });
+    }
+    const sel = document.getElementById("dwsEssaySelect");
+    if (sel) sel.addEventListener("change", function () { syncAidsVisibility(host); });
   }
 
   if (document.readyState === "loading") {
