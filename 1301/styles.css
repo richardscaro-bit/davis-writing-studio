@@ -239,3 +239,22 @@ details.studio-drop .sample-essay h4 {
 [data-essay-panel].is-hidden {
   display: none !important;
 }
+
+/* Case Study Source Search Guide and Source Log (in-page) */
+.dws-source-aids { margin-top: 1.5rem; }
+.dws-source-aids .dws-source-aids-inner { display: grid; gap: 0.85rem; }
+.dws-source-aids .dws-table-wrap { overflow-x: auto; margin: 0.6rem 0 0.9rem; }
+.dws-source-aids table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.dws-source-aids th, .dws-source-aids td { border: 1px solid rgba(255,248,240,0.18); padding: 0.45rem 0.5rem; vertical-align: top; text-align: left; }
+.dws-source-aids th { font-weight: 600; }
+.dws-source-aids table input,
+.dws-source-aids table textarea { width: 100%; min-height: 3.2rem; }
+.dws-source-aids .field { margin-top: 0.65rem; }
+
+/* Hidden fieldsets: .angle-fieldset { display:grid } otherwise wins over the hidden attribute */
+.angle-fieldset[hidden],
+.criteria-fieldset[hidden],
+#caseStudyCriteriaBox[hidden],
+#comparisonCriteriaBox[hidden] {
+  display: none !important;
+}

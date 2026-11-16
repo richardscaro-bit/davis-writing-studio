@@ -65,9 +65,9 @@ const studios = {
     label: "Case Study Critical Analysis",
     due: "Five-step practice path",
     length: "1,000–1,500 words MLA",
-    format: "Clear claim · critical analysis · 3–4 outside sources beyond the packet",
+    format: "Clear claim · critical analysis · exactly 2 outside sources, used in 2 of 5 sections",
     prompt:
-      "Choose one case from your topic folder (or an approved case). Write a critical analysis built around one clear claim—a stance a reader could disagree with—supported by evidence from your case Source Packet and Case Brief, plus 3–4 credible outside sources beyond the packet. In class you will see a BarkBox or Crumbl model demo; brainstorm ideas before you lock a working thesis later. Whole-Class Examples in Drive are practice models only.",
+      "Choose one case from your topic folder (or an approved case). Write a critical analysis built around one clear claim, a stance a reader could disagree with, supported by evidence from your case Source Packet and Case Brief. Your thesis previews all five criteria in order: framing, stakeholders, evidence quality, assumptions, and limits. Write five body sections in that same order. Each body section uses two cited packet details. In exactly two of the five sections, add one outside source each. Use exactly two outside sources total, and use each source in only one section. Example critical questions are in your Case Brief file. Aim for 1,000 to 1,500 words MLA. In class you will see a BarkBox or Crumbl model demo. Brainstorm ideas before you lock a working thesis later. Whole-Class Examples in Drive are practice models only.",
     aiPolicy: {
       level: "Level 2 · AI for Support, Not Composition",
       allowed:
@@ -129,21 +129,21 @@ const caseStudyWeeks = [
     week: "Step 3",
     due: "Focus · claim + outline",
     assignment: "Outline + research plan",
-    focus: "shape a 1 to 2 page outline and research plan with a working thesis, and identify 3 to 4 outside sources beyond the packet. This is when the thesis locks after the demo and brainstorm.",
+    focus: "shape a 1 to 2 page outline and research plan with a working thesis that previews all five criteria in order, five body sections in that same order, two cited packet details in each section, and exactly 2 outside sources placed in two different sections. This is when the thesis locks after the demo and brainstorm.",
     also: ["In-class focus: Outline / Thesis / Outside Source"]
   },
   {
     week: "Step 4",
     due: "Focus · draft + peer",
     assignment: "Working draft + peer review",
-    focus: "build a working draft toward full essay length, integrate or placeholder the 3 to 4 outside sources, and rehearse one peer review.",
+    focus: "build a working draft toward full essay length, keep two cited packet details in each of the five body sections, place exactly 2 outside sources in two different sections, and rehearse one peer review.",
     also: []
   },
   {
     week: "Step 5",
     due: "Focus · polished essay",
     assignment: "Polished critical analysis essay",
-    focus: "finish a 1,000 to 1,500 word MLA critical analysis (Works Cited not in the word count) with packet evidence primary and 3 to 4 outside sources beyond the packet.",
+    focus: "finish a 1,000 to 1,500 word MLA critical analysis (Works Cited not in the word count) with packet evidence primary, two cited packet details in each of five body sections, and exactly 2 outside sources in two different sections.",
     also: ["In-class focus: Limits / Ethics"]
   }
 ];
@@ -311,9 +311,9 @@ function renderWorkspaceFields(key, workspace) {
       </div>
       <div class="callout warn">
         <strong>Practice framing.</strong>
-        Aim for a 1,000–1,500 word MLA critical analysis.
-        Use 3–4 credible outside sources beyond the packet (packet stays primary).
-        Outline is 1–2 pages. One clear claim. One peer review rehearsal (Step 4).
+        Aim for a 1,000 to 1,500 word MLA critical analysis.
+        Use exactly 2 outside sources, each in a different body section. Do not reuse a source. The packet stays primary.
+        Each of the five body sections uses two cited packet details. The thesis previews all five criteria in order. Outline is 1 to 2 pages. One peer review rehearsal (Step 4).
       </div>
       <div class="field-grid">
         <label class="field">Topic / case preview notes
@@ -329,11 +329,11 @@ function renderWorkspaceFields(key, workspace) {
           <textarea data-field="readingNotes" placeholder="Reading notes keyed to the five analysis questions…">${escapeHtml(workspace.readingNotes)}</textarea>
         </label>
         <label class="field">Outline / research plan (1–2 pages)
-          <span class="hint">Outline / Research Plan — working claim/thesis + plan for 3–4 outside sources beyond the packet</span>
-          <textarea data-field="outline" placeholder="Working claim / thesis…&#10;Section outline…&#10;Outside sources 1–4 (beyond packet)…">${escapeHtml(workspace.outline)}</textarea>
+          <span class="hint">Outline / Research Plan: a thesis that previews all five criteria, five body sections, two cited packet details in each, and exactly 2 outside sources in two different sections</span>
+          <textarea data-field="outline" placeholder="Working thesis that previews framing, stakeholders, evidence quality, assumptions, and limits…&#10;Five body sections in that order, each with packet detail 1 and packet detail 2…&#10;Exactly 2 outside sources, each in a different section…">${escapeHtml(workspace.outline)}</textarea>
         </label>
         <label class="field">Working draft
-          <span class="hint">Working Draft — aim toward full essay length; integrate or placeholder 3–4 outside sources</span>
+          <span class="hint">Working Draft: aim toward full essay length. Keep two cited packet details in each section. Place exactly 2 outside sources in two different sections.</span>
           <textarea data-field="draft" style="min-height:14rem" placeholder="Draft body…">${escapeHtml(workspace.draft)}</textarea>
         </label>
       </div>
@@ -357,12 +357,12 @@ function renderWorkspaceFields(key, workspace) {
 
 function renderFinalChecklist(key, workspace) {
   const items = [
-    ["thesis", "I have one clear claim—a stance a reader could disagree with."],
-    ["length", "Essay body is about 1,000–1,500 words (Works Cited not counted)."],
+    ["thesis", "My thesis is one arguable sentence that previews all five criteria in order: framing, stakeholders, evidence quality, assumptions, and limits."],
+    ["length", "Essay body is about 1,000 to 1,500 words (Works Cited not counted)."],
     ["mla", "MLA format: heading, in-text citations, Works Cited."],
-    ["sources", "I used 3–4 credible outside sources beyond the packet."],
-    ["packet", "Packet evidence remains primary and is integrated fairly."],
-    ["analysis", "I address problem, stakeholders, evidence, assumptions/biases, and limits."],
+    ["sources", "I used exactly 2 outside sources, each in a different body section, and I did not reuse a source."],
+    ["packet", "Each of the five body sections has two cited packet details, and packet evidence remains primary."],
+    ["analysis", "I have five body sections in this order: framing, stakeholders, evidence quality, assumptions, and limits."],
     ["peer", "I completed one Step 4 peer-review rehearsal."],
     ["ai", "Any AI use followed Level 2 rules (support, not composition)."]
   ];

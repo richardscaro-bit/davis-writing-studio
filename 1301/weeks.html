@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Practice path | ENGL 1301 · Davis Writing Studio</title>
-    <meta name="description" content="How to start practicing any ENGL 1301 essay: pick the essay, read its Purpose, then work thesis, draft, and polish with Tools and Resources.">
+    <meta name="description" content="How to start practicing any ENGL 1301 essay: pick the essay, read its Purpose, then work a critical question, thesis, draft, and polish with Tools and Resources.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -42,7 +42,7 @@
       <section class="section" aria-labelledby="weeksTitle">
         <p class="eyebrow">How to start practicing · any essay</p>
         <h1 id="weeksTitle">Practice path</h1>
-        <p class="lead">Use this path for whichever essay you are practicing. Pick that essay below, read its Purpose, then work the steps with Tools and Resources. Dedicated studios open only for the essay you selected — Case Study is not the default.</p>
+        <p class="lead">Use this path for whichever essay you are practicing. Pick that essay below, read its Purpose, then work the steps with Tools and Resources, including the critical question developer before the thesis generator. Dedicated studios open only for the essay you selected. Case Study is not the default.</p>
         <p class="hero-actions">
           <a class="button primary" id="pathStudioBtn" href="index.html#essays">See all essays</a>
           <a class="button ghost" href="tools/">Practice tools</a>
@@ -53,8 +53,10 @@
 
         <div class="callout" style="margin-top:1.25rem;" id="pathActiveCallout">
           <strong>Start practicing</strong>
-          <p style="margin:0.35rem 0 0;" id="pathActiveText">Pick the essay you are on, read that essay’s Purpose, then move through brainstorm, thesis and outline, draft, then peer review and polish. Tools and Resources support every essay; open that essay’s studio only when one exists for it.</p>
+          <p style="margin:0.35rem 0 0;" id="pathActiveText">Pick the essay you are on, read that essay's Purpose, then move through brainstorm, a critical question, thesis and outline, draft, then peer review and polish. Tools and Resources support every essay; open that essay's studio only when one exists for it.</p>
         </div>
+
+        <div id="dwsSourceAids" class="dws-source-aids"></div>
 
         <div class="week-stepper" style="margin-top:1.5rem;">
           <article class="week-card" id="step1">
@@ -100,33 +102,47 @@
           <article class="week-card" id="step4">
             <header>
               <h5>Step 4</h5>
-              <span class="pill">Focus · thesis + outline</span>
+              <span class="pill">Focus · critical question</span>
             </header>
-            <p><strong>Thesis + outline</strong></p>
-            <p>Shape a working thesis, then a short outline. Practice with the thesis helper and outline helper; carry what you keep into the essay’s studio when it has one.</p>
+            <p><strong>Critical question developer</strong></p>
+            <p>Turn your topic into one open, arguable question, often beginning with how, why, or to what extent. The developer flags yes/no or fact-only questions, shows a weak vs stronger example, and can send the question you keep into the thesis generator.</p>
             <div class="resource-links">
-              <a class="button small primary" href="tools/thesis-helper.html">Thesis helper</a>
-              <a class="button small ghost" href="tools/outline-helper.html">Outline helper</a>
+              <a class="button small primary" href="tools/critical-question.html">Critical question developer</a>
+              <a class="button small ghost" href="tools/thesis-helper.html">Thesis generator</a>
             </div>
           </article>
 
           <article class="week-card" id="step5">
             <header>
               <h5>Step 5</h5>
-              <span class="pill">Focus · draft + sources</span>
+              <span class="pill">Focus · thesis + outline</span>
             </header>
-            <p><strong>Draft + sources</strong></p>
-            <p>Build a working draft and track sources as the essay asks for them. Use the source log and MLA practice tools; draft in the essay’s studio when that room has a workspace.</p>
+            <p><strong>Thesis + outline</strong></p>
+            <p>Shape a working thesis that answers your critical question, then a short outline. Practice with the thesis helper and outline helper; carry what you keep into the essay's studio when it has one.</p>
             <div class="resource-links">
-              <a class="button small primary" href="tools/source-log.html">Source log</a>
-              <a class="button small ghost" href="tools/mla-citation.html">MLA practice</a>
-              <a class="button small ghost" id="step5StudioBtn" href="index.html#essays">Essay rooms</a>
+              <a class="button small primary" href="tools/thesis-helper.html">Thesis helper</a>
+              <a class="button small ghost" href="tools/outline-helper.html">Outline helper</a>
+              <a class="button small ghost" href="tools/critical-question.html">Critical question developer</a>
             </div>
           </article>
 
-          <article class="week-card active" id="step6">
+          <article class="week-card" id="step6">
             <header>
               <h5>Step 6</h5>
+              <span class="pill">Focus · draft + sources</span>
+            </header>
+            <p><strong>Draft + sources</strong></p>
+            <p>Build a working draft and track sources as the essay asks for them. Use the source log and MLA practice tools; draft in the essay's studio when that room has a workspace.</p>
+            <div class="resource-links">
+              <a class="button small primary" href="tools/source-log.html">Source log</a>
+              <a class="button small ghost" href="tools/mla-citation.html">MLA practice</a>
+              <a class="button small ghost" id="step6StudioBtn" href="index.html#essays">Essay rooms</a>
+            </div>
+          </article>
+
+          <article class="week-card" id="step7">
+            <header>
+              <h5>Step 7</h5>
               <span class="pill">Focus · peer + polish</span>
             </header>
             <p><strong>Peer + polish</strong></p>
@@ -143,14 +159,14 @@
 
     <footer class="site-footer"><p>Davis Writing Studio · ENGL 1301 Practice path</p></footer>
     <script src="app.js"></script>
-    <script src="tools/essay-context.js?v=path1"></script>
+    <script src="tools/essay-context.js?v=csqdev1"></script>
     <script>
       (function () {
         const ctx = window.DWSEssayContext;
         if (!ctx) return;
         const pathStudioBtn = document.getElementById("pathStudioBtn");
         const step1StudioBtn = document.getElementById("step1StudioBtn");
-        const step5StudioBtn = document.getElementById("step5StudioBtn");
+        const step6StudioBtn = document.getElementById("step6StudioBtn");
         const pathActiveText = document.getElementById("pathActiveText");
 
         function refreshPath() {
@@ -169,13 +185,13 @@
               step1StudioBtn.href = "index.html#essays";
               step1StudioBtn.textContent = "Essays on Home";
             }
-            if (step5StudioBtn) {
-              step5StudioBtn.href = "index.html#essays";
-              step5StudioBtn.textContent = "Essay rooms";
+            if (step6StudioBtn) {
+              step6StudioBtn.href = "index.html#essays";
+              step6StudioBtn.textContent = "Essay rooms";
             }
             if (pathActiveText) {
               pathActiveText.textContent =
-                "Pick the essay you are on, read that essay’s Purpose, then move through brainstorm, thesis and outline, draft, then peer review and polish. Tools and Resources support every essay; open that essay’s studio only when one exists for it. Case Study opens only when you select Case Study.";
+                "Pick the essay you are on, read that essay's Purpose, then move through brainstorm, a critical question, thesis and outline, draft, then peer review and polish. Tools and Resources support every essay; open that essay's studio only when one exists for it. Case Study opens only when you select Case Study.";
             }
             return;
           }
@@ -189,17 +205,17 @@
             step1StudioBtn.href = href;
             step1StudioBtn.textContent = "Open " + label;
           }
-          if (step5StudioBtn) {
-            step5StudioBtn.href = href;
-            step5StudioBtn.textContent = "Open " + label;
+          if (step6StudioBtn) {
+            step6StudioBtn.href = href;
+            step6StudioBtn.textContent = "Open " + label;
           }
           if (pathActiveText) {
             pathActiveText.textContent =
               "You selected " +
               essay.label +
-              ". Read its Purpose, then work brainstorm → thesis and outline → draft → peer and polish. Open " +
+              ". Read its Purpose, then work brainstorm, a critical question, thesis and outline, draft, then peer and polish. Open " +
               label +
-              " for that essay’s workspace. Case Study is only the next step when Case Study is the selected essay.";
+              " for that essay's workspace. Case Study is only the next step when Case Study is the selected essay.";
           }
         }
 
@@ -208,5 +224,6 @@
         refreshPath();
       })();
     </script>
+    <script src="tools/source-aids.js?v=csrules17"></script>
   </body>
 </html>

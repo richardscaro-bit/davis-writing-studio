@@ -174,14 +174,14 @@
                   <li><strong>Assumptions</strong> — What the case takes for granted</li>
                   <li><strong>Limits</strong> — What the packet can and cannot tell us</li>
                 </ul>
-                <p>Your thesis answers one critical question about your packet. Body paragraphs argue by interpreting evidence. Summary tells what the packet says; analysis tells what it means and where it is strong or thin. Aim for about 1,000 to 1,500 words MLA with 1 to 2 outside sources beyond the packet.</p>
+                <p>Your thesis answers one critical question about your packet. Body paragraphs argue by interpreting evidence. Summary tells what the packet says; analysis tells what it means and where it is strong or thin. Aim for about 1,000 to 1,500 words MLA with exactly 2 outside sources beyond the packet, each in a different body section.</p>
                 <p><strong>Practice sequence (shapes only):</strong></p>
                 <ol class="cue-list">
                   <li><strong>Topic selection + preview</strong> — Topic folder and exact packet title; one-sentence summary; critical question; working thesis; two concrete packet details; why you chose this case.</li>
                   <li><strong>Critical analysis reading notes</strong> — Notes under the five lenses; at least two original critical questions; end with “A possible focus for my essay is …” Class models (BarkBox / Crumbl) show the method only.</li>
-                  <li><strong>Outline / research plan</strong> — Working thesis; outline with intro, ≥3 body sections (topic sentence + packet details + analysis), limitations / ethics, conclusion; 1 to 2 outside sources and what each adds.</li>
+                  <li><strong>Outline / research plan</strong> — Working thesis that previews all five criteria in order; outline with intro, five body sections in this order (framing, stakeholders, evidence quality, assumptions, limits), limitations / ethics, conclusion. Each body section has two cited packet details. Exactly 2 outside sources go in two different sections, and a source is not reused.</li>
                   <li><strong>Working draft + one peer review</strong> — Continuous prose toward the final length; peer pass restates thesis, names the critical question, strongest evidence, thinner analysis, limitations, and two revision moves.</li>
-                  <li><strong>Final critical analysis essay</strong> — Intro + thesis; analysis body; outside sources; limitations / ethics; conclusion; Works Cited. Not a summary-only report, not a classical argument dossier, not a mid-essay topic switch.</li>
+                  <li><strong>Final critical analysis essay</strong> — Intro + thesis that previews all five criteria; five body sections in that order; exactly 2 outside sources in two different sections; limitations / ethics; conclusion; Works Cited. Not a summary-only report, not a classical argument dossier, not a mid-essay topic switch.</li>
                 </ol>
                 <p><strong>Sample critical-question shapes:</strong></p>
                 <ul class="cue-list">
@@ -382,6 +382,7 @@
 
 <article class="resource-card" id="library-search">
             <h3>Library search tips</h3>
+            <div id="dwsSourceAids" class="dws-source-aids"></div>
             <p id="libraryLead">Prefer <strong>SAC Library</strong> databases when your essay needs outside sources. Start with a topic phrase plus one tension word, then narrow by peer-reviewed or full text. Sign in with ACES when prompted. Ask a librarian if a paywall appears; campus access often unlocks it.</p>
             <ul class="cue-list" id="libraryCues">
               <li>Use the keyword generator first, then paste a draft query into the library search or a database (Academic Search Complete, JSTOR, and similar).</li>
@@ -416,11 +417,10 @@
             <h3 id="libguideTitle">LibGuide · research maps</h3>
             <p id="libguideLead">LibGuides are librarian-built maps for a class or assignment: databases, search tips, citation help. Browse SAC Academic Guides by subject or instructor.</p>
             <div class="resource-links">
-              <a class="button small primary" href="https://alamo.libguides.com/sac/academic-guides" target="_blank" rel="noopener">SAC Academic Guides</a>
-              <a class="button small ghost" id="libguideDavisLink" href="https://alamo.libguides.com/sac/engl1301_davis_casestudy" title="Placeholder until a Davis Case Study LibGuide is published" hidden>Davis · Case Study LibGuide (placeholder)</a>
+              <a class="button small primary" id="libguideAcademicLink" href="https://alamo.libguides.com/sac/academic-guides" target="_blank" rel="noopener">SAC Academic Guides</a>
+              <a class="button small ghost" id="libguideDavisLink" href="case-study-research-guide.html" hidden>Case Study research guide</a>
               <a class="button small ghost" href="https://sac.libanswers.com/" target="_blank" rel="noopener">Ask a SAC librarian</a>
             </div>
-            <p class="hint-block" id="libguideHint" style="margin-top:0.65rem;" hidden>Placeholder URL pattern for Caroline to edit when live: <code>https://alamo.libguides.com/sac/engl1301_davis_casestudy</code></p>
           </article>
 
           <article class="resource-card" id="keywords">
@@ -503,7 +503,7 @@
 
     <footer class="site-footer"><p>Davis Writing Studio · ENGL 1301 Resources</p></footer>
     <script src="app.js"></script>
-    <script src="tools/essay-context.js?v=res2"></script>
+    <script src="tools/essay-context.js?v=csrules17"></script>
     <script>
       (function () {
         const ctx = window.DWSEssayContext;
@@ -534,7 +534,7 @@
           if (id === "case-study") {
             if (libraryLead) {
               libraryLead.innerHTML =
-                "Prefer <strong>SAC Library</strong> databases for the 3 to 4 outside sources beyond the packet. Start with your case name plus one tension word, then narrow by peer-reviewed or full text. Sign in with ACES when prompted. Ask a librarian if a paywall appears; campus access often unlocks it.";
+                "Prefer <strong>SAC Library</strong> databases for your exactly 2 outside sources beyond the packet. Start with your case name plus one tension word, then narrow by peer-reviewed or full text. Sign in with ACES when prompted. Ask a librarian if a paywall appears; campus access often unlocks it.";
             }
             if (scholarBoolean) {
               scholarBoolean.innerHTML =
@@ -598,23 +598,37 @@
           const libTitle = document.getElementById("libguideTitle");
           const libLead = document.getElementById("libguideLead");
           const libDavis = document.getElementById("libguideDavisLink");
-          const libHint = document.getElementById("libguideHint");
+          const libAcademic = document.getElementById("libguideAcademicLink");
           if (id === "case-study") {
             if (libTitle) libTitle.textContent = "LibGuide · Case Study research";
             if (libLead) {
               libLead.textContent =
-                "LibGuides are librarian-built maps for a class or assignment: databases, search tips, citation help. Browse SAC Academic Guides by subject or instructor. If a Davis Case Study guide is published later, swap the placeholder link below.";
+                "This studio has a Case Study research guide: what sources you need, where to search, how to judge them, and how to log and cite them. You can also browse SAC Academic Guides by subject or instructor.";
             }
-            if (libDavis) setPanelVisibility(libDavis, true);
-            if (libHint) setPanelVisibility(libHint, true);
+            if (libDavis) {
+              setPanelVisibility(libDavis, true);
+              libDavis.classList.remove("ghost");
+              libDavis.classList.add("primary");
+            }
+            if (libAcademic) {
+              libAcademic.classList.remove("primary");
+              libAcademic.classList.add("ghost");
+            }
           } else {
             if (libTitle) libTitle.textContent = "LibGuide · research maps";
             if (libLead) {
               libLead.textContent =
                 "LibGuides are librarian-built maps for a class or assignment: databases, search tips, citation help. Browse SAC Academic Guides by subject or instructor.";
             }
-            if (libDavis) setPanelVisibility(libDavis, false);
-            if (libHint) setPanelVisibility(libHint, false);
+            if (libDavis) {
+              setPanelVisibility(libDavis, false);
+              libDavis.classList.remove("primary");
+              libDavis.classList.add("ghost");
+            }
+            if (libAcademic) {
+              libAcademic.classList.remove("ghost");
+              libAcademic.classList.add("primary");
+            }
           }
         }
 
@@ -624,5 +638,6 @@
       })();
     </script>
 </script>
+    <script src="tools/source-aids.js?v=csrules17"></script>
   </body>
 </html>

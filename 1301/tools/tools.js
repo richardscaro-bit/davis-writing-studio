@@ -147,6 +147,7 @@
         ($("#criterion2")?.value || "").trim(),
         ($("#criterion3")?.value || "").trim()
       ].filter(Boolean),
+      csCriteria: $("#csCriteriaChips") ? readCsCriteria() : [],
       angles: selectedAngles()
     };
   }
@@ -183,9 +184,109 @@
       btn.setAttribute("aria-pressed", on ? "true" : "false");
       btn.classList.toggle("active", on);
     });
+    if ($("#csCriteriaChips") && Array.isArray(data.csCriteria) && data.csCriteria.length) {
+      setCsCriteria(data.csCriteria, false);
+    }
   }
 
-  function buildClaimOptions(inputs) {
+
+  const CS_CRITERIA = [
+    { id: "framing", label: "Framing", phrase: "its framing" },
+    { id: "stakeholders", label: "Stakeholders", phrase: "its stakeholders" },
+    { id: "evidence", label: "Evidence quality", phrase: "its evidence quality" },
+    { id: "assumptions", label: "Assumptions", phrase: "its assumptions" },
+    { id: "limits", label: "Limits", phrase: "its limits" }
+  ];
+
+  function joinNatural(items) {
+    const list = (items || []).filter(Boolean);
+    if (!list.length) return "";
+    if (list.length === 1) return list[0];
+    if (list.length === 2) return list[0] + " and " + list[1];
+    return list.slice(0, -1).join(", ") + ", and " + list[list.length - 1];
+  }
+
+  function readCsCriteria() {
+    const chips = $$("#csCriteriaChips [data-cs-criterion][aria-pressed='true']");
+    const ids = chips.map((b) => b.getAttribute("data-cs-criterion")).filter(Boolean);
+    const allowed = new Set(CS_CRITERIA.map((c) => c.id));
+    const ordered = CS_CRITERIA.map((c) => c.id).filter((id) => ids.includes(id) && allowed.has(id));
+    return ordered.length ? ordered : CS_CRITERIA.map((c) => c.id);
+  }
+
+  function setCsCriteria(ids, persist) {
+    const host = $("#csCriteriaChips");
+    if (!host) return;
+    const want = new Set(ids && ids.length ? ids : CS_CRITERIA.map((c) => c.id));
+    host.querySelectorAll("[data-cs-criterion]").forEach((btn) => {
+      const on = want.has(btn.getAttribute("data-cs-criterion"));
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+      btn.classList.toggle("active", on);
+    });
+    const allOn = CS_CRITERIA.every((c) => want.has(c.id));
+    const allBtn = $("#csCriteriaAll");
+    if (allBtn) {
+      allBtn.setAttribute("aria-pressed", allOn ? "true" : "false");
+      allBtn.classList.toggle("active", allOn);
+    }
+    if (persist !== false) persistThesisInputs();
+    updateCaseStudyThesisPattern();
+  }
+
+  function csPhrases(ids) {
+    const set = new Set(ids && ids.length ? ids : CS_CRITERIA.map((c) => c.id));
+    return CS_CRITERIA.filter((c) => set.has(c.id)).map((c) => c.phrase);
+  }
+
+  function csBecauseBlanks(ids) {
+    return "because " + joinNatural(csPhrases(ids).map((p) => p + " ___"));
+  }
+
+  function csBecauseTension(ids, tension) {
+    const phrases = csPhrases(ids);
+    if (!phrases.length) return csBecauseBlanks(ids);
+    if (!tension) return csBecauseBlanks(ids);
+    if (phrases.length === 1) return "because " + phrases[0] + " around " + tension;
+    const head = phrases.slice(0, -1).map((p) => p + " ___");
+    const tail = phrases[phrases.length - 1] + " around " + tension;
+    return "because " + joinNatural(head.concat([tail]));
+  }
+
+  function csWhyPreview(ids) {
+    const all = ids.length === CS_CRITERIA.length;
+    const labels = CS_CRITERIA.filter((c) => ids.includes(c.id)).map((c) => c.label.toLowerCase());
+    if (all) return "all five criteria in order";
+    return joinNatural(labels);
+  }
+
+  function updateCaseStudyThesisPattern() {
+    const pat = document.getElementById("caseStudyThesisPattern");
+    const essay = activeEssay();
+    const isCs = $("#claimGenerate") && essay && essay.id === "case-study";
+    if (!isCs) {
+      if (pat) pat.hidden = true;
+      return;
+    }
+    let box = pat;
+    if (!box) {
+      box = document.createElement("p");
+      box.id = "caseStudyThesisPattern";
+      box.className = "hint-block";
+      const cueEl = document.getElementById("essayToolCue");
+      const host = document.getElementById("claimGenerate") && document.getElementById("claimGenerate").closest("section");
+      (cueEl && cueEl.parentElement ? cueEl.parentElement : host || document.getElementById("claimGenerate").parentElement).appendChild(box);
+    }
+    box.hidden = false;
+    const ids = readCsCriteria();
+    const all = ids.length === CS_CRITERIA.length;
+    const clause = csBecauseBlanks(ids);
+    const countNote = all
+      ? "Name all five, in that order."
+      : "Name the criteria you selected, in the order above.";
+    box.innerHTML = "<strong>Thesis pattern.</strong> [Packet] [your answer] " + escapeHtml(clause) + ". " + countNote + " Example questions are in your Case Brief file.";
+  }
+
+    function buildClaimOptions(inputs) {
     const essay = activeEssay();
     const kind = (essay && essay.claimKind) || "generic";
     let caseName = inputs.caseName;
@@ -369,6 +470,47 @@
       }
     };
 
+    if (kind === "case-study") {
+      const ids = (inputs.csCriteria && inputs.csCriteria.length) ? inputs.csCriteria : readCsCriteria();
+      const selected = (ids && ids.length) ? ids : CS_CRITERIA.map((c) => c.id);
+      const all = selected.length === CS_CRITERIA.length;
+      const blanks = csBecauseBlanks(selected);
+      const tenseClause = csBecauseTension(selected, tension);
+      const named = joinNatural(csPhrases(selected));
+      const verb = selected.length === 1 ? "shows" : "show";
+      const whyPreview = csWhyPreview(selected);
+      const options = [
+        {
+          angle: all ? "five-pattern" : "criteria-pattern",
+          text: `${caseName} [your answer] ${blanks}.`,
+          why: "Fill-in pattern: answer the question, then name " + whyPreview + "."
+        },
+        {
+          angle: all ? "five-preview" : "criteria-preview",
+          text: `The ${caseName} packet only partly supports ${argues} ${tenseClause}.`,
+          why: "Previews " + whyPreview + ", then points to the tension a reader can contest."
+        },
+        {
+          angle: all ? "five-preview-2" : "criteria-preview-2",
+          text: `The ${caseName} packet presents ${argues}, but ${named} around ${tension} ${verb} a more complicated case.`,
+          why: "Names what the packet presents, then previews " + whyPreview + "."
+        }
+      ];
+      if (question) {
+        options.push({
+          angle: "question",
+          text: `The ${caseName} packet answers “${question}” ${blanks}.`,
+          why: "Answers your critical question and previews " + whyPreview + "."
+        });
+      }
+      const seenCs = new Set();
+      return options.filter((o) => {
+        if (seenCs.has(o.text)) return false;
+        seenCs.add(o.text);
+        return true;
+      }).slice(0, 4);
+    }
+
     const catalog = catalogs[kind] || catalogs.generic;
     const options = [];
     angles.forEach((angle) => {
@@ -440,15 +582,61 @@
   }
 
   function persistThesisInputs() {
-    if (!$("#caseName")) return;
-    saveJSON(KEYS.thesisInputs, readThesisInputs());
-    setStatus($("#claimSaveStatus"), "Draft fields saved locally.", true);
+    const hasAny = $("#caseName") || $("#criticalQuestion") || $("#packetArgues") || $("#tensionInput");
+    if (!hasAny) return;
+    const prev = loadJSON(KEYS.thesisInputs, {}) || {};
+    const current = readThesisInputs();
+    const merged = {
+      caseName: $("#caseName") ? current.caseName : (prev.caseName || ""),
+      topicFolder: $("#topicFolder") ? current.topicFolder : (prev.topicFolder || ""),
+      packetArgues: $("#packetArgues") ? current.packetArgues : (prev.packetArgues || ""),
+      tension: $("#tensionInput") ? current.tension : (prev.tension || ""),
+      question: $("#criticalQuestion") ? current.question : (prev.question || ""),
+      criteria: ($("#criterion1") || $("#criterion2") || $("#criterion3")) ? current.criteria : (prev.criteria || []),
+      csCriteria: $("#csCriteriaChips") ? current.csCriteria : (prev.csCriteria || []),
+      angles: $("#angleChips") ? current.angles : (prev.angles || [])
+    };
+    saveJSON(KEYS.thesisInputs, merged);
+    setStatus($("#claimSaveStatus") || $("#cqSaveStatus"), "Draft fields saved locally.", true);
   }
 
-  function bindClaimGenerator() {
+
+  let csCriteriaBound = false;
+  function bindCaseStudyCriteriaChips() {
+    const host = $("#csCriteriaChips");
+    if (!host || csCriteriaBound) return;
+    csCriteriaBound = true;
+    host.addEventListener("click", (e) => {
+      const allBtn = e.target.closest("[data-cs-all]");
+      const oneBtn = e.target.closest("[data-cs-criterion]");
+      if (allBtn && host.contains(allBtn)) {
+        setCsCriteria(CS_CRITERIA.map((c) => c.id), true);
+        return;
+      }
+      if (!oneBtn || !host.contains(oneBtn)) return;
+      const id = oneBtn.getAttribute("data-cs-criterion");
+      const current = readCsCriteria();
+      const isOn = current.includes(id);
+      let next;
+      if (isOn) {
+        next = current.filter((x) => x !== id);
+        if (!next.length) {
+          setStatus($("#claimSaveStatus"), "Keep at least one criterion, or choose All 5.", false);
+          return;
+        }
+      } else {
+        next = CS_CRITERIA.map((c) => c.id).filter((x) => current.includes(x) || x === id);
+      }
+      setCsCriteria(next, true);
+    });
+  }
+
+    function bindClaimGenerator() {
     if (!$("#claimGenerate")) return;
     bindAngleChips();
     bindIdeaGenerator();
+
+    bindCaseStudyCriteriaChips();
 
     $("#criteriaPresets")?.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-criterion]");
@@ -522,7 +710,8 @@
     });
 
     $("#claimClear")?.addEventListener("click", () => {
-      writeThesisInputs({ caseName: "", topicFolder: "", packetArgues: "", tension: "", question: "", criteria: [], angles: [] });
+      writeThesisInputs({ caseName: "", topicFolder: "", packetArgues: "", tension: "", question: "", criteria: [], csCriteria: CS_CRITERIA.map((c) => c.id), angles: [] });
+      setCsCriteria(CS_CRITERIA.map((c) => c.id), false);
       saveJSON(KEYS.thesisInputs, readThesisInputs());
       saveJSON(KEYS.thesisDrafts, []);
       localStorage.removeItem(KEYS.chosenClaim);
@@ -739,8 +928,11 @@
     return { angle: "idea", text, why: "Built from your topic and idea picks." };
   }
 
+  let ideaGeneratorBound = false;
   function bindIdeaGenerator() {
     if (!$("#ideaGenerate")) return;
+    if (ideaGeneratorBound) return;
+    ideaGeneratorBound = true;
 
     const savedPacket = loadJSON(KEYS.ideaPicks, null);
     // ideaPicks stores {topic, question, idea, packet?}
@@ -837,7 +1029,190 @@
   }
 
 
-  /* ---------- Outline / topic sentences ---------- */
+  /* ---------- Critical question developer (reuses idea generator) ---------- */
+
+  function questionStarter(essay) {
+    if (essay && essay.id === "case-study") {
+      return {
+        topic: "LumenBox, a made-up subscription packet that presents the company as a community-loyalty success",
+        yesNo: "Does LumenBox treat its subscribers well?",
+        fact: "How many subscribers does LumenBox have?",
+        strong: "How well does the LumenBox packet support its community-loyalty story once we ask who is left out?"
+      };
+    }
+    if (essay && (essay.id === "monster-comparison" || essay.claimKind === "comparison")) {
+      return {
+        topic: "two made-up figures, Shadow Maw and the Glass Warden, both framed as protectors",
+        yesNo: "Are Shadow Maw and the Glass Warden similar?",
+        fact: "When was each figure first introduced?",
+        strong: "Why do Shadow Maw and the Glass Warden invite different reader judgments even when both are framed as protectors?"
+      };
+    }
+    return {
+      topic: "a campus night market called Pecan Street Nights that advertises itself as zero waste, while most stalls still use disposable trays",
+      yesNo: "Is Pecan Street Nights wasteful?",
+      fact: "How many disposable trays does the market use on a Saturday?",
+      strong: "To what extent does the market's zero-waste message hold up once everyday stall practice is in view?"
+    };
+  }
+
+  function renderQuestionExample(essay) {
+    const box = $("#cqExampleBody");
+    if (!box) return;
+    const ex = questionStarter(essay);
+    box.innerHTML = `<p style="margin:0 0 0.55rem;">Topic: ${escapeHtml(ex.topic)}.</p>
+            <ul class="cue-list">
+              <li><strong>Weaker, yes/no:</strong> ${escapeHtml(ex.yesNo)}</li>
+              <li><strong>Weaker, fact-only:</strong> ${escapeHtml(ex.fact)}</li>
+              <li><strong>Stronger:</strong> ${escapeHtml(ex.strong)}</li>
+            </ul>`;
+  }
+
+  function assessCriticalQuestion(raw) {
+    const text = String(raw || "").replace(/\s+/g, " ").trim();
+    const flags = [];
+    const notes = [];
+    if (!text) {
+      return { empty: true, ok: false, flags, notes, rewrite: "", text };
+    }
+    const body = text.replace(/[?]+$/g, "").trim();
+    const wordCount = body.split(/\s+/).filter(Boolean).length;
+
+    const yesNo = /^(is|are|was|were|do|does|did|can|could|should|would|will|has|have|had|may|might)\b/i.test(body);
+    const factOnly = /^(how many|how much|how often|how long|how old|when\b|where\b|in what year|what year|who is|who was|what is the (name|date|title|number|population|score|rate|total))\b/i.test(body);
+    const openStart = /^(how|why|to what extent|in what ways|under what conditions|under what)\b/i.test(body) && !/^(how many|how much|how often|how long|how old)\b/i.test(body);
+
+    if (yesNo) {
+      flags.push("This reads as a yes/no question. A reader can stop at yes or no. Try opening with how, why, or to what extent so the answer has to be argued.");
+    }
+    if (factOnly) {
+      flags.push("This looks like a fact-only question. A single looked-up fact could finish it. A critical question asks how or why that information matters.");
+    }
+    if (wordCount < 6) {
+      flags.push("This is quite short. Add the topic and the tension you want to judge so a reader can see what is at issue.");
+    }
+    if (openStart) {
+      notes.push("This opens in a way that usually needs an argued answer, not just a fact.");
+    }
+    if (!yesNo && !factOnly && !openStart && !/\?$/.test(text)) {
+      notes.push("If this is your question, add a question mark and check that a careful reader would have to argue an answer, not only report a fact.");
+    }
+
+    let rewrite = "";
+    if (yesNo) {
+      const m = body.match(/^(does|do|did|is|are|was|were|can|could|should|would|will|has|have|had|may|might)\s+(.+)$/i);
+      if (m) rewrite = `To what extent ${m[1].toLowerCase()} ${m[2].replace(/[.]+$/g, "")}?`;
+    } else if (factOnly) {
+      rewrite = "Why does this information matter for how a careful reader should understand the topic?";
+    }
+    const ok = flags.length === 0;
+    if (ok && !notes.length) {
+      notes.push("This looks open enough to argue. Edit it in your own words, then send it to the thesis generator if you want to keep it.");
+    }
+    return { empty: false, ok, flags, notes, rewrite, text };
+  }
+
+  function renderQuestionFeedback(result) {
+    const box = $("#cqFeedback");
+    const title = $("#cqFeedbackTitle");
+    const body = $("#cqFeedbackBody");
+    const useBtn = $("#cqUseRewrite");
+    if (!box || !body) return;
+    if (!result || result.empty) {
+      box.hidden = true;
+      if (useBtn) useBtn.hidden = true;
+      return;
+    }
+    box.hidden = false;
+    box.classList.toggle("warn", !result.ok);
+    if (title) title.textContent = result.ok ? "This question looks open enough to argue" : "This question needs a stronger opening";
+    const parts = [];
+    (result.flags || []).forEach((f) => parts.push(`<p style="margin:0.45rem 0 0;">${escapeHtml(f)}</p>`));
+    (result.notes || []).forEach((n) => parts.push(`<p style="margin:0.45rem 0 0;">${escapeHtml(n)}</p>`));
+    if (result.rewrite) {
+      parts.push(`<p style="margin:0.45rem 0 0;"><strong>Suggested wording to edit:</strong> ${escapeHtml(result.rewrite)}</p>`);
+    }
+    body.innerHTML = parts.join("");
+    if (useBtn) {
+      useBtn.hidden = !result.rewrite;
+      useBtn.dataset.rewrite = result.rewrite || "";
+    }
+  }
+
+  function bindCriticalQuestionDeveloper() {
+    if (!$("#cqCheck")) return;
+    const saved = loadJSON(KEYS.thesisInputs, null);
+    if (saved) {
+      if ($("#caseName") && saved.caseName) $("#caseName").value = saved.caseName;
+      if ($("#topicFolder") && saved.topicFolder) $("#topicFolder").value = saved.topicFolder;
+      if ($("#criticalQuestion") && saved.question) $("#criticalQuestion").value = saved.question;
+    }
+    const picks = loadJSON(KEYS.ideaPicks, null);
+    if (picks && picks.question && $("#criticalQuestion") && !$("#criticalQuestion").value.trim()) {
+      $("#criticalQuestion").value = picks.question;
+    }
+    if (picks && picks.topic && $("#caseName") && !$("#caseName").value.trim()) {
+      $("#caseName").value = picks.topic;
+    }
+    renderQuestionExample(activeEssay());
+
+    ["caseName", "topicFolder", "criticalQuestion"].forEach((id) => {
+      const el = document.getElementById(id);
+      el?.addEventListener("change", persistThesisInputs);
+      el?.addEventListener("blur", persistThesisInputs);
+    });
+
+    $("#cqCheck").addEventListener("click", () => {
+      const result = assessCriticalQuestion($("#criticalQuestion")?.value || "");
+      if (result.empty) {
+        setStatus($("#cqSaveStatus"), "Type or pick a question first, then check it.", false);
+        renderQuestionFeedback(null);
+        return;
+      }
+      persistThesisInputs();
+      renderQuestionFeedback(result);
+      setStatus($("#cqSaveStatus"), result.ok ? "Question checked and saved on this device." : "Question checked. Consider the suggested wording, then edit in your voice.", result.ok);
+    });
+
+    $("#cqUseRewrite")?.addEventListener("click", () => {
+      const rewrite = $("#cqUseRewrite").dataset.rewrite || "";
+      if (!rewrite || !$("#criticalQuestion")) return;
+      $("#criticalQuestion").value = rewrite;
+      persistThesisInputs();
+      const result = assessCriticalQuestion(rewrite);
+      renderQuestionFeedback(result);
+      setStatus($("#cqSaveStatus"), "Suggested wording is in the box. Edit it so it sounds like you, then send it if you want to keep it.", true);
+    });
+
+    $("#cqSend").addEventListener("click", () => {
+      const question = ($("#criticalQuestion")?.value || "").trim();
+      if (!question) {
+        setStatus($("#cqSaveStatus"), "Add a critical question before sending it to the thesis generator.", false);
+        return;
+      }
+      const result = assessCriticalQuestion(question);
+      renderQuestionFeedback(result);
+      persistThesisInputs();
+      const picksNow = loadJSON(KEYS.ideaPicks, {}) || {};
+      saveJSON(KEYS.ideaPicks, Object.assign({}, picksNow, {
+        topic: ($("#caseName")?.value || "").trim() || picksNow.topic || "",
+        question,
+        savedAt: Date.now()
+      }));
+      setStatus($("#cqSaveStatus"), "Question saved. Opening the thesis generator…", true);
+      window.location.href = "thesis-helper.html";
+    });
+
+    $("#ideaResults")?.addEventListener("click", () => {
+      const picksNow = readIdeaPicks();
+      if (picksNow.question && $("#criticalQuestion") && !$("#criticalQuestion").value.trim()) {
+        $("#criticalQuestion").value = picksNow.question;
+      }
+    });
+  }
+
+
+    /* ---------- Outline / topic sentences ---------- */
 
   function readOutlineInputs() {
     const thesis = loadJSON(KEYS.thesisInputs, null) || {};
@@ -1059,7 +1434,9 @@
       if (/background|context|definition|plate label/.test(t)) return "background";
       if (/counter|opposing|reply/.test(t)) return "counter";
       if (/stakeholder/.test(t)) return "stakeholders";
-      if (/evidence quality|outside source/.test(t)) return "evidence";
+      if (/limitations and ethics|ethical/.test(t)) return "ethics";
+      if (/outside sources plan|sources plan/.test(t)) return "sources-plan";
+      if (/evidence quality/.test(t)) return "evidence";
       if (/assumption/.test(t)) return "assumptions";
       if (/limit/.test(t) && !/limited/.test(t)) return "limits";
       if (/misunderstand|myth|caution|newcomer tip/.test(t)) return "clarify";
@@ -1209,19 +1586,19 @@
       }
 
       if (kind === "case-study") {
-        if (role === "intro") return `This critical analysis of ${focus} claims that ${claim}`;
-        if (role === "background" || /framing|problem/i.test(lens.title || "")) {
+        if (role === "intro") return `This critical analysis of ${focus} answers the critical question with a thesis that previews framing, stakeholders, evidence quality, assumptions, and limits: ${claim}`;
+        if (role === "background" || /framing/i.test(lens.title || "")) {
           return `The packet frames ${focus} in a way that soft-pedals ${tension}.`;
         }
-        if (role === "stakeholders") return `Who the ${focus} materials center — and who they sideline — matters once ${tension} is visible.`;
-        if (role === "evidence") return `The packet’s evidence about ${focus} looks settled until ${tension} pressure-tests what it actually proves.`;
-        if (role === "assumptions") return `The ${focus} packet treats an assumption as obvious; naming it shows how ${tension} unsettles the story.`;
+        if (role === "stakeholders") return `Who the ${focus} materials center, and whose voices are missing, matters once ${tension} is visible.`;
+        if (role === "evidence") return `The packet's evidence about ${focus} looks settled until ${tension} tests whether it is data or branding.`;
+        if (role === "assumptions") return `The ${focus} packet treats an assumption as obvious. Naming it shows how ${tension} unsettles the story.`;
         if (role === "limits") return `The packet is persuasive in places about ${focus}, yet its limits around ${tension} weaken the overall claim.`;
-        if (/outside/i.test(lens.title || "")) {
-          return `Outside sources should pressure-test the ${focus} packet on ${tension}, not decorate the summary.`;
+        if (role === "ethics" || /limitations and ethics/i.test(lens.title || "")) {
+          return `Name a gap, bias, or ethical tension in the ${focus} packet and say why it matters for what the case can show.`;
         }
-        if (role === "conclusion") return `A careful reader should take away that ${claim} — especially given ${tension}.`;
-        return `This lens on ${focus} advances the claim by keeping ${tension} in view.`;
+        if (role === "conclusion") return `A careful reader should take away that ${claim}, especially given ${tension}. Do not add a new thesis.`;
+        return `This section on ${focus} advances the claim by keeping ${tension} in view. Use two cited packet details. Add an outside source only if this is one of your two outside-source sections.`;
       }
 
       if (kind === "reflection") {
@@ -3274,10 +3651,33 @@
     const cue = $("#essayToolCue");
     if (cue && essay) {
       if ($("#claimGenerate")) cue.textContent = essay.thesisCue || cue.textContent;
+      else if ($("#cqCheck")) {
+        const hint = essay.questionHint ? " " + essay.questionHint : "";
+        cue.textContent = "Turn your topic into one open, arguable question (how, why, or to what extent)." + hint;
+      }
       else if ($("#outlineGenerate")) cue.textContent = essay.outlineCue || cue.textContent;
       else if ($("#mlaBuild")) cue.textContent = essay.mlaCue || cue.textContent;
       else if ($("#slList")) cue.textContent = essay.sourceAim || cue.textContent;
       else if ($("#kwGenerate")) cue.textContent = essay.thesisCue || cue.textContent;
+    }
+    if ($("#cqExampleBody")) renderQuestionExample(essay);
+    const csBox = $("#caseStudyCriteriaBox");
+    const angleBox = document.querySelector("fieldset.angle-fieldset");
+    if (csBox) {
+      const isCs = !!(essay && essay.id === "case-study" && $("#claimGenerate"));
+      csBox.hidden = !isCs;
+      if (angleBox) angleBox.hidden = isCs;
+      if (isCs) {
+        const saved = loadJSON(KEYS.thesisInputs, {}) || {};
+        if (Array.isArray(saved.csCriteria) && saved.csCriteria.length) setCsCriteria(saved.csCriteria, false);
+        else setCsCriteria(CS_CRITERIA.map((c) => c.id), false);
+      }
+    }
+    if ($("#claimGenerate") && essay && essay.id === "case-study") {
+      updateCaseStudyThesisPattern();
+    } else {
+      const pat = document.getElementById("caseStudyThesisPattern");
+      if (pat) pat.hidden = true;
     }
     const pktBtn = $("#slAddPacket");
     if (pktBtn && essay) {
@@ -3325,6 +3725,8 @@
       refreshEssayBoundUi();
     }
     bindClaimGenerator();
+    bindIdeaGenerator();
+    bindCriticalQuestionDeveloper();
     bindOutlineHelper();
     bindMla();
     bindSourceLog();

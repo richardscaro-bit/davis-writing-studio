@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Critical question developer | ENGL 1301 · Davis Writing Studio</title>
+    <meta name="description" content="Practice tool: turn a topic into an open, arguable critical question, then carry it into the thesis generator.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+<a class="skip-link" href="#main">Skip to main content</a>
+    <header class="topbar" aria-label="Course navigation">
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true"><img src="../../_design/assets/mark-crown-real.jpg" alt="" width="40" height="40"></span><span><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span></a>
+      <nav class="nav-links" aria-label="Primary sections">
+        <a href="../../index.html">Hub</a>
+        <a href="../index.html">Home</a>
+        <a href="../resources.html">Resources</a>
+        <a href="../weeks.html">Practice path</a>
+        <a href="index.html" aria-current="page">Tools</a>
+        <a href="../../tutor/?course=1301">Tutor</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    </header>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="../../index.html">Hub</a>
+      <a href="../index.html">Home</a>
+      <a href="../resources.html">Resources</a>
+      <a href="../weeks.html">Practice path</a>
+      <a href="index.html" aria-current="page">Tools</a>
+      <a href="../../tutor/?course=1301">Tutor</a>
+    </nav>
+
+    <main id="main">
+      <section class="section" aria-labelledby="cqTitle">
+        <p class="eyebrow" data-essay-eyebrow>Practice tool · Practice path · any essay</p>
+        <h1 id="cqTitle">Critical question developer</h1>
+        <p class="lead">Start with a topic, then shape one open, arguable question (often beginning with how, why, or to what extent). This tool flags yes/no or fact-only questions, suggests a stronger wording you can edit, and can send the question you keep into the thesis generator.</p>
+
+        <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
+
+        <div class="callout ai" style="margin-top:1rem;">
+          <strong>Practice only · you own the question</strong>
+          <p style="margin:0;" id="essayToolCue">A strong critical question cannot be finished with a simple yes, no, or a single looked-up fact. Pick an essay above if you want matched starters.</p>
+        </div>
+
+        <div class="callout" id="cqExample" style="margin-top:1rem;">
+          <strong>Example only (made-up topic, not a class case)</strong>
+          <div id="cqExampleBody" class="studio-drop-body" style="border:0;padding-top:0.35rem;margin-top:0.35rem;">
+            <p style="margin:0 0 0.55rem;">Topic: a campus night market called Pecan Street Nights advertises itself as zero waste, while most stalls still use disposable trays.</p>
+            <ul class="cue-list">
+              <li><strong>Weaker, yes/no:</strong> Is Pecan Street Nights wasteful?</li>
+              <li><strong>Weaker, fact-only:</strong> How many disposable trays does the market use on a Saturday?</li>
+              <li><strong>Stronger:</strong> To what extent does the market's zero-waste message hold up once everyday stall practice is in view?</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tool-panel" style="margin-top:1.25rem;">
+          <div class="field-grid">
+            <label class="field" data-essay-field="subjectLabel" data-essay-hint="subjectHint" data-essay-placeholder="subjectPlaceholder">
+              <span data-essay-title>Subject / focus</span> <span class="hint">Start here. Name your topic, case, pair, or focus.</span>
+              <input type="text" id="caseName" placeholder="Your subject" autocomplete="off">
+            </label>
+            <label class="field" data-essay-field="topicLabel">
+              <span data-essay-title>Optional topic tag</span> <span class="hint">Optional</span>
+              <select id="topicFolder">
+                <option value="">- select or leave blank -</option>
+              </select>
+            </label>
+            <label class="field span-2" data-essay-field="questionLabel" data-essay-hint="questionHint" data-essay-placeholder="questionPlaceholder">
+              <span data-essay-title>Your critical question</span> <span class="hint">Draft or paste a question, then check it.</span>
+              <textarea id="criticalQuestion" style="min-height:4.5rem;" placeholder="What question will your thesis answer?"></textarea>
+            </label>
+          </div>
+
+          <div class="idea-generator" id="ideaGenerator">
+            <div class="idea-generator-head">
+              <h2 class="eyebrow" style="margin:0;">Topics, questions &amp; ideas</h2>
+              <p class="hint-block" style="margin:0.35rem 0 0;">These starters come from the same topic / question / idea generator used in the thesis helper. Suggestions are templates. Pick a question, then check whether it is open and arguable.</p>
+            </div>
+            <div class="hero-actions" style="margin-top:0.75rem;">
+              <button type="button" class="button primary" id="ideaGenerate">Suggest topics, questions &amp; ideas</button>
+            </div>
+            <div id="ideaResults" class="idea-results" hidden>
+              <div class="idea-columns">
+                <section class="idea-column" aria-labelledby="ideaTopicsHeading">
+                  <h3 id="ideaTopicsHeading" class="idea-column-title">Topics</h3>
+                  <div id="ideaTopics" class="idea-chips" role="group" aria-label="Suggested topics"></div>
+                </section>
+                <section class="idea-column" aria-labelledby="ideaQuestionsHeading">
+                  <h3 id="ideaQuestionsHeading" class="idea-column-title">Questions</h3>
+                  <div id="ideaQuestions" class="idea-chips" role="group" aria-label="Suggested questions"></div>
+                </section>
+                <section class="idea-column" aria-labelledby="ideaIdeasHeading">
+                  <h3 id="ideaIdeasHeading" class="idea-column-title">Ideas / controlling ideas</h3>
+                  <div id="ideaIdeas" class="idea-chips" role="group" aria-label="Suggested ideas"></div>
+                </section>
+              </div>
+              <div class="hero-actions" style="margin-top:0.85rem;">
+                <button type="button" class="button primary" id="ideaApply">Use picks in the question box</button>
+              </div>
+              <p class="hint-block" style="margin-top:0.5rem;">Select a topic and a question (an idea is optional). Then check the question before you send it to the thesis generator.</p>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <button type="button" class="button primary" id="cqCheck">Check this question</button>
+            <button type="button" class="button ghost" id="cqUseRewrite" hidden>Use the suggested wording</button>
+            <button type="button" class="button ghost" id="cqSend">Send to the thesis generator</button>
+            <a class="button ghost" href="thesis-helper.html">Open thesis generator</a>
+            <a class="button ghost" href="../weeks.html">Practice path</a>
+          </div>
+          <p class="save-status" id="cqSaveStatus" aria-live="polite"></p>
+
+          <div id="cqFeedback" class="callout" hidden style="margin-top:1rem;">
+            <strong id="cqFeedbackTitle">Question check</strong>
+            <div id="cqFeedbackBody"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Critical question practice · AI Level 2 templates</p></footer>
+    <script src="../app.js"></script>
+    <script src="essay-context.js?v=cscrit1"></script>
+    <script src="tools.js?v=cscrit1"></script>
+  </body>
+</html>
