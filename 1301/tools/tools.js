@@ -336,7 +336,7 @@
           why: "Targets a hidden premise rather than summarizing the packet."
         },
         limits: {
-          text: `The ${caseName} packet makes a persuasive case for ${argues}, yet its limits around ${tension} weaken the overall claim.`,
+          text: `The ${caseName} packet makes a persuasive case for ${argues}, yet its limits around ${tension} weaken the overall thesis.`,
           why: "Keeps credit for the packet while staking a clear limit."
         }
       },
@@ -1593,7 +1593,7 @@
         if (role === "stakeholders") return `Who the ${focus} materials center, and whose voices are missing, matters once ${tension} is visible.`;
         if (role === "evidence") return `The packet's evidence about ${focus} looks settled until ${tension} tests whether it is data or branding.`;
         if (role === "assumptions") return `The ${focus} packet treats an assumption as obvious. Naming it shows how ${tension} unsettles the story.`;
-        if (role === "limits") return `The packet is persuasive in places about ${focus}, yet its limits around ${tension} weaken the overall claim.`;
+        if (role === "limits") return `The packet is persuasive in places about ${focus}, yet its limits around ${tension} weaken the overall thesis.`;
         if (role === "ethics" || /limitations and ethics/i.test(lens.title || "")) {
           return `Name a gap, bias, or ethical tension in the ${focus} packet and say why it matters for what the case can show.`;
         }
@@ -3717,6 +3717,337 @@
     }
   }
 
+
+  /* ---------- Download my plan (browser-only .docx; no upload) ---------- */
+  /* Zip/docx writer follows the Tutor chat download in tutor/tutor.js. */
+  const PLAN_CRC_TABLE = (() => {
+    const t = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) {
+      let c = n;
+      for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+      t[n] = c >>> 0;
+    }
+    return t;
+  })();
+
+  function planCrc32(bytes) {
+    let c = 0xffffffff;
+    for (let i = 0; i < bytes.length; i++) c = PLAN_CRC_TABLE[(c ^ bytes[i]) & 0xff] ^ (c >>> 8);
+    return (c ^ 0xffffffff) >>> 0;
+  }
+
+  function planZipStore(files) {
+    const enc = new TextEncoder();
+    const chunks = [];
+    const central = [];
+    let offset = 0;
+    for (const [name, content] of Object.entries(files)) {
+      const nameB = enc.encode(name);
+      const data = enc.encode(content);
+      const crc = planCrc32(data);
+      const local = new DataView(new ArrayBuffer(30));
+      local.setUint32(0, 0x04034b50, true);
+      local.setUint16(4, 20, true);
+      local.setUint16(6, 0x0800, true);
+      local.setUint16(8, 0, true);
+      local.setUint32(14, crc, true);
+      local.setUint32(18, data.length, true);
+      local.setUint32(22, data.length, true);
+      local.setUint16(26, nameB.length, true);
+      chunks.push(new Uint8Array(local.buffer), nameB, data);
+      const cen = new DataView(new ArrayBuffer(46));
+      cen.setUint32(0, 0x02014b50, true);
+      cen.setUint16(4, 20, true);
+      cen.setUint16(6, 20, true);
+      cen.setUint16(8, 0x0800, true);
+      cen.setUint32(16, crc, true);
+      cen.setUint32(20, data.length, true);
+      cen.setUint32(24, data.length, true);
+      cen.setUint16(28, nameB.length, true);
+      cen.setUint32(42, offset, true);
+      central.push(new Uint8Array(cen.buffer), nameB);
+      offset += 30 + nameB.length + data.length;
+    }
+    const cenSize = central.reduce((n, c) => n + c.length, 0);
+    const end = new DataView(new ArrayBuffer(22));
+    end.setUint32(0, 0x06054b50, true);
+    end.setUint16(8, Object.keys(files).length, true);
+    end.setUint16(10, Object.keys(files).length, true);
+    end.setUint32(12, cenSize, true);
+    end.setUint32(16, offset, true);
+    return new Blob([...chunks, ...central, new Uint8Array(end.buffer)]);
+  }
+
+  function planXmlEsc(s) {
+    return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "");
+  }
+
+  function planPara(text, opts) {
+    opts = opts || {};
+    const bold = opts.bold ? "<w:b/>" : "";
+    const sz = opts.size ? '<w:sz w:val="' + opts.size + '"/><w:szCs w:val="' + opts.size + '"/>' : "";
+    const rPr = (bold || sz) ? "<w:rPr>" + bold + sz + "</w:rPr>" : "";
+    const lines = String(text || "").split("\n");
+    const runs = lines.map((l, i) =>
+      (i ? "<w:r><w:br/></w:r>" : "") +
+      "<w:r>" + rPr + '<w:t xml:space="preserve">' + planXmlEsc(l) + "</w:t></w:r>").join("");
+    const after = opts.spaceAfter ? "<w:pPr><w:spacing w:after=\"" + opts.spaceAfter + "\"/></w:pPr>" : "";
+    return "<w:p>" + after + runs + "</w:p>";
+  }
+
+  function planBlank(val) {
+    const s = String(val || "").trim();
+    return s ? s : "(not filled in yet)\n________________________________";
+  }
+
+  function planCsMeta(id) {
+    return CS_CRITERIA.find((c) => c.id === id) || { id: id, label: id, phrase: id };
+  }
+
+  function planReadCsCriteria(thesis) {
+    if ($("#csCriteriaChips")) return readCsCriteria();
+    if (thesis && Array.isArray(thesis.csCriteria) && thesis.csCriteria.length) {
+      const allowed = new Set(CS_CRITERIA.map((c) => c.id));
+      const ordered = CS_CRITERIA.map((c) => c.id).filter((id) => thesis.csCriteria.includes(id) && allowed.has(id));
+      if (ordered.length) return ordered;
+    }
+    return CS_CRITERIA.map((c) => c.id);
+  }
+
+  function collectPlanData() {
+    const thesis = loadJSON(KEYS.thesisInputs, {}) || {};
+    const chosen = loadJSON(KEYS.chosenClaim, {}) || {};
+    const outlineIn = loadJSON(KEYS.outlineInputs, {}) || {};
+    const savedSkeleton = loadJSON(KEYS.outlineSkeleton, null);
+    const essay = activeEssay();
+    const kind = (essay && essay.claimKind) || (savedSkeleton && savedSkeleton.essayId === "case-study" ? "case-study" : "");
+    const label = (essay && essay.label)
+      || (savedSkeleton && savedSkeleton.essayLabel)
+      || "";
+    const caseName = ($("#caseName")?.value || $("#outlineCase")?.value || thesis.caseName || chosen.caseName || outlineIn.caseName || "").trim();
+    const question = ($("#criticalQuestion")?.value || thesis.question || chosen.question || outlineIn.question || "").trim();
+    const thesisText = ($("#outlineClaim")?.value || chosen.claim || outlineIn.claim || "").trim();
+    const tension = ($("#tensionInput")?.value || $("#outlineTension")?.value || thesis.tension || chosen.tension || outlineIn.tension || "").trim();
+    const topicFolder = ($("#topicFolder")?.value || thesis.topicFolder || chosen.topicFolder || outlineIn.topicFolder || "").trim();
+    const sourcesNote = ($("#outlineSourcesNote")?.value || outlineIn.sourcesNote || "").trim();
+    const csCriteria = (kind === "case-study") ? planReadCsCriteria(thesis) : [];
+    let sections = (savedSkeleton && Array.isArray(savedSkeleton.sections) && savedSkeleton.sections.length)
+      ? savedSkeleton.sections
+      : null;
+    if (!sections) {
+      if (kind === "case-study") {
+        const ids = csCriteria.length ? csCriteria : CS_CRITERIA.map((c) => c.id);
+        const romans = ["II", "III", "IV", "V", "VI", "VII", "VIII"];
+        sections = [
+          { title: "I. Introduction", topic: "", sentenceLabel: "Opening plan", role: "intro", isTopicSentence: false }
+        ].concat(ids.map((id, i) => ({
+          title: romans[i] + ". " + planCsMeta(id).label,
+          topic: "",
+          sentenceLabel: "Topic sentence",
+          role: id,
+          isTopicSentence: true,
+          criterionId: id
+        })), [{
+          title: "Closing",
+          topic: "",
+          sentenceLabel: "Closing plan",
+          role: "conclusion",
+          isTopicSentence: false
+        }]);
+      } else {
+        const lenses = (essay && essay.outlineLenses) ? essay.outlineLenses : [];
+        if (lenses.length) {
+          sections = lenses.map((lens, i) => {
+            const isFirst = i === 0;
+            const isLast = i === lenses.length - 1;
+            return {
+              title: lens.title,
+              topic: "",
+              sentenceLabel: isFirst ? "Opening plan" : (isLast ? "Closing plan" : "Topic sentence"),
+              role: isFirst ? "intro" : (isLast ? "conclusion" : "body"),
+              isTopicSentence: !isFirst && !isLast
+            };
+          });
+        } else {
+          sections = [
+            { title: "I. Introduction", topic: "", sentenceLabel: "Opening plan", role: "intro", isTopicSentence: false },
+            { title: "II. Body point 1", topic: "", sentenceLabel: "Topic sentence", role: "body", isTopicSentence: true },
+            { title: "III. Body point 2", topic: "", sentenceLabel: "Topic sentence", role: "body", isTopicSentence: true },
+            { title: "IV. Body point 3", topic: "", sentenceLabel: "Topic sentence", role: "body", isTopicSentence: true },
+            { title: "V. Conclusion", topic: "", sentenceLabel: "Closing plan", role: "conclusion", isTopicSentence: false }
+          ];
+        }
+      }
+    }
+    return {
+      label,
+      kind,
+      caseName,
+      question,
+      thesisText,
+      tension,
+      topicFolder,
+      sourcesNote,
+      csCriteria,
+      sections
+    };
+  }
+
+  function planEvidenceItems(data) {
+    const secs = data.sections || [];
+    if (data.kind === "case-study") {
+      const ids = (data.csCriteria && data.csCriteria.length) ? data.csCriteria : CS_CRITERIA.map((c) => c.id);
+      return ids.map((id) => {
+        const meta = planCsMeta(id);
+        const match = secs.find((s) => {
+          const t = String(s.title || "").toLowerCase();
+          const role = String(s.role || "").toLowerCase();
+          const lab = meta.label.toLowerCase();
+          return role === id || s.criterionId === id || t.indexOf(lab) !== -1;
+        });
+        return {
+          title: match && match.title ? match.title : meta.label,
+          topic: match && match.topic ? match.topic : "",
+          sentenceLabel: (match && match.sentenceLabel) || "Topic sentence",
+          caseStudy: true,
+          criterionLabel: meta.label
+        };
+      });
+    }
+    return secs
+      .filter((s) => s.role !== "intro" && s.role !== "conclusion")
+      .map((s) => ({
+        title: s.title,
+        topic: s.topic || "",
+        sentenceLabel: s.sentenceLabel || "Topic sentence",
+        caseStudy: false
+      }));
+  }
+
+  function planFileName(data) {
+    const day = new Date().toISOString().slice(0, 10);
+    const raw = String(data.caseName || data.label || "plan").toLowerCase();
+    const slug = raw.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "plan";
+    return "writing-studio-1301-" + slug + "-" + day + ".docx";
+  }
+
+  function planLines(data) {
+    const lines = [];
+    const push = (t, opts) => lines.push({ text: t, opts: opts || {} });
+    push("My writing plan", { bold: true, size: "32", spaceAfter: "80" });
+    push("Davis Writing Studio  ENGL 1301", { bold: true, size: "22" });
+    push("Built in this browser on " + new Date().toLocaleString() + ". Nothing was sent to the Writing Studio.", { size: "20", spaceAfter: "200" });
+
+    push("Essay", { bold: true, size: "28", spaceAfter: "60" });
+    push(planBlank(data.label), { spaceAfter: "80" });
+    push("Subject", { bold: true, size: "24" });
+    push(planBlank(data.caseName), { spaceAfter: "80" });
+    if (data.topicFolder || data.kind === "case-study") {
+      push("Topic folder", { bold: true, size: "24" });
+      push(planBlank(data.topicFolder), { spaceAfter: "80" });
+    }
+    push("Critical question", { bold: true, size: "24" });
+    push(planBlank(data.question), { spaceAfter: "80" });
+    push("Thesis", { bold: true, size: "24" });
+    push(planBlank(data.thesisText), { spaceAfter: "80" });
+    push("Tension or insight", { bold: true, size: "24" });
+    push(planBlank(data.tension), { spaceAfter: "200" });
+
+    if (data.kind === "case-study" && data.csCriteria.length) {
+      const labels = data.csCriteria.map((id) => planCsMeta(id).label);
+      const allFive = data.csCriteria.length === CS_CRITERIA.length;
+      push("Case Study criteria in this plan: " + (allFive ? "all 5 (" + joinNatural(labels) + ")" : joinNatural(labels)) + ".", { spaceAfter: "200" });
+    }
+
+    push("Outline", { bold: true, size: "28", spaceAfter: "80" });
+    (data.sections || []).forEach((sec) => {
+      push(sec.title || "Section", { bold: true, size: "24", spaceAfter: "40" });
+      const label = sec.sentenceLabel || (sec.isTopicSentence === false ? "Section plan" : "Topic sentence");
+      push(label + ": " + planBlank(sec.topic), { spaceAfter: "80" });
+    });
+
+    push("Evidence needed", { bold: true, size: "28", spaceAfter: "80" });
+    if (data.kind === "case-study") {
+      push("Use two cited packet details in each section. Use exactly 2 outside sources total, each in a different body section. Do not reuse a source.", { spaceAfter: "160" });
+    } else if (data.sourcesNote) {
+      push("Sources note: " + data.sourcesNote, { spaceAfter: "160" });
+    }
+
+    const evidence = planEvidenceItems(data);
+    if (!evidence.length) {
+      push("No body sections are in this plan yet. Add an outline, then download again.", { spaceAfter: "160" });
+    }
+    evidence.forEach((item) => {
+      push(item.title, { bold: true, size: "24", spaceAfter: "40" });
+      push((item.sentenceLabel || "Topic sentence") + ": " + planBlank(item.topic), { spaceAfter: "60" });
+      if (item.caseStudy) {
+        push("[ ] Packet detail 1: ____________________    Page or paragraph: __________", {});
+        push("[ ] Packet detail 2: ____________________    Page or paragraph: __________", {});
+        push("[ ] Outside source 1 or 2 (use in only two sections, and do not reuse a source): ____________________    Page or paragraph: __________", { spaceAfter: "160" });
+      } else {
+        push("[ ] Evidence 1: ____________________    Page or paragraph: __________", {});
+        push("[ ] Evidence 2: ____________________    Page or paragraph: __________", { spaceAfter: "160" });
+      }
+    });
+
+    push("This is a planning sheet, not a draft of the essay. Keep your own copy. Your notes stay only in this browser unless you download or copy them.", { size: "20", spaceAfter: "80" });
+    return lines;
+  }
+
+  function buildPlanDocx(data) {
+    const body = planLines(data).map((row) => planPara(row.text, row.opts)).join("");
+    const files = {
+      "[Content_Types].xml":
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+        '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
+        '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+        '<Default Extension="xml" ContentType="application/xml"/>' +
+        '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
+        "</Types>",
+      "_rels/.rels":
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>' +
+        "</Relationships>",
+      "word/_rels/document.xml.rels":
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"></Relationships>',
+      "word/document.xml":
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+        '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' +
+        body + "</w:body></w:document>"
+    };
+    return new Blob([planZipStore(files)], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+  }
+
+  function planStatusEl() {
+    return $("#planDownloadStatus") || $("#claimSaveStatus") || $("#outlineSaveStatus") || $("#cqSaveStatus");
+  }
+
+  function downloadPlanFile(blob, name) {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  }
+
+  function bindPlanDownload() {
+    const buttons = $$("#planDownload");
+    if (!buttons.length) return;
+    buttons.forEach((btn) => {
+      if (btn.dataset.planBound === "true") return;
+      btn.dataset.planBound = "true";
+      btn.addEventListener("click", () => {
+        const data = collectPlanData();
+        downloadPlanFile(buildPlanDocx(data), planFileName(data));
+        setStatus(planStatusEl(), "Plan downloaded. It was built in this browser and was not sent to the Writing Studio.", true);
+      });
+    });
+  }
+
   function bootTools() {
     const ctx = essayCtx();
     if (ctx) {
@@ -3732,6 +4063,7 @@
     bindSourceLog();
     bindPeerChecklist();
     bindKeywordGenerator();
+    bindPlanDownload();
   }
 
   bootTools();
