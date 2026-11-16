@@ -1,4 +1,4 @@
-/* Davis Writing Studio — ENGL 1301
+/* Davis Writing Studio: ENGL 1301
    Lean Case Study studio (five-step practice path). Thin HTML shells fill #studioPanel.
    Architecture matches Aug Writing Studio: data-studio + renderStudio + localStorage.
    Student UI uses Case Study critical analysis language only.
@@ -64,10 +64,10 @@ const studios = {
     key: "case-study",
     label: "Case Study Critical Analysis",
     due: "Five-step practice path",
-    length: "1,000–1,500 words MLA",
-    format: "Clear claim · critical analysis · exactly 2 outside sources, used in 2 of 5 sections",
+    length: "1,000 to 1,500 words MLA",
+    format: "Clear thesis · critical analysis · packet plus exactly 2 outside sources in every body section",
     prompt:
-      "Choose one case from your topic folder (or an approved case). Write a critical analysis built around one clear claim, a stance a reader could disagree with, supported by evidence from your case Source Packet and Case Brief. Your thesis previews all five criteria in order: framing, stakeholders, evidence quality, assumptions, and limits. Write five body sections in that same order. Each body section uses two cited packet details. In exactly two of the five sections, add one outside source each. Use exactly two outside sources total, and use each source in only one section. Example critical questions are in your Case Brief file. Aim for 1,000 to 1,500 words MLA. In class you will see a BarkBox or Crumbl model demo. Brainstorm ideas before you lock a working thesis later. Whole-Class Examples in Drive are practice models only.",
+      "Choose one case from your topic folder (or an approved case). Start with your own critical analysis question about your case study. You can find example critical questions in your Case Brief file. Next, use the five lenses to answer your question. In order, they are Framing, Stakeholders, Evidence, Assumptions, and Limits. Your outline has five body sections, one for each lens, in that order. Put 2 cited case study details in each section. Your thesis answers your question and previews all five lenses, in order. Your case study packet is your primary source. Use it in every body section. Use exactly 2 outside sources from Google Scholar or the SAC Library. Every body section uses your packet plus one or both outside sources. You can use either outside source in any section, and as often as you need. Put your limitations or ethics idea in the Limits section. Do not add a separate limitations section outside of Limits. The Outline / Research Plan assignment in Canvas is the graded turn-in. Support it with evidence from your Source Packet and Case Brief. Aim for 1,000 to 1,500 words MLA. In class you will see a BarkBox or Crumbl model demo. Brainstorm ideas before you lock a working thesis later. Whole-Class Examples in Drive are practice models only.",
     aiPolicy: {
       level: "Level 2 · AI for Support, Not Composition",
       allowed:
@@ -123,28 +123,28 @@ const caseStudyWeeks = [
     due: "Focus · packet notes",
     assignment: "Critical analysis reading notes",
     focus: "active reading of your Source Packet / Case Brief for the problem, stakeholders, evidence, assumptions or biases, and limits. Keep notes you can reuse in the outline and draft.",
-    also: ["In-class focus: Evidence Quality"]
+    also: ["In-class focus: Evidence"]
   },
   {
     week: "Step 3",
     due: "Focus · claim + outline",
     assignment: "Outline + research plan",
-    focus: "shape a 1 to 2 page outline and research plan with a working thesis that previews all five criteria in order, five body sections in that same order, two cited packet details in each section, and exactly 2 outside sources placed in two different sections. This is when the thesis locks after the demo and brainstorm.",
+    focus: "shape a 1 to 2 page outline and research plan. Start with your own critical analysis question about your case study. Use all five lenses as body sections, in this order: Framing, Stakeholders, Evidence, Assumptions, and Limits. Put 2 cited case study details in each section. Your thesis answers your question and previews all five lenses, in order. Your case study packet is your primary source. Use it in every body section. Use exactly 2 outside sources from Google Scholar or the SAC Library. Every body section uses your packet plus one or both outside sources. You can use either outside source in any section, and as often as you need. The packet stays primary. This is when the thesis locks after the demo and brainstorm.",
     also: ["In-class focus: Outline / Thesis / Outside Source"]
   },
   {
     week: "Step 4",
     due: "Focus · draft + peer",
     assignment: "Working draft + peer review",
-    focus: "build a working draft toward full essay length, keep two cited packet details in each of the five body sections, place exactly 2 outside sources in two different sections, and rehearse one peer review.",
+    focus: "build a working draft toward full essay length, keep two cited packet details in each of the five body sections, use the packet plus one or both of your exactly 2 outside sources in every body section, and rehearse one peer review.",
     also: []
   },
   {
     week: "Step 5",
     due: "Focus · polished essay",
     assignment: "Polished critical analysis essay",
-    focus: "finish a 1,000 to 1,500 word MLA critical analysis (Works Cited not in the word count) with packet evidence primary, two cited packet details in each of five body sections, and exactly 2 outside sources in two different sections.",
-    also: ["In-class focus: Limits / Ethics"]
+    focus: "finish a 1,000 to 1,500 word MLA critical analysis (Works Cited not in the word count) with packet evidence primary, two cited packet details in each of five body sections, and exactly 2 outside sources. Every body section uses the packet plus one or both of them.",
+    also: ["In-class focus: Limits"]
   }
 ];
 
@@ -252,7 +252,7 @@ function renderWeekStepper(key) {
           )
           .join("")}
       </div>
-      <p class="callout"><strong>Course Final Reflection</strong> has its own essay block on the 1301 home — this studio covers the Case Study steps only.</p>
+      <p class="callout"><strong>Course Final Reflection</strong> has its own essay block on the 1301 home. This studio covers the Case Study steps only.</p>
     </section>
   `;
 }
@@ -268,7 +268,23 @@ function renderTopicPicker(key, workspace) {
         </div>
         <a class="button small primary" href="${PRACTICE_ROOT}" target="_blank" rel="noopener">Open practice root</a>
       </div>
-      <p><strong>Essay readings:</strong> after you pick a topic, open that folder and read your case <strong>Source Packet</strong> and <strong>Case Brief</strong> (plus Case Options). Those packet materials are the primary readings for this essay. Models: BarkBox + Crumbl in class; Tesla alternate; Whole-Class Examples in Drive are practice only.</p>
+      <div class="dws-twobox">
+        <div class="dws-box">
+          <h3>Your case file</h3>
+          <ul>
+            <li>After you pick a topic, open that folder and read your case <strong>Source Packet</strong> and <strong>Case Brief</strong> (plus Case Options).</li>
+            <li>Those packet materials are the primary readings for this essay.</li>
+          </ul>
+        </div>
+        <div class="dws-box sage">
+          <h3>Models, not your packet</h3>
+          <ul>
+            <li>In-class models: BarkBox and Crumbl.</li>
+            <li>Tesla is an alternate model.</li>
+            <li><strong>Whole-Class Examples</strong> in Drive are practice only.</li>
+          </ul>
+        </div>
+      </div>
       <div class="resource-links">
         <a class="button small ghost" href="${TOPIC_OPTIONS}" target="_blank" rel="noopener">Topic Options doc</a>
         <a class="button small ghost" href="${STUDENT_PROMPTS}" target="_blank" rel="noopener">Student Prompts</a>
@@ -310,30 +326,48 @@ function renderWorkspaceFields(key, workspace) {
         <button type="button" class="button small ghost" data-clear-workspace="${escapeAttr(key)}">Clear local draft</button>
       </div>
       <div class="callout warn">
-        <strong>Practice framing.</strong>
-        Aim for a 1,000 to 1,500 word MLA critical analysis.
-        Use exactly 2 outside sources, each in a different body section. Do not reuse a source. The packet stays primary.
-        Each of the five body sections uses two cited packet details. The thesis previews all five criteria in order. Outline is 1 to 2 pages. One peer review rehearsal (Step 4).
+        <strong>Practice framing</strong>
+        <div class="dws-twobox">
+          <div class="dws-box">
+            <h3>Shape and sources</h3>
+            <ul>
+              <li>Aim for a <strong>1,000 to 1,500 word</strong> MLA critical analysis.</li>
+              <li>Your case study packet is your <strong>primary source</strong>. Use it in every body section.</li>
+              <li>Use exactly <strong>2 outside sources</strong> from Google Scholar or the SAC Library.</li>
+              <li>Every body section uses your packet plus one or both outside sources.</li>
+              <li>You can use either outside source in any section, and as often as you need.</li>
+            </ul>
+          </div>
+          <div class="dws-box sage">
+            <h3>Outline and thesis</h3>
+            <ul>
+              <li>Each of the five body sections uses two cited packet details.</li>
+              <li>The thesis previews all five lenses, in that order.</li>
+              <li>The outline is 1 to 2 pages.</li>
+              <li>Plan one peer review rehearsal (Step 4).</li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div class="field-grid">
         <label class="field">Topic / case preview notes
-          <span class="hint">Topic Selection and Case Study Preview — what case are you analyzing, and why does it matter?</span>
+          <span class="hint">Topic Selection and Case Study Preview: what case are you analyzing, and why does it matter?</span>
           <textarea data-field="previewNotes" placeholder="Case name, topic folder, first critical question…">${escapeHtml(workspace.previewNotes)}</textarea>
         </label>
         <label class="field">Brainstorming (before a working thesis)
-          <span class="hint">Early idea generation after the in-class demo — questions, angles, stakeholders, tensions. Do this before you lock a thesis in Step 3.</span>
-          <textarea data-field="brainstorm" placeholder="Freewrite: possible claims, surprising evidence, who is affected, what still confuses you…">${escapeHtml(workspace.brainstorm)}</textarea>
+          <span class="hint">Early idea generation after the in-class demo: questions, angles, tensions. Do this before you lock a thesis in Step 3.</span>
+          <textarea data-field="brainstorm" placeholder="Freewrite: possible thesis ideas, surprising evidence, who is affected, what still confuses you…">${escapeHtml(workspace.brainstorm)}</textarea>
         </label>
         <label class="field">Critical analysis reading notes
-          <span class="hint">Critical Analysis Reading Notes — problem · stakeholders · evidence · assumptions/biases · limits (from your Source Packet / Case Brief)</span>
-          <textarea data-field="readingNotes" placeholder="Reading notes keyed to the five analysis questions…">${escapeHtml(workspace.readingNotes)}</textarea>
+          <span class="hint">Critical analysis reading notes under all five lenses (from your Source Packet / Case Brief)</span>
+          <textarea data-field="readingNotes" placeholder="Reading notes keyed to all five lenses: Framing, Stakeholders, Evidence, Assumptions, Limits…">${escapeHtml(workspace.readingNotes)}</textarea>
         </label>
-        <label class="field">Outline / research plan (1–2 pages)
-          <span class="hint">Outline / Research Plan: a thesis that previews all five criteria, five body sections, two cited packet details in each, and exactly 2 outside sources in two different sections</span>
-          <textarea data-field="outline" placeholder="Working thesis that previews framing, stakeholders, evidence quality, assumptions, and limits…&#10;Five body sections in that order, each with packet detail 1 and packet detail 2…&#10;Exactly 2 outside sources, each in a different section…">${escapeHtml(workspace.outline)}</textarea>
+        <label class="field">Outline / research plan (1 to 2 pages)
+          <span class="hint">Outline / Research Plan: a thesis that previews all five lenses, in order, five body sections in that order, two cited packet details in each, and exactly 2 outside sources. Every body section uses the packet plus one or both of them</span>
+          <textarea data-field="outline" placeholder="Working thesis that previews all five lenses, in order: Framing, Stakeholders, Evidence, Assumptions, Limits…&#10;Five body sections in that order, each with packet detail 1 and packet detail 2…&#10;Every body section uses the packet plus one or both of your exactly 2 outside sources…">${escapeHtml(workspace.outline)}</textarea>
         </label>
         <label class="field">Working draft
-          <span class="hint">Working Draft: aim toward full essay length. Keep two cited packet details in each section. Place exactly 2 outside sources in two different sections.</span>
+          <span class="hint">Working Draft: aim toward full essay length. Keep two cited packet details in each section. Every body section uses the packet plus one or both of your exactly 2 outside sources.</span>
           <textarea data-field="draft" style="min-height:14rem" placeholder="Draft body…">${escapeHtml(workspace.draft)}</textarea>
         </label>
       </div>
@@ -349,7 +383,7 @@ function renderWorkspaceFields(key, workspace) {
       </div>
       <p>Use this space to capture peer feedback notes. The peer-review checklist tool can help you rehearse a structured response.</p>
       <label class="field">Peer feedback notes
-        <textarea data-field="peerReview" placeholder="What is strong in the claim/thesis? Where does evidence need work? Limits or ethics to flag?">${escapeHtml(workspace.peerReview)}</textarea>
+        <textarea data-field="peerReview" placeholder="What is strong in the thesis? Where does evidence need work? Does the thesis preview all five lenses, in order?">${escapeHtml(workspace.peerReview)}</textarea>
       </label>
     </section>
   `;
@@ -357,12 +391,12 @@ function renderWorkspaceFields(key, workspace) {
 
 function renderFinalChecklist(key, workspace) {
   const items = [
-    ["thesis", "My thesis is one arguable sentence that previews all five criteria in order: framing, stakeholders, evidence quality, assumptions, and limits."],
+    ["thesis", "My thesis is one arguable sentence that previews all five lenses, in order: Framing, Stakeholders, Evidence, Assumptions, and Limits."],
     ["length", "Essay body is about 1,000 to 1,500 words (Works Cited not counted)."],
     ["mla", "MLA format: heading, in-text citations, Works Cited."],
-    ["sources", "I used exactly 2 outside sources, each in a different body section, and I did not reuse a source."],
+    ["sources", "I used exactly 2 outside sources. Every body section uses the packet plus one or both of them."],
     ["packet", "Each of the five body sections has two cited packet details, and packet evidence remains primary."],
-    ["analysis", "I have five body sections in this order: framing, stakeholders, evidence quality, assumptions, and limits."],
+    ["analysis", "I have five body sections in this order: Framing, Stakeholders, Evidence, Assumptions, and Limits."],
     ["peer", "I completed one Step 4 peer-review rehearsal."],
     ["ai", "Any AI use followed Level 2 rules (support, not composition)."]
   ];
@@ -386,7 +420,7 @@ function renderFinalChecklist(key, workspace) {
           )
           .join("")}
       </ul>
-      <p class="callout"><strong>Practice checklist</strong> — use this list to spot gaps in claim, sources, MLA, and analysis before you leave the studio.</p>
+      <p class="callout"><strong>Practice checklist</strong>, use this list to spot gaps in thesis, sources, MLA, and analysis before you leave the studio.</p>
     </section>
   `;
 }
@@ -401,7 +435,24 @@ function renderCaseStudyStudio(key) {
           <p class="eyebrow">Overview · what this studio is for</p>
           <span class="pill">${escapeHtml(studio.due)}</span>
           <h3 id="${key}SummaryTitle">What you practice here</h3>
-          <p>${escapeHtml(studio.prompt)}</p>
+          <div class="dws-twobox">
+            <div class="dws-box">
+              <h3>Your case file</h3>
+              <ul>
+                <li>Choose one case from your topic folder (or an approved case).</li>
+                <li>Support your work with evidence from your <strong>Source Packet</strong> and <strong>Case Brief</strong>.</li>
+                <li>You can find example critical questions in your Case Brief file.</li>
+              </ul>
+            </div>
+            <div class="dws-box sage">
+              <h3>How you practice</h3>
+              <ul>
+                <li>In class you will see a BarkBox or Crumbl model demo.</li>
+                <li>Brainstorm ideas before you lock a working thesis later.</li>
+                <li><strong>Whole-Class Examples</strong> in Drive are practice models only.</li>
+              </ul>
+            </div>
+          </div>
           <div class="studio-meta">
             <span class="pill">${escapeHtml(studio.length)}</span>
             <span class="pill">${escapeHtml(studio.format)}</span>

@@ -4,7 +4,7 @@
   const CRITERIA = [
     ["framing", "1. Framing"],
     ["stakeholders", "2. Stakeholders"],
-    ["evidence", "3. Evidence quality"],
+    ["evidence", "3. Evidence"],
     ["assumptions", "4. Assumptions"],
     ["limits", "5. Limits"]
   ];
@@ -23,14 +23,24 @@
       packetMla: "",
       packetDetails,
       outside: [
-        { title: "", author: "", date: "", found: "", link: "", section: "", packetDetail: "", relation: "", evidence: "", credibility: "", purpose: "", mla: "" },
-        { title: "", author: "", date: "", found: "", link: "", section: "", packetDetail: "", relation: "", evidence: "", credibility: "", purpose: "", mla: "" }
+        { title: "", author: "", date: "", found: "", link: "", section: "", sections: [], packetDetail: "", relation: "", evidence: "", credibility: "", purpose: "", mla: "" },
+        { title: "", author: "", date: "", found: "", link: "", section: "", sections: [], packetDetail: "", relation: "", evidence: "", credibility: "", purpose: "", mla: "" }
       ],
       unused: [
         { title: "", found: "", why: "" },
         { title: "", found: "", why: "" }
       ]
     };
+  }
+
+
+  function normOutside(baseRow, saved) {
+    const row = Object.assign({}, baseRow, saved || {});
+    let sections = Array.isArray(row.sections) ? row.sections.filter(Boolean) : [];
+    if (!sections.length && row.section) sections = [row.section];
+    row.sections = sections;
+    row.section = sections[0] || "";
+    return row;
   }
 
   function loadState() {
@@ -41,7 +51,7 @@
       const base = emptyState();
       return Object.assign(base, data, {
         packetDetails: Object.assign(base.packetDetails, data.packetDetails || {}),
-        outside: [Object.assign(base.outside[0], (data.outside || [])[0] || {}), Object.assign(base.outside[1], (data.outside || [])[1] || {})],
+        outside: [normOutside(base.outside[0], (data.outside || [])[0]), normOutside(base.outside[1], (data.outside || [])[1])],
         unused: [Object.assign(base.unused[0], (data.unused || [])[0] || {}), Object.assign(base.unused[1], (data.unused || [])[1] || {})]
       });
     } catch (err) {
@@ -67,10 +77,10 @@
         <div class="studio-drop-body">
           <p><strong>Your goal:</strong> find 2 outside sources that check what your case study packet claims.</p>
           <p><a class="button small ghost" href="https://docs.google.com/document/d/19SFFZfuGU0w9PyLGf_Quca1Bxl7jVAWJztn9qdhoZbE/copy" target="_blank" rel="noopener">Make your own copy of the Source Search Guide</a></p>
-          <p><strong>The rule.</strong> All five body sections use the case study. Each section has 2 cited packet details. Pick the two sections that most need outside proof. Each of those two gets one outside source. You need exactly 2 outside sources total. Use each source in only one section. The packet stays your main source.</p>
+                    <div data-cs-rule-copy></div>
           <p>Every outside source gets a purpose line: <strong>Use this to ___, not to ___.</strong> Give each one a signal phrase and an MLA in-text citation. Check your topic folder Research subfolder first, and use it when it fits.</p>
 
-          <p><strong>Step 1. Pick the packet details to check.</strong> Your five body sections follow this order: Framing, Stakeholders, Evidence quality, Assumptions, Limits. Write packet details in the Source Log below. Circle the two details that most need outside proof (a number, a big claim, or a claim made only by the company or group itself).</p>
+          <p><strong>Step 1. Pick the packet details to check.</strong> Use one section for each of the five lenses, in the listed order. Write packet details in the Source Log below. Circle the two details that most need outside proof (a number, a big claim, or a claim made only by the company or group itself).</p>
           <p>Fill in: <em>The packet says ___ (page or slide ___). I want to check whether ___.</em></p>
 
           <p><strong>Step 2. Turn the detail into search words.</strong> Pull out 2 or 3 key words: the name, the topic, and the claim. Add a support word or a contradict word.</p>
@@ -114,16 +124,16 @@
 
           <p><strong>Step 5. Purpose line and MLA citation.</strong> Write: Use this to ___, not to ___. Model: Use this to show how many subscribers cancel, not to explain why they cancel. Many databases and Google Scholar have a Cite button. Choose MLA, copy it into your Source Log, then check it. Cite buttons make mistakes. SAC How to Cite: <a href="https://alamo.libguides.com/sac-guides/citation/overview" target="_blank" rel="noopener">alamo.libguides.com/sac-guides/citation/overview</a>.</p>
 
-          <p><strong>Step 6. Fit it into a body section.</strong> In the two sections with an outside source, use this order: packet detail, then outside source, then your analysis. The other three sections use packet detail, then your analysis. Make your analysis at least as long as your evidence.</p>
+          <p><strong>Step 6. Fit it into a body section.</strong> In every body section, use this order: packet detail, then one or both outside sources, then your analysis. Make your analysis at least as long as your evidence.</p>
           <ul class="cue-list">
             <li>Packet detail: The packet states that ___ (Packet Author page).</li>
             <li>Outside source: According to [author or group], ___ (Author page).</li>
             <li>Analysis: This shows that the packet ___ because ___.</li>
           </ul>
 
-          <p><strong>Worked example (BarkBox practice case, not a graded packet).</strong> The source result below is a pattern, not a real article. Do not cite it. Packet detail (Evidence quality): the BarkBox materials claim that social content and community identity drive subscription success. Support search: "subscription box" "brand community" loyalty study. Contradict search: "pet subscription" churn OR cancel data. If a university study shows many subscribers cancel within months, that contradicts the success story. Purpose line: Use this to show how many subscribers cancel, not to explain why they cancel.</p>
+          <p><strong>Worked example (BarkBox practice case, not a graded packet).</strong> The source result below is a pattern, not a real article. Do not cite it. Packet detail (Evidence): the BarkBox materials claim that social content and community identity drive subscription success. Support search: "subscription box" "brand community" loyalty study. Contradict search: "pet subscription" churn OR cancel data. If a university study shows many subscribers cancel within months, that contradicts the success story. Purpose line: Use this to show how many subscribers cancel, not to explain why they cancel.</p>
 
-          <p><strong>Checklist before you turn in your outline.</strong> Two outside sources, each in a different body section. Each one has a purpose line, a credibility note, and an MLA citation. Your packet is still the main evidence in all five sections.</p>
+          <p><strong>Checklist before you turn in your outline.</strong> Exactly 2 outside sources. Every body section uses your packet plus one or both of them. Each source has a purpose line, a credibility note, and an MLA citation. Your packet is still the primary source in all five sections.</p>
           <p><a class="button small primary" href="${sl}">Open the Source Log tool</a></p>
         </div>
       </details>
@@ -161,12 +171,16 @@
           <label class="field">Link
             <input type="text" data-cs="out.${i}.link" value="${val(src.link)}" autocomplete="off">
           </label>
-          <label class="field">Which criterion section uses this source?
-            <select data-cs="out.${i}.section">
-              <option value="">Choose one</option>
-              ${CRITERIA.map(([id, label]) => `<option value="${id}"${src.section === id ? " selected" : ""}>${label}</option>`).join("")}
-            </select>
-          </label>
+          <fieldset class="field span-2">
+            <legend>Which body sections use this source? You can check more than one.</legend>
+            <div class="cue-list" style="list-style:none;padding-left:0;margin:0.35rem 0 0;">
+              ${CRITERIA.map(([id, label]) => {
+                const chosen = (src.sections && src.sections.length ? src.sections : (src.section ? [src.section] : []));
+                const on = chosen.indexOf(id) !== -1;
+                return `<label style="display:inline-flex;align-items:center;gap:0.35rem;margin:0 1rem 0.35rem 0;"><input type="checkbox" data-cs="out.${i}.sections" value="${id}"${on ? " checked" : ""}> ${label}</label>`;
+              }).join("")}
+            </div>
+          </fieldset>
           <label class="field span-2">Which packet detail does it check?
             <textarea data-cs="out.${i}.packetDetail" style="min-height:3rem;">${val(src.packetDetail)}</textarea>
           </label>
@@ -204,7 +218,7 @@
       <details class="studio-drop" id="dwsSourceLogDrop">
         <summary>Case Study Source Log</summary>
         <div class="studio-drop-body">
-          <p><strong>The rule.</strong> All five body sections use the case study. Each section has 2 cited packet details. Pick the two sections that most need outside proof. Each of those two gets one outside source. You need exactly 2 outside sources total. Use each source in only one section.</p>
+                    <div data-cs-rule-copy></div>
           <p>This log saves in this browser. You can also keep working in the <a href="${sl}">Source Log tool</a>. The two stay in sync on this device.</p>
           <p><a class="button small ghost" href="https://docs.google.com/document/d/1k5gqe177BPq79ybjit5ZJjlVF7vRxkqKXfV4D8K3iEM/copy" target="_blank" rel="noopener">Make your own copy of the Source Log</a></p>
 
@@ -235,7 +249,7 @@
             </table>
           </div>
 
-          <p><strong>Check before you turn in your outline.</strong> Two outside sources, each in a different body section. Each one has a purpose line and an MLA citation. Your packet is still the main evidence in all five sections.</p>
+          <p><strong>Check before you turn in your outline.</strong> Exactly 2 outside sources. Every body section uses your packet plus one or both of them. Each source has a purpose line and an MLA citation. Your packet is still the primary source in all five sections.</p>
           <p class="save-status" data-cs-status></p>
         </div>
       </details>
@@ -255,9 +269,15 @@
     });
     state.outside.forEach((row, i) => {
       Object.keys(row).forEach((k) => {
+        if (k === "section" || k === "sections") return;
         const el = get("out." + i + "." + k);
         if (el) row[k] = el.value;
       });
+      const boxes = root.querySelectorAll('[data-cs="out.' + i + '.sections"]');
+      const sections = [];
+      boxes.forEach((box) => { if (box.checked) sections.push(box.value); });
+      row.sections = sections;
+      row.section = sections[0] || "";
     });
     state.unused.forEach((row, i) => {
       Object.keys(row).forEach((k) => {
@@ -310,6 +330,9 @@
     `;
     bind(host);
     host.dataset.csMounted = "true";
+    if (window.DWSCaseStudyLenses && typeof window.DWSCaseStudyLenses.fillRuleHosts === "function") {
+      window.DWSCaseStudyLenses.fillRuleHosts();
+    }
   }
 
   function syncAidsVisibility(host) {

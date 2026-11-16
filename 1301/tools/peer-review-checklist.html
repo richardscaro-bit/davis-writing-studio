@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles.css?v=csv3e">
   </head>
   <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -37,7 +37,20 @@
       <section class="section" aria-labelledby="prTitle">
         <p class="eyebrow" data-essay-eyebrow>Practice tool · peer rehearsal · any essay</p>
         <h1 id="prTitle">Peer-review checklist</h1>
-        <p class="lead">Rehearse feedback on a draft for the essay you are practicing. Choose an essay to load matched checklist items, or use the generic list. Check what is working, leave a short note, then copy or print a summary for your partner.</p>
+                <div class="dws-twobox dws-purpose">
+          <div class="dws-box">
+            <h3>Purpose</h3>
+            <p>This page is a rehearsal checklist for giving feedback on a draft. Use it when you and a partner are ready for one peer pass.</p>
+          </div>
+          <div class="dws-box sage">
+            <h3>Use this page to</h3>
+            <ul>
+            <li>Check the draft against the essay you are practicing</li>
+            <li>Leave a short note on what is working and what to revise</li>
+            <li>Copy or print a summary for your partner</li>
+            </ul>
+          </div>
+        </div>
 
         <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
         <div id="dwsSourceAids" class="dws-source-aids"></div>
@@ -53,7 +66,7 @@
               <input type="text" id="prReviewer" placeholder="Jordan" autocomplete="off">
             </label>
             <label class="field">Writer / draft name <span class="hint">Optional</span>
-              <input type="text" id="prWriter" placeholder="Alex — draft title" autocomplete="off">
+              <input type="text" id="prWriter" placeholder="Alex, draft title" autocomplete="off">
             </label>
             <label class="field span-2" style="grid-column:1/-1;">Working claim (as you read it) <span class="hint">Quote or paraphrase the thesis you see</span>
               <textarea id="prClaim" style="min-height:3.5rem;" placeholder="The draft’s main idea seems to be…"></textarea>
@@ -67,7 +80,7 @@
 
           <ul class="peer-check-list" id="prList" aria-label="Peer-review items"></ul>
 
-          <label class="field" style="margin-top:1rem;">Overall note to the writer <span class="hint">2–4 sentences: one strength + one priority revision</span>
+          <label class="field" style="margin-top:1rem;">Overall note to the writer <span class="hint">2 to 4 sentences: one strength + one priority revision</span>
             <textarea id="prOverall" style="min-height:5rem;" placeholder="One strength I noticed… One priority revision…"></textarea>
           </label>
 
@@ -92,8 +105,9 @@
     </main>
     <footer class="site-footer"><p>Peer-review rehearsal · AI Level 2</p></footer>
     <script src="../app.js"></script>
-    <script src="essay-context.js?v=csrules17"></script>
-    <script src="tools.js?v=csplan1"></script>
-    <script src="source-aids.js?v=csscope1"></script>
+    <script src="essay-context.js?v=csv3e"></script>
+    <script src="case-study-lenses.js?v=csv3e"></script>
+    <script src="tools.js?v=csv3e"></script>
+    <script src="source-aids.js?v=csv3e"></script>
   </body>
 </html>

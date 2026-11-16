@@ -148,6 +148,7 @@
         ($("#criterion3")?.value || "").trim()
       ].filter(Boolean),
       csCriteria: $("#csCriteriaChips") ? readCsCriteria() : [],
+      csSkipWhy: $("#csSkipWhy") ? readCsSkipWhy() : {},
       angles: selectedAngles()
     };
   }
@@ -184,19 +185,41 @@
       btn.setAttribute("aria-pressed", on ? "true" : "false");
       btn.classList.toggle("active", on);
     });
-    if ($("#csCriteriaChips") && Array.isArray(data.csCriteria) && data.csCriteria.length) {
+    if ($("#csCriteriaChips") && Array.isArray(data.csCriteria)) {
       setCsCriteria(data.csCriteria, false);
     }
+    if ($("#csSkipWhy") && data.csSkipWhy) writeCsSkipWhy(data.csSkipWhy);
   }
 
 
-  const CS_CRITERIA = [
-    { id: "framing", label: "Framing", phrase: "its framing" },
-    { id: "stakeholders", label: "Stakeholders", phrase: "its stakeholders" },
-    { id: "evidence", label: "Evidence quality", phrase: "its evidence quality" },
-    { id: "assumptions", label: "Assumptions", phrase: "its assumptions" },
-    { id: "limits", label: "Limits", phrase: "its limits" }
-  ];
+  /* Labels and order come from the swappable config in case-study-lenses.js.
+     Do not hardcode lens names here. Phrase is built from the current label. */
+  const CS_CRITERIA = (window.DWS_CASE_STUDY_LENSES || []).map((lens) => ({
+    id: lens.id,
+    label: lens.label,
+    phrase: (window.DWSCaseStudyLenses && window.DWSCaseStudyLenses.lensPhrase)
+      ? window.DWSCaseStudyLenses.lensPhrase(lens)
+      : ("its " + String(lens.label || "").toLowerCase())
+  }));
+
+  function csAllIds() { return CS_CRITERIA.map((c) => c.id); }
+  function lockCsChips(locked) {
+    const host = $("#csCriteriaChips");
+    if (!host) return;
+    host.querySelectorAll("[data-cs-criterion], [data-cs-all]").forEach((btn) => {
+      btn.disabled = !!locked;
+      if (locked) btn.setAttribute("aria-disabled", "true");
+      else btn.removeAttribute("aria-disabled");
+    });
+  }
+  function applyCsFiveLock(persist) {
+    const box = $("#csSectionBox");
+    const essay = (typeof activeEssay === "function") ? activeEssay() : null;
+    if (box) box.hidden = !(essay && essay.id === "case-study");
+    setCsCriteria(csAllIds(), persist === true);
+    const api = window.DWSCaseStudyLenses;
+    if (api && typeof api.fillRuleHosts === "function") api.fillRuleHosts();
+  }
 
   function joinNatural(items) {
     const list = (items || []).filter(Boolean);
@@ -207,34 +230,41 @@
   }
 
   function readCsCriteria() {
-    const chips = $$("#csCriteriaChips [data-cs-criterion][aria-pressed='true']");
-    const ids = chips.map((b) => b.getAttribute("data-cs-criterion")).filter(Boolean);
-    const allowed = new Set(CS_CRITERIA.map((c) => c.id));
-    const ordered = CS_CRITERIA.map((c) => c.id).filter((id) => ids.includes(id) && allowed.has(id));
-    return ordered.length ? ordered : CS_CRITERIA.map((c) => c.id);
+    return csAllIds();
   }
 
   function setCsCriteria(ids, persist) {
     const host = $("#csCriteriaChips");
     if (!host) return;
-    const want = new Set(ids && ids.length ? ids : CS_CRITERIA.map((c) => c.id));
+    if (window.DWSCaseStudyLenses && typeof window.DWSCaseStudyLenses.renderPickerChips === "function") {
+      if (!host.querySelector("[data-cs-criterion]")) window.DWSCaseStudyLenses.renderPickerChips(host);
+    }
+    ids = csAllIds();
+    const want = new Set(ids);
     host.querySelectorAll("[data-cs-criterion]").forEach((btn) => {
       const on = want.has(btn.getAttribute("data-cs-criterion"));
       btn.setAttribute("aria-pressed", on ? "true" : "false");
       btn.classList.toggle("active", on);
     });
-    const allOn = CS_CRITERIA.every((c) => want.has(c.id));
+    lockCsChips(true);
     const allBtn = $("#csCriteriaAll");
-    if (allBtn) {
-      allBtn.setAttribute("aria-pressed", allOn ? "true" : "false");
-      allBtn.classList.toggle("active", allOn);
-    }
+    if (allBtn) allBtn.remove();
+    updateCsSkipWhy();
     if (persist !== false) persistThesisInputs();
     updateCaseStudyThesisPattern();
   }
 
+  function readCsSkipWhy() { return {}; }
+  function writeCsSkipWhy() { updateCsSkipWhy(); }
+  function updateCsSkipWhy() {
+    const host = document.getElementById("csSkipWhy");
+    if (!host) return;
+    host.innerHTML = "";
+    host.hidden = true;
+  }
+
   function csPhrases(ids) {
-    const set = new Set(ids && ids.length ? ids : CS_CRITERIA.map((c) => c.id));
+    const set = new Set(ids || []);
     return CS_CRITERIA.filter((c) => set.has(c.id)).map((c) => c.phrase);
   }
 
@@ -253,9 +283,8 @@
   }
 
   function csWhyPreview(ids) {
-    const all = ids.length === CS_CRITERIA.length;
-    const labels = CS_CRITERIA.filter((c) => ids.includes(c.id)).map((c) => c.label.toLowerCase());
-    if (all) return "all five criteria in order";
+    const labels = CS_CRITERIA.filter((c) => (ids || csAllIds()).includes(c.id)).map((c) => c.label.toLowerCase());
+    if (!labels.length) return "all five lenses";
     return joinNatural(labels);
   }
 
@@ -277,13 +306,9 @@
       (cueEl && cueEl.parentElement ? cueEl.parentElement : host || document.getElementById("claimGenerate").parentElement).appendChild(box);
     }
     box.hidden = false;
-    const ids = readCsCriteria();
-    const all = ids.length === CS_CRITERIA.length;
+    const ids = csAllIds();
     const clause = csBecauseBlanks(ids);
-    const countNote = all
-      ? "Name all five, in that order."
-      : "Name the criteria you selected, in the order above.";
-    box.innerHTML = "<strong>Thesis pattern.</strong> [Packet] [your answer] " + escapeHtml(clause) + ". " + countNote + " Example questions are in your Case Brief file.";
+    box.innerHTML = "<strong>Thesis pattern.</strong> [Packet] [your answer] " + escapeHtml(clause) + ". The thesis previews all five lenses, in that order. Example questions are in your Case Brief file.";
   }
 
     function buildClaimOptions(inputs) {
@@ -329,7 +354,7 @@
         },
         evidence: {
           text: `While the ${caseName} packet pushes ${argues} as settled fact, its evidence overstates that conclusion and leaves ${tension} unresolved.`,
-          why: "Judges evidence quality without announcing the essay’s plan."
+          why: "Judges the evidence without announcing the essay's plan."
         },
         assumptions: {
           text: `The ${caseName} packet assumes readers will accept ${argues} without asking how ${tension} unsettles that story.`,
@@ -606,29 +631,8 @@
     const host = $("#csCriteriaChips");
     if (!host || csCriteriaBound) return;
     csCriteriaBound = true;
-    host.addEventListener("click", (e) => {
-      const allBtn = e.target.closest("[data-cs-all]");
-      const oneBtn = e.target.closest("[data-cs-criterion]");
-      if (allBtn && host.contains(allBtn)) {
-        setCsCriteria(CS_CRITERIA.map((c) => c.id), true);
-        return;
-      }
-      if (!oneBtn || !host.contains(oneBtn)) return;
-      const id = oneBtn.getAttribute("data-cs-criterion");
-      const current = readCsCriteria();
-      const isOn = current.includes(id);
-      let next;
-      if (isOn) {
-        next = current.filter((x) => x !== id);
-        if (!next.length) {
-          setStatus($("#claimSaveStatus"), "Keep at least one criterion, or choose All 5.", false);
-          return;
-        }
-      } else {
-        next = CS_CRITERIA.map((c) => c.id).filter((x) => current.includes(x) || x === id);
-      }
-      setCsCriteria(next, true);
-    });
+    // All five lenses are required. Clicks do not change the selection.
+    host.addEventListener("click", (e) => { e.preventDefault(); });
   }
 
     function bindClaimGenerator() {
@@ -1392,6 +1396,34 @@
     };
   }
 
+
+  function caseStudyOutlineLenses() {
+    const romans = ["II", "III", "IV", "V", "VI"];
+    const preview = joinNatural(CS_CRITERIA.map((c) => c.label));
+    const bodyCues = ["Topic sentence", "Packet detail 1, cited", "Packet detail 2, cited", "Outside source, cited (one or both of your 2 outside sources)", "Your analysis, at least as long as the evidence"];
+    const list = [{
+      title: "I. Introduction",
+      topic: "Name your packet and topic folder, give brief context, state your critical question, and end with a thesis that previews all five lenses, in order (" + preview + ").",
+      cues: ["Packet and topic folder", "Context in 3 to 4 bullets", "Critical question", "Thesis that previews all five lenses"]
+    }];
+    CS_CRITERIA.forEach((c, i) => {
+      list.push({
+        title: romans[i] + ". " + c.label,
+        topic: c.id === "limits"
+          ? "What can the packet tell us, and what can it not? Fold limitations and ethical tensions into this lens, not a separate section."
+          : "How this lens applies to the packet.",
+        cues: bodyCues.slice(),
+        roleHint: c.id
+      });
+    });
+    list.push({
+      title: "VII. Conclusion",
+      topic: "State what a careful reader can now understand about the case. Do not add a new thesis.",
+      cues: ["What a careful reader now understands", "No new thesis"]
+    });
+    return list;
+  }
+
   function buildOutline(inputs) {
     const essay = activeEssay();
     const kind = (essay && essay.claimKind) || "generic";
@@ -1415,6 +1447,9 @@
     ];
 
     let list = (lenses || defaultLenses).map((lens) => ({ ...lens, cues: (lens.cues || []).slice() }));
+    if (kind === "case-study") {
+      list = caseStudyOutlineLenses();
+    }
     if (kind === "comparison") {
       const dCrit = comparisonDefaults(inputs, essay).criteria;
       list = list.map((lens, idx) => {
@@ -1434,9 +1469,9 @@
       if (/background|context|definition|plate label/.test(t)) return "background";
       if (/counter|opposing|reply/.test(t)) return "counter";
       if (/stakeholder/.test(t)) return "stakeholders";
-      if (/limitations and ethics|ethical/.test(t)) return "ethics";
+      if (/limitations and ethics|ethical/.test(t)) return "limits";
       if (/outside sources plan|sources plan/.test(t)) return "sources-plan";
-      if (/evidence quality/.test(t)) return "evidence";
+      if (/evidence quality/.test(t) || /(^|\.\s)evidence\b/.test(t) || /^iv\.\s*evidence\b/.test(t)) return "evidence";
       if (/assumption/.test(t)) return "assumptions";
       if (/limit/.test(t) && !/limited/.test(t)) return "limits";
       if (/misunderstand|myth|caution|newcomer tip/.test(t)) return "clarify";
@@ -1586,19 +1621,16 @@
       }
 
       if (kind === "case-study") {
-        if (role === "intro") return `This critical analysis of ${focus} answers the critical question with a thesis that previews framing, stakeholders, evidence quality, assumptions, and limits: ${claim}`;
+        if (role === "intro") return `This critical analysis of ${focus} answers the critical question with a thesis that previews all five lenses, in order: ${claim}`;
         if (role === "background" || /framing/i.test(lens.title || "")) {
           return `The packet frames ${focus} in a way that soft-pedals ${tension}.`;
         }
         if (role === "stakeholders") return `Who the ${focus} materials center, and whose voices are missing, matters once ${tension} is visible.`;
         if (role === "evidence") return `The packet's evidence about ${focus} looks settled until ${tension} tests whether it is data or branding.`;
         if (role === "assumptions") return `The ${focus} packet treats an assumption as obvious. Naming it shows how ${tension} unsettles the story.`;
-        if (role === "limits") return `The packet is persuasive in places about ${focus}, yet its limits around ${tension} weaken the overall thesis.`;
-        if (role === "ethics" || /limitations and ethics/i.test(lens.title || "")) {
-          return `Name a gap, bias, or ethical tension in the ${focus} packet and say why it matters for what the case can show.`;
-        }
+        if (role === "limits") return `The packet is persuasive in places about ${focus}, yet its limits around ${tension}, including gaps, biases, or ethical tensions, weaken the overall thesis.`;
         if (role === "conclusion") return `A careful reader should take away that ${claim}, especially given ${tension}. Do not add a new thesis.`;
-        return `This section on ${focus} advances the claim by keeping ${tension} in view. Use two cited packet details. Add an outside source only if this is one of your two outside-source sections.`;
+        return `This section on ${focus} advances the claim by keeping ${tension} in view. Use two cited packet details and one or both of your 2 outside sources.`;
       }
 
       if (kind === "reflection") {
@@ -3668,10 +3700,18 @@
       csBox.hidden = !isCs;
       if (angleBox) angleBox.hidden = isCs;
       if (isCs) {
-        const saved = loadJSON(KEYS.thesisInputs, {}) || {};
-        if (Array.isArray(saved.csCriteria) && saved.csCriteria.length) setCsCriteria(saved.csCriteria, false);
-        else setCsCriteria(CS_CRITERIA.map((c) => c.id), false);
+        const host = $("#csCriteriaChips");
+        if (host && window.DWSCaseStudyLenses && typeof window.DWSCaseStudyLenses.renderPickerChips === "function") {
+          window.DWSCaseStudyLenses.renderPickerChips(host);
+        }
+        setCsCriteria(csAllIds(), false);
       }
+    }
+    if (essay && essay.id === "case-study") {
+      applyCsFiveLock(false);
+    } else {
+      const secBox = $("#csSectionBox");
+      if (secBox) secBox.hidden = true;
     }
     if ($("#claimGenerate") && essay && essay.id === "case-study") {
       updateCaseStudyThesisPattern();
@@ -3806,13 +3846,7 @@
   }
 
   function planReadCsCriteria(thesis) {
-    if ($("#csCriteriaChips")) return readCsCriteria();
-    if (thesis && Array.isArray(thesis.csCriteria) && thesis.csCriteria.length) {
-      const allowed = new Set(CS_CRITERIA.map((c) => c.id));
-      const ordered = CS_CRITERIA.map((c) => c.id).filter((id) => thesis.csCriteria.includes(id) && allowed.has(id));
-      if (ordered.length) return ordered;
-    }
-    return CS_CRITERIA.map((c) => c.id);
+    return csAllIds();
   }
 
   function collectPlanData() {
@@ -3954,10 +3988,9 @@
     push("Tension or insight", { bold: true, size: "24" });
     push(planBlank(data.tension), { spaceAfter: "200" });
 
-    if (data.kind === "case-study" && data.csCriteria.length) {
-      const labels = data.csCriteria.map((id) => planCsMeta(id).label);
-      const allFive = data.csCriteria.length === CS_CRITERIA.length;
-      push("Case Study criteria in this plan: " + (allFive ? "all 5 (" + joinNatural(labels) + ")" : joinNatural(labels)) + ".", { spaceAfter: "200" });
+    if (data.kind === "case-study") {
+      const labels = csAllIds().map((id) => planCsMeta(id).label);
+      push("Case Study lenses in this plan: " + joinNatural(labels) + ". All five sections are required. The thesis previews all five, in that order.", { spaceAfter: "200" });
     }
 
     push("Outline", { bold: true, size: "28", spaceAfter: "80" });
@@ -3969,7 +4002,7 @@
 
     push("Evidence needed", { bold: true, size: "28", spaceAfter: "80" });
     if (data.kind === "case-study") {
-      push("Use two cited packet details in each section. Use exactly 2 outside sources total, each in a different body section. Do not reuse a source.", { spaceAfter: "160" });
+      push("Use two cited packet details in each of the five lens sections. Use exactly 2 outside sources total. Every body section uses your packet plus one or both outside sources. You can use either outside source in any section, and as often as you need.", { spaceAfter: "160" });
     } else if (data.sourcesNote) {
       push("Sources note: " + data.sourcesNote, { spaceAfter: "160" });
     }
@@ -3984,7 +4017,7 @@
       if (item.caseStudy) {
         push("[ ] Packet detail 1: ____________________    Page or paragraph: __________", {});
         push("[ ] Packet detail 2: ____________________    Page or paragraph: __________", {});
-        push("[ ] Outside source 1 or 2 (use in only two sections, and do not reuse a source): ____________________    Page or paragraph: __________", { spaceAfter: "160" });
+        push("[ ] Outside source (one or both of your 2 outside sources): ____________________    Page or paragraph: __________", { spaceAfter: "160" });
       } else {
         push("[ ] Evidence 1: ____________________    Page or paragraph: __________", {});
         push("[ ] Evidence 2: ____________________    Page or paragraph: __________", { spaceAfter: "160" });

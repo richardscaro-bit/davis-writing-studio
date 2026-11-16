@@ -453,7 +453,13 @@
       studioLabel: "Case Study studio",
       label: "Case Study Critical Analysis",
       purpose:
-        "One clear thesis that previews all five criteria in order, plus evidence from your Source Packet and Case Brief, plus exactly 2 outside sources. Write five body sections in this order: framing, stakeholders, evidence quality, assumptions, and limits. Each section uses two cited packet details. In exactly two of the five sections, add one outside source each. Do not reuse a source. Aim for a 1,000 to 1,500 word MLA critical analysis (AI Level 2: support, not composition).",
+        "Start with your own critical analysis question about your case study. You can find example critical questions in your Case Brief file. Next, use the five lenses to answer your question. In order, they are Framing, Stakeholders, Evidence, Assumptions, and Limits. Your outline has five body sections, one for each lens, in that order. Put 2 cited case study details in each section. Your thesis answers your question and previews all five lenses, in order. Your case study packet is your primary source. Use it in every body section. Use exactly 2 outside sources from Google Scholar or the SAC Library. Every body section uses your packet plus one or both outside sources. You can use either outside source in any section, and as often as you need. Put your limitations or ethics idea in the Limits section. Do not add a separate limitations section outside of Limits. The Outline / Research Plan assignment in Canvas is the graded turn-in. Use evidence from your Source Packet and Case Brief. Aim for a 1,000 to 1,500 word MLA critical analysis (AI Level 2: support, not composition).",
+      purposeLead: "You are practicing the <strong>Case Study Critical Analysis</strong>. Start with your own critical analysis question, then write all five lens sections.",
+      purposeUses: [
+        "Write a <strong>thesis</strong> that previews all five lenses, in order",
+        "Put <strong>2 cited case study details</strong> in each section",
+        "Use exactly <strong>2 outside sources</strong>. Every body section uses the packet plus one or both of them"
+      ],
       subjectLabel: "Case / packet name",
       subjectHint: "Required. e.g. BarkBox Subscription Box",
       subjectPlaceholder: "BarkBox",
@@ -479,14 +485,14 @@
       presentsPlaceholder: "The packet presents BarkBox as a customer-loyalty success…",
       tensionLabel: "Tension / limit / stakeholder conflict / assumption",
       tensionHint: "Required. What a careful reader could push back on.",
-      questionHint: "Find example critical questions in your Case Brief file.",
+      questionHint: "Start with your own critical analysis question. Example questions are in your Case Brief file. Use all five lenses as body sections, in this order: Framing, Stakeholders, Evidence, Assumptions, and Limits. Your thesis answers your question and previews all five lenses, in order. Put 2 cited case study details in each section. Use exactly 2 outside sources from Google Scholar or the SAC Library. Every body section uses your packet plus one or both outside sources. You can use either outside source in any section, and as often as you need.",
       tensionPlaceholder: "It underplays how subscription fatigue…",
       questionLabel: "Your critical question",
       questionPlaceholder: "How well does the packet support its claim that ___? Example questions are in your Case Brief file.",
       angles: [
         { id: "framing", label: "Framing" },
         { id: "stakeholders", label: "Stakeholders" },
-        { id: "evidence", label: "Evidence quality" },
+        { id: "evidence", label: "Evidence" },
         { id: "assumptions", label: "Assumptions" },
         { id: "limits", label: "Limits" }
       ],
@@ -521,31 +527,30 @@
         ]
       },
       outlineLenses: [
-        { title: "I. Introduction", topic: "Name your packet and topic folder, give brief context, state your critical question, and end with a thesis that previews all five criteria in order.", cues: ["Packet and topic folder", "Context in 3 to 4 bullets", "Critical question (examples are in your Case Brief file)", "Thesis that names framing, stakeholders, evidence quality, assumptions, and limits"] },
-        { title: "II. Framing", topic: "How does the packet define the problem?", cues: ["Topic sentence", "Packet detail 1, cited", "Packet detail 2, cited", "Outside source, cited (only if this is one of your 2 sections)", "Your analysis, at least as long as the evidence"] },
-        { title: "III. Stakeholders", topic: "Who is affected? Whose voices appear, and whose are missing?", cues: ["Topic sentence", "Packet detail 1, cited", "Packet detail 2, cited", "Outside source, cited (only if this is one of your 2 sections)", "Your analysis, at least as long as the evidence"] },
-        { title: "IV. Evidence quality", topic: "Is the evidence data, or is it branding, opinion, or a single example?", cues: ["Topic sentence", "Packet detail 1, cited", "Packet detail 2, cited", "Outside source, cited (only if this is one of your 2 sections)", "Your analysis, at least as long as the evidence"] },
-        { title: "V. Assumptions", topic: "What does the case take for granted?", cues: ["Topic sentence", "Packet detail 1, cited", "Packet detail 2, cited", "Outside source, cited (only if this is one of your 2 sections)", "Your analysis, at least as long as the evidence"] },
-        { title: "VI. Limits", topic: "What can the packet tell us, and what can it not tell us?", cues: ["Topic sentence", "Packet detail 1, cited", "Packet detail 2, cited", "Outside source, cited (only if this is one of your 2 sections)", "Your analysis, at least as long as the evidence"] },
-        { title: "VII. Limitations and ethics", topic: "Name gaps, biases, or ethical tensions, and say why they matter for what the packet can show.", cues: ["One gap, bias, or ethical tension", "Why it matters"] },
-        { title: "VIII. Conclusion", topic: "State what a careful reader can now understand about the case. Do not add a new thesis.", cues: ["What a careful reader now understands", "No new thesis"] }
+        { title: "I. Introduction", topic: "Name your packet and topic folder, give brief context, state your critical question, and end with a thesis that previews all five lenses, in order.", cues: ["Packet and topic folder", "Context in 3 to 4 bullets", "Critical question (examples are in your Case Brief file)", "Thesis that previews all five lenses"] },
+        { title: "II. Framing", topic: "How does the packet define the problem?", cues: ["Topic sentence", "Packet detail 1, cited", "Packet detail 2, cited", "Outside source, cited (one or both of your 2 outside sources)", "Your analysis, at least as long as the evidence"] },
+        { title: "III. Stakeholders", topic: "Who is affected? Whose voices appear, and whose are missing?", cues: ["Topic sentence", "Packet detail 1, cited", "Packet detail 2, cited", "Outside source, cited (one or both of your 2 outside sources)", "Your analysis, at least as long as the evidence"] },
+        { title: "IV. Evidence", topic: "Is the evidence data, or is it branding, opinion, or a single example?", cues: ["Topic sentence", "Packet detail 1, cited", "Packet detail 2, cited", "Outside source, cited (one or both of your 2 outside sources)", "Your analysis, at least as long as the evidence"] },
+        { title: "V. Assumptions", topic: "What does the case take for granted?", cues: ["Topic sentence", "Packet detail 1, cited", "Packet detail 2, cited", "Outside source, cited (one or both of your 2 outside sources)", "Your analysis, at least as long as the evidence"] },
+        { title: "VI. Limits", topic: "What can the packet tell us, and what can it not? Fold limitations and ethical tensions into this lens, not a separate section.", cues: ["Topic sentence", "Packet detail 1, cited", "Packet detail 2, cited", "Outside source, cited (one or both of your 2 outside sources)", "Your analysis, at least as long as the evidence"] },
+        { title: "VII. Conclusion", topic: "State what a careful reader can now understand about the case. Do not add a new thesis.", cues: ["What a careful reader now understands", "No new thesis"] }
       ],
-      sourceAim: "Use exactly 2 outside sources total. Put one in each of 2 different body sections. Do not reuse a source. Every section uses 2 cited packet details.",
+      sourceAim: "Use exactly 2 outside sources total. Every body section uses your packet plus one or both outside sources. You can use either outside source in any section, and as often as you need. Every lens section uses 2 cited packet details.",
       sourcePacketLabel: "Packet / Case Brief",
       peerItems: [
-        { id: "claim", title: "Claim clarity", prompt: "Is the thesis one sentence that answers the critical question and previews all five criteria in this order: framing, stakeholders, evidence quality, assumptions, and limits?", placeholder: "The thesis previews… / Still missing…" },
-        { id: "packet", title: "Packet evidence", prompt: "Does each of the five body sections use two cited packet details from the Source Packet or Case Brief?", placeholder: "Strongest packet details… / Section that needs a second cited detail…" },
-        { id: "outside", title: "Outside sources (exactly 2)", prompt: "Are there exactly 2 outside sources, each in a different body section, with no source reused? Does each one support, test, or challenge a packet detail?", placeholder: "The two sections with outside sources… / Reused or missing…" },
+        { id: "claim", title: "Thesis clarity", prompt: "Is the thesis one sentence that answers the critical question and previews all five lenses, in order?", placeholder: "The thesis previews… / Still missing…" },
+        { id: "packet", title: "Packet evidence", prompt: "Does each of the five lens sections use two cited packet details from the Source Packet or Case Brief?", placeholder: "Strongest packet details… / Section that needs a second cited detail…" },
+        { id: "outside", title: "Outside sources (exactly 2)", prompt: "Are there exactly 2 outside sources? Does every body section use the packet plus one or both of them? You can use either source in any section, and as often as you need. Does each one support, test, or challenge a packet detail?", placeholder: "How the two sources are used... / A section missing an outside source..." },
         { id: "mlaWorks", title: "MLA Works Cited", prompt: "Is there a Works Cited with the packet and both outside sources?", placeholder: "Entries look complete for… / Double-check…" },
         { id: "mlaIntext", title: "MLA in-text citations", prompt: "Do body sections credit sources in-text where evidence appears?", placeholder: "In-text works in… / Missing near…" },
-        { id: "org", title: "Organization / topic sentences", prompt: "Are there five body sections in this order: framing, stakeholders, evidence quality, assumptions, and limits?", placeholder: "Clearest topic sentence… / Section that drifts…" },
+        { id: "org", title: "Organization / topic sentences", prompt: "Are there five body sections in this order: Framing, Stakeholders, Evidence, Assumptions, Limits?", placeholder: "Clearest topic sentence… / Section that drifts…" },
         { id: "analysis", title: "Analysis over summary", prompt: "Does the draft judge the packet (not only retell it)? Is the analysis at least as long as the evidence?", placeholder: "Best analytical move… / Still summarizing…" },
         { id: "ai", title: "AI Level 2 honesty", prompt: "Does the writer own the claim and evidence? AI support only, not composition?", placeholder: "Disclosure / ownership looks… / Ask to clarify…" }
       ],
       // PENDING CAROLINE PICK (Poe warmer version)
-      thesisCue: "Write one sentence that answers your critical question and previews all five criteria in order. Pattern: [Packet] [your answer] because its framing ___, its stakeholders ___, its evidence quality ___, its assumptions ___, and its limits ___. Find example questions in your Case Brief file.",
-      outlineCue: "Use five body sections in this order: framing, stakeholders, evidence quality, assumptions, and limits. In each one: topic sentence, two cited packet details, then your analysis. In exactly two sections, add one outside source before the analysis.",
-      mlaCue: "Cite the packet and your exactly 2 outside sources. Every section cites two packet details. Only two sections also cite an outside source."
+      thesisCue: "Write one sentence that answers your critical question and previews all five lenses, in order. Use all five lenses as body sections, in this order: Framing, Stakeholders, Evidence, Assumptions, and Limits. Put 2 cited case study details in each section. Use exactly 2 outside sources from Google Scholar or the SAC Library. Every body section uses your packet plus one or both outside sources. You can use either outside source in any section, and as often as you need. Find example questions in your Case Brief file.",
+      outlineCue: "Your outline has five body sections, one for each lens, in this order: Framing, Stakeholders, Evidence, Assumptions, and Limits. Put 2 cited case study details in each section. Your thesis answers your question and previews all five lenses, in order. In each lens section: topic sentence, two cited packet details, one or both outside sources, then your analysis. You can use either outside source in any section, and as often as you need.",
+      mlaCue: "Cite the packet and your exactly 2 outside sources. Every lens section cites two packet details and one or both outside sources."
     },
     {
       id: "final-reflection",
@@ -656,7 +661,7 @@
       "Other / custom"
     ],
     presentsLabel: "What sources or experience present",
-    presentsHint: "Required. 1–2 sentences in your words.",
+    presentsHint: "Required. 1 to 2 sentences in your words.",
     presentsPlaceholder: "Readers or sources present…",
     tensionLabel: "Tension, insight, or controlling idea",
     tensionHint: "Required. What you will argue, explain, or reveal.",
@@ -764,6 +769,20 @@
     });
   }
 
+
+  function purposeInner(essay) {
+    if (essay && essay.purposeLead && Array.isArray(essay.purposeUses)) {
+      const items = essay.purposeUses.map((u) => "<li>" + u + "</li>").join("");
+      return (
+        '<div class="dws-twobox dws-purpose" id="dwsEssayPurposeInner">' +
+          '<div class="dws-box"><h3>This essay</h3><p>' + essay.purposeLead + "</p></div>" +
+          '<div class="dws-box sage"><h3>Keep in view</h3><ul>' + items + "</ul></div>" +
+        "</div>"
+      );
+    }
+    return '<p style="margin:0.35rem 0 0;" id="dwsEssayPurposeText">' + escapeHtml((essay && essay.purpose) || "") + "</p>";
+  }
+
   function mountPicker(target) {
     const host =
       typeof target === "string" ? document.querySelector(target) : target || document.getElementById("essayPicker");
@@ -786,16 +805,16 @@
       </label>
       <div class="callout essay-picker-purpose" id="dwsEssayPurpose">
         <strong>Purpose</strong>
-        <p style="margin:0.35rem 0 0;" id="dwsEssayPurposeText">${escapeHtml(active.purpose)}</p>
+        ${purposeInner(active)}
       </div>
     `;
 
     const select = host.querySelector("#dwsEssaySelect");
-    const purposeText = host.querySelector("#dwsEssayPurposeText");
     select.addEventListener("change", () => {
       const id = setSelectedId(select.value);
       const essay = byId(id) || GENERIC;
-      if (purposeText) purposeText.textContent = essay.purpose;
+      const purposeHost = host.querySelector("#dwsEssayPurpose");
+      if (purposeHost) purposeHost.innerHTML = "<strong>Purpose</strong>" + purposeInner(essay);
       applyThesisLabels();
       emit(essay);
     });

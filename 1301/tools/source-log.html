@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles.css?v=csv3e">
   </head>
   <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -37,7 +37,20 @@
       <section class="section" aria-labelledby="slTitle">
         <p class="eyebrow" data-essay-eyebrow>Practice tool · research tracker · any essay</p>
         <h1 id="slTitle">Source log</h1>
-        <p class="lead">Track sources for whichever essay you are practicing. Log what each source says, how it helps your thesis or controlling idea, and a rough MLA draft, then polish citations in the MLA tool.</p>
+                <div class="dws-twobox dws-purpose">
+          <div class="dws-box">
+            <h3>Purpose</h3>
+            <p>This page is a source tracker for the essay you are practicing. Use it after you have a working thesis or question and sources to record.</p>
+          </div>
+          <div class="dws-box sage">
+            <h3>Use this page to</h3>
+            <ul>
+            <li>Log what each source says and how it helps your <strong>thesis</strong></li>
+            <li>Keep a rough <strong>MLA</strong> draft for each entry</li>
+            <li>For the Case Study, track the packet plus exactly <strong>2 outside sources</strong>. Every body section uses the packet plus one or both of them</li>
+            </ul>
+          </div>
+        </div>
 
         <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
         <div id="dwsSourceAids" class="dws-source-aids"></div>
@@ -49,7 +62,7 @@
 
         <div class="tool-panel" style="margin-top:1.25rem;">
           <div class="field-grid">
-            <label class="field">Working claim <span class="hint">Optional — keeps “how it helps” grounded</span>
+            <label class="field">Working claim <span class="hint">Optional, keeps “how it helps” grounded</span>
               <textarea id="slClaim" style="min-height:4rem;" placeholder="Paste your working thesis or controlling idea…"></textarea>
             </label>
             <label class="field" data-essay-field="subjectLabel" data-essay-placeholder="subjectPlaceholder">
@@ -92,8 +105,9 @@
     </main>
     <footer class="site-footer"><p>Source log practice · AI Level 2</p></footer>
     <script src="../app.js"></script>
-    <script src="essay-context.js?v=csrules17"></script>
-    <script src="tools.js?v=csplan1"></script>
-    <script src="source-aids.js?v=csscope1"></script>
+    <script src="essay-context.js?v=csv3e"></script>
+    <script src="case-study-lenses.js?v=csv3e"></script>
+    <script src="tools.js?v=csv3e"></script>
+    <script src="source-aids.js?v=csv3e"></script>
   </body>
 </html>

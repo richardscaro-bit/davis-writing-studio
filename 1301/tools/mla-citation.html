@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MLA citation generator | ENGL 1301 · Davis Writing Studio</title>
-    <meta name="description" content="Practice MLA 9 Works Cited and in-text citations for any ENGL 1301 essay — website, article, journal, book, film/TV, and course packet / handout.">
+    <meta name="description" content="Practice MLA 9 Works Cited and in-text citations for any ENGL 1301 essay, website, article, journal, book, film/TV, and course packet / handout.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles.css?v=csv3e">
   </head>
   <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -37,7 +37,20 @@
       <section class="section" aria-labelledby="mlaTitle">
         <p class="eyebrow" data-essay-eyebrow>Practice tool · MLA 9 · any essay</p>
         <h1 id="mlaTitle">MLA citation generator</h1>
-        <p class="lead">Pick a source type, fill the fields you have, and build a practice Works Cited entry (hanging-indent preview) plus a sample in-text citation. Templates only; no chatbot. You own accuracy: verify every entry against the source and Purdue OWL or your handbook.</p>
+                <div class="dws-twobox dws-purpose">
+          <div class="dws-box">
+            <h3>Purpose</h3>
+            <p>This page builds a practice MLA Works Cited entry and a sample in-text citation. Templates only, no chatbot. Use it after you have the source details in front of you.</p>
+          </div>
+          <div class="dws-box sage">
+            <h3>Use this page to</h3>
+            <ul>
+            <li>Fill in the fields you have for one source</li>
+            <li>Preview a hanging-indent entry and a sample in-text citation</li>
+            <li>Verify every entry against the source and Purdue OWL</li>
+            </ul>
+          </div>
+        </div>
 
         <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
         <div id="dwsSourceAids" class="dws-source-aids"></div>
@@ -49,7 +62,7 @@
 
         <div class="tool-panel" style="margin-top:1.25rem;">
           <fieldset class="field angle-fieldset mla-type-fieldset">
-            <legend>Source type <span class="hint">Choose one — fields update to match</span></legend>
+            <legend>Source type <span class="hint">Choose one, fields update to match</span></legend>
             <div class="angle-chips mla-type-tabs" id="mlaTypeTabs" role="tablist" aria-label="Source types">
               <button type="button" class="angle-chip mla-type-chip active" role="tab" data-type="website" aria-selected="true" aria-pressed="true">Website</button>
               <button type="button" class="angle-chip mla-type-chip" role="tab" data-type="article" aria-selected="false" aria-pressed="false">Online article / news</button>
@@ -60,16 +73,16 @@
             </div>
           </fieldset>
 
-          <p class="hint-block" id="mlaTypeHint" style="margin-top:0.75rem;">Web page on a site. Title of the page in quotation marks; site name italicized.</p>
+          <p class="hint-block" id="mlaTypeHint" style="margin-top:0.75rem;">Web page on a site. Title of the page in quotation marks, site name italicized.</p>
 
           <div class="field-grid" id="mlaFields" style="margin-top:0.85rem;">
-            <label class="field mla-f" data-for="website article journal book packet">Author <span class="hint" id="mlaAuthorHint">Last, First — leave blank if no named author</span>
+            <label class="field mla-f" data-for="website article journal book packet">Author <span class="hint" id="mlaAuthorHint">Last, First, leave blank if no named author</span>
               <input type="text" id="mlaAuthor" placeholder="Garcia, Maria" autocomplete="off">
             </label>
-            <label class="field mla-f" data-for="film">Director / key contributor <span class="hint">Last, First — e.g. director. Add role in the next field if needed.</span>
+            <label class="field mla-f" data-for="film">Director / key contributor <span class="hint">Last, First, e.g. director. Add role in the next field if needed.</span>
               <input type="text" id="mlaDirector" placeholder="Nolan, Christopher" autocomplete="off">
             </label>
-            <label class="field mla-f" data-for="film">Contributor role <span class="hint">Optional — director, creator, performer</span>
+            <label class="field mla-f" data-for="film">Contributor role <span class="hint">Optional, director, creator, performer</span>
               <input type="text" id="mlaContributorRole" placeholder="director" autocomplete="off">
             </label>
             <label class="field mla-f" data-for="website article journal book packet film">Title <span class="hint" id="mlaTitleHint">Page / article / book / film title</span>
@@ -90,16 +103,16 @@
             <label class="field mla-f" data-for="journal">Page range <span class="hint">e.g. 112-28</span>
               <input type="text" id="mlaPages" placeholder="112-28" autocomplete="off">
             </label>
-            <label class="field mla-f" data-for="website article journal book film packet">Publication date <span class="hint">Day Mon. Year when you have it — e.g. 15 Mar. 2024 or 2024</span>
+            <label class="field mla-f" data-for="website article journal book film packet">Publication date <span class="hint">Day Mon. Year when you have it, e.g. 15 Mar. 2024 or 2024</span>
               <input type="text" id="mlaDate" placeholder="15 Mar. 2024" autocomplete="off">
             </label>
             <label class="field mla-f" data-for="website article journal packet">URL or DOI <span class="hint">Optional but helpful for web / Drive / DOI</span>
               <input type="url" id="mlaUrl" placeholder="https://… or https://doi.org/…" autocomplete="off">
             </label>
-            <label class="field mla-f" data-for="film">Platform / streaming service <span class="hint">Optional — Netflix, Disney+, etc.</span>
+            <label class="field mla-f" data-for="film">Platform / streaming service <span class="hint">Optional: Netflix, Disney+, etc.</span>
               <input type="text" id="mlaPlatform" placeholder="Netflix" autocomplete="off">
             </label>
-            <label class="field mla-f" data-for="website article packet">Access date <span class="hint">Optional in MLA 9 — useful if the page may change</span>
+            <label class="field mla-f" data-for="website article packet">Access date <span class="hint">Optional in MLA 9. useful if the page may change</span>
               <input type="text" id="mlaAccess" placeholder="28 Oct. 2026" autocomplete="off">
             </label>
           </div>
@@ -130,16 +143,16 @@
               <h2 class="eyebrow" style="margin:0;">In-text citation (practice)</h2>
               <button type="button" class="button small ghost" id="mlaCopyInText">Copy</button>
             </div>
-            <div class="tool-output" id="mlaInText" aria-live="polite">—</div>
-            <p class="hint-block" id="mlaInTextNote" style="margin-top:0.5rem;">Add a page, paragraph, or timestamp locator when the source has one — e.g. (Garcia 14) or (“BarkBox” 00:12:03).</p>
+            <div class="tool-output" id="mlaInText" aria-live="polite">: </div>
+            <p class="hint-block" id="mlaInTextNote" style="margin-top:0.5rem;">Add a page, paragraph, or timestamp locator when the source has one, e.g. (Garcia 14) or (“BarkBox” 00:12:03).</p>
 
             <div class="callout" style="margin-top:1rem;">
               <strong>Quick cue check</strong>
               <ul class="cue-list">
-                <li>Author in Works Cited = last name first; in-text uses last name only (or short title if no author).</li>
-                <li>Titles of short works (articles, pages, episodes) use quotation marks; books, journals, films, sites are italicized.</li>
+                <li>Author in Works Cited = last name first. In-text uses last name only (or short title if no author).</li>
+                <li>Titles of short works (articles, pages, episodes) use quotation marks. Books, journals, films, sites are italicized.</li>
                 <li>If your essay uses a course packet or handout, cite it once, then each outside source.</li>
-                <li>Hanging indent in your real doc: first line flush left; following lines indented 0.5&quot;.</li>
+                <li>Hanging indent in your real doc: first line flush left. Following lines indented 0.5&quot;.</li>
               </ul>
             </div>
           </div>
@@ -148,8 +161,9 @@
     </main>
     <footer class="site-footer"><p>MLA 9 practice templates · verify every entry</p></footer>
     <script src="../app.js"></script>
-    <script src="essay-context.js?v=csrules17"></script>
-    <script src="tools.js?v=csplan1"></script>
-    <script src="source-aids.js?v=csscope1"></script>
+    <script src="essay-context.js?v=csv3e"></script>
+    <script src="case-study-lenses.js?v=csv3e"></script>
+    <script src="tools.js?v=csv3e"></script>
+    <script src="source-aids.js?v=csv3e"></script>
   </body>
 </html>

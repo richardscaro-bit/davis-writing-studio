@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=csv3e">
   </head>
   <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -42,7 +42,20 @@
       <section class="section" aria-labelledby="guideTitle">
         <p class="eyebrow">Resources · Case Study research</p>
         <h1 id="guideTitle">Case Study research guide</h1>
-        <p class="lead">This page is a research map for the Case Study Critical Analysis. It walks you through what kinds of sources the essay needs, where to search, how to judge a result, and how to log and cite the exactly 2 outside sources that go with your packet.</p>
+        <div class="dws-twobox dws-purpose">
+          <div class="dws-box">
+            <h3>Purpose</h3>
+            <p>This page is a research map for the <strong>Case Study Critical Analysis</strong>. Use it when you are ready to find, judge, and log the exactly <strong>2 outside sources</strong> that go with your packet.</p>
+          </div>
+          <div class="dws-box sage">
+            <h3>Use this page to</h3>
+            <ul>
+            <li>See what kinds of sources this essay needs</li>
+            <li>Follow a search plan in <strong>Google Scholar</strong> and the <strong>SAC Library</strong></li>
+            <li>Judge a result, then log and cite your two sources</li>
+            </ul>
+          </div>
+        </div>
         <p class="hero-actions">
           <a class="button primary" href="#plan">Search plan</a>
           <a class="button ghost" href="#databases">SAC databases</a>
@@ -56,7 +69,38 @@
 
         <div class="callout" style="margin-top:1.25rem;">
           <strong>The rule for this essay</strong>
-          <p style="margin:0.35rem 0 0;">All five body sections use the case study. Each section has 2 cited packet details. Pick the two sections that most need outside proof. Each of those two gets one outside source. You need exactly 2 outside sources total. Use each source in only one section. The packet stays your main source. Aim for a 1,000 to 1,500 word MLA critical analysis (AI Level 2: support, not composition).</p>
+          <div data-cs-rule-copy><div class="dws-rule" data-cs-rule-boxes>
+        <div class="dws-twobox dws-rule-boxes">
+          <div class="dws-box">
+            <h3>Your question and thesis</h3>
+            <ul>
+              <li>Start with your own <strong>critical analysis question</strong> about your case study.</li>
+              <li>You can find example critical questions in your <strong>Case Brief</strong> file.</li>
+              <li>Your <strong>thesis</strong> answers your question and previews all five lenses, in order.</li>
+            </ul>
+          </div>
+          <div class="dws-box sage">
+            <h3>Five body sections</h3>
+            <ul>
+              <li>In order, they are <strong>Framing</strong>, <strong>Stakeholders</strong>, <strong>Evidence</strong>, <strong>Assumptions</strong>, and <strong>Limits</strong>.</li>
+              <li>Your outline has <strong>five body sections</strong>, one for each lens, in that order.</li>
+              <li>Put <strong>2 cited case study details</strong> in each section.</li>
+              <li>Put your limitations or ethics idea in the <strong>Limits</strong> section.</li>
+              <li>Do not add a separate limitations section outside of Limits.</li>
+            </ul>
+          </div>
+          <div class="dws-box">
+            <h3>Your sources</h3>
+            <ul>
+              <li>Your case study packet is your <strong>primary source</strong>. Use it in every body section.</li>
+              <li>Use exactly <strong>2 outside sources</strong> from Google Scholar or the SAC Library.</li>
+              <li>Every body section uses your packet plus one or both outside sources.</li>
+              <li>You can use either outside source in any section, and as often as you need.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="dws-rule-meta">Length: 1,000 to 1,500 words, MLA (AI Level 2: support, not composition). Turn in: the Outline / Research Plan assignment in Canvas.</p>
+      </div></div>
         </div>
 
         <p class="hero-actions">
@@ -67,6 +111,43 @@
         </p>
       </section>
 
+
+      <section class="section" id="lensRevision" aria-labelledby="lensRevTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Lens revision</p>
+            <h2 id="lensRevTitle">Write all five lens sections</h2>
+          </div>
+        </div>
+        <div class="dws-twobox">
+          <div class="dws-box">
+            <h3>Start with your question</h3>
+            <ul>
+              <li>Start with your own <strong>critical analysis question</strong> about your case study.</li>
+              <li>Your <strong>thesis</strong> answers your question and previews all five lenses, in order.</li>
+            </ul>
+          </div>
+          <div class="dws-box sage">
+            <h3>Write all five sections</h3>
+            <ul>
+              <li>Use all five lenses as body sections, in this order: <strong>Framing</strong>, <strong>Stakeholders</strong>, <strong>Evidence</strong>, <strong>Assumptions</strong>, and <strong>Limits</strong>.</li>
+              <li>Every section is required.</li>
+            </ul>
+          </div>
+        </div>
+        <label class="field" for="csLensQuestion">Your critical question
+          <span class="hint">Optional. Used only in this browser. Nouns may fill topic words if you leave that field blank.</span>
+          <textarea id="csLensQuestion" style="min-height:4.5rem;" placeholder="How well does the packet support its story of ___ once we ask ___?"></textarea>
+        </label>
+        <label class="field" for="csLensTopic">Your topic words
+          <span class="hint">A few words from your case or question. Example search terms are built here in the browser. Nothing is sent to a server until you click a link.</span>
+          <input type="text" id="csLensTopic" placeholder="Words from your case or question" autocomplete="off">
+        </label>
+        <p class="hint-block" style="margin-top:0.85rem;">All five Where you might look cards are open. Use one if it helps. Skip the rest.</p>
+        <div id="csLensMarks" class="idea-chips" role="group" aria-label="Case Study lenses"></div>
+        <div id="csLensCards"></div>
+      </section>
+
       <section class="section" id="sources" aria-labelledby="sourcesTitle">
         <div class="section-heading">
           <div>
@@ -74,16 +155,43 @@
             <h2 id="sourcesTitle">What kinds of sources this essay needs</h2>
           </div>
         </div>
-        <p>Your <strong>Source Packet</strong> and <strong>Case Brief</strong> are the primary readings. Outside sources have a narrower job: they check a packet detail, then help you analyze how strong that detail is.</p>
+        <div class="dws-twobox">
+          <div class="dws-box">
+            <h3>Your case file</h3>
+            <ul>
+              <li>Your <strong>Source Packet</strong> and <strong>Case Brief</strong> are the primary readings.</li>
+            </ul>
+          </div>
+          <div class="dws-box sage">
+            <h3>Outside sources</h3>
+            <ul>
+              <li>Outside sources have a narrower job.</li>
+              <li>They check a packet detail, then help you analyze how strong that detail is.</li>
+            </ul>
+          </div>
+        </div>
         <ul class="cue-list">
           <li><strong>Start with the packet.</strong> Choose one topic and stay with it. Read the Case Options, the matching Case Brief, and the matching Source Packet before you search.</li>
-          <li><strong>Then find exactly 2 outside sources.</strong> Put one in each of 2 different body sections. Do not reuse a source. The other three body sections use packet details and your analysis only.</li>
+          <li><strong>Then find exactly 2 outside sources.</strong> Every body section uses your packet plus one or both outside sources. You can use either outside source in any section, and as often as you need.</li>
           <li><strong>Pick details that need a check.</strong> Good candidates are a number, a broad success story, or a statement that comes only from the company or group itself.</li>
           <li><strong>Prefer sources you can cite.</strong> Scholarly articles, studies, government or agency reports, and substantial news investigations usually work better than a random blog post or an unsourced chart.</li>
           <li><strong>A source that disagrees is useful.</strong> If a study or report cuts against what the packet says, it can help you judge where the packet is strong or thin.</li>
           <li><strong>AI output is not evidence.</strong> The tutor and other AI tools may help you think, but they do not count as outside sources. Do not cite an AI summary of an article you have not read.</li>
         </ul>
-        <p class="hint-block">Every outside source needs a purpose line you can finish in one sentence: <strong>Use this to ___, not to ___.</strong> If you cannot finish that line, the source may be interesting, but it is not ready for a body section.</p>
+        <div class="dws-twobox">
+          <div class="dws-box">
+            <h3>Give each source a purpose line</h3>
+            <ul>
+              <li>Every outside source needs a purpose line you can finish in one sentence: <strong>Use this to ___, not to ___.</strong></li>
+            </ul>
+          </div>
+          <div class="dws-box sage">
+            <h3>If you cannot finish that line</h3>
+            <ul>
+              <li>The source may be interesting, but it is not ready for a body section.</li>
+            </ul>
+          </div>
+        </div>
       </section>
 
       <section class="section" id="plan" aria-labelledby="planTitle">
@@ -100,7 +208,7 @@
           <li><strong>Search SAC Library databases.</strong> Sign in with ACES when prompted. Start with the databases below, then use the A to Z list if you need a subject database.</li>
           <li><strong>Use Google Scholar to discover, then come back for the full text.</strong> If Scholar shows only an abstract, search the title in SAC databases or ask a librarian.</li>
           <li><strong>Sort each keeper.</strong> Does it support the packet detail, contradict it, or add context? Then judge who is behind it before you trust it.</li>
-          <li><strong>Log the two keepers.</strong> Put each one in the Source Log with a purpose line, a credibility note, and an MLA citation. Then place each source in a different body section, after the packet details and before your analysis.</li>
+          <li><strong>Log the two keepers.</strong> Put each one in the Source Log with a purpose line, a credibility note, and an MLA citation. Then use each source in the body sections where it helps, after the packet details and before your analysis. Every body section uses your packet plus one or both outside sources.</li>
         </ol>
       </section>
 
@@ -111,8 +219,24 @@
             <h2 id="dbTitle">Recommended SAC databases</h2>
           </div>
         </div>
-        <p>Prefer <a href="https://www.alamo.edu/sac/library/" target="_blank" rel="noopener">SAC Library</a> databases for your outside sources. Off campus, log in with ACES. If a paywall appears, ask a librarian. Campus access often unlocks the article.</p>
-        <p>Each database name below opens that title on the official <a href="https://alamo.libguides.com/az/SAC" target="_blank" rel="noopener">SAC A to Z list</a>. Click the title, then sign in if you are asked. These five are a strong start for Case Study research. They appear on the SAC list as of this guide.</p>
+        <div class="dws-twobox">
+          <div class="dws-box">
+            <h3>Where to search</h3>
+            <ul>
+              <li>Prefer <a href="https://www.alamo.edu/sac/library/" target="_blank" rel="noopener">SAC Library</a> databases for your outside sources.</li>
+              <li>Off campus, log in with ACES.</li>
+              <li>If a paywall appears, ask a librarian. Campus access often unlocks the article.</li>
+            </ul>
+          </div>
+          <div class="dws-box sage">
+            <h3>How these links work</h3>
+            <ul>
+              <li>Each database name below opens that title on the official <a href="https://alamo.libguides.com/az/SAC" target="_blank" rel="noopener">SAC A to Z list</a>.</li>
+              <li>Click the title, then sign in if you are asked.</li>
+              <li>These five are a strong start for Case Study research. They appear on the SAC list as of this guide.</li>
+            </ul>
+          </div>
+        </div>
         <ul class="cue-list">
           <li><strong><a href="https://alamo.libguides.com/az/SAC?q=Academic%20OneFile" target="_blank" rel="noopener">Academic OneFile</a>.</strong> A broad database of journals, magazines, and news. Use it when you want studies or reporting that test a packet detail.</li>
           <li><strong><a href="https://alamo.libguides.com/az/SAC?q=JSTOR" target="_blank" rel="noopener">JSTOR</a>.</strong> Scholarly journal articles, usually as PDFs. Coverage often stops a few years before the present, so pair it with a current-events database if you need recent data.</li>
@@ -158,7 +282,20 @@
             <h2 id="kwTitle">Keywords and search strings</h2>
           </div>
         </div>
-        <p>Build a short list of words before you search: the case or company name, the topic, and the idea you want to test. Then add a support word or a contradict word.</p>
+        <div class="dws-twobox">
+          <div class="dws-box">
+            <h3>Build a short word list first</h3>
+            <ul>
+              <li>Include the case or company name, the topic, and the idea you want to test.</li>
+            </ul>
+          </div>
+          <div class="dws-box sage">
+            <h3>Then add a direction word</h3>
+            <ul>
+              <li>Add a support word or a contradict word.</li>
+            </ul>
+          </div>
+        </div>
         <ul class="cue-list">
           <li>To look for support, try words such as <strong>study, data, survey, results, effect, report, growth</strong>.</li>
           <li>To look for a contradiction, try words such as <strong>criticism, problems, lawsuit, complaint, decline, risks, limits, cancel, fails</strong>.</li>
@@ -174,7 +311,7 @@
           <summary>A practice pattern (not a source to cite)</summary>
           <div class="studio-drop-body">
             <p>This example uses the BarkBox practice case so you can see the shape of a search. It is a pattern, not a real article. Do not cite it as evidence.</p>
-            <p>Packet detail to check (Evidence quality): the materials present social content and community identity as drivers of subscription success.</p>
+            <p>Packet detail to check (Evidence): the materials present social content and community identity as drivers of subscription success.</p>
             <ul class="cue-list">
               <li>Support search: <code>"subscription box" AND "brand community" AND (loyalty OR study)</code></li>
               <li>Contradict search: <code>("pet subscription" OR BarkBox) AND (churn OR cancel) AND (data OR report)</code></li>
@@ -194,7 +331,21 @@
             <h2 id="judgeTitle">Judge a source before you use it</h2>
           </div>
         </div>
-        <p>Do not stay only on the result in front of you. Leave the page and read laterally: open a new tab and see what other sources say about the author, the publisher, or the finding. A short method for this is SIFT, from Mike Caulfield:</p>
+        <div class="dws-twobox">
+          <div class="dws-box">
+            <h3>Do not stay only on the result</h3>
+            <ul>
+              <li>Leave the page and read laterally.</li>
+              <li>Open a new tab and see what other sources say about the author, the publisher, or the finding.</li>
+            </ul>
+          </div>
+          <div class="dws-box sage">
+            <h3>A short method</h3>
+            <ul>
+              <li>Use <strong>SIFT</strong>, from Mike Caulfield. The four moves are below.</li>
+            </ul>
+          </div>
+        </div>
         <ul class="cue-list">
           <li><strong>Stop.</strong> Pause before you treat a result as evidence. Notice your first impression, then check the source.</li>
           <li><strong>Investigate the source.</strong> Who is behind it: a researcher, a news outlet, a government agency, or the company itself? Search the author or publisher in a new tab.</li>
@@ -219,8 +370,24 @@
             <h2 id="notesTitle">Take notes in the Source Log</h2>
           </div>
         </div>
-        <p>Log a source while you still have it open. For each of your 2 outside sources, record the title, author, date, where you found it, the link, which body section it will serve, which packet detail it checks, how it relates (supports, contradicts, or adds context), a credibility note, a purpose line, and a draft MLA citation.</p>
-        <p>You can work in the Studio Source Log on this site (it saves in your browser on this device), or make your own copy of the course Source Log document.</p>
+        <div class="dws-twobox">
+          <div class="dws-box">
+            <h3>What to record</h3>
+            <ul>
+              <li>Log a source while you still have it open.</li>
+              <li>For each of your <strong>2 outside sources</strong>, record the title, author, date, where you found it, and the link.</li>
+              <li>Also record which body sections it will serve, which packet detail it checks, and how it relates (supports, contradicts, or adds context).</li>
+              <li>Add a credibility note, a purpose line, and a draft MLA citation.</li>
+            </ul>
+          </div>
+          <div class="dws-box sage">
+            <h3>Where to log it</h3>
+            <ul>
+              <li>You can work in the Studio <strong>Source Log</strong> on this site (it saves in your browser on this device).</li>
+              <li>Or make your own copy of the course Source Log document.</li>
+            </ul>
+          </div>
+        </div>
         <p class="hero-actions">
           <a class="button primary" href="tools/source-log.html">Open the Source Log tool</a>
           <a class="button ghost" href="https://docs.google.com/document/d/1k5gqe177BPq79ybjit5ZJjlVF7vRxkqKXfV4D8K3iEM/copy" target="_blank" rel="noopener">Make your own copy of the Source Log</a>
@@ -237,11 +404,25 @@
             <h2 id="mlaTitle">MLA help</h2>
           </div>
         </div>
-        <p>Your Works Cited should include the packet and both outside sources. Every body section cites two packet details in the text. Only the two sections with outside sources also cite that outside source in the text.</p>
+        <div class="dws-twobox">
+          <div class="dws-box">
+            <h3>Works Cited</h3>
+            <ul>
+              <li>Your Works Cited should include the packet and both outside sources.</li>
+            </ul>
+          </div>
+          <div class="dws-box sage">
+            <h3>In-text citations</h3>
+            <ul>
+              <li>Every body section cites two packet details in the text.</li>
+              <li>Every body section also cites one or both outside sources in the text.</li>
+            </ul>
+          </div>
+        </div>
         <ul class="cue-list">
           <li>Many databases and Google Scholar have a Cite button. Choose MLA, copy the entry into your Source Log, then check it. Cite buttons make mistakes.</li>
           <li>Give each outside source a signal phrase and an MLA in-text citation.</li>
-          <li>In a section with an outside source, use this order: packet detail, then outside source, then your analysis. Make your analysis at least as long as your evidence.</li>
+          <li>In every body section, use this order: packet detail, then one or both outside sources, then your analysis. Make your analysis at least as long as your evidence.</li>
         </ul>
         <p>A fill-in pattern for that order:</p>
         <ul class="cue-list">
@@ -272,7 +453,23 @@
           <li>Email: <a href="mailto:ask@sac.libanswers.com">ask@sac.libanswers.com</a></li>
         </ul>
         <p>The <a href="https://www.alamo.edu/sac/library/" target="_blank" rel="noopener">SAC Library homepage</a> also lists research help, including Book a Librarian appointments. Use Ask a Librarian or that homepage to request a time.</p>
-        <p><strong>Writing help</strong> is available through SAC Tutoring. You can schedule a Writing Assistance appointment in AlamoNAVIGATE through your ACES account. Choose a San Antonio College Academic Success Center location. The English Success Center is listed on the tutoring schedules page (GH 122). Hours change, so check the official pages before you go.</p>
+        <div class="dws-twobox">
+          <div class="dws-box">
+            <h3>Writing help</h3>
+            <ul>
+              <li>Writing help is available through <strong>SAC Tutoring</strong>.</li>
+              <li>You can schedule a Writing Assistance appointment in AlamoNAVIGATE through your ACES account.</li>
+            </ul>
+          </div>
+          <div class="dws-box sage">
+            <h3>Where to go</h3>
+            <ul>
+              <li>Choose a San Antonio College Academic Success Center location.</li>
+              <li>The English Success Center is listed on the tutoring schedules page (GH 122).</li>
+              <li>Hours change, so check the official pages before you go.</li>
+            </ul>
+          </div>
+        </div>
         <p class="hero-actions">
           <a class="button primary" href="https://sac.libanswers.com/" target="_blank" rel="noopener">Ask a SAC librarian</a>
           <a class="button ghost" href="https://www.alamo.edu/sac/library/" target="_blank" rel="noopener">SAC Library</a>
@@ -287,6 +484,7 @@
       <p>Davis Writing Studio · Case Study research guide</p>
     </footer>
     <script src="app.js"></script>
-    <script src="tools/source-aids.js?v=csscope1"></script>
+    <script src="tools/source-aids.js?v=csv3e"></script>
+    <script src="tools/case-study-lenses.js?v=csv3e"></script>
   </body>
 </html>
