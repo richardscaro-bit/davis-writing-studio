@@ -167,6 +167,21 @@ function getWorkspace(key) {
   return workspace;
 }
 
+function openStudioDropFromHash() {
+  const raw = (location.hash || "").replace(/^#/, "");
+  if (!raw) return;
+  const el = document.getElementById(raw);
+  if (!el) return;
+  if (el.matches("details.studio-drop")) {
+    el.open = true;
+    return;
+  }
+  const parent = el.closest("details.studio-drop");
+  if (parent) parent.open = true;
+  const child = el.querySelector(":scope > details.studio-drop");
+  if (child) child.open = true;
+}
+
 function bindNavToggle() {
   const toggle = $(".nav-toggle");
   const mobile = $("#mobileNav");
@@ -177,9 +192,21 @@ function bindNavToggle() {
   });
 }
 
+
+function studioDrop(title, inner, attrs) {
+  const open = attrs && attrs.open ? " open" : "";
+  const id = attrs && attrs.id ? ` id="${escapeAttr(attrs.id)}"` : "";
+  return `<details class="studio-drop"${id}${open}>
+      <summary>${escapeHtml(title)}</summary>
+      <div class="studio-drop-body">
+        ${inner}
+      </div>
+    </details>`;
+}
+
 function renderStudioAiPolicy(key) {
   const policy = studios[key].aiPolicy;
-  return `
+  const body = `
     <section class="studio-canvas-panel" aria-labelledby="${key}AiPolicyTitle">
       <div class="workspace-heading">
         <div>
@@ -196,6 +223,7 @@ function renderStudioAiPolicy(key) {
       <p class="callout ai"><strong>You own the analysis.</strong> Do not treat AI summaries as evidence. Keep a short note if you used AI for brainstorming or feedback.</p>
     </section>
   `;
+  return key === "case-study" ? studioDrop("AI use for this essay", body) : body;
 }
 
 function renderWritingProcessMap(key) {
@@ -224,7 +252,7 @@ function renderWritingProcessMap(key) {
 }
 
 function renderWeekStepper(key) {
-  return `
+  return studioDrop("Practice path", `
     <section class="studio-week-plan" id="${key}Schedule" aria-labelledby="${key}WeeklyPlanTitle">
       <div class="workspace-heading">
         <div>
@@ -254,12 +282,12 @@ function renderWeekStepper(key) {
       </div>
       <p class="callout"><strong>Course Final Reflection</strong> has its own essay block on the 1301 home. This studio covers the Case Study steps only.</p>
     </section>
-  `;
+  `);
 }
 
 function renderTopicPicker(key, workspace) {
   const selected = workspace.topicId;
-  return `
+  return studioDrop("Topic picker", `
     <section class="topic-picker" id="${key}Topics" aria-labelledby="${key}TopicsTitle">
       <div class="workspace-heading">
         <div>
@@ -312,7 +340,7 @@ function renderTopicPicker(key, workspace) {
       </div>
       <p class="save-status" data-save-status>${selected ? `Selected topic saved locally: ${escapeHtml((topics.find((t) => t.id === selected) || {}).name || selected)}` : "Click a topic to mark it as your current choice (saved in this browser). Folder links still open Drive."}</p>
     </section>
-  `;
+  `);
 }
 
 function renderWorkspaceFields(key, workspace) {
@@ -325,6 +353,7 @@ function renderWorkspaceFields(key, workspace) {
         </div>
         <button type="button" class="button small ghost" data-clear-workspace="${escapeAttr(key)}">Clear local draft</button>
       </div>
+      ${studioDrop("Practice framing", `
       <div class="callout warn">
         <strong>Practice framing</strong>
         <div class="dws-twobox">
@@ -349,31 +378,41 @@ function renderWorkspaceFields(key, workspace) {
           </div>
         </div>
       </div>
-      <div class="field-grid">
+      `)}
+      ${studioDrop("Topic / case preview notes", `
         <label class="field">Topic / case preview notes
           <span class="hint">Topic Selection and Case Study Preview: what case are you analyzing, and why does it matter?</span>
           <textarea data-field="previewNotes" placeholder="Case name, topic folder, first critical question…">${escapeHtml(workspace.previewNotes)}</textarea>
         </label>
+      `)}
+      ${studioDrop("Brainstorming", `
         <label class="field">Brainstorming (before a working thesis)
           <span class="hint">Early idea generation after the in-class demo: questions, angles, tensions. Do this before you lock a thesis in Step 3.</span>
           <textarea data-field="brainstorm" placeholder="Freewrite: possible thesis ideas, surprising evidence, who is affected, what still confuses you…">${escapeHtml(workspace.brainstorm)}</textarea>
         </label>
+      `)}
+      ${studioDrop("Critical analysis reading notes", `
         <label class="field">Critical analysis reading notes
           <span class="hint">Critical analysis reading notes under all five lenses (from your Source Packet / Case Brief)</span>
           <textarea data-field="readingNotes" placeholder="Reading notes keyed to all five lenses: Framing, Stakeholders, Evidence, Assumptions, Limits…">${escapeHtml(workspace.readingNotes)}</textarea>
         </label>
+      `)}
+      ${studioDrop("Outline / research plan", `
         <label class="field">Outline / research plan (1 to 2 pages)
           <span class="hint">Outline / Research Plan: a thesis that previews all five lenses, in order, five body sections in that order, two cited packet details in each, and exactly 2 outside sources. Every body section uses the packet plus one or both of them</span>
           <textarea data-field="outline" placeholder="Working thesis that previews all five lenses, in order: Framing, Stakeholders, Evidence, Assumptions, Limits…&#10;Five body sections in that order, each with packet detail 1 and packet detail 2…&#10;Every body section uses the packet plus one or both of your exactly 2 outside sources…">${escapeHtml(workspace.outline)}</textarea>
         </label>
+      `)}
+      ${studioDrop("Working draft", `
         <label class="field">Working draft
           <span class="hint">Working Draft: aim toward full essay length. Keep two cited packet details in each section. Every body section uses the packet plus one or both of your exactly 2 outside sources.</span>
           <textarea data-field="draft" style="min-height:14rem" placeholder="Draft body…">${escapeHtml(workspace.draft)}</textarea>
         </label>
-      </div>
+      `)}
       <p class="save-status" data-save-status aria-live="polite"></p>
     </section>
 
+    ${studioDrop("Peer review notes", `
     <section class="workspace-block" id="${key}Peer" aria-labelledby="${key}PeerTitle">
       <div class="workspace-heading">
         <div>
@@ -386,6 +425,7 @@ function renderWorkspaceFields(key, workspace) {
         <textarea data-field="peerReview" placeholder="What is strong in the thesis? Where does evidence need work? Does the thesis preview all five lenses, in order?">${escapeHtml(workspace.peerReview)}</textarea>
       </label>
     </section>
+    `)}
   `;
 }
 
@@ -401,7 +441,7 @@ function renderFinalChecklist(key, workspace) {
     ["ai", "Any AI use followed Level 2 rules (support, not composition)."]
   ];
   const checks = workspace.checklist || {};
-  return `
+  return studioDrop("Final checklist", `
     <section class="final-checklist" id="${key}Checklist" aria-labelledby="${key}ChecklistTitle">
       <div class="workspace-heading">
         <div>
@@ -422,7 +462,7 @@ function renderFinalChecklist(key, workspace) {
       </ul>
       <p class="callout"><strong>Practice checklist</strong>, use this list to spot gaps in thesis, sources, MLA, and analysis before you leave the studio.</p>
     </section>
-  `;
+  `);
 }
 
 function renderCaseStudyStudio(key) {
@@ -435,6 +475,7 @@ function renderCaseStudyStudio(key) {
           <p class="eyebrow">Overview · what this studio is for</p>
           <span class="pill">${escapeHtml(studio.due)}</span>
           <h3 id="${key}SummaryTitle">What you practice here</h3>
+          ${studioDrop("Case file", `
           <div class="dws-twobox">
             <div class="dws-box">
               <h3>Your case file</h3>
@@ -453,6 +494,7 @@ function renderCaseStudyStudio(key) {
               </ul>
             </div>
           </div>
+          `)}
           <div class="studio-meta">
             <span class="pill">${escapeHtml(studio.length)}</span>
             <span class="pill">${escapeHtml(studio.format)}</span>
@@ -595,6 +637,8 @@ function handleStudioPanelClick(event) {
 
 function init() {
   bindNavToggle();
+  openStudioDropFromHash();
+  window.addEventListener("hashchange", openStudioDropFromHash);
   const key = document.body.dataset.studio;
   if ($("#studioPanel") && key) {
     renderStudio(key);

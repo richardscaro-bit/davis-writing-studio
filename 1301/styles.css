@@ -200,6 +200,18 @@ details.studio-drop > summary {
   font-family: Inter, system-ui, sans-serif;
   font-size: 0.95rem;
   line-height: 1.35;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.15rem 0;
+}
+details.studio-drop > summary:focus {
+  outline: none;
+}
+details.studio-drop > summary:focus-visible {
+  outline: 2px solid var(--topic, #c08070);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 details.studio-drop > summary::-webkit-details-marker { display: none; }
 details.studio-drop > summary::before {
@@ -410,4 +422,11 @@ details.studio-drop .sample-essay h4 {
 @media (max-width: 700px) {
   .dws-rule-boxes { flex-direction: column; }
   .dws-rule-boxes > .dws-box { flex: 1 1 auto; }
+}
+
+
+/* Botanical two-box look stays available inside studio drops */
+details.studio-drop .studio-drop-body > .dws-twobox:first-child,
+details.studio-drop .studio-drop-body > .dws-rule:first-child {
+  margin-top: 0;
 }

@@ -171,7 +171,10 @@
       ? "<p class=\"cs-look-tutor\"><a href=\"" + escapeHtml(tutorWith) + "\">Open the tutor with my topic words included</a>. This sends the words you typed, not a full draft, and only after you click.</p>"
       : "";
     return (
-      "<article class=\"cs-look-card\" data-look-lens=\"" + escapeHtml(lens.id) + "\">" +
+      "<details class=\"studio-drop\" data-look-lens=\"" + escapeHtml(lens.id) + "\">" +
+        "<summary>" + escapeHtml(lens.label) + "</summary>" +
+        "<div class=\"studio-drop-body\">" +
+      "<article class=\"cs-look-card\">" +
         "<h3 class=\"cs-look-title\">Where you might look</h3>" +
         "<p class=\"cs-look-kicker\">" + escapeHtml(lens.label) + " lens</p>" +
         "<p class=\"cs-look-label\">Angles you might try</p>" +
@@ -189,7 +192,9 @@
         "<p class=\"cs-look-tutor\"><a href=\"" + escapeHtml(tutorPlain) + "\">Ask the tutor for help with this lens</a>. This link does not send your topic words. You can paste them after you click if you want.</p>" +
         withLink +
         "<p class=\"cs-look-end\">Use one if it helps. Skip the rest.</p>" +
-      "</article>"
+      "</article>" +
+        "</div>" +
+      "</details>"
     );
   }
 
@@ -409,4 +414,26 @@
   } else {
     boot();
   }
+
+  function openStudioDropFromHash() {
+    var raw = (location.hash || "").replace(/^#/, "");
+    if (!raw) return;
+    var el = document.getElementById(raw);
+    if (!el) return;
+    if (el.matches("details.studio-drop")) {
+      el.open = true;
+      return;
+    }
+    var parent = el.closest("details.studio-drop");
+    if (parent) parent.open = true;
+    var child = el.querySelector(":scope > details.studio-drop");
+    if (child) child.open = true;
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", openStudioDropFromHash);
+  } else {
+    openStudioDropFromHash();
+  }
+  window.addEventListener("hashchange", openStudioDropFromHash);
+
 })(window);

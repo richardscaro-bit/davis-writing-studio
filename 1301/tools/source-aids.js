@@ -77,7 +77,6 @@
         <div class="studio-drop-body">
           <p><strong>Your goal:</strong> find 2 outside sources that check what your case study packet claims.</p>
           <p><a class="button small ghost" href="https://docs.google.com/document/d/19SFFZfuGU0w9PyLGf_Quca1Bxl7jVAWJztn9qdhoZbE/copy" target="_blank" rel="noopener">Make your own copy of the Source Search Guide</a></p>
-                    <div data-cs-rule-copy></div>
           <p>Every outside source gets a purpose line: <strong>Use this to ___, not to ___.</strong> Give each one a signal phrase and an MLA in-text citation. Check your topic folder Research subfolder first, and use it when it fits.</p>
 
           <p><strong>Step 1. Pick the packet details to check.</strong> Use one section for each of the five lenses, in the listed order. Write packet details in the Source Log below. Circle the two details that most need outside proof (a number, a big claim, or a claim made only by the company or group itself).</p>
@@ -322,8 +321,18 @@
 
   function fillHost(host) {
     const state = loadState();
+    const path = location.pathname || "";
+    const pageHasOwnRule = /case-study-studio\.html/.test(path) || /case-study-research-guide\.html/.test(path);
+    const ruleDrop = pageHasOwnRule ? "" : `
+      <details class="studio-drop" id="dwsCsRuleDrop">
+        <summary>The rule for this essay</summary>
+        <div class="studio-drop-body">
+          <div data-cs-rule-copy></div>
+        </div>
+      </details>`;
     host.innerHTML = `
       <div class="dws-source-aids-inner">
+        ${ruleDrop}
         ${guideHtml()}
         ${logHtml(state)}
       </div>
