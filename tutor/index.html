@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="tutor.css?v=20261112-grammar">
+    <link rel="stylesheet" href="tutor.css?v=20261116-attach">
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
@@ -41,7 +41,7 @@
       <section class="section tutor-intro" aria-labelledby="tutorTitle">
         <p class="eyebrow">Writing coach · all four courses</p>
         <h1 id="tutorTitle">Writing Studio Tutor</h1>
-        <p class="lead">Tell the tutor your class and assignment, then ask about your own draft, question, outline, sources, or citations. The tutor asks questions and points to one next step. It does not write for you.</p>
+        <p class="lead">Tell the tutor your class and assignment, then ask about your own draft, question, outline, sources, or citations. You can paste text or attach a file or photo. The tutor asks questions and points to one next step. It does not write for you.</p>
         <div class="callout warn tutor-note" role="note">
           <strong>Before you start</strong>
           Live test. Do not paste names or other identifying details. Grading stays in Canvas.
@@ -84,12 +84,21 @@
           <div class="tutor-log" id="chatLog" role="log" aria-live="polite" aria-label="Conversation"></div>
           <form class="tutor-compose" id="chatForm">
             <label class="field" for="chatInput">Your message
-              <textarea id="chatInput" rows="4" maxlength="6000" placeholder="Paste a short part of your own draft, or ask a question about your assignment."></textarea>
+              <textarea id="chatInput" rows="4" maxlength="6000" placeholder="Paste a short part of your own draft, attach your draft, or ask a question about your assignment."></textarea>
             </label>
+            <ul class="attach-list" id="attachList" aria-label="Attached files" hidden></ul>
+            <p class="attach-drop-hint" id="attachDropHint" aria-hidden="true">Drop files here to attach them</p>
             <div class="tutor-compose-row">
-              <span class="save-status" id="chatStatus">Saved only in this browser.</span>
+              <div class="attach-wrap">
+                <input type="file" id="attachInput" class="visually-hidden" multiple tabindex="-1" aria-hidden="true">
+                <button class="attach-btn" type="button" id="attachBtn" aria-label="Attach files or photos" title="Attach files or photos">
+                  <svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                </button>
+                <span class="save-status" id="chatStatus">Saved only in this browser.</span>
+              </div>
               <button class="button primary" type="submit" id="sendBtn">Send</button>
             </div>
+            <p class="tutor-small attach-note" id="attachNote">Attach your draft (Word, PDF, or text) or photos. Files you attach are sent to an AI service to get a reply, like your messages. Please don't upload anything with personal information you don't want shared.</p>
           </form>
         </div>
       </section>
@@ -106,6 +115,7 @@
       <p>Davis Writing Studio · Tutor</p>
     </footer>
     <script src="config.js?v=20261112-grammar"></script>
-    <script src="tutor.js?v=20261112-grammar"></script>
+    <script src="attach.js?v=20261116-attach"></script>
+    <script src="tutor.js?v=20261116-attach"></script>
   </body>
 </html>

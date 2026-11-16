@@ -38,6 +38,13 @@
   const input = $("chatInput");
   const status = $("chatStatus");
   const sendBtn = $("sendBtn");
+  const attachBtn = $("attachBtn");
+  const attachInput = $("attachInput");
+  const attachList = $("attachList");
+  const chatPanel = document.querySelector(".tutor-chat");
+  const MAX_FILES = 6;  // per message
+  let pending = [];     // files read and waiting to be sent: { id, name, kind, text, dataUrl, truncated, error, reading }
+  const photoData = {}; // message id -> photo data URLs, kept in memory only (never saved to localStorage)
 
   // ---------- mobile nav (same as the course pages) ----------
   document.querySelector(".nav-toggle")?.addEventListener("click", () => {
@@ -57,6 +64,7 @@
   let state = load();
   function save() {
     try {
+      // Photos stay in memory only. File text is kept so a later question can still use the draft.
       localStorage.setItem(STORE_KEY, JSON.stringify(state));
       status.textContent = "Saved only in this browser.";
     } catch (e) {
@@ -105,6 +113,12 @@
       who.textContent = m.role === "user" ? "You" : "Tutor";
       div.appendChild(who);
       div.appendChild(document.createTextNode(m.content));
+      if (Array.isArray(m.attachments) && m.attachments.length) {
+        const f = document.createElement("span");
+        f.className = "msg-files";
+        f.textContent = "Attached: " + m.attachments.map((a) => a.name + (a.kind === "image" ? " (photo)" : "") + (a.truncated ? " (first part only)" : "")).join(", ");
+        div.appendChild(f);
+      }
       if (m.demo) {
         const tag = document.createElement("span");
         tag.className = "demo-tag";
@@ -132,7 +146,7 @@
     /\bhow many points\b/i,
     /\bout of (10|100)\b/i,
   ];
-  function demoReply(text, firstTurn) {
+  function demoReply(text, firstTurn, files) {
     const named = (text.match(/\b(?:ENGL\s*)?(1301|1302|2311|2328)\b/i) || [])[1];
     const course = named ? "ENGL " + named : (COURSE_NAMES[hintCourse] || "");
     const what = stageSel.value || "your work";
@@ -144,6 +158,10 @@
       body = "I don't grade, and I can't predict a grade. Professor Davis grades in Canvas. " +
         "I can tell you what the assignment asks for and whether I can find each part in your draft. " +
         "Which requirement do you want to check first?";
+    } else if (files && files.length) {
+      body = "What I see: you attached " + files.map((a) => a.name).join(", ") + " for " + where + ". In the live tutor, I would read it and point to one specific spot.\n\n" +
+        "One next move: tell me which part you want me to look at first, such as your thesis or one body paragraph.\n\n" +
+        "You've got this!";
     } else {
       body = "What I see: you are working on " + where + ". I don't have your text yet, so I can't point to a specific spot.\n\n" +
         "Why it matters: feedback is most useful when it is tied to your own words and to what the assignment asks for.\n\n" +
@@ -169,13 +187,29 @@
   $("chatForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     if (busy) return;
+    if (pending.some((a) => a.reading)) { status.textContent = "Still reading your file. Try Send again in a moment."; return; }
+    const ready = pending.filter((a) => a.kind === "text" || a.kind === "image");
     const raw = input.value.trim();
-    if (!raw) return;
-    const text = scrub(raw);
+    if (!raw && !ready.length) {
+      if (pending.length) status.textContent = "None of the attached files could be read. Remove them, or type a message.";
+      return;
+    }
+    const text = raw ? scrub(raw) : "I attached " + ready.map((a) => a.name).join(", ") + ".";
     const firstTurn = !state.messages.some((m) => m.role === "assistant" && !m.error);
     state.course = hintCourse;
-    state.messages.push({ role: "user", content: text });
+    const msg = { role: "user", content: text };
+    if (ready.length) {
+      msg.id = "m" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      msg.attachments = ready.map((a) => a.kind === "text"
+        ? { name: a.name, kind: "text", text: scrub(a.text), truncated: Boolean(a.truncated) }
+        : { name: a.name, kind: "image" });
+      const photos = ready.filter((a) => a.kind === "image").map((a) => ({ name: a.name, dataUrl: a.dataUrl }));
+      if (photos.length) photoData[msg.id] = photos;
+    }
+    state.messages.push(msg);
     input.value = "";
+    pending = [];
+    renderPending();
     render();
     save();
 
@@ -186,7 +220,7 @@
     try {
       if (TEST_MODE) {
         await new Promise((r) => setTimeout(r, 450));
-        state.messages.push({ role: "assistant", content: demoReply(text, firstTurn), demo: true });
+        state.messages.push({ role: "assistant", content: demoReply(text, firstTurn, msg.attachments), demo: true });
       } else {
         const res = await fetch(PROXY_URL, {
           method: "POST",
@@ -194,7 +228,7 @@
           body: JSON.stringify({
             ...(hintCourse ? { course: hintCourse } : {}),
             assignment: contextLabel(),
-            messages: state.messages.filter((m) => !m.error).map((m) => ({ role: m.role, content: m.content })),
+            messages: state.messages.filter((m) => !m.error).map(toWire),
           }),
         });
         const data = await res.json().catch(() => ({}));
@@ -211,6 +245,111 @@
     }
   });
 
+  // One chat message as sent to the proxy. File text goes every turn (the proxy trims old text first).
+  // Photos go only while this page is open, because they are not saved in the browser.
+  function toWire(m) {
+    const out = { role: m.role, content: m.content };
+    if (m.role === "user" && Array.isArray(m.attachments) && m.attachments.length) {
+      const photos = (m.id && photoData[m.id]) || [];
+      out.attachments = m.attachments.map((a) => {
+        if (a.kind === "text") return { name: a.name, kind: "text", text: a.text, truncated: Boolean(a.truncated) };
+        const p = photos.find((x) => x.name === a.name);
+        return p ? { name: a.name, kind: "image", dataUrl: p.dataUrl } : null;
+      }).filter(Boolean);
+      const gone = m.attachments.filter((a) => a.kind === "image" && !photos.some((x) => x.name === a.name));
+      if (gone.length) out.content += "\n\n(I shared a photo earlier in this chat: " + gone.map((a) => a.name).join(", ") + ". It is not attached anymore.)";
+    }
+    return out;
+  }
+
+  // ---------- attachments ----------
+  function sizeLabel(n) {
+    return n >= 1000 ? Math.round(n / 1000) + "k characters" : n + " characters";
+  }
+  function renderPending() {
+    attachList.innerHTML = "";
+    attachList.hidden = !pending.length;
+    pending.forEach((a) => {
+      const li = document.createElement("li");
+      li.className = "attach-chip" + (a.kind === "error" ? " error" : "");
+      if (a.kind === "image" && a.preview) {
+        const img = document.createElement("img");
+        img.src = a.preview; img.alt = "";
+        li.appendChild(img);
+      }
+      const box = document.createElement("span");
+      box.className = "chip-text";
+      const nm = document.createElement("span");
+      nm.className = "chip-name";
+      nm.textContent = a.name;
+      const meta = document.createElement("span");
+      meta.className = "chip-meta";
+      meta.textContent = a.reading ? "Reading..."
+        : a.kind === "error" ? a.error
+        : a.kind === "image" ? "Photo, ready to send"
+        : a.truncated ? "Long file: only the first " + sizeLabel(a.text.length) + " will be sent"
+        : "Text read, " + sizeLabel(a.text.length);
+      box.append(nm, meta);
+      li.appendChild(box);
+      const x = document.createElement("button");
+      x.type = "button";
+      x.className = "chip-remove";
+      x.setAttribute("aria-label", "Remove " + a.name);
+      x.textContent = "\u00d7";
+      x.addEventListener("click", () => {
+        pending = pending.filter((p) => p.id !== a.id);
+        renderPending();
+        status.textContent = a.name + " removed.";
+        attachBtn.focus();
+      });
+      li.appendChild(x);
+      attachList.appendChild(li);
+    });
+  }
+  async function addFiles(fileList) {
+    const files = Array.from(fileList || []);
+    if (!files.length) return;
+    const room = MAX_FILES - pending.length;
+    if (room <= 0) { status.textContent = "You can attach up to " + MAX_FILES + " files at a time."; return; }
+    if (files.length > room) status.textContent = "Only the first " + room + " files were added. You can attach up to " + MAX_FILES + " at a time.";
+    const reader = window.TutorAttach;
+    const items = files.slice(0, room).map((f) => ({ id: Math.random().toString(36).slice(2), name: f.name || "file", reading: true, file: f }));
+    pending.push(...items);
+    renderPending();
+    await Promise.all(items.map(async (it) => {
+      const r = reader ? await reader.readFile(it.file) : { kind: "error", error: "Files can't be read right now. Paste the text instead." };
+      Object.assign(it, r, { reading: false, name: it.name });
+      delete it.file;
+      renderPending();
+    }));
+    const ok = items.filter((a) => a.kind !== "error").length;
+    const bad = items.length - ok;
+    status.textContent = (ok ? ok + (ok === 1 ? " file ready to send." : " files ready to send.") : "") +
+      (bad ? (ok ? " " : "") + bad + (bad === 1 ? " file could not be read." : " files could not be read.") : "");
+  }
+  attachBtn.addEventListener("click", () => attachInput.click());
+  attachInput.addEventListener("change", () => { addFiles(attachInput.files); attachInput.value = ""; });
+  let dragDepth = 0;
+  const hasFiles = (e) => e.dataTransfer && Array.from(e.dataTransfer.types || []).includes("Files");
+  chatPanel.addEventListener("dragenter", (e) => { if (!hasFiles(e)) return; e.preventDefault(); dragDepth++; chatPanel.classList.add("dragging"); });
+  chatPanel.addEventListener("dragover", (e) => { if (!hasFiles(e)) return; e.preventDefault(); e.dataTransfer.dropEffect = "copy"; });
+  chatPanel.addEventListener("dragleave", () => { dragDepth = Math.max(0, dragDepth - 1); if (!dragDepth) chatPanel.classList.remove("dragging"); });
+  chatPanel.addEventListener("drop", (e) => {
+    if (!hasFiles(e)) return;
+    e.preventDefault();
+    dragDepth = 0;
+    chatPanel.classList.remove("dragging");
+    addFiles(e.dataTransfer.files);
+  });
+  // Dropping a file anywhere else should not open it in place of the page.
+  window.addEventListener("dragover", (e) => { if (hasFiles(e)) e.preventDefault(); });
+  window.addEventListener("drop", (e) => { if (hasFiles(e)) e.preventDefault(); });
+  // Pasting a screenshot into the message box attaches it.
+  input.addEventListener("paste", (e) => {
+    const files = Array.from((e.clipboardData && e.clipboardData.files) || []);
+    if (files.length) { e.preventDefault(); addFiles(files); }
+  });
+
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) $("chatForm").requestSubmit();
   });
@@ -219,6 +358,9 @@
   $("clearChat").addEventListener("click", () => {
     if (state.messages.length && !confirm("Clear this chat from this browser? Download it first if you want a copy.")) return;
     state.messages = [];
+    pending = [];
+    renderPending();
+    Object.keys(photoData).forEach((k) => delete photoData[k]);
     try { localStorage.removeItem(STORE_KEY); } catch (e) { /* ignore */ }
     save();
     render();
@@ -233,7 +375,11 @@
       "\nDownloaded " + new Date().toLocaleString() + (TEST_MODE ? "\nTest mode: replies are samples." : "");
   }
   function asText() {
-    return heading() + "\n\n" + state.messages.map((m) => (m.role === "user" ? "You" : "Tutor") + ":\n" + m.content).join("\n\n") + "\n";
+    return heading() + "\n\n" + state.messages.map((m) => (m.role === "user" ? "You" : "Tutor") + ":\n" + m.content + filesLine(m)).join("\n\n") + "\n";
+  }
+  function filesLine(m) {
+    return Array.isArray(m.attachments) && m.attachments.length
+      ? "\n(Attached: " + m.attachments.map((a) => a.name).join(", ") + ")" : "";
   }
   function fileName(ext) {
     return "writing-studio-tutor-" + (hintCourse || "chat") + "-" + new Date().toISOString().slice(0, 10) + "." + ext;
@@ -273,7 +419,7 @@
   function buildDocx() {
     let body = para(heading(), true);
     state.messages.forEach((m) => {
-      body += para(m.role === "user" ? "You" : "Tutor", true) + para(m.content, false);
+      body += para(m.role === "user" ? "You" : "Tutor", true) + para(m.content + filesLine(m), false);
     });
     const files = {
       "[Content_Types].xml":
