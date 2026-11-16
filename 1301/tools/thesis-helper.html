@@ -157,6 +157,16 @@
     <footer class="site-footer"><p>Thesis practice · AI Level 2 template generator</p></footer>
     <script src="../app.js"></script>
     <script src="essay-context.js?v=compare10"></script>
+    <script>
+      /* CRAAP Court hint for Case Study (Nov 16, 2026). Thesis page only. */
+      (function () {
+        var ctx = window.DWSEssayContext;
+        var e = ctx && ctx.byId ? ctx.byId("case-study") : null;
+        if (e) {
+          e.tensionHint = "Required. What a careful reader could push back on. From CRAAP Court? Put your rulings in the Tension box or the critical question box.";
+        }
+      })();
+    </script>
     <script src="tools.js?v=compare10"></script>
   </body>
 </html>

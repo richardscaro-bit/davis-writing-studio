@@ -157,6 +157,17 @@
     <footer class="site-footer"><p>Thesis practice · AI Level 2 template generator</p></footer>
     <script src="../app.js"></script>
     <script src="essay-context.js?v=compare10"></script>
+    <script>
+      /* Project 3 rule update (Nov 15, 2026): same story, same criticism type. Thesis page only. */
+      (function () {
+        var ctx = window.DWSEssayContext;
+        var e = ctx && ctx.byId ? ctx.byId("project3-gothic-criticism") : null;
+        if (e) {
+          e.purpose = "Write a 1,500 to 2,000 word MLA literary criticism essay on one Gothic primary text. State a contestable interpretive thesis, support it with close reading, and engage at least two peer-reviewed critics who write about the same story and use the same criticism type.";
+          e.sourceAim = "Primary text plus at least two named peer-reviewed critics on the same story who use the same criticism type.";
+        }
+      })();
+    </script>
     <script src="tools.js?v=compare10"></script>
   </body>
 </html>
