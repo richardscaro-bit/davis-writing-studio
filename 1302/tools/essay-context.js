@@ -116,9 +116,9 @@
       angles: [{id:"thesis",label:"Thesis"},{id:"close",label:"Close reading"},{id:"criticA",label:"Critic A"},{id:"criticB",label:"Critic B"}],
       defaultAngles: ["thesis","close","criticA"],
       claimKind: "argument",
-      ideaSeeds: {topics:["Poe, “The Raven”","Jackson, “The Lottery”","Faulkner, “A Rose for Emily”"],questions:["How do two critic types disagree about {topic}?","What resistant evidence must your thesis face?","Which passages earn the interpretive claim?"],ideas:["Naming an approach without citing a critic does not count","Plot summary alone does not count","Map how Critic A and Critic B agree, differ, or leave a gap"]},
+      ideaSeeds: {topics:["Poe, “The Raven”","Jackson, “The Lottery”","Faulkner, “A Rose for Emily”"],questions:["How do two critics using the same criticism type read {topic} differently?","What resistant evidence must your thesis face?","Which passages earn the interpretive claim?"],ideas:["Naming an approach without citing a critic does not count","Plot summary alone does not count","Map how Critic A and Critic B agree, differ, or leave a gap"]},
       outlineLenses: [
-        {title:"I. Introduction & thesis",topic:"Name the text and contestable interpretive claim.",cues:["Hook","Thesis","Critic roadmap"]},
+        {title:"I. Introduction & thesis",topic:"Name the text and contestable interpretive claim.",cues:["Hook","Thesis","Preview of both critics"]},
         {title:"II. Close reading 1",topic:"Develop the first textual claim.",cues:["Passage","Technique","Link to thesis"]},
         {title:"III. Critic A",topic:"Engage one peer-reviewed critic and type.",cues:["Name + type","Agree/differ","Use for thesis"]},
         {title:"IV. Critic B",topic:"Engage a second critic of the same type on the same story.",cues:["Same type","Gap or conflict","Your reply"]},
