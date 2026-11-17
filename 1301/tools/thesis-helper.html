@@ -9,6 +9,35 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css?v=csv3e">
+    <script>
+      (function () {
+        try {
+          var embed = window.self !== window.top || /(?:^|[?&])embed=1(?:&|$)/.test(location.search);
+          if (embed) document.documentElement.classList.add("is-embed");
+        } catch (e) {
+          document.documentElement.classList.add("is-embed");
+        }
+      })();
+    </script>
+    <style>
+      html.is-embed .topbar,
+      html.is-embed .mobile-nav,
+      html.is-embed .nav-toggle,
+      html.is-embed .site-footer,
+      html.is-embed .skip-link {
+        display: none !important;
+      }
+      html.is-embed main {
+        padding: 0.7rem 0.65rem 1rem;
+        max-width: none;
+      }
+      html.is-embed .section { margin: 0; }
+      html.is-embed .section > h1 {
+        font-size: 1.45rem;
+        margin: 0.15rem 0 0.65rem;
+      }
+      html.is-embed body { background: var(--charcoal-deep); }
+    </style>
   </head>
   <body>
 <a class="skip-link" href="#main">Skip to main content</a>
