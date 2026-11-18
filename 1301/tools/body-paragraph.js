@@ -238,6 +238,8 @@
     $("bpMoveEyebrow").textContent = "Move " + move.num + " of 6";
     $("bpMoveTitle").textContent = move.title;
     $("bpMoveHint").textContent = move.hint;
+    var tip = $("bpIntegrateTip");
+    if (tip) tip.hidden = !(move.id === "source" || move.id === "connection");
     var starters = $("bpStarters");
     starters.innerHTML = "";
     move.starters.forEach(function (s) {

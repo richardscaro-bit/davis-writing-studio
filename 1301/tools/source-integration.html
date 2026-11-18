@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("dws-tool-theme");
+          if (t !== "dark") t = "light";
+          document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+    <style>
+      html { background: #f7f3eb; color-scheme: light; }
+      html[data-theme="dark"] { background: #1e1c1a; color-scheme: dark; }
+    </style>
+    <title>Source integration | ENGL 1301 · Davis Writing Studio</title>
+    <meta name="description" content="Practice quoting, paraphrasing, summarizing, and integrating a library or Google Scholar source in MLA, with a short self-check.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css?v=si1">
+    <link rel="stylesheet" href="../../_design/tool-theme.css?v=2">
+    <link rel="stylesheet" href="../../_design/site-theme.css?v=3">
+    <style>
+      .si-verbs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.35rem 0 0; }
+      .si-verb {
+        margin: 0;
+        padding: 0.25rem 0.6rem;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 999px;
+        background: rgba(0,0,0,0.12);
+        font-size: 0.9rem;
+      }
+      html[data-theme="light"] .si-verb {
+        border-color: var(--line, #d4ccbe);
+        background: #fff;
+        color: var(--ink, #2c2a28);
+      }
+      .si-passage {
+        margin: 0.5rem 0 0;
+        padding: 0.85rem 0.95rem;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 12px;
+        background: rgba(0,0,0,0.18);
+        line-height: 1.55;
+      }
+      html[data-theme="light"] .si-passage {
+        border-color: var(--line, #d4ccbe);
+        background: #fff;
+        color: var(--ink, #2c2a28);
+      }
+      .bp-checks { display: grid; gap: 0.7rem; margin-top: 0.65rem; }
+      .bp-check {
+        display: grid;
+        gap: 0.4rem;
+        padding-bottom: 0.65rem;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+      .bp-check:last-child { border-bottom: 0; padding-bottom: 0; }
+      .bp-check-q { margin: 0; }
+      .bp-check-actions { display: flex; gap: 0.4rem; }
+      .bp-check-actions .button[aria-pressed="true"] {
+        background: rgba(201, 160, 144, 0.28);
+        border-color: var(--terracotta, #c9a090);
+      }
+      #siPassageText[hidden],
+      #siPassageHiddenNote[hidden] { display: none !important; }
+
+    </style>
+  </head>
+  <body data-course="1301">
+<a class="skip-link" href="#main">Skip to main content</a>
+    <header class="topbar" aria-label="Course navigation">
+      <a class="brand" href="../index.html" aria-label="ENGL 1301 home">
+        <span class="brand-mark" aria-hidden="true"><img src="../../_design/assets/mark-crown-real.jpg" alt="" width="40" height="40"></span>
+        <span><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span>
+      </a>
+      <nav class="nav-links" aria-label="Primary sections">
+        <a href="../../index.html">Hub</a>
+        <a href="../index.html">Home</a>
+        <a href="../resources.html">Resources</a>
+        <a href="../weeks.html">Practice path</a>
+        <a href="index.html" aria-current="page">Tools</a>
+        <a href="../../tutor/?course=1301">Tutor</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="../../index.html">Hub</a>
+      <a href="../index.html">Home</a>
+      <a href="../resources.html">Resources</a>
+      <a href="../weeks.html">Practice path</a>
+      <a href="index.html" aria-current="page">Tools</a>
+      <a href="../../tutor/?course=1301">Tutor</a>
+    </nav>
+
+    <main id="main">
+      <section class="section" aria-labelledby="siTitle">
+        <p class="eyebrow">Practice tool · any 1301 essay</p>
+        <h1 id="siTitle">Quoting, paraphrasing, and summarizing</h1>
+
+        <div class="dws-twobox dws-purpose">
+          <div class="dws-box">
+            <h3>Purpose</h3>
+            <p>This page helps you decide when to quote, paraphrase, or summarize, and how to integrate a source in MLA. Use it with the Body Paragraph Builder when you bring in a library or Google Scholar source.</p>
+          </div>
+          <div class="dws-box sage">
+            <h3>Use this page to</h3>
+            <ul>
+              <li>Choose quote, paraphrase, or summary for the job</li>
+              <li>Build a quote sandwich: signal phrase, quote, citation, explanation</li>
+              <li>Practice with an invented passage, then check your work</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="hero-actions">
+          <a class="button ghost" href="body-paragraph.html">Body paragraph builder</a>
+          <a class="button ghost" href="mla-citation.html">MLA citation</a>
+          <a class="button ghost" href="../case-study-studio.html">Case Study studio</a>
+        </p>
+
+        <h2 style="margin-top:1.5rem;">When to quote, paraphrase, or summarize</h2>
+        <div class="dws-twobox">
+          <div class="dws-box">
+            <h3>Quote</h3>
+            <p>Use a quote when the exact wording matters: a phrase you will analyze, a distinctive word, or language that would lose force if you rewrote it.</p>
+          </div>
+          <div class="dws-box sage">
+            <h3>Paraphrase</h3>
+            <p>Paraphrase when the idea matters more than the exact wording, and you can say that idea accurately in your own sentence shape.</p>
+          </div>
+          <div class="dws-box">
+            <h3>Summarize</h3>
+            <p>Summarize when you need the main point of a longer passage or a whole source, in a compact statement of your own.</p>
+          </div>
+        </div>
+        <p class="hint-block">All three still need a citation. A paraphrase or summary without a citation looks like the idea is yours.</p>
+
+        <h2 style="margin-top:1.5rem;">How to do each in MLA</h2>
+        <div class="dws-twobox">
+          <div class="dws-box">
+            <h3>Quote</h3>
+            <p>Introduce the quote, put the exact words in quotation marks, then add an in-text citation.</p>
+            <p>A library or Google Scholar source notes the same pattern: "Signup is offered only in English" (Elmhurst). That limit matters because it leaves out households the program claims to serve.</p>
+          </div>
+          <div class="dws-box sage">
+            <h3>Paraphrase</h3>
+            <p>Read, cover the source, write the idea in your own words, then check that you did not keep the source's sentence shape. Cite it anyway.</p>
+            <p>The invented newsletter says the compost pickup will cut landfill waste in half, but signup is only in English and pickup is limited to single-family homes (Elmhurst).</p>
+          </div>
+          <div class="dws-box">
+            <h3>Summarize</h3>
+            <p>State the source's main point in one or two sentences of your own, then cite it.</p>
+            <p>The invented newsletter promises a large drop in landfill waste, then describes a signup and pickup plan that covers only some households (Elmhurst).</p>
+          </div>
+        </div>
+
+        <h2 style="margin-top:1.5rem;">The quote sandwich</h2>
+        <div class="dws-twobox">
+          <div class="dws-box">
+            <h3>Four parts</h3>
+            <ol>
+              <li>A signal phrase that names the source or sets up the point</li>
+              <li>The quote, in quotation marks</li>
+              <li>An MLA in-text citation</li>
+              <li>An explanation in your own words: why the quote matters for your claim</li>
+            </ol>
+          </div>
+          <div class="dws-box sage">
+            <h3>Do not drop a quote in alone</h3>
+            <p>A quote cannot do the work by itself. Your sentence before it tells readers why it is there. Your sentence after it says what you want them to notice.</p>
+            <p>When a body paragraph uses a library or Google Scholar source, introduce it, cite it, and explain how it helps your claim.</p>
+          </div>
+        </div>
+
+        <h2 style="margin-top:1.5rem;">Signal verbs</h2>
+        <p>Use a precise verb in the signal phrase. These are a starting list, not a complete one.</p>
+        <div class="si-verbs" role="list">
+          <p class="si-verb" role="listitem">argues</p>
+          <p class="si-verb" role="listitem">claims</p>
+          <p class="si-verb" role="listitem">explains</p>
+          <p class="si-verb" role="listitem">notes</p>
+          <p class="si-verb" role="listitem">observes</p>
+          <p class="si-verb" role="listitem">suggests</p>
+          <p class="si-verb" role="listitem">questions</p>
+          <p class="si-verb" role="listitem">complicates</p>
+          <p class="si-verb" role="listitem">concedes</p>
+          <p class="si-verb" role="listitem">emphasizes</p>
+          <p class="si-verb" role="listitem">finds</p>
+          <p class="si-verb" role="listitem">points out</p>
+          <p class="si-verb" role="listitem">shows</p>
+          <p class="si-verb" role="listitem">writes</p>
+        </div>
+
+        <h2 style="margin-top:1.5rem;">Avoiding patchwriting</h2>
+        <div class="dws-twobox">
+          <div class="dws-box">
+            <h3>What it looks like</h3>
+            <p>Patchwriting keeps the source's sentence shape and swaps a few words. It is a common stage in learning academic language, not a reason to panic. It is not yet a paraphrase, and it is not yet in your voice.</p>
+            <p><strong>Too close:</strong> Households that join the weekly compost pickup will cut waste in half by year end, and signup is offered only in English (Elmhurst).</p>
+          </div>
+          <div class="dws-box sage">
+            <h3>A better version</h3>
+            <p>Cover the source. Write the idea as you would explain it to a classmate. Then uncover the source and check. If the sentences still match, rewrite again and cite.</p>
+            <p><strong>In your own shape:</strong> The program claims a sharp drop in landfill waste, yet it is advertised only in English and only to single-family homes (Elmhurst).</p>
+          </div>
+        </div>
+
+        <h2 style="margin-top:1.5rem;" id="siPractice">Short practice</h2>
+        <p>Read the whole passage first. Hide it before you write a gist or a paraphrase. Then show it again and check for close copying. Your work stays in this browser.</p>
+        <div class="tool-panel" style="margin-top:0.75rem;">
+          <p class="eyebrow" id="siPassageLabel">Practice passage</p>
+          <p class="hint-block" id="siPassageSource"></p>
+          <p class="si-passage" id="siPassageText"></p>
+          <p class="hint-block" id="siPassageHiddenNote" hidden>The passage is hidden. Write from memory, then show it to check your work.</p>
+          <p class="hint-block">Use (Elmhurst) as a practice citation for this invented passage. In a real essay, use the author and page or location from your source.</p>
+          <p class="hero-actions" style="margin-top:0.6rem;">
+            <button type="button" class="button ghost" id="siHidePassage">Hide the passage</button>
+          </p>
+
+          <label class="field" style="margin-top:1rem;">Gist or short summary
+            <span class="hint">One or two sentences, written with the passage hidden. What is the main point?</span>
+            <textarea id="siGist" style="min-height:4.5rem;" placeholder="Write a short gist in your own words."></textarea>
+          </label>
+          <label class="field">Paraphrase
+            <span class="hint">Restate a key idea in your own sentence shape, then cite. After you write, show the passage and check for close copying.</span>
+            <textarea id="siParaphrase" style="min-height:5.5rem;" placeholder="Write a paraphrase, then add a citation."></textarea>
+          </label>
+          <label class="field">Quote sandwich
+            <span class="hint">Signal phrase, quote, citation, and an explanation that adds your own point.</span>
+            <textarea id="siSandwich" style="min-height:6.5rem;" placeholder="Write a quote sandwich here."></textarea>
+          </label>
+
+          <h2 class="eyebrow" style="margin:1.25rem 0 0.35rem;">Quick self-check</h2>
+          <p class="hint-block" style="margin:0;">Yes or no, for this practice only. Nothing is scored or sent anywhere.</p>
+          <div id="siChecks" class="bp-checks"></div>
+          <p class="hero-actions" style="margin-top:0.85rem;">
+            <button type="button" class="button ghost" id="siClear">Clear practice</button>
+          </p>
+          <p class="save-status" id="siSaveStatus" aria-live="polite"></p>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Source integration · ENGL 1301 practice · AI Level 2</p></footer>
+    <script src="../app.js"></script>
+    <script src="../../_design/source-integration.js?v=si1"></script>
+    <script src="../../_design/tool-theme.js?v=2"></script>
+  </body>
+</html>

@@ -427,7 +427,7 @@ function renderWorkspaceFields(key, workspace) {
           <span class="hint">Draft one body section in six moves: topic sentence, primary case evidence, analysis, a library or Google Scholar source, a connection back to the case, and a tie to the thesis.</span>
           <textarea data-field="bodyParagraph" placeholder="Topic sentence (name the lens): …&#10;Primary case evidence with a citation: …&#10;Analysis: …&#10;Library or Google Scholar source: …&#10;Connection back to the primary case: …&#10;Tie back to the thesis: …">${escapeHtml(workspace.bodyParagraph)}</textarea>
         </label>
-        ${toolLinks([["tools/body-paragraph.html", "Body paragraph builder"]])}
+        ${toolLinks([["tools/body-paragraph.html", "Body paragraph builder"], ["tools/source-integration.html", "Source integration"]])}
       `)}
       ${studioDrop("Working draft", `
         <label class="field">Working draft

@@ -120,3 +120,59 @@ details.studio-drop .studio-drop-body p { margin: 0 0 0.7rem; }
 .resource-list .resource-card details.studio-drop .hint-block {
   color: var(--cream-dim, rgba(255,248,240,0.78));
 }
+
+
+/* Two-box purpose and teaching cards (shared with 1301 tool pages). */
+.dws-twobox {
+  display: flex;
+  gap: 0.85rem;
+  margin: 0.7rem 0 0;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+.dws-twobox > .dws-box {
+  flex: 1 1 16rem;
+  min-width: 0;
+  background: #fffdf6;
+  color: #2e2622;
+  border-width: 5px 1px 1px;
+  border-style: solid;
+  border-color: #C9AE7A;
+  border-radius: 14px;
+  padding: 0.75rem 0.95rem 0.85rem;
+}
+.dws-twobox > .dws-box.sage {
+  background: #eef2ec;
+  border-color: #5A7A5A #C9AE7A #C9AE7A;
+}
+.dws-twobox > .dws-box h3,
+.dws-twobox > .dws-box h4 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #354838;
+  border-bottom: 1px solid #c4a56a;
+  padding-bottom: 0.3rem;
+  margin: 0 0 0.5rem;
+  line-height: 1.2;
+}
+.dws-twobox > .dws-box ul,
+.dws-twobox > .dws-box ol {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+.dws-twobox > .dws-box li { margin: 0 0 0.4rem; color: #2e2622; }
+.dws-twobox > .dws-box li:last-child { margin-bottom: 0; }
+.dws-twobox > .dws-box p {
+  margin: 0 0 0.45rem;
+  font-size: 0.98rem;
+  color: #2e2622;
+}
+.dws-twobox > .dws-box p:last-child { margin-bottom: 0; }
+.callout .dws-twobox { margin-top: 0.55rem; }
+@media (max-width: 700px) {
+  .dws-twobox { flex-direction: column; }
+}
+.dws-purpose { margin-top: 0.85rem; }

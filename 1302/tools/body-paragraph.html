@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("dws-tool-theme");
+          if (t !== "dark") t = "light";
+          document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+    <style>
+      html { background: #f7f3eb; color-scheme: light; }
+      html[data-theme="dark"] { background: #1e1c1a; color-scheme: dark; }
+    </style>
+    <title>Gothic Body Paragraph Builder | ENGL 1302 · Davis Writing Studio</title>
+    <meta name="description" content="Practice one Gothic essay body paragraph in six moves: claim, story evidence with a quote and citation, analysis, a peer-reviewed critic, a critic connection, and a tie to the thesis.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css?v=gothbp2">
+    <link rel="stylesheet" href="../../_design/tool-theme.css?v=2">
+    <link rel="stylesheet" href="../../_design/site-theme.css?v=3">
+<style>
+      .bp-lens-picker,
+      .bp-starters { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0.4rem 0 0; }
+      .bp-move-nav {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 0.4rem;
+        margin: 0.85rem 0 1rem;
+      }
+      .bp-step {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.15rem;
+        margin: 0;
+        padding: 0.5rem 0.55rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.18);
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+        font: inherit;
+      }
+      .bp-step:hover { border-color: rgba(255, 255, 255, 0.28); }
+      .bp-step.is-current {
+        border-color: var(--terracotta, #c9a090);
+        box-shadow: inset 0 0 0 1px var(--terracotta, #c9a090);
+      }
+      .bp-step.is-filled .bp-step-num { color: #fff; }
+      .bp-step-num {
+        font-family: Inter, system-ui, sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: rgba(255, 248, 240, 0.72);
+      }
+      .bp-step-label { font-size: 0.82rem; line-height: 1.25; }
+      .bp-move-box {
+        padding: 0.95rem 1rem 1.1rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.18);
+      }
+      .bp-move-box .eyebrow { margin: 0 0 0.25rem; }
+      .bp-move-box h2 { margin: 0 0 0.35rem; font-size: 1.45rem; }
+      .bp-preview {
+        margin: 0;
+        min-height: 6rem;
+        padding: 0.85rem 0.95rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.18);
+        white-space: pre-wrap;
+        line-height: 1.55;
+      }
+      .bp-checks { display: grid; gap: 0.7rem; margin-top: 0.65rem; }
+      .bp-check {
+        display: grid;
+        gap: 0.4rem;
+        padding-bottom: 0.65rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .bp-check:last-child { border-bottom: 0; padding-bottom: 0; }
+      .bp-check-q { margin: 0; }
+      .bp-check-actions { display: flex; gap: 0.4rem; }
+      .bp-check-actions .button[aria-pressed="true"] {
+        background: rgba(201, 160, 144, 0.28);
+        border-color: var(--terracotta, #c9a090);
+      }
+      .bp-sample { margin-top: 1rem; }
+      #bpThesisNote[hidden],
+      #bpPreviewMissing[hidden] { display: none !important; }
+      @media (max-width: 800px) {
+        .bp-move-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+    </style>
+  </head>
+  <body>
+<a class="skip-link" href="#main">Skip to main content</a>
+    <header class="topbar" aria-label="Course navigation">
+      <a class="brand" href="../index.html" aria-label="ENGL 1302 home">
+        <span class="brand-mark" aria-hidden="true"><img src="../../_design/assets/mark-crown-real.jpg" alt="" width="40" height="40"></span>
+        <span><strong>ENGL 1302</strong><small>Davis Writing Studio</small></span>
+      </a>
+      <nav class="nav-links" aria-label="Primary sections">
+        <a href="../../index.html">Hub</a>
+        <a href="../index.html">Home</a>
+        <a href="../resources.html">Resources</a>
+        <a href="../weeks.html">Practice path</a>
+        <a href="index.html" aria-current="page">Tools</a>
+        <a href="../../tutor/?course=1302">Tutor</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="../../index.html">Hub</a>
+      <a href="../index.html">Home</a>
+      <a href="../resources.html">Resources</a>
+      <a href="../weeks.html">Practice path</a>
+      <a href="index.html" aria-current="page">Tools</a>
+      <a href="../../tutor/?course=1302">Tutor</a>
+    </nav>
+
+    <main id="main">
+      <section class="section" aria-labelledby="bpTitle">
+        <p class="eyebrow">Practice tool · Project 3 · Gothic Literary Criticism</p>
+        <h1 id="bpTitle">Gothic Body Paragraph Builder</h1>
+
+        <div class="dws-twobox dws-purpose">
+          <div class="dws-box">
+            <h3>Purpose</h3>
+            <p>This page helps you draft one <strong>body paragraph</strong> for the Gothic Literary Criticism essay. Work through six moves, one at a time, then copy or download a draft to keep revising.</p>
+          </div>
+          <div class="dws-box sage">
+            <h3>Use this page to</h3>
+            <ul>
+              <li>Start with a claim topic sentence tied to your thesis</li>
+              <li>Build the paragraph in six numbered moves, with optional sentence starters</li>
+              <li>Bring in one peer-reviewed critic, then copy or download a draft</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout" style="margin-top:1rem;" id="bpP3Rule">
+          <strong>Project 3 rule</strong>
+          <p style="margin:0.35rem 0 0;">Both critics write on the same story. Most students use one criticism type for both critics. If you want, you can use two different types instead.</p>
+        </div>
+
+        <div class="dws-twobox" style="margin-top:1rem;">
+          <div class="dws-box">
+            <h3>Source rule</h3>
+            <p>Each body section starts with your claim, then story evidence, then where a peer-reviewed critic supports, extends, or pushes back, then a tie to the thesis.</p>
+          </div>
+          <div class="dws-box sage">
+            <h3>The six moves</h3>
+            <ol>
+              <li>Claim (topic sentence tied to the thesis)</li>
+              <li>Story evidence with a quote and MLA in-text citation</li>
+              <li>Analysis</li>
+              <li>Critic (peer-reviewed, with a signal phrase and citation)</li>
+              <li>Critic connection (agree, extend, or push back, linked to the story evidence)</li>
+              <li>Thesis tie</li>
+            </ol>
+          </div>
+        </div>
+
+        <p class="hero-actions">
+          <a class="button ghost" href="thesis-helper.html">Thesis generator</a>
+          <a class="button ghost" href="outline-helper.html">Outline / topic sentences</a>
+          <a class="button ghost" href="source-integration.html">Source integration</a>
+          <a class="button ghost" href="mla-citation.html">MLA citation</a>
+          <a class="button ghost" href="../project3-studio.html">Gothic studio</a>
+          <a class="button ghost" href="../gothic-essay-outline-template.html">Outline template</a>
+        </p>
+
+        <div class="tool-panel" style="margin-top:1.25rem;">
+          <label class="field">Working thesis <span class="hint">Optional. If you already chose a thesis in the thesis helper, it is filled in here.</span>
+            <textarea id="bpThesis" style="min-height:4.5rem;" placeholder="Paste or edit your working thesis."></textarea>
+          </label>
+          <p class="hint-block" id="bpThesisNote" hidden></p>
+          <p class="hero-actions" style="margin-top:0.5rem;">
+            <button type="button" class="button small ghost" id="bpPullThesis">Use saved thesis</button>
+          </p>
+
+          <div class="field-grid" style="margin-top:1rem;">
+            <label class="field">Story title <span class="hint">Optional. The primary Gothic text for this paragraph.</span>
+              <input type="text" id="bpStory" autocomplete="off" placeholder="The story you are writing about">
+            </label>
+            <label class="field">Critic name <span class="hint">Optional. The peer-reviewed critic you are using in this paragraph.</span>
+              <input type="text" id="bpCriticName" autocomplete="off" placeholder="Author of the article">
+            </label>
+          </div>
+
+          <fieldset class="field" style="margin-top:1rem;">
+            <legend>Criticism type for this paragraph</legend>
+            <p class="hint-block">Optional. If you already saved a type in the thesis or outline helper, you can use it here.</p>
+            <p class="hint-block" id="bpTypeNote" hidden></p>
+            <div id="bpTypePicker" class="bp-lens-picker" role="group" aria-label="Criticism types"></div>
+            <p class="hero-actions" style="margin-top:0.5rem;">
+              <button type="button" class="button small ghost" id="bpPullTypes">Use saved criticism type</button>
+            </p>
+          </fieldset>
+
+          <nav id="bpMoveNav" class="bp-move-nav" aria-label="Paragraph moves"></nav>
+
+          <div class="bp-move-box" id="bpMoveBox" tabindex="-1">
+            <p class="eyebrow" id="bpMoveEyebrow">Move 1 of 6</p>
+            <h2 id="bpMoveTitle">Claim</h2>
+            <p class="hint-block" id="bpMoveHint" style="margin:0 0 0.65rem;"></p>
+            <p class="hint-block" id="bpIntegrateTip" hidden>Need help quoting, paraphrasing, or summarizing? Open the <a href="source-integration.html">Source integration</a> practice.</p>
+            <p class="hint-block" style="margin:0;">Sentence starters (optional). Click one to insert it, then write over it in your own words.</p>
+            <div id="bpStarters" class="bp-starters"></div>
+            <label class="field" style="margin-top:0.75rem;">Your sentences
+              <textarea id="bpMoveText" style="min-height:7rem;" placeholder="Write this move here."></textarea>
+            </label>
+            <p class="hero-actions" style="margin-top:0.75rem;">
+              <button type="button" class="button ghost" id="bpPrevMove">Previous move</button>
+              <button type="button" class="button primary" id="bpNextMove">Next move</button>
+            </p>
+          </div>
+
+          <h2 class="eyebrow" style="margin:1.35rem 0 0.45rem;">Live preview</h2>
+          <p class="hint-block" id="bpPreviewLens">Criticism type: choose one above, or leave blank.</p>
+          <div id="bpPreview" class="bp-preview" aria-live="polite">Your paragraph will appear here as you complete the six moves.</div>
+          <p class="hint-block" id="bpPreviewMissing" hidden></p>
+
+          <h2 class="eyebrow" style="margin:1.35rem 0 0.45rem;">Download draft (MLA)</h2>
+          <p class="hint-block">Optional. Fills a Word file with MLA page setup and a Works Cited page. Your work stays in this browser until you download it.</p>
+          <div class="field-grid">
+            <label class="field">Your name
+              <input type="text" id="bpMlaName" autocomplete="name" placeholder="First Last">
+            </label>
+            <label class="field">Instructor
+              <input type="text" id="bpMlaInstructor" placeholder="Instructor name">
+            </label>
+            <label class="field">Course
+              <input type="text" id="bpMlaCourse" placeholder="ENGL 1302">
+            </label>
+            <label class="field">Date
+              <input type="text" id="bpMlaDate" placeholder="18 November 2026">
+            </label>
+          </div>
+          <h3 style="margin:1rem 0 0.35rem;">Works Cited</h3>
+          <p class="hint-block">Record the author, title, and link or database for your story and the peer-reviewed critic in this paragraph.</p>
+          <div class="field-grid">
+            <label class="field">Story (primary source): author
+              <input type="text" id="bpCiteAuthor0" autocomplete="off">
+            </label>
+            <label class="field">Story (primary source): title
+              <input type="text" id="bpCiteTitle0" autocomplete="off">
+            </label>
+            <label class="field">Story (primary source): link or collection
+              <input type="text" id="bpCiteWhere0" autocomplete="off">
+            </label>
+            <label class="field">Peer-reviewed critic: author
+              <input type="text" id="bpCiteAuthor1" autocomplete="off">
+            </label>
+            <label class="field">Peer-reviewed critic: title
+              <input type="text" id="bpCiteTitle1" autocomplete="off">
+            </label>
+            <label class="field">Peer-reviewed critic: link or database
+              <input type="text" id="bpCiteWhere1" autocomplete="off">
+            </label>
+            <label class="field">Second critic (optional): author
+              <input type="text" id="bpCiteAuthor2" autocomplete="off">
+            </label>
+            <label class="field">Second critic (optional): title
+              <input type="text" id="bpCiteTitle2" autocomplete="off">
+            </label>
+            <label class="field">Second critic (optional): link or database
+              <input type="text" id="bpCiteWhere2" autocomplete="off">
+            </label>
+          </div>
+          <p class="hero-actions" style="margin-top:0.75rem;">
+            <button type="button" class="button primary" id="bpCopy">Copy</button>
+            <button type="button" class="button ghost" id="bpDownload">Download Word draft</button>
+            <button type="button" class="button ghost" id="bpClear">Clear</button>
+          </p>
+          <p class="save-status" id="bpSaveStatus" aria-live="polite"></p>
+
+          <h2 class="eyebrow" style="margin:1.35rem 0 0.35rem;">Quick self-check</h2>
+          <p class="hint-block" style="margin:0;">Yes or no, for this draft only. Nothing is scored or sent anywhere.</p>
+          <div id="bpChecks" class="bp-checks"></div>
+        </div>
+
+        <details class="studio-drop bp-sample">
+          <summary>Optional: a public-domain practice example (not a student paper)</summary>
+          <div class="studio-drop-body">
+            <div class="dws-twobox">
+              <div class="dws-box">
+                <h3>Public domain story</h3>
+                <p>This practice uses Edgar Allan Poe's "The Raven," which is in the public domain. In the opening, the speaker sits "weak and weary" over "forgotten lore" when a tapping comes at the chamber door (Poe).</p>
+              </div>
+              <div class="dws-box sage">
+                <h3>Example critic (not a real source)</h3>
+                <p>Example critic (practice only, not a real published source) argues that the speaker is already listening for a voice that will confirm his grief, so the bird's "Nevermore" feels like an answer he expected. Do not copy this invented critic into a real essay. Use your own story evidence and a real peer-reviewed critic on the same story.</p>
+              </div>
+            </div>
+          </div>
+        </details>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Gothic Body Paragraph Builder · Project 3 practice · AI Level 2</p></footer>
+    <script src="../app.js"></script>
+    <script src="docx-writer.js?v=gothbp1"></script>
+    <script src="p3-critic-types.js?v=1"></script>
+    <script src="body-paragraph.js?v=gothbp1"></script>
+    <script src="../../_design/tool-theme.js?v=2"></script>
+  </body>
+</html>
