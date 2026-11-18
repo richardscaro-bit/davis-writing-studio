@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("dws-tool-theme");
+          if (t !== "dark") t = "light";
+          document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+    <style>
+      html { background: #f7f3eb; color-scheme: light; }
+      html[data-theme="dark"] { background: #1e1c1a; color-scheme: dark; }
+    </style>
+    <title>Research Plan helper | ENGL 1301 · Davis Writing Studio</title>
+    <meta name="description" content="Plan your two library or Google Scholar sources for the Outline and Research Plan assignment: topic family, searches, ethics, and a purpose line for each source.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css?v=rp1">
+    <link rel="stylesheet" href="../../_design/tool-theme.css?v=1">
+    <style>
+      .rp-step { margin-top: 1.5rem; }
+      .rp-step > h2 { margin: 0 0 0.55rem; font-size: 1.45rem; }
+      .rp-topic-list { display: grid; gap: 0.55rem; }
+      @media (min-width: 800px) {
+        .rp-topic-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+      .rp-topic {
+        display: grid;
+        gap: 0.25rem;
+        margin: 0;
+        padding: 0.7rem 0.8rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.18);
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+        font: inherit;
+      }
+      .rp-topic:hover { border-color: rgba(255, 255, 255, 0.28); }
+      .rp-topic.is-current {
+        border-color: var(--terracotta, #c9a090);
+        box-shadow: inset 0 0 0 1px var(--terracotta, #c9a090);
+      }
+      .rp-topic span { color: var(--cream-dim, rgba(255,248,240,0.78)); }
+      .rp-chip-row, .rp-db-row { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0.4rem 0 0; }
+      .rp-source {
+        margin-top: 1rem;
+        padding: 0.95rem 1rem 1.05rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.18);
+      }
+      .rp-source h3 { margin: 0 0 0.55rem; }
+      .rp-purpose {
+        margin: 0.55rem 0 0;
+        padding: 0.75rem 0.85rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.18);
+        line-height: 1.5;
+      }
+      .bp-checks { display: grid; gap: 0.7rem; margin-top: 0.65rem; }
+      .bp-check {
+        display: grid;
+        gap: 0.4rem;
+        padding-bottom: 0.65rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .bp-check:last-child { border-bottom: 0; padding-bottom: 0; }
+      .bp-check-q { margin: 0; }
+      .bp-check-actions { display: flex; gap: 0.4rem; }
+      .bp-check-actions .button[aria-pressed="true"],
+      .idea-chip[aria-pressed="true"],
+      .rp-topic.is-current {
+        background: rgba(201, 160, 144, 0.18);
+      }
+      .bp-check-actions .button[aria-pressed="true"] {
+        border-color: var(--terracotta, #c9a090);
+      }
+      .rp-why-how { margin: 0; padding-left: 1.2rem; }
+      .rp-why-how li { margin: 0 0 0.4rem; }
+      #rpSearchEmpty[hidden], #rpSearchBox[hidden] { display: none !important; }
+    </style>
+  </head>
+  <body>
+<a class="skip-link" href="#main">Skip to main content</a>
+    <header class="topbar" aria-label="Course navigation">
+      <a class="brand" href="../index.html" aria-label="ENGL 1301 home">
+        <span class="brand-mark" aria-hidden="true"><img src="../../_design/assets/mark-crown-real.jpg" alt="" width="40" height="40"></span>
+        <span><strong>ENGL 1301</strong><small>Davis Writing Studio</small></span>
+      </a>
+      <nav class="nav-links" aria-label="Primary sections">
+        <a href="../../index.html">Hub</a>
+        <a href="../index.html">Home</a>
+        <a href="../resources.html">Resources</a>
+        <a href="../weeks.html">Practice path</a>
+        <a href="index.html" aria-current="page">Tools</a>
+        <a href="../../tutor/?course=1301">Tutor</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="../../index.html">Hub</a>
+      <a href="../index.html">Home</a>
+      <a href="../resources.html">Resources</a>
+      <a href="../weeks.html">Practice path</a>
+      <a href="index.html" aria-current="page">Tools</a>
+      <a href="../../tutor/?course=1301">Tutor</a>
+    </nav>
+
+    <main id="main">
+      <section class="section" aria-labelledby="rpTitle">
+        <p class="eyebrow">Practice tool · Case Study</p>
+        <h1 id="rpTitle">Research Plan helper</h1>
+
+        <div class="dws-twobox dws-purpose">
+          <div class="dws-box">
+            <h3>Intro</h3>
+            <p>This helper walks you through planning your two library or Google Scholar sources for the Outline and Research Plan assignment. You will pick a topic family, try some searches, think through ethics, and write a purpose line for each source. Your case study packet is still your primary source in every section. One CQ Researcher report may count as one of your two sources.</p>
+          </div>
+          <div class="dws-box sage">
+            <h3>Due and points</h3>
+            <ul>
+              <li>Due: Sun Nov 22 at 11:59 PM CT (Outline and Research Plan assignment, file name Lastname_CaseStudy_Outline).</li>
+              <li>Points: 100 points</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="hero-actions">
+          <a class="button ghost" href="../case-study-studio.html">Case Study studio</a>
+          <a class="button ghost" href="../case-study-research-guide.html">Case Study research guide</a>
+          <a class="button ghost" href="keyword-generator.html">Keyword generator</a>
+          <a class="button ghost" href="source-log.html">Source log</a>
+          <a class="button ghost" href="mla-citation.html">MLA citation</a>
+        </p>
+
+        <section class="rp-step" aria-labelledby="rpStep0Title">
+          <h2 id="rpStep0Title">Step 0: Why and how to add library or Google Scholar sources</h2>
+          <p>Teachers sometimes call these outside sources.</p>
+          <div class="dws-twobox">
+            <div class="dws-box">
+              <h3>Why</h3>
+              <ol class="rp-why-how">
+                <li>Your packet shows what the company or group says about itself. A scholarly source lets you test that.</li>
+                <li>Scholars give you expert terms and real data, so your analysis is not just your opinion.</li>
+                <li>A source shows that your thesis is part of a bigger conversation that other people care about.</li>
+                <li>Readers trust a writer who checks the story from more than one side.</li>
+              </ol>
+            </div>
+            <div class="dws-box sage">
+              <h3>How to add a source to a paragraph</h3>
+              <ol class="rp-why-how">
+                <li>Introduce it with a signal phrase. Name the author and say why they matter.</li>
+                <li>Quote, paraphrase, or summarize, and add an MLA in-text citation.</li>
+                <li>Explain what the source shows in your own words.</li>
+                <li>Connect it to a specific case detail. Say whether it confirms, complicates, or contradicts that detail.</li>
+                <li>Tie it to your thesis.</li>
+              </ol>
+            </div>
+          </div>
+          <details class="studio-drop" style="margin-top:1rem;">
+            <summary>Model (invented topic and invented source, for practice only)</summary>
+            <div class="studio-drop-body">
+              <p>Food marketing researcher Lena Ortiz, who studies meal kit companies, found that most customers cancel within six months (Ortiz 14). That finding complicates the FreshFork packet's promise that its boxes "build lifelong cooking habits" (slide 5). If most people quit that fast, the habit story works more as branding than as evidence. This gap supports my thesis that FreshFork sells a feeling of belonging more than a real change in how people cook.</p>
+            </div>
+          </details>
+        </section>
+
+        <section class="rp-step" aria-labelledby="rpStep1Title">
+          <h2 id="rpStep1Title">Step 1: Pick a topic family</h2>
+          <div id="rpTopicList" class="rp-topic-list" role="group" aria-label="Topic families"></div>
+        </section>
+
+        <section class="rp-step" aria-labelledby="rpStep2Title">
+          <h2 id="rpStep2Title">Step 2: Search strings and databases</h2>
+          <p id="rpSearchEmpty" class="hint-block">Pick a topic family in Step 1 to see sample search strings and the databases to try first.</p>
+          <div id="rpSearchBox" hidden>
+            <p class="hint-block" id="rpSearchFamily"></p>
+            <h3 style="margin:0.7rem 0 0.25rem;">Search strings</h3>
+            <p class="hint-block" style="margin:0;">Click a string to copy it.</p>
+            <div id="rpSearchStrings" class="rp-chip-row"></div>
+            <h3 style="margin:0.9rem 0 0.25rem;">Try first</h3>
+            <div id="rpSearchDbs" class="rp-db-row"></div>
+          </div>
+          <div class="dws-twobox" style="margin-top:1rem;">
+            <div class="dws-box">
+              <h3>Search tips (short)</h3>
+              <ul>
+                <li>Use AND to combine ideas, OR for words that mean the same thing, and quotation marks to keep a phrase together.</li>
+                <li>Turn on a peer reviewed or scholarly journals filter when the database has one.</li>
+                <li>Read the abstract first. Check the date and the author.</li>
+                <li>Google Scholar tip: open the menu, go to Settings, then Library links. Search for San Antonio College, check "San Antonio College Library - Read at SAC Library!" and click Save. Off campus, you sign in with your ACES login.</li>
+              </ul>
+            </div>
+            <div class="dws-box sage">
+              <h3>Source rule note</h3>
+              <p>One CQ Researcher report may count as one of your two library or Google Scholar sources.</p>
+              <p>Open databases from the <a href="https://alamo.libguides.com/az/SAC" target="_blank" rel="noopener noreferrer">SAC Library A to Z list</a>.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="rp-step" aria-labelledby="rpStep3Title">
+          <h2 id="rpStep3Title">Step 3: Ethics questions and lens choice</h2>
+          <div id="rpEthicsQs" class="field-grid"></div>
+          <h3 style="margin:1rem 0 0.35rem;">Where it goes</h3>
+          <p>Put your ethics point in the Limits section, or inside any other lens where the ethical problem shows up, and back it with cited evidence.</p>
+          <div id="rpEthicsLenses" class="rp-chip-row" role="group" aria-label="Lens choice"></div>
+        </section>
+
+        <section class="rp-step" aria-labelledby="rpStep4Title">
+          <h2 id="rpStep4Title">Step 4: Two library or Google Scholar sources, citation basics, and purpose line</h2>
+          <p>For each source, record the author, title, and link or database. Check your MLA citation with the <a href="https://alamo.libguides.com/sac-guides/citation/overview" target="_blank" rel="noopener noreferrer">SAC How to Cite guide</a>.</p>
+          <p class="hint-block">Sentence frame</p>
+          <p>This source helps my ______ section because it ______ (confirms, complicates, or contradicts) the packet's point that ______, which supports my thesis that ______.</p>
+          <details class="studio-drop">
+            <summary>Model (invented topic)</summary>
+            <div class="studio-drop-body">
+              <p>This source helps my Evidence section because it complicates the FreshFork packet's point that its meal kits build lifelong cooking habits, which supports my thesis that FreshFork sells a feeling of belonging more than real change.</p>
+            </div>
+          </details>
+
+          <div class="rp-source" id="rpSource0">
+            <h3>Library or Google Scholar source 1</h3>
+            <div class="field-grid">
+              <label class="field">Author
+                <input type="text" id="rpSrcAuthor0" autocomplete="off">
+              </label>
+              <label class="field">Title
+                <input type="text" id="rpSrcTitle0" autocomplete="off">
+              </label>
+              <label class="field">Link or database
+                <input type="text" id="rpSrcWhere0" autocomplete="off">
+              </label>
+              <label class="field">This source helps my ______ section
+                <select id="rpSrcSection0"></select>
+              </label>
+            </div>
+            <p class="hint-block" style="margin:0.7rem 0 0.25rem;">because it ______ (confirms, complicates, or contradicts)</p>
+            <div id="rpSrcVerb0" class="rp-chip-row" role="group" aria-label="confirms, complicates, or contradicts"></div>
+            <label class="field">the packet's point that ______
+              <textarea id="rpSrcPacket0" style="min-height:3.5rem;"></textarea>
+            </label>
+            <label class="field">which supports my thesis that ______
+              <textarea id="rpSrcThesis0" style="min-height:3.5rem;"></textarea>
+            </label>
+            <p class="rp-purpose" id="rpPurposePreview0"></p>
+            <h3 style="margin:1rem 0 0.35rem;">Self-check (yes or no)</h3>
+            <div id="rpSrcChecks0" class="bp-checks"></div>
+          </div>
+
+          <div class="rp-source" id="rpSource1">
+            <h3>Library or Google Scholar source 2</h3>
+            <div class="field-grid">
+              <label class="field">Author
+                <input type="text" id="rpSrcAuthor1" autocomplete="off">
+              </label>
+              <label class="field">Title
+                <input type="text" id="rpSrcTitle1" autocomplete="off">
+              </label>
+              <label class="field">Link or database
+                <input type="text" id="rpSrcWhere1" autocomplete="off">
+              </label>
+              <label class="field">This source helps my ______ section
+                <select id="rpSrcSection1"></select>
+              </label>
+            </div>
+            <p class="hint-block" style="margin:0.7rem 0 0.25rem;">because it ______ (confirms, complicates, or contradicts)</p>
+            <div id="rpSrcVerb1" class="rp-chip-row" role="group" aria-label="confirms, complicates, or contradicts"></div>
+            <label class="field">the packet's point that ______
+              <textarea id="rpSrcPacket1" style="min-height:3.5rem;"></textarea>
+            </label>
+            <label class="field">which supports my thesis that ______
+              <textarea id="rpSrcThesis1" style="min-height:3.5rem;"></textarea>
+            </label>
+            <p class="rp-purpose" id="rpPurposePreview1"></p>
+            <h3 style="margin:1rem 0 0.35rem;">Self-check (yes or no)</h3>
+            <div id="rpSrcChecks1" class="bp-checks"></div>
+          </div>
+        </section>
+
+        <section class="rp-step" aria-labelledby="rpMlaTitle">
+          <h2 id="rpMlaTitle">Download plan (MLA)</h2>
+          <p class="hint-block">Optional. Fills a Word file with MLA page setup. Your work stays in this browser until you download it.</p>
+          <div class="field-grid">
+            <label class="field">Your name
+              <input type="text" id="rpMlaName" autocomplete="name" placeholder="First Last">
+            </label>
+            <label class="field">Instructor
+              <input type="text" id="rpMlaInstructor" placeholder="Instructor name">
+            </label>
+            <label class="field">Course
+              <input type="text" id="rpMlaCourse" placeholder="ENGL 1301">
+            </label>
+            <label class="field">Date
+              <input type="text" id="rpMlaDate" placeholder="18 November 2026">
+            </label>
+          </div>
+          <p class="hero-actions" style="margin-top:0.85rem;">
+            <button type="button" class="button primary" id="rpCopy">Copy</button>
+            <button type="button" class="button" id="rpDownload">Download plan (.docx)</button>
+            <button type="button" class="button ghost" id="rpClear">Clear</button>
+          </p>
+          <p class="save-status" id="rpSaveStatus" aria-live="polite"></p>
+        </section>
+
+        <section class="rp-step" aria-labelledby="rpLinksTitle">
+          <h2 id="rpLinksTitle">Links</h2>
+          <ul>
+            <li>SAC Library A to Z list: <a href="https://alamo.libguides.com/az/SAC" target="_blank" rel="noopener noreferrer">https://alamo.libguides.com/az/SAC</a></li>
+            <li>SAC How to Cite guide: <a href="https://alamo.libguides.com/sac-guides/citation/overview" target="_blank" rel="noopener noreferrer">https://alamo.libguides.com/sac-guides/citation/overview</a></li>
+            <li>Google Scholar: <a href="https://scholar.google.com" target="_blank" rel="noopener noreferrer">https://scholar.google.com</a></li>
+            <li>SAC Discovery (catalog and more): <a href="https://sactx.aspendiscovery.org/" target="_blank" rel="noopener noreferrer">https://sactx.aspendiscovery.org/</a></li>
+          </ul>
+          <details class="studio-drop">
+            <summary>Database links (as the SAC A to Z list gives them)</summary>
+            <div class="studio-drop-body">
+              <p>The first group is tagged "SAC Library resource." The second group is on the same A to Z list under SAC's account and is approved for this class.</p>
+              <ul id="rpDbLinksFirst">
+                <li>ProQuest One Community College: <a href="https://go.openathens.net/redirector/alamo.edu?url=https%3A%2F%2Fsearch.proquest.com%2Fpq1ccnew%3Faccountid%3D7151" target="_blank" rel="noopener noreferrer">https://go.openathens.net/redirector/alamo.edu?url=https%3A%2F%2Fsearch.proquest.com%2Fpq1ccnew%3Faccountid%3D7151</a></li>
+                <li>JSTOR: <a href="https://www.jstor.org/search" target="_blank" rel="noopener noreferrer">https://www.jstor.org/search</a></li>
+                <li>PsycARTICLES: <a href="https://go.openathens.net/redirector/alamo.edu?url=https%3A%2F%2Fsearch.ebscohost.com%2Flogin.aspx%3Fauthtype%3Dsso%26custid%3Ds9008406%26groupid%3Dmain%26profile%3Dehost%26defaultdb%3Dpdh" target="_blank" rel="noopener noreferrer">https://go.openathens.net/redirector/alamo.edu?url=https%3A%2F%2Fsearch.ebscohost.com%2Flogin.aspx%3Fauthtype%3Dsso%26custid%3Ds9008406%26groupid%3Dmain%26profile%3Dehost%26defaultdb%3Dpdh</a></li>
+                <li>Nexis Uni: <a href="https://www.nexisuni.com" target="_blank" rel="noopener noreferrer">https://www.nexisuni.com</a></li>
+                <li>CQ Researcher: <a href="https://cqpress.sagepub.com/cqresearcher/" target="_blank" rel="noopener noreferrer">https://cqpress.sagepub.com/cqresearcher/</a></li>
+                <li>Access Science: <a href="https://go.openathens.net/redirector/alamo.edu?url=https://www.accessscience.com/?implicit-login=true" target="_blank" rel="noopener noreferrer">https://go.openathens.net/redirector/alamo.edu?url=https://www.accessscience.com/?implicit-login=true</a></li>
+                <li>CINAHL Ultimate: <a href="https://go.openathens.net/redirector/alamo.edu?url=https%3A%2F%2Fsearch.ebscohost.com%2Flogin.aspx%3Fauthtype%3Dip%2Csso%26groupid%3Dmain%26custid%3Ds9008406%26profile%3Dehost%26defaultdb%3Dcul" target="_blank" rel="noopener noreferrer">https://go.openathens.net/redirector/alamo.edu?url=https%3A%2F%2Fsearch.ebscohost.com%2Flogin.aspx%3Fauthtype%3Dip%2Csso%26groupid%3Dmain%26custid%3Ds9008406%26profile%3Dehost%26defaultdb%3Dcul</a></li>
+                <li>Education Research Complete: <a href="https://go.openathens.net/redirector/alamo.edu?url=https%3A%2F%2Fsearch.ebscohost.com%2Flogin.aspx%3Fauthtype%3Dsso%26custid%3Ds9008406%26groupid%3Dmain%26profile%3Dehost%26defaultdb%3Dehh" target="_blank" rel="noopener noreferrer">https://go.openathens.net/redirector/alamo.edu?url=https%3A%2F%2Fsearch.ebscohost.com%2Flogin.aspx%3Fauthtype%3Dsso%26custid%3Ds9008406%26groupid%3Dmain%26profile%3Dehost%26defaultdb%3Dehh</a></li>
+                <li>Credo Reference: <a href="https://go.openathens.net/redirector/alamo.edu?url=https%3A%2F%2Faccess.infobase.com%2F" target="_blank" rel="noopener noreferrer">https://go.openathens.net/redirector/alamo.edu?url=https%3A%2F%2Faccess.infobase.com%2F</a></li>
+                <li>Films on Demand: Master Academic Collection: <a href="https://go.openathens.net/redirector/alamo.edu?url=https://access.infobase.com/fod?aid=18502" target="_blank" rel="noopener noreferrer">https://go.openathens.net/redirector/alamo.edu?url=https://access.infobase.com/fod?aid=18502</a></li>
+                <li>Access World News Research Collection (NewsBank, includes the San Antonio Express-News): <a href="https://infoweb.newsbank.com/apps/news/easy-search?p=WORLDNEWS" target="_blank" rel="noopener noreferrer">https://infoweb.newsbank.com/apps/news/easy-search?p=WORLDNEWS</a></li>
+              </ul>
+              <p>Also approved (TexShare and EBSCO links on the SAC A to Z list)</p>
+              <ul>
+                <li>Opposing Viewpoints In Context: <a href="https://infotrac.galegroup.com/itweb/txshracd2904?db=OVIC" target="_blank" rel="noopener noreferrer">https://infotrac.galegroup.com/itweb/txshracd2904?db=OVIC</a></li>
+                <li>Academic OneFile: <a href="https://link.gale.com/apps/AONE?u=txshracd2904" target="_blank" rel="noopener noreferrer">https://link.gale.com/apps/AONE?u=txshracd2904</a></li>
+                <li>GreenFILE: <a href="https://go.openathens.net/redirector/alamo.edu?url=https%3A%2F%2Fsearch.ebscohost.com%2Flogin.aspx%3Fauthtype%3Dsso%26custid%3Ds9008406%26groupid%3Dmain%26profile%3Dehost%26defaultdb%3D8gh" target="_blank" rel="noopener noreferrer">https://go.openathens.net/redirector/alamo.edu?url=https%3A%2F%2Fsearch.ebscohost.com%2Flogin.aspx%3Fauthtype%3Dsso%26custid%3Ds9008406%26groupid%3Dmain%26profile%3Dehost%26defaultdb%3D8gh</a></li>
+                <li>Pop Culture Studies: <a href="https://link.gale.com/apps/PPOP?u=txshracd2904" target="_blank" rel="noopener noreferrer">https://link.gale.com/apps/PPOP?u=txshracd2904</a></li>
+              </ul>
+              <p>One CQ Researcher report may count as one of your two library or Google Scholar sources.</p>
+            </div>
+          </details>
+        </section>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Research Plan helper · Case Study practice · AI Level 2</p></footer>
+    <script src="../app.js"></script>
+    <script src="docx-writer.js?v=rp1"></script>
+    <script src="research-plan.js?v=rp2"></script>
+    <script src="../../_design/tool-theme.js?v=1"></script>
+  </body>
+</html>

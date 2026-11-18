@@ -95,7 +95,13 @@
       thesisFromHelper: false,
       currentMove: 0,
       moves: { topic: "", evidence: "", analysis: "", source: "", connection: "", tie: "" },
-      checks: [null, null, null, null, null, null]
+      checks: [null, null, null, null, null, null],
+      mla: { name: "", instructor: "", course: "ENGL 1301", date: "" },
+      cited: [
+        { label: "primary", author: "", title: "", where: "" },
+        { label: "outside1", author: "", title: "", where: "" },
+        { label: "outside2", author: "", title: "", where: "" }
+      ]
     };
   }
 
@@ -114,6 +120,23 @@
       base.checks = CHECKS.map(function (_, i) {
         var v = raw.checks && raw.checks[i];
         return v === "yes" || v === "no" ? v : (v === true ? "yes" : (v === false ? "no" : null));
+      });
+      var m = raw.mla || {};
+      base.mla = {
+        name: typeof m.name === "string" ? m.name : "",
+        instructor: typeof m.instructor === "string" ? m.instructor : "",
+        course: typeof m.course === "string" && m.course.trim() ? m.course : "ENGL 1301",
+        date: typeof m.date === "string" ? m.date : ""
+      };
+      var rawCited = Array.isArray(raw.cited) ? raw.cited : [];
+      base.cited = base.cited.map(function (slot, i) {
+        var s = rawCited[i] || {};
+        return {
+          label: slot.label,
+          author: typeof s.author === "string" ? s.author : "",
+          title: typeof s.title === "string" ? s.title : "",
+          where: typeof s.where === "string" ? s.where : ""
+        };
       });
       return base;
     } catch (err) {
@@ -327,6 +350,49 @@
     renderMove(state);
     renderPreview(state);
     renderChecks(state);
+    renderMla(state);
+  }
+
+  function renderMla(state) {
+    function set(id, val) { var el = $(id); if (el) el.value = val || ""; }
+    set("bpMlaName", state.mla.name);
+    set("bpMlaInstructor", state.mla.instructor);
+    set("bpMlaCourse", state.mla.course || "ENGL 1301");
+    set("bpMlaDate", state.mla.date);
+    [["bpCiteAuthor0","bpCiteTitle0","bpCiteWhere0"],
+     ["bpCiteAuthor1","bpCiteTitle1","bpCiteWhere1"],
+     ["bpCiteAuthor2","bpCiteTitle2","bpCiteWhere2"]].forEach(function (ids, i) {
+      set(ids[0], state.cited[i].author);
+      set(ids[1], state.cited[i].title);
+      set(ids[2], state.cited[i].where);
+    });
+  }
+
+  function citationEntry(s) {
+    if (!s) return "";
+    var author = (s.author || "").replace(/\s+/g, " ").trim();
+    var title = (s.title || "").replace(/\s+/g, " ").trim();
+    var where = (s.where || "").replace(/\s+/g, " ").trim();
+    var parts = [];
+    if (author) parts.push(/[.?!]$/.test(author) ? author : author + ".");
+    if (title) {
+      var bare = title.replace(/^["']|["']$/g, "");
+      if (/[.?!]$/.test(bare)) parts.push('"' + bare + '"');
+      else parts.push('"' + bare + '."');
+    }
+    if (where) {
+      if (/^https?:\/\//i.test(where)) parts.push(where);
+      else parts.push("*" + where.replace(/^\*|\*$/g, "") + "*.");
+    }
+    return parts.join(" ").replace(/\s+/g, " ").trim();
+  }
+
+  function sortKey(entry) {
+    return String(entry || "")
+      .replace(/\*/g, "")
+      .replace(/^["']/, "")
+      .replace(/^(the|a|an)\s+/i, "")
+      .toLowerCase();
   }
 
   function copyParagraph(state) {
@@ -347,34 +413,40 @@
   }
 
   function downloadDraft(state) {
-    if (!window.DWSDocxWriter || !DWSDocxWriter.buildSimpleDocx) {
+    if (!window.DWSDocxWriter || !DWSDocxWriter.buildMlaPlanDocx) {
       setStatus("The download tool did not load. Try refreshing the page.", false);
       return;
     }
     var paragraph = assemble(state);
-    var blocks = [];
-    blocks.push({ text: "Body paragraph draft", bold: true });
-    blocks.push({ text: "ENGL 1301 · Case Study Critical Analysis" });
-    blocks.push({ blank: true });
-    blocks.push({ text: "Lens: " + (state.lens || "(not chosen yet)") });
+    var lines = [];
+    lines.push({ text: "Body paragraph draft", center: true });
+    lines.push("");
+    lines.push("Lens: " + (state.lens || "(not chosen yet)"));
     if (state.thesis && state.thesis.trim()) {
-      blocks.push({ text: "Working thesis" , bold: true });
-      blocks.push({ text: state.thesis.trim() });
+      lines.push("Working thesis: " + state.thesis.trim());
     }
-    blocks.push({ blank: true });
-    if (paragraph) {
-      blocks.push({ text: "Draft paragraph", bold: true });
-      blocks.push({ text: paragraph });
-    } else {
-      blocks.push({ text: "Add your six moves in the Body Paragraph Builder, then download again." });
-    }
+    lines.push("");
+    if (paragraph) lines.push(paragraph);
+    else lines.push("Add your six moves in the Body Paragraph Builder, then download again.");
     var missing = missingMoves(state);
     if (missing.length && paragraph) {
-      blocks.push({ blank: true });
-      blocks.push({ text: "Still to add: " + missing.join("; ") + "." });
+      lines.push("");
+      lines.push("Still to add: " + missing.join("; ") + ".");
     }
-    var blob = DWSDocxWriter.buildSimpleDocx({ paragraphs: blocks });
-    DWSDocxWriter.downloadBlob(blob, "body-paragraph-draft.docx");
+    var cited = (state.cited || []).map(citationEntry).filter(Boolean);
+    cited.sort(function (a, b) { return sortKey(a).localeCompare(sortKey(b)); });
+    var last = (DWSDocxWriter.lastNameFrom(state.mla.name) || "paragraph").replace(/[^A-Za-z0-9-]+/g, "") || "paragraph";
+    var blob = DWSDocxWriter.buildMlaPlanDocx({
+      name: state.mla.name,
+      instructor: state.mla.instructor,
+      course: state.mla.course || "ENGL 1301",
+      date: state.mla.date,
+      lastName: DWSDocxWriter.lastNameFrom(state.mla.name),
+      outlineLines: lines,
+      worksCited: cited,
+      worksCitedPrompt: "Add your primary case source and library or Google Scholar source entries above, then download again."
+    });
+    DWSDocxWriter.downloadBlob(blob, last + "-body-paragraph.docx");
     setStatus("Draft downloaded. It stays on your device.", true);
   }
 
@@ -452,6 +524,30 @@
         renderMove(state);
         renderPreview(state);
       }
+    });
+    function hookMla(id, key) {
+      var el = $(id);
+      if (!el) return;
+      el.addEventListener("input", function () {
+        state.mla[key] = el.value;
+        writeState(state);
+      });
+    }
+    hookMla("bpMlaName", "name");
+    hookMla("bpMlaInstructor", "instructor");
+    hookMla("bpMlaCourse", "course");
+    hookMla("bpMlaDate", "date");
+    [["bpCiteAuthor0","bpCiteTitle0","bpCiteWhere0"],
+     ["bpCiteAuthor1","bpCiteTitle1","bpCiteWhere1"],
+     ["bpCiteAuthor2","bpCiteTitle2","bpCiteWhere2"]].forEach(function (ids, i) {
+      ["author","title","where"].forEach(function (key, ki) {
+        var el = $(ids[ki]);
+        if (!el) return;
+        el.addEventListener("input", function () {
+          state.cited[i][key] = el.value;
+          writeState(state);
+        });
+      });
     });
     $("bpCopy").addEventListener("click", function () { copyParagraph(state); });
     $("bpDownload").addEventListener("click", function () { downloadDraft(state); });

@@ -212,6 +212,54 @@
           <p class="hint-block" id="bpPreviewLens">Lens: choose one above.</p>
           <div id="bpPreview" class="bp-preview" aria-live="polite">Your paragraph will appear here as you complete the six moves.</div>
           <p class="hint-block" id="bpPreviewMissing" hidden></p>
+
+          <h2 class="eyebrow" style="margin:1.35rem 0 0.45rem;">Download draft (MLA)</h2>
+          <p class="hint-block">Optional. Fills a Word file with MLA page setup and a Works Cited page. Your work stays in this browser until you download it.</p>
+          <div class="field-grid">
+            <label class="field">Your name
+              <input type="text" id="bpMlaName" autocomplete="name" placeholder="First Last">
+            </label>
+            <label class="field">Instructor
+              <input type="text" id="bpMlaInstructor" placeholder="Instructor name">
+            </label>
+            <label class="field">Course
+              <input type="text" id="bpMlaCourse" placeholder="ENGL 1301">
+            </label>
+            <label class="field">Date
+              <input type="text" id="bpMlaDate" placeholder="18 November 2026">
+            </label>
+          </div>
+          <h3 style="margin:1rem 0 0.35rem;">Works Cited</h3>
+          <p class="hint-block">Record the author, title, and link or database for your primary case source and your library or Google Scholar source or sources.</p>
+          <div class="field-grid">
+            <label class="field">Primary case source: author
+              <input type="text" id="bpCiteAuthor0" autocomplete="off">
+            </label>
+            <label class="field">Primary case source: title
+              <input type="text" id="bpCiteTitle0" autocomplete="off">
+            </label>
+            <label class="field">Primary case source: link or database
+              <input type="text" id="bpCiteWhere0" autocomplete="off">
+            </label>
+            <label class="field">Library or Google Scholar source: author
+              <input type="text" id="bpCiteAuthor1" autocomplete="off">
+            </label>
+            <label class="field">Library or Google Scholar source: title
+              <input type="text" id="bpCiteTitle1" autocomplete="off">
+            </label>
+            <label class="field">Library or Google Scholar source: link or database
+              <input type="text" id="bpCiteWhere1" autocomplete="off">
+            </label>
+            <label class="field">Library or Google Scholar source 2 (optional): author
+              <input type="text" id="bpCiteAuthor2" autocomplete="off">
+            </label>
+            <label class="field">Library or Google Scholar source 2 (optional): title
+              <input type="text" id="bpCiteTitle2" autocomplete="off">
+            </label>
+            <label class="field">Library or Google Scholar source 2 (optional): link or database
+              <input type="text" id="bpCiteWhere2" autocomplete="off">
+            </label>
+          </div>
           <p class="hero-actions" style="margin-top:0.75rem;">
             <button type="button" class="button primary" id="bpCopy">Copy</button>
             <button type="button" class="button" id="bpDownload">Download draft (.docx)</button>
@@ -243,8 +291,8 @@
     </main>
     <footer class="site-footer"><p>Body Paragraph Builder · Case Study practice · AI Level 2</p></footer>
     <script src="../app.js"></script>
-    <script src="docx-writer.js?v=bp1"></script>
-    <script src="body-paragraph.js?v=bp1"></script>
+    <script src="docx-writer.js?v=bpmla1"></script>
+    <script src="body-paragraph.js?v=bpmla2"></script>
     <script src="../../_design/tool-theme.js?v=1"></script>
   </body>
 </html>
