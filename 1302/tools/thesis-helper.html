@@ -9,6 +9,47 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
+    <style>
+      #gothicThesisHelp { margin-top: 1.15rem; }
+      .gothic-ladder { margin: 0.65rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.7rem; }
+      .gothic-ladder li {
+        padding: 0.7rem 0.85rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-left: 4px solid var(--terracotta, #9a5c52);
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.18);
+      }
+      .gothic-ladder .rung-label {
+        display: block;
+        font-family: Inter, system-ui, sans-serif;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: rgba(255, 248, 240, 0.78);
+        margin: 0 0 0.3rem;
+      }
+      .gothic-ladder p { margin: 0; color: var(--cream-dim, rgba(255,248,240,0.78)); }
+      #gothicNudge { margin-top: 0.75rem; }
+      #gothicNudge[hidden], #gothicThesisHelp[hidden] { display: none !important; }
+      .framework-list { display: grid; gap: 0.85rem; margin-top: 0.75rem; }
+      .framework-card {
+        padding: 0.85rem 0.95rem 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.18);
+      }
+      .framework-card h3 {
+        margin: 0 0 0.45rem;
+        font-size: 1.15rem;
+        color: #fff;
+        font-family: var(--font-display, "Cormorant Garamond", Georgia, serif);
+      }
+      .framework-line, .framework-example, .framework-note { margin: 0 0 0.45rem; }
+      .framework-line { color: #fff; }
+      .framework-example, .framework-note { color: var(--cream-dim, rgba(255,248,240,0.78)); }
+      .framework-note { font-size: 0.9rem; }
+    </style>
   </head>
   <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -37,13 +78,95 @@
       <section class="section" aria-labelledby="thTitle">
         <p class="eyebrow" data-essay-eyebrow>Practice tool · any essay</p>
         <h1 id="thTitle">Thesis generator</h1>
-        <p class="lead">Choose the essay you are practicing. For Monster Comparison, name both figures, choose three criteria you will apply to both, and state one clear insight. This tool builds 2 to 4 draft thesis options from structured templates (AI Level 2; no chatbot). Edit in your voice, then carry a thesis into the outline helper.</p>
+        <p class="lead">Choose the essay you are practicing. For Monster Comparison, name both figures, choose three criteria you will apply to both, and state one clear insight. This tool builds 2 to 4 draft thesis options from structured templates (AI Level 2. No chatbot). Edit in your voice, then carry a thesis into the outline helper.</p>
 
         <div id="essayPicker" class="essay-picker" aria-label="Essay selector"></div>
 
         <div class="callout ai" style="margin-top:1rem;">
           <strong>Practice only · you own the thesis</strong>
           <p style="margin:0;" id="essayToolCue">Avoid announcement theses (“This paper will…”). Pick an essay above for matched labels, or stay in generic mode.</p>
+        </div>
+
+        <div id="gothicThesisHelp" hidden>
+          <div class="callout" id="gothicLadderBox">
+            <strong>From a weak claim to a strong one</strong>
+            <ol class="gothic-ladder">
+              <li>
+                <span class="rung-label">1. Theme announcement</span>
+                <p>“The Tell-Tale Heart” is about guilt.</p>
+              </li>
+              <li>
+                <span class="rung-label">2. Summary</span>
+                <p>The narrator kills the old man and later hears a heartbeat under the floorboards.</p>
+              </li>
+              <li>
+                <span class="rung-label">3. Arguable how-or-why claim</span>
+                <p>The narrator’s boasts about his “acute” hearing make his guilt impossible to hide, so the sense he trusts most becomes the device that exposes him.</p>
+              </li>
+            </ol>
+            <p style="margin:0.75rem 0 0;">A strong Gothic thesis names a device or moment in the story and its effect. It is a claim a reasonable reader could disagree with.</p>
+          </div>
+
+          <div class="callout" style="margin-top:1rem;" id="gothicSelfCheck">
+            <strong>Quick self-check</strong>
+            <p style="margin:0.35rem 0 0.35rem;">Test your claim before you generate options.</p>
+            <ul class="cue-list">
+              <li>Could a reasonable reader disagree?</li>
+              <li>Does it name a story element and its effect?</li>
+              <li>Does it say how, not just that?</li>
+            </ul>
+          </div>
+
+          <details class="studio-drop" id="gothicFrameworks" style="margin-top:1rem;">
+            <summary>Thesis frameworks (optional)</summary>
+            <div class="studio-drop-body">
+              <p>These are optional sentence shapes you can adapt. They are not required templates. Use your own story and your own words.</p>
+              <div class="framework-list">
+                <article class="framework-card" data-framework="In [story], [device] [acts on a character or the reader], which [effect].">
+                  <h3>Device plus effect</h3>
+                  <p class="framework-line"><strong>Framework:</strong> In [story], [device] [acts on a character or the reader], which [effect].</p>
+                  <p class="framework-example"><strong>Example:</strong> In “The Raven,” the repeated word “Nevermore” turns each new question into an answer the speaker cannot escape, so the poem’s refrain becomes the engine of his despair.</p>
+                  <p class="framework-note">Optional: adapt in your own words.</p>
+                  <p class="hero-actions"><button type="button" class="button small ghost gothic-drop-framework">Drop framework into thesis field</button></p>
+                </article>
+                <article class="framework-card" data-framework="In [story], [device] works as a sign of [meaning] because [how it operates in the text].">
+                  <h3>Device plus meaning</h3>
+                  <p class="framework-line"><strong>Framework:</strong> In [story], [device] works as a sign of [meaning] because [how it operates in the text].</p>
+                  <p class="framework-example"><strong>Example:</strong> In “The Yellow Wallpaper,” the changing pattern the narrator traces on the wall figures the rest cure itself: the longer she is told to sit still, the more the pattern seems to trap a woman behind it.</p>
+                  <p class="framework-note">Optional: adapt in your own words.</p>
+                  <p class="hero-actions"><button type="button" class="button small ghost gothic-drop-framework">Drop framework into thesis field</button></p>
+                </article>
+                <article class="framework-card" data-framework="[Story] turns when [moment], and after that turn [what changes in meaning or effect].">
+                  <h3>A shift or turn across the story</h3>
+                  <p class="framework-line"><strong>Framework:</strong> [Story] turns when [moment], and after that turn [what changes in meaning or effect].</p>
+                  <p class="framework-example"><strong>Example:</strong> “The Fall of the House of Usher” turns when the narrator hears sounds from Madeline’s vault; the house’s supposed “sentience” is no longer only a mood, but a collapse the characters can no longer explain away.</p>
+                  <p class="framework-note">Optional: adapt in your own words.</p>
+                  <p class="hero-actions"><button type="button" class="button small ghost gothic-drop-framework">Drop framework into thesis field</button></p>
+                </article>
+                <article class="framework-card" data-framework="Although [X] seems to [familiar reading], [Y] shows [competing claim].">
+                  <h3>Counterpoint</h3>
+                  <p class="framework-line"><strong>Framework:</strong> Although [X] seems to [familiar reading], [Y] shows [competing claim].</p>
+                  <p class="framework-example"><strong>Example:</strong> Although Victor Frankenstein presents himself as a doomed seeker of knowledge, the creature’s own account shows that Victor’s refusal of care, not the experiment alone, drives the later violence.</p>
+                  <p class="framework-note">Optional: adapt in your own words.</p>
+                  <p class="hero-actions"><button type="button" class="button small ghost gothic-drop-framework">Drop framework into thesis field</button></p>
+                </article>
+                <article class="framework-card" data-framework="In [story], [element or character A] and [element or character B] [comparison], which [insight].">
+                  <h3>Comparison of two elements or characters</h3>
+                  <p class="framework-line"><strong>Framework:</strong> In [story], [element or character A] and [element or character B] [comparison], which [insight].</p>
+                  <p class="framework-example"><strong>Example:</strong> In Frankenstein, Walton’s polar quest and Victor’s experiment run side by side: both men chase a dangerous extreme of knowledge, but Walton can still turn the ship around after hearing Victor’s story.</p>
+                  <p class="framework-note">Optional: adapt in your own words.</p>
+                  <p class="hero-actions"><button type="button" class="button small ghost gothic-drop-framework">Drop framework into thesis field</button></p>
+                </article>
+                <article class="framework-card" data-framework="A critic argues that [claim about the story]. I [agree with / extend / push back]: [your claim], because [story evidence].">
+                  <h3>Critic in conversation</h3>
+                  <p class="framework-line"><strong>Framework:</strong> A critic argues that [claim about the story]. I [agree with / extend / push back]: [your claim], because [story evidence].</p>
+                  <p class="framework-example"><strong>Example:</strong> A critic might argue that the horror in “The Tell-Tale Heart” comes only from the murder. The closing scene pushes back: the narrator is undone by his need to keep talking, not only by the crime itself.</p>
+                  <p class="framework-note">Optional: adapt in your own words.</p>
+                  <p class="hero-actions"><button type="button" class="button small ghost gothic-drop-framework">Drop framework into thesis field</button></p>
+                </article>
+              </div>
+            </div>
+          </details>
         </div>
 
         <div class="tool-panel" style="margin-top:1.25rem;">
@@ -55,7 +178,7 @@
             <label class="field" data-essay-field="topicLabel">
               <span data-essay-title>Optional topic tag</span> <span class="hint">Optional</span>
               <select id="topicFolder">
-                <option value="">— select or leave blank —</option>
+                <option value="">, select or leave blank: </option>
               </select>
             </label>
             <label class="field" data-essay-field="presentsLabel" data-essay-hint="presentsHint" data-essay-placeholder="presentsPlaceholder">
@@ -66,6 +189,9 @@
               <span data-essay-title>Tension, insight, or controlling idea</span> <span class="hint">Required.</span>
               <textarea id="tensionInput" style="min-height:5rem;" placeholder="The key tension or insight is…"></textarea>
             </label>
+
+            <div class="callout warn" id="gothicNudge" hidden role="status" aria-live="polite"></div>
+
             <label class="field" data-essay-field="questionLabel" data-essay-placeholder="questionPlaceholder">
               <span data-essay-title>Optional focusing question</span> <span class="hint">Optional</span>
               <textarea id="criticalQuestion" style="min-height:4rem;" placeholder="What question guides this draft?"></textarea>
@@ -88,7 +214,7 @@
               </div>
             </fieldset>
             <fieldset class="field angle-fieldset">
-              <legend>Preferred angle <span class="hint">Pick one or more; this shapes which templates run</span></legend>
+              <legend>Preferred angle <span class="hint">Pick one or more, this shapes which templates run</span></legend>
               <div class="angle-chips" id="angleChips" role="group" aria-label="Claim angles">
                 <button type="button" class="angle-chip" data-angle="framing" aria-pressed="false">Framing</button>
                 <button type="button" class="angle-chip" data-angle="evidence" aria-pressed="false">Evidence</button>
@@ -101,7 +227,7 @@
           <div class="idea-generator" id="ideaGenerator">
             <div class="idea-generator-head">
               <h2 class="eyebrow" style="margin:0;">Topics, questions &amp; ideas</h2>
-              <p class="hint-block" style="margin:0.35rem 0 0;">Pick an essay first if you want matched starters. Suggestions are templates to edit; you own the thesis (AI Level 2).</p>
+              <p class="hint-block" style="margin:0.35rem 0 0;">Pick an essay first if you want matched starters. Suggestions are templates to edit. You own the thesis (AI Level 2).</p>
             </div>
             <div class="hero-actions" style="margin-top:0.75rem;">
               <button type="button" class="button primary" id="ideaGenerate">Suggest topics, questions &amp; ideas</button>
@@ -140,7 +266,7 @@
 
           <div id="claimResults" class="claim-results" hidden>
             <h2 class="eyebrow" style="margin-top:1.25rem;">Draft thesis options</h2>
-            <p class="hint-block">Copy one you like, edit it in your own voice, then <strong>Use this thesis</strong> to carry it into the outline helper. These are templates; verify against your notes and sources.</p>
+            <p class="hint-block">Copy one you like, edit it in your own voice, then <strong>Use this thesis</strong> to carry it into the outline helper. These are templates. Verify against your notes and sources.</p>
             <div id="claimOptions" class="claim-options" aria-live="polite"></div>
             <div class="callout" id="claimChecklist" style="margin-top:1rem;">
               <strong>After you pick one, cue check</strong>
@@ -156,18 +282,121 @@
     </main>
     <footer class="site-footer"><p>Thesis practice · AI Level 2 template generator</p></footer>
     <script src="../app.js"></script>
-    <script src="essay-context.js?v=p3same2"></script>
+    <script src="essay-context.js?v=p3type2"></script>
     <script>
-      /* Project 3 rule update (Nov 15, 2026): same story, same criticism type. Thesis page only. */
+      /* Project 3 rule update (Nov 16, 2026): same story required; same criticism type is the default, and two different types are fine if the student wants. Thesis page only. Placeholders and cue below are also thesis-page only. */
       (function () {
         var ctx = window.DWSEssayContext;
         var e = ctx && ctx.byId ? ctx.byId("project3-gothic-criticism") : null;
         if (e) {
-          e.purpose = "Write a 1,500 to 2,000 word MLA literary criticism essay on one Gothic primary text. State a contestable interpretive thesis, support it with close reading, and engage at least two peer-reviewed critics who write about the same story and use the same criticism type.";
-          e.sourceAim = "Primary text plus at least two named peer-reviewed critics on the same story who use the same criticism type.";
+          e.purpose = "Write a 1,500 to 2,000 word MLA literary criticism essay on one Gothic primary text. State a contestable interpretive thesis, support it with close reading, and use 3 to 4 sources total: the story plus 2 to 3 outside sources from JSTOR (SAC A to Z) or Google Scholar. Two must be peer-reviewed critics on the same story, usually using the same criticism type. Two different types are fine.";
+          e.sourceAim = "Use 3 to 4 sources total: the story plus 2 to 3 outside sources from JSTOR (SAC A to Z) or Google Scholar. Two must be peer-reviewed critics on the same story, usually using the same criticism type. Two different types are fine.";
+          e.subjectPlaceholder = "e.g. Edgar Allan Poe, “The Tell-Tale Heart”";
+          e.presentsPlaceholder = "e.g. A first reading notices the narrator’s careful steps and his claim that he is not mad.";
+          e.tensionPlaceholder = "e.g. The narrator’s boasts about sharp hearing make his guilt audible, so the sense he trusts most is what gives him away.";
+          e.questionPlaceholder = "e.g. How does the story’s sound imagery turn the narrator’s claim of power into self-exposure?";
+          e.presentsHint = "Required. What a first reading notices (plot or theme on the surface). Your thesis should go past this.";
+          e.tensionHint = "Required. An arguable how-or-why claim about a device or moment and its effect. Not a theme announcement or a plot summary.";
+          e.thesisCue = "Draft an interpretive thesis: an arguable how-or-why claim about a Gothic device and its effect, not a theme announcement or a plot summary.";
         }
       })();
     </script>
     <script src="tools.js?v=compare10"></script>
+    <script>
+      (function () {
+        var GOTHIC_ID = "project3-gothic-criticism";
+        var ctx = window.DWSEssayContext;
+        var help = document.getElementById("gothicThesisHelp");
+        var nudge = document.getElementById("gothicNudge");
+        var presents = document.getElementById("packetArgues");
+        var tension = document.getElementById("tensionInput");
+        var timer = null;
+        var THEME_MSG = "<strong>This still reads like a theme announcement.</strong><p style=\"margin:0.35rem 0 0;\">Name a specific device or moment in the story and the effect it has. A strong claim says how or why, not only what the story is about.</p>";
+        var SUMMARY_MSG = "<strong>This still reads like a plot summary.</strong><p style=\"margin:0.35rem 0 0;\">Keep the event if you need it, then add how a device works and what effect it has. A reasonable reader should be able to disagree.</p>";
+
+        function active() {
+          var e = ctx && ctx.getActive ? ctx.getActive() : null;
+          return e && e.id === GOTHIC_ID;
+        }
+        function setNudge(html) {
+          if (!nudge) return;
+          if (!html) {
+            nudge.hidden = true;
+            nudge.innerHTML = "";
+            return;
+          }
+          nudge.innerHTML = html;
+          nudge.hidden = false;
+        }
+        function hasHowWhy(t) {
+          return /\b(how|why|because|so that|which makes|which turns|by |through |until |in order to|becomes the|turns each)\b/.test(t);
+        }
+        function isTheme(t) {
+          if (/\bis about\b|\bare about\b|\bit'?s about\b|\btheme of\b|\bthe theme\b|\bdeals with\b|\bexplores the theme\b|\bis a story about\b|\bthis paper will\b|\bthis essay will\b/.test(t)) return true;
+          if (/\bshows that (fear|love|guilt|death|madness|evil|isolation|revenge|insanity|grief|horror|power|society|human nature|the human|loss|grief)\b/.test(t)) return true;
+          if (/^(this )?(story|poem|text|novel) (is|shows|explores|presents) [a-z][a-z]+(\s+and\s+[a-z]+)?\.?$/.test(t)) return true;
+          if (/^(fear|guilt|madness|isolation|death|revenge|grief|horror|love|evil|power|loss|insanity)(\s+and\s+(fear|guilt|madness|isolation|death|revenge|grief|horror|love|evil|power|loss|insanity))?\.?$/.test(t)) return true;
+          return false;
+        }
+        function isSummary(t) {
+          if (/\btells the story of\b|\bis a story in which\b|\bis when\b|\bbegins with\b|\bends with\b|\bthen (he|she|they|the narrator)\b/.test(t)) return true;
+          var plot = /\b(kills?|dies?|murders?|buries?|discovers?|returns?|goes to|meets?|finds?|happens|occurs|hears a heartbeat)\b/.test(t);
+          return plot && !hasHowWhy(t);
+        }
+        function classify(text) {
+          var t = (text || "").replace(/\s+/g, " ").trim().toLowerCase();
+          if (t.length < 18) return null;
+          if (isTheme(t)) return "theme";
+          if (isSummary(t)) return "summary";
+          return null;
+        }
+        function review() {
+          if (!active()) {
+            setNudge("");
+            return;
+          }
+          var texts = [tension && tension.value, presents && presents.value].filter(Boolean);
+          var kind = null;
+          texts.forEach(function (val) {
+            if (!kind) kind = classify(val);
+          });
+          if (kind === "theme") setNudge(THEME_MSG);
+          else if (kind === "summary") setNudge(SUMMARY_MSG);
+          else setNudge("");
+        }
+        function scheduleReview() {
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(review, 280);
+        }
+        function sync(essay) {
+          var on = !!(essay ? essay.id === GOTHIC_ID : active());
+          if (help) help.hidden = !on;
+          if (!on) {
+            setNudge("");
+            var fw = document.getElementById("gothicFrameworks");
+            if (fw) fw.open = false;
+          } else {
+            review();
+          }
+        }
+        if (presents) presents.addEventListener("input", scheduleReview);
+        if (tension) tension.addEventListener("input", scheduleReview);
+        if (help) {
+          help.addEventListener("click", function (ev) {
+            var btn = ev.target.closest(".gothic-drop-framework");
+            if (!btn) return;
+            var card = btn.closest(".framework-card");
+            var line = card && card.getAttribute("data-framework");
+            if (!line || !tension) return;
+            tension.value = line;
+            try { tension.dispatchEvent(new Event("input", { bubbles: true })); } catch (e) {}
+            tension.focus();
+            tension.scrollIntoView({ block: "center", behavior: "smooth" });
+          });
+        }
+        if (ctx && ctx.onChange) ctx.onChange(sync);
+        sync(ctx && ctx.getActive ? ctx.getActive() : null);
+      })();
+    </script>
   </body>
 </html>

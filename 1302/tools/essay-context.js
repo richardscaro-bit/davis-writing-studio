@@ -99,7 +99,7 @@
       studioHref: "../project3-studio.html",
       studioLabel: "Gothic Literary Criticism studio",
       label: "Project 3 · Gothic Literary Criticism",
-      purpose: "Write a 1,500–2,000 word MLA literary criticism essay on one Gothic primary text. State a contestable interpretive thesis, support it with close reading, and engage at least two peer-reviewed critics who write about the same story and use the same criticism type.",
+      purpose: "Write a 1,500 to 2,000 word MLA literary criticism essay on one Gothic primary text. State a contestable interpretive thesis, support it with close reading, and use 3 to 4 sources total: the story plus 2 to 3 outside sources from JSTOR (SAC A to Z) or Google Scholar. Two must be peer-reviewed critics on the same story, usually using the same criticism type. Two different types are fine.",
       subjectLabel: "Primary Gothic text",
       subjectHint: "Required. Poe “The Raven,” Jackson “The Lottery,” Faulkner “A Rose for Emily,” or approved comparison.",
       subjectPlaceholder: "e.g. Shirley Jackson, “The Lottery”",
@@ -116,20 +116,20 @@
       angles: [{id:"thesis",label:"Thesis"},{id:"close",label:"Close reading"},{id:"criticA",label:"Critic A"},{id:"criticB",label:"Critic B"}],
       defaultAngles: ["thesis","close","criticA"],
       claimKind: "argument",
-      ideaSeeds: {topics:["Poe, “The Raven”","Jackson, “The Lottery”","Faulkner, “A Rose for Emily”"],questions:["How do two critics using the same criticism type read {topic} differently?","What resistant evidence must your thesis face?","Which passages earn the interpretive claim?"],ideas:["Naming an approach without citing a critic does not count","Plot summary alone does not count","Map how Critic A and Critic B agree, differ, or leave a gap"]},
+      ideaSeeds: {topics:["Poe, “The Raven”","Jackson, “The Lottery”","Faulkner, “A Rose for Emily”"],questions:["How do two critics on {topic}, usually using the same criticism type, read it differently?","What resistant evidence must your thesis face?","Which passages earn the interpretive claim?"],ideas:["Naming an approach without citing a critic does not count","Plot summary alone does not count","Map how Critic A and Critic B agree, differ, or leave a gap"]},
       outlineLenses: [
         {title:"I. Introduction & thesis",topic:"Name the text and contestable interpretive claim.",cues:["Hook","Thesis","Preview of both critics"]},
         {title:"II. Close reading 1",topic:"Develop the first textual claim.",cues:["Passage","Technique","Link to thesis"]},
         {title:"III. Critic A",topic:"Engage one peer-reviewed critic and type.",cues:["Name + type","Agree/differ","Use for thesis"]},
-        {title:"IV. Critic B",topic:"Engage a second critic of the same type on the same story.",cues:["Same type","Gap or conflict","Your reply"]},
+        {title:"IV. Critic B",topic:"Engage a second critic on the same story, usually using the same criticism type. Two different types are fine.",cues:["Usually same type (different types are fine)","Gap or conflict","Your reply"]},
         {title:"V. Resistant evidence",topic:"Face an alternative reading honestly.",cues:["Counter-evidence","Reply","Protect thesis"]},
         {title:"VI. Conclusion",topic:"Restate the insight for Gothic studies readers.",cues:["Fresh restatement","So-what","No new plot"]}
       ],
-      sourceAim: "Primary text plus at least two named peer-reviewed critics on the same story who use the same criticism type.",
+      sourceAim: "Use 3 to 4 sources total: the story plus 2 to 3 outside sources from JSTOR (SAC A to Z) or Google Scholar. Two must be peer-reviewed critics on the same story, usually using the same criticism type. Two different types are fine.",
       sourcePacketLabel: "Primary / criticism",
       peerItems: [
         {id:"claim",title:"Interpretive thesis",prompt:"Is the thesis contestable and specific to this text?",placeholder:"Thesis is… / Still summary…"},
-        {id:"critics",title:"Two critics, same type",prompt:"Are two peer-reviewed critics on the same story, using the same criticism type, named and used?",placeholder:"Types… / Missing…"},
+        {id:"critics",title:"Sources (3 to 4 total)",prompt:"Are 3 to 4 sources in use: the story plus 2 to 3 outside sources from JSTOR (SAC A to Z) or Google Scholar? Two must be peer-reviewed critics on the same story, usually using the same criticism type. Two different types are fine.",placeholder:"Story plus two critics… / Missing or genre-only…"},
         {id:"close",title:"Close reading",prompt:"Do body sections use concrete passages?",placeholder:"Strongest passage… / Needs…"},
         {id:"resistant",title:"Resistant evidence",prompt:"Is an alternative reading faced?",placeholder:"Faces… / Missing…"},
         {id:"mla",title:"MLA",prompt:"Do in-text citations match Works Cited?",placeholder:"MLA looks… / Check…"},
@@ -137,7 +137,7 @@
       ],
       thesisCue: "Draft an interpretive thesis that needs two critics to stay honest.",
       outlineCue: "Interleave close reading with Critic A and Critic B.",
-      mlaCue: "Cite the primary text and both critics in MLA."
+      mlaCue: "Cite 3 to 4 sources total: the story plus 2 to 3 outside sources from JSTOR (SAC A to Z) or Google Scholar. Two must be peer-reviewed critics on the same story, usually using the same criticism type. Two different types are fine."
     },
     {
       id: "project4-public-argument",
