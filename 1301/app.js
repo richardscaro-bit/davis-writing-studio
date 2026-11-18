@@ -157,6 +157,8 @@ function getWorkspace(key) {
       brainstorm: "",
       readingNotes: "",
       outline: "",
+      researchPlan: "",
+      bodyParagraph: "",
       draft: "",
       peerReview: "",
       checklist: {}
@@ -164,6 +166,8 @@ function getWorkspace(key) {
   }
   const workspace = saved.workspaces[key];
   if (typeof workspace.brainstorm !== "string") workspace.brainstorm = "";
+  if (typeof workspace.researchPlan !== "string") workspace.researchPlan = "";
+  if (typeof workspace.bodyParagraph !== "string") workspace.bodyParagraph = "";
   return workspace;
 }
 
@@ -204,6 +208,12 @@ function studioDrop(title, inner, attrs) {
     </details>`;
 }
 
+function toolLinks(items) {
+  return `<p class="hero-actions" style="margin:0.75rem 0 0;">${items
+    .map(([href, label]) => `<a class="button small ghost" href="${escapeAttr(href)}">${escapeHtml(label)}</a>`)
+    .join("")}</p>`;
+}
+
 function renderStudioAiPolicy(key) {
   const policy = studios[key].aiPolicy;
   const body = `
@@ -231,7 +241,7 @@ function renderWritingProcessMap(key) {
     ["1", "Overview", "Know the essay task.", `#${key}Overview`],
     ["2", "Practice path", "See what each step is for.", `#${key}Schedule`],
     ["3", "Topic", "Open packet + folder links.", `#${key}Topics`],
-    ["4", "Practice", "Brainstorm → notes → outline → draft.", `#${key}Workspace`],
+    ["4", "Practice", "Brainstorm → notes → outline → research plan → body paragraph → draft.", `#${key}Workspace`],
     ["5", "Peer", "One peer review (Step 4).", `#${key}Peer`],
     ["6", "Check", "Run the practice checklist.", `#${key}Checklist`]
   ];
@@ -349,7 +359,7 @@ function renderWorkspaceFields(key, workspace) {
       <div class="workspace-heading">
         <div>
           <p class="eyebrow">Practice workspace · saves in this browser</p>
-          <h4 id="${key}WorkspaceTitle">Brainstorm → Notes → Outline → Draft</h4>
+          <h4 id="${key}WorkspaceTitle">Brainstorm → Notes → Outline → Research Plan → Body paragraph → Draft</h4>
         </div>
         <button type="button" class="button small ghost" data-clear-workspace="${escapeAttr(key)}">Clear local draft</button>
       </div>
@@ -384,6 +394,7 @@ function renderWorkspaceFields(key, workspace) {
           <span class="hint">Topic Selection and Case Study Preview: what case are you analyzing, and why does it matter?</span>
           <textarea data-field="previewNotes" placeholder="Case name, topic folder, first critical question…">${escapeHtml(workspace.previewNotes)}</textarea>
         </label>
+        ${toolLinks([["tools/critical-question.html", "Critical question developer"]])}
       `)}
       ${studioDrop("Brainstorming", `
         <label class="field">Brainstorming (before a working thesis)
@@ -402,12 +413,28 @@ function renderWorkspaceFields(key, workspace) {
           <span class="hint">Outline / Research Plan: a thesis that previews all five lenses, in order, five body sections in that order, two cited packet details in each, and exactly 2 outside sources. Every body section uses the packet plus one or both of them</span>
           <textarea data-field="outline" placeholder="Working thesis that previews all five lenses, in order: Framing, Stakeholders, Evidence, Assumptions, Limits…&#10;Five body sections in that order, each with packet detail 1 and packet detail 2…&#10;Every body section uses the packet plus one or both of your exactly 2 outside sources…">${escapeHtml(workspace.outline)}</textarea>
         </label>
+        ${toolLinks([["tools/thesis-helper.html", "Thesis generator"], ["tools/outline-helper.html", "Outline / topic sentences"]])}
+      `)}
+      ${studioDrop("Research Plan", `
+        <label class="field">Research Plan
+          <span class="hint">Plan your ethics point and two library or Google Scholar sources, with a purpose line for each.</span>
+          <textarea data-field="researchPlan" placeholder="Ethics (Limits or any lens where it fits): …&#10;Library or Google Scholar source 1, and its purpose: …&#10;Library or Google Scholar source 2, and its purpose: …">${escapeHtml(workspace.researchPlan)}</textarea>
+        </label>
+        ${toolLinks([["tools/research-plan.html", "Research Plan helper"]])}
+      `)}
+      ${studioDrop("Body paragraph (six moves)", `
+        <label class="field">Body paragraph (six moves)
+          <span class="hint">Draft one body section in six moves: topic sentence, primary case evidence, analysis, a library or Google Scholar source, a connection back to the case, and a tie to the thesis.</span>
+          <textarea data-field="bodyParagraph" placeholder="Topic sentence (name the lens): …&#10;Primary case evidence with a citation: …&#10;Analysis: …&#10;Library or Google Scholar source: …&#10;Connection back to the primary case: …&#10;Tie back to the thesis: …">${escapeHtml(workspace.bodyParagraph)}</textarea>
+        </label>
+        ${toolLinks([["tools/body-paragraph.html", "Body paragraph builder"]])}
       `)}
       ${studioDrop("Working draft", `
         <label class="field">Working draft
           <span class="hint">Working Draft: aim toward full essay length. Keep two cited packet details in each section. Every body section uses the packet plus one or both of your exactly 2 outside sources.</span>
           <textarea data-field="draft" style="min-height:14rem" placeholder="Draft body…">${escapeHtml(workspace.draft)}</textarea>
         </label>
+        ${toolLinks([["tools/mla-citation.html", "MLA citation generator"]])}
       `)}
       <p class="save-status" data-save-status aria-live="polite"></p>
     </section>
@@ -424,6 +451,7 @@ function renderWorkspaceFields(key, workspace) {
       <label class="field">Peer feedback notes
         <textarea data-field="peerReview" placeholder="What is strong in the thesis? Where does evidence need work? Does the thesis preview all five lenses, in order?">${escapeHtml(workspace.peerReview)}</textarea>
       </label>
+      ${toolLinks([["tools/peer-review-checklist.html", "Peer-review checklist"]])}
     </section>
     `)}
   `;
@@ -502,7 +530,7 @@ function renderCaseStudyStudio(key) {
         </div>
         <aside class="studio-launch-card" aria-label="Jump to a studio block">
           <strong>Jump to a block</strong>
-          <span>Topic picker → brainstorm / notes / outline / draft → peer notes → practice checklist. Practice path, Tools, and Resources stay linked from the top of the page.</span>
+          <span>Topic picker → brainstorm / notes / outline / research plan / body paragraph / draft → peer notes → practice checklist. Practice path, Tools, and Resources stay linked from the top of the page.</span>
           <div class="studio-launch-actions">
             <a class="button small primary" href="#${key}Topics">Topic picker</a>
             <a class="button small ghost" href="weeks.html">Practice path</a>
@@ -626,6 +654,8 @@ function handleStudioPanelClick(event) {
       brainstorm: "",
       readingNotes: "",
       outline: "",
+      researchPlan: "",
+      bodyParagraph: "",
       draft: "",
       peerReview: "",
       checklist: {}
