@@ -1,0 +1,255 @@
+/* Light theme rules for course hubs, studios, resources, weeks, guides,
+   the gothic template, the tutor page, and the root hub.
+   Dark mode keeps the current charcoal look. Tool pages also load this
+   file so shared components stay in sync. Toggle styles live in
+   tool-theme.css. */
+
+/* --------------------------------------------------------------------------
+   Root hub (charcoal magazine layout)
+   -------------------------------------------------------------------------- */
+html[data-theme="light"] body.opt {
+  color: var(--ink);
+  background:
+    radial-gradient(120% 80% at 10% -10%, rgba(138, 78, 69, 0.06), transparent 45%),
+    radial-gradient(90% 60% at 100% 0%, rgba(90, 84, 76, 0.05), transparent 50%),
+    linear-gradient(180deg, #f8f4ec 0%, #f7f3eb 42%, #f3eee4 100%);
+  background-attachment: fixed;
+}
+html[data-theme="light"] .opt-c {
+  background: #f7f3eb;
+}
+html[data-theme="light"] .opt-top {
+  background: rgba(255, 253, 248, 0.96);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 1px 0 rgba(138, 78, 69, 0.18);
+}
+html[data-theme="light"] .opt-top .brand,
+html[data-theme="light"] .opt-top .brand:hover {
+  color: var(--ink);
+}
+html[data-theme="light"] .opt-top .brand-lockup > span {
+  color: var(--muted);
+}
+html[data-theme="light"] .opt-top .hub-under-mark {
+  filter: drop-shadow(0 2px 6px rgba(60, 52, 44, 0.18));
+}
+html[data-theme="light"] .opt-top nav a {
+  color: var(--muted);
+}
+html[data-theme="light"] .opt-top nav a[aria-current="page"],
+html[data-theme="light"] .opt-top nav a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--terracotta);
+}
+html[data-theme="light"] .opt-top .theme-toggle {
+  margin-left: 0.35rem;
+}
+html[data-theme="light"] .opt-c .mag-intro h1 {
+  color: var(--ink);
+}
+html[data-theme="light"] .opt-c .mag-intro .lead,
+html[data-theme="light"] .opt-footer {
+  color: var(--cream-dim);
+}
+html[data-theme="light"] .opt-c .hub-dragon-rule {
+  filter: brightness(0.35) saturate(0.85);
+  opacity: 0.9;
+}
+
+/* Course tiles sit on dark photos, so type and pills stay light for contrast. */
+html[data-theme="light"] .opt-c .tile,
+html[data-theme="light"] .opt-c .tile:hover,
+html[data-theme="light"] .opt-c .tile-copy strong {
+  color: #fff;
+}
+html[data-theme="light"] .opt-c .tile-copy p {
+  color: #f4f1ea;
+}
+html[data-theme="light"] .opt-c .tile-copy .kicker {
+  color: #e4c4b8;
+}
+html[data-theme="light"] .opt-c .tile-copy .status-pill,
+html[data-theme="light"] .opt-c .tile .status-pill {
+  background: rgba(154, 92, 82, 0.45);
+  color: #f7f1ea;
+  border-color: rgba(232, 201, 190, 0.55);
+}
+html[data-theme="light"] .opt-c .tile {
+  box-shadow: 0 16px 36px rgba(60, 52, 44, 0.16);
+}
+html[data-theme="light"] .opt-c .tile:hover {
+  box-shadow: 0 22px 44px rgba(60, 52, 44, 0.22);
+}
+
+/* --------------------------------------------------------------------------
+   Tutor page (hard-coded light type on charcoal)
+   -------------------------------------------------------------------------- */
+html[data-theme="light"] .tutor-intro h1,
+html[data-theme="light"] .tutor-layout h2,
+html[data-theme="light"] .tutor-mode strong {
+  color: var(--ink);
+}
+html[data-theme="light"] .tutor-mode {
+  color: var(--ink);
+  background: rgba(138, 78, 69, 0.1);
+  border-color: rgba(138, 78, 69, 0.4);
+}
+html[data-theme="light"] .tutor-small,
+html[data-theme="light"] .tutor-empty {
+  color: var(--muted);
+}
+html[data-theme="light"] .tutor-log {
+  background: var(--cream-panel);
+  border-color: var(--line);
+  color: var(--ink);
+}
+html[data-theme="light"] .msg.assistant {
+  background: #f6f1e8;
+  border-color: var(--line);
+  color: var(--ink);
+}
+html[data-theme="light"] .msg.assistant .who {
+  color: var(--terracotta);
+}
+html[data-theme="light"] .msg .demo-tag {
+  color: var(--muted);
+}
+html[data-theme="light"] .attach-btn,
+html[data-theme="light"] .attach-chip,
+html[data-theme="light"] .attach-chip .chip-remove {
+  background: #fff;
+  border-color: var(--line);
+  color: var(--ink);
+}
+html[data-theme="light"] .attach-btn:hover,
+html[data-theme="light"] .attach-chip .chip-remove:hover {
+  background: var(--cream-panel);
+  color: var(--ink);
+}
+html[data-theme="light"] .attach-chip .chip-meta {
+  color: var(--muted);
+}
+html[data-theme="light"] .tutor-chat.dragging .attach-drop-hint {
+  background: rgba(138, 78, 69, 0.12);
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   Shared leftovers on course pages
+   -------------------------------------------------------------------------- */
+html[data-theme="light"] .dws-source-aids th,
+html[data-theme="light"] .dws-source-aids td {
+  background: var(--cream-panel);
+}
+
+/* Botanical cream and sage boxes already use dark ink. Keep them as they are. */
+
+/* Ombre card backgrounds in section-charcoal.css are hard-coded charcoal
+   gradients. Those selectors beat the general light-theme card rules, so
+   these repeats keep cream and sage washes readable. */
+html[data-theme="light"] .dashboard-link-grid .dashboard-link-card:nth-child(4n+1),
+html[data-theme="light"] .student-path-grid a:nth-child(4n+1),
+html[data-theme="light"] .week-stepper .week-card:nth-child(5n+1),
+html[data-theme="light"] .resource-list .resource-card:nth-child(6n+1),
+html[data-theme="light"] .tool-grid .tool-card:nth-child(5n+1),
+html[data-theme="light"] .topic-card:nth-child(3n+1),
+html[data-theme="light"] .claim-option:nth-child(3n+1),
+html[data-theme="light"] .outline-section:nth-child(3n+1),
+html[data-theme="light"] .source-row:nth-child(3n+1),
+html[data-theme="light"] .peer-check-item:nth-child(3n+1),
+html[data-theme="light"] .kw-query-list li:nth-child(3n+1) {
+  background: linear-gradient(155deg, #fffef9 0%, #f6f1e8 100%);
+  border-color: var(--line);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+}
+html[data-theme="light"] .dashboard-link-grid .dashboard-link-card:nth-child(4n+2),
+html[data-theme="light"] .student-path-grid a:nth-child(4n+2),
+html[data-theme="light"] .week-stepper .week-card:nth-child(5n+2),
+html[data-theme="light"] .resource-list .resource-card:nth-child(6n+2),
+html[data-theme="light"] .tool-grid .tool-card:nth-child(5n+2),
+html[data-theme="light"] .topic-card:nth-child(3n+2),
+html[data-theme="light"] .claim-option:nth-child(3n+2),
+html[data-theme="light"] .outline-section:nth-child(3n+2),
+html[data-theme="light"] .source-row:nth-child(3n+2),
+html[data-theme="light"] .peer-check-item:nth-child(3n+2),
+html[data-theme="light"] .kw-query-list li:nth-child(3n+2) {
+  background: linear-gradient(205deg, #fffef9 0%, #f3f4ee 100%);
+  border-color: var(--line);
+  border-top: 3px solid rgba(138, 78, 69, 0.45);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+}
+html[data-theme="light"] .dashboard-link-grid .dashboard-link-card:nth-child(4n+3),
+html[data-theme="light"] .student-path-grid a:nth-child(4n+3),
+html[data-theme="light"] .week-stepper .week-card:nth-child(5n+3),
+html[data-theme="light"] .resource-list .resource-card:nth-child(6n+3),
+html[data-theme="light"] .tool-grid .tool-card:nth-child(5n+3),
+html[data-theme="light"] .topic-card:nth-child(3n+3),
+html[data-theme="light"] .claim-option:nth-child(3n+3),
+html[data-theme="light"] .outline-section:nth-child(3n+3),
+html[data-theme="light"] .source-row:nth-child(3n+3),
+html[data-theme="light"] .peer-check-item:nth-child(3n+3),
+html[data-theme="light"] .kw-query-list li:nth-child(3n+3) {
+  background: linear-gradient(180deg, #fffef9 0%, #f4efe6 100%);
+  border-color: var(--line);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+}
+html[data-theme="light"] .dashboard-link-grid .dashboard-link-card:nth-child(4n+4),
+html[data-theme="light"] .student-path-grid a:nth-child(4n+4),
+html[data-theme="light"] .week-stepper .week-card:nth-child(5n+4),
+html[data-theme="light"] .resource-list .resource-card:nth-child(6n+4),
+html[data-theme="light"] .tool-grid .tool-card:nth-child(5n+4) {
+  background: linear-gradient(140deg, #fffef9 0%, #f8f3ea 100%);
+  border-color: var(--line);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+}
+html[data-theme="light"] .week-stepper .week-card:nth-child(5n+5),
+html[data-theme="light"] .resource-list .resource-card:nth-child(6n+5),
+html[data-theme="light"] .tool-grid .tool-card:nth-child(5n+5) {
+  background: linear-gradient(220deg, #fffef9 0%, #f3eee4 100%);
+  border-color: var(--line);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+}
+html[data-theme="light"] .resource-list .resource-card:nth-child(6n+6) {
+  background: linear-gradient(170deg, #fffef9 0%, #f7f2e9 100%);
+  border-color: var(--line);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+}
+
+html[data-theme="light"] .studio-summary,
+html[data-theme="light"] .studio-week-plan,
+html[data-theme="light"] .studio-canvas-panel,
+html[data-theme="light"] .workspace-block,
+html[data-theme="light"] .topic-picker,
+html[data-theme="light"] .final-checklist,
+html[data-theme="light"] .tool-panel,
+html[data-theme="light"] .studio-launch-card,
+html[data-theme="light"] .welcome-dashboard {
+  background: linear-gradient(165deg, #fffef9 0%, #f6f1e8 100%);
+  border-color: var(--line);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+}
+
+html[data-theme="light"] .dashboard-link-card strong,
+html[data-theme="light"] .dashboard-link-card span,
+html[data-theme="light"] .student-path-grid strong,
+html[data-theme="light"] .student-path-grid span,
+html[data-theme="light"] .resource-list .resource-card h3,
+html[data-theme="light"] .week-card h5,
+html[data-theme="light"] .tool-card strong {
+  color: var(--ink);
+}
+html[data-theme="light"] .dashboard-link-card small,
+html[data-theme="light"] .student-path-grid small,
+html[data-theme="light"] .resource-list .resource-card p,
+html[data-theme="light"] .week-card p,
+html[data-theme="light"] .week-card ul,
+html[data-theme="light"] .tool-card small {
+  color: var(--cream-dim);
+}

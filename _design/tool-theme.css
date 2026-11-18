@@ -1,6 +1,7 @@
-/* Light work theme and theme toggle for tool pages only.
-   Course hubs, landing pages, resources, practice path, and tutor stay on the
-   charcoal theme. This file is loaded only from /1301/tools and /1302/tools. */
+/* Light work theme and theme toggle for the Writing Studio.
+   Loaded on tool pages and on the rest of the site. Tool pages default to
+   light. Course hubs and other charcoal pages default to dark unless the
+   shared dws-tool-theme key already says light. */
 
 /* --------------------------------------------------------------------------
    Toggle button

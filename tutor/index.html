@@ -1,15 +1,32 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tutor | Davis Writing Studio</title>
+        <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("dws-tool-theme");
+          if (t === "light") document.documentElement.setAttribute("data-theme", "light");
+          else document.documentElement.setAttribute("data-theme", "dark");
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      })();
+    </script>
+    <style>
+      html { background: #1e1c1a; color-scheme: dark; }
+      html[data-theme="light"] { background: #f7f3eb; color-scheme: light; }
+    </style>
+<title>Tutor | Davis Writing Studio</title>
     <meta name="description" content="Davis Writing Studio Tutor: a writing coach for ENGL 1301, 1302, 2311, and 2328 (live test).">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="tutor.css?v=20261116-rest1">
-  </head>
+      <link rel="stylesheet" href="../_design/tool-theme.css?v=2">
+    <link rel="stylesheet" href="../_design/site-theme.css?v=2">
+</head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
     <header class="topbar" aria-label="Studio navigation">
@@ -117,5 +134,6 @@
     <script src="config.js?v=20261112-grammar"></script>
     <script src="attach.js?v=20261116-attach"></script>
     <script src="tutor.js?v=20261116-rest1"></script>
+    <script src="../_design/tool-theme.js?v=2"></script>
   </body>
 </html>

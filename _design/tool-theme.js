@@ -1,5 +1,6 @@
-/* Theme toggle for Writing Studio tool pages.
-   Default is light. Choice is stored in this browser only. */
+/* Theme toggle for the Writing Studio.
+   Tool pages default to light. Other pages default to dark unless
+   this browser already stored a choice under dws-tool-theme. */
 (function () {
   var KEY = "dws-tool-theme";
 
@@ -42,7 +43,7 @@
   function place() {
     var headerBtn = makeButton();
     headerBtn.classList.add("theme-toggle-header");
-    var header = document.querySelector("header.topbar");
+    var header = document.querySelector("header.topbar") || document.querySelector("header.opt-top");
     var navToggle = header && header.querySelector(".nav-toggle");
     if (header) {
       if (navToggle) header.insertBefore(headerBtn, navToggle);
