@@ -14,20 +14,22 @@
 | Path | Course | Contents |
 |------|--------|----------|
 | `/` | Hub | Option C charcoal magazine collage → 1301 / 1302 / 2311 / 2328 |
-| `/1301/` | ENGL 1301 | **Home · Resources · Weeks · Tools · Case Study studio** (+ Comparison/Exposition coming-later stubs) |
-| `/1302/` | ENGL 1302 | Same subpage skeleton (Coming soon) |
-| `/2311/` | ENGL 2311 | Same subpage skeleton (Coming soon) |
-| `/2328/` | ENGL 2328 | Same subpage skeleton (Coming soon) |
-| `/tutor/` | Tutor (test) | Course picker and optional stage, chat saved only in the browser, Test mode until `tutor/config.js` has a proxy URL. Proxy code in `_tutor_proxy/`. |
+| `/1301/` | ENGL 1301 | Home · Resources · Weeks · Tools · dedicated studios (Case Study, Field Guide, Monster Comparison, Facing the Unknown) |
+| `/1302/` | ENGL 1302 | Eight essay studios and practice path |
+| `/2311/` | ENGL 2311 | Technical & Business Writing stages |
+| `/2328/` | ENGL 2328 | American Literature stages |
+| `/tutor/` | Tutor | Course picker and optional stage, chat saved only in the browser. |
 
 ### ENGL 1301 subpages
 
 - `index.html` — short course home / dashboard  
 - `resources.html` — Drive packets, handouts, OER, AI Level 2  
-- `weeks.html` — W11–15 Case Study checkpoints  
-- `tools/` — thesis/claim helper, MLA practice generator, coming-later slots  
-- `case-study-studio.html` — live Essay 3 workspace  
-- `comparison-studio.html` / `exposition-studio.html` — **coming later** stubs only  
+- `weeks.html` — Practice path for any essay  
+- `tools/` — thesis helper, outline, MLA, source log, peer checklist, keyword generator, and more  
+- `case-study-studio.html` — live Case Study Critical Analysis workspace  
+- `field-guide-studio.html` — Cultural Place Field Guide  
+- `spring-monster-comparison-studio.html` — Monster Comparison (essay-first)  
+- `facing-the-unknown-studio.html` — Facing the Unknown  
 
 Shared section chrome: `_design/section-charcoal.css` (hub Option C stays in `_design/hub-charcoal-options.css`).
 
@@ -42,7 +44,7 @@ Then open http://127.0.0.1:8765/
 
 ## Content shift (Oct 28)
 
-Essay 3 is **Case Study critical analysis**. Final: 1,000–1,500 words MLA, due Sun Dec 6, 2026 11:59 p.m. CT. Outside sources: **3–4** beyond the packet. Studio sequence: in-class case demo → **brainstorming** → reading notes → outline/thesis → draft + peer → final. Packet Source Packets / Case Briefs are the unit readings. Student-facing UI uses full assignment titles (no A01–A05 codes). Other essay types will be added later. Live student practice space.
+Essay 3 is **Case Study critical analysis**. Final: 1,000–1,500 words MLA, due Sun Dec 6, 2026 11:59 p.m. CT. Outside sources: **exactly 2** beyond the packet. Studio sequence: in-class case demo → **brainstorming** → reading notes → outline/thesis → draft + peer → final. Packet Source Packets / Case Briefs are the unit readings. Student-facing UI uses full assignment titles (no A01–A05 codes). Other essay types are available in dedicated studios or Tools.
 
 ## Source
 
