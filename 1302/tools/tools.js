@@ -136,9 +136,12 @@
   }
 
   function readThesisInputs() {
+    const p3 = (window.DWSP3CriticTypes && DWSP3CriticTypes.isP3 && DWSP3CriticTypes.isP3())
+      ? DWSP3CriticTypes.get()
+      : null;
     return {
       caseName: ($("#caseName")?.value || "").trim(),
-      topicFolder: ($("#topicFolder")?.value || "").trim(),
+      topicFolder: (p3 && p3.topicFolder) || ($("#topicFolder")?.value || "").trim(),
       packetArgues: ($("#packetArgues")?.value || "").trim(),
       tension: ($("#tensionInput")?.value || "").trim(),
       question: ($("#criticalQuestion")?.value || "").trim(),
@@ -389,11 +392,24 @@
       });
     }
     const seen = new Set();
-    return options.filter((o) => {
+    let out = options.filter((o) => {
       if (seen.has(o.text)) return false;
       seen.add(o.text);
       return true;
     }).slice(0, 4);
+    const essayNow = (typeof activeEssay === "function") ? activeEssay() : null;
+    if (essayNow && essayNow.id === "project3-gothic-criticism" && window.DWSP3CriticTypes) {
+      const typ = window.DWSP3CriticTypes.get();
+      if (typ && typ.phrase) {
+        const add = " This plan uses " + typ.phrase + ".";
+        out = out.map((opt) => {
+          if (!opt || !opt.text) return opt;
+          if (/this plan uses /i.test(opt.text)) return opt;
+          return Object.assign({}, opt, { text: String(opt.text).replace(/\s+$/, "") + add });
+        });
+      }
+    }
+    return out;
   }
 
   function renderClaimOptions(options) {
@@ -1024,7 +1040,11 @@
     const tension = trimSnippet(inputs.tension, 110) || "the central tension or insight";
     const claim = trimSnippet(inputs.claim, 200) || "Working thesis / controlling idea";
     const question = trimSnippet(inputs.question || "", 120);
-    const topicFolder = trimSnippet(inputs.topicFolder || "", 80);
+    let topicFolder = trimSnippet(inputs.topicFolder || "", 80);
+    const p3Types = (essay && essay.id === "project3-gothic-criticism" && window.DWSP3CriticTypes)
+      ? window.DWSP3CriticTypes.get()
+      : null;
+    if (p3Types && p3Types.topicFolder) topicFolder = trimSnippet(p3Types.topicFolder, 80);
     const sourcesNote = trimSnippet(inputs.sourcesNote, 160);
     const lenses = (essay && essay.outlineLenses && essay.outlineLenses.length)
       ? essay.outlineLenses
@@ -1295,12 +1315,45 @@
       };
     });
 
+    if (p3Types) {
+      sections.forEach((sec) => {
+        const title = String(sec.title || "");
+        if (/introduction/i.test(title) && p3Types.summary) {
+          const line = "Criticism type or types: " + p3Types.summary;
+          if (!(sec.cues || []).some((c) => String(c).indexOf("Criticism type or types:") === 0)) {
+            sec.cues = (sec.cues || []).concat([line]);
+            sec.bullets = (sec.cues || []).slice();
+          }
+        }
+        if (/Critic A/i.test(title)) {
+          const typ = p3Types.mode === "different" ? p3Types.type1 : p3Types.typeSame;
+          if (typ) {
+            sec.topic = "Engage a peer-reviewed critic who uses a " + typ + " approach on " + caseName + ", and show how that reading supports or complicates the claim.";
+            sec.cues = [typ + " approach", "Agree, extend, or differ", "Use for thesis"];
+            sec.bullets = sec.cues.slice();
+          }
+        }
+        if (/Critic B/i.test(title)) {
+          if (p3Types.mode === "different" && p3Types.type2) {
+            sec.topic = "Engage a second peer-reviewed critic who uses a " + p3Types.type2 + " approach on the same story. Two different types are the plan here.";
+            sec.cues = [p3Types.type2 + " approach", "Gap or conflict", "Your reply"];
+            sec.bullets = sec.cues.slice();
+          } else if (p3Types.typeSame) {
+            sec.topic = "Engage a second peer-reviewed critic on the same story, using the same " + p3Types.typeSame + " approach. Two different types are also allowed.";
+            sec.cues = ["Same type: " + p3Types.typeSame, "Gap or conflict", "Your reply"];
+            sec.bullets = sec.cues.slice();
+          }
+        }
+      });
+    }
+
     return {
       claim,
       caseName,
       tension,
       question: question || "",
       topicFolder: topicFolder || "",
+      criticTypes: p3Types || null,
       essayId: (essay && essay.id) || "",
       essayLabel: essayLabel(),
       sections
@@ -1369,7 +1422,11 @@
 
   function outlinePlainText(skeleton) {
     if (!skeleton) return "";
-    const lines = ["Working thesis: " + skeleton.claim, ""];
+    const lines = ["Working thesis: " + skeleton.claim];
+    if (skeleton.criticTypes && skeleton.criticTypes.summary) {
+      lines.push("Criticism type or types: " + skeleton.criticTypes.summary + ".");
+    }
+    lines.push("");
     skeleton.sections.forEach((sec) => {
       lines.push(sec.title);
       lines.push((sec.sentenceLabel || (sec.isTopicSentence === false ? "Section plan" : "Topic sentence")) + ": " + sec.topic);
@@ -1429,6 +1486,11 @@
       const thesisIn = loadJSON(KEYS.thesisInputs, null) || {};
       inputs.question = inputs.question || chosenNow.question || thesisIn.question || "";
       inputs.topicFolder = inputs.topicFolder || chosenNow.topicFolder || thesisIn.topicFolder || "";
+      if (window.DWSP3CriticTypes && DWSP3CriticTypes.isP3 && DWSP3CriticTypes.isP3()) {
+        const typ = DWSP3CriticTypes.get();
+        if (typ && typ.topicFolder) inputs.topicFolder = typ.topicFolder;
+        inputs.criticTypeMode = typ ? typ.mode : "";
+      }
       inputs.criteria = inputs.criteria || chosenNow.criteria || thesisIn.criteria || [];
       const skeleton = buildOutline(inputs);
       saveJSON(KEYS.outlineInputs, inputs);

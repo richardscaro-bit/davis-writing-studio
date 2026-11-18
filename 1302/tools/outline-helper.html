@@ -9,6 +9,32 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
+
+    <style>
+      .p3-critic-types, .mla-download-plan {
+        margin-top: 1.15rem;
+        padding: 0.95rem 1rem 1.05rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.18);
+      }
+      .p3-critic-legend { margin: 0 0 0.55rem; }
+      .p3-canvas-rule { margin: 0.65rem 0 0; color: var(--cream-dim, rgba(255,248,240,0.78)); }
+      .p3-critic-mode { border: 0; margin: 0 0 0.75rem; padding: 0; display: grid; gap: 0.4rem; }
+      .p3-critic-mode label { display: flex; gap: 0.45rem; align-items: flex-start; }
+      .p3-type-row { display: block; margin: 0 0 0.65rem; }
+      .p3-type-custom { margin-top: 0.4rem; }
+      .mla-download-plan h2 { margin: 0 0 0.35rem; }
+      #mlaPlanPrimaryPreview { margin: 0.4rem 0; }
+      #mlaPlanPrimaryFlag { margin: 0.4rem 0 0; }
+      #mlaPlanPrimaryFlag[hidden],
+      [data-p3-same][hidden],
+      [data-p3-different][hidden],
+      #mlaPlanAnthologyFields[hidden],
+      #mlaPlanWebsiteFields[hidden] { display: none !important; }
+      .field-grid label[hidden],
+      label.field[hidden] { display: none !important; }
+    </style>
   </head>
   <body>
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -64,6 +90,8 @@
             </label>
           </div>
 
+          <div id="p3CriticTypes" class="p3-critic-types-host" hidden></div>
+
           <div class="hero-actions">
             <button type="button" class="button primary" id="outlineGenerate">Generate outline + topic sentences</button>
             <button type="button" class="button ghost" id="outlineClear">Clear</button>
@@ -78,9 +106,80 @@
             <div class="outline-toolbar">
               <h2 class="eyebrow" style="margin:0;">Practice outline skeleton</h2>
               <button type="button" class="button small ghost" id="outlineCopyAll">Copy all</button>
+              <button type="button" class="button small" id="outlineDownloadPlanBar">Download plan (MLA)</button>
             </div>
             <div id="outlineBody" class="outline-body" aria-live="polite"></div>
             <p class="hint-block" style="margin-top:1rem;" id="outlineHint">Topic sentences appear on body sections only. Intro and conclusion use opening and closing plans. For research next steps for your pair, open Keyword generator.</p>
+          </div>
+
+          <div id="mlaDownloadPlan" class="mla-download-plan">
+            <h2>Download plan (MLA)</h2>
+            <p class="hint-block" style="margin:0 0 0.75rem;">Optional. Fills a Word file with MLA page setup so you can keep working in your own document. Your work stays in this browser until you download it.</p>
+            <div class="field-grid">
+              <label class="field">Your name
+                <input type="text" id="mlaPlanName" autocomplete="name" placeholder="First Last">
+              </label>
+              <label class="field">Instructor
+                <input type="text" id="mlaPlanInstructor" placeholder="Instructor name">
+              </label>
+              <label class="field">Course
+                <input type="text" id="mlaPlanCourse" placeholder="ENGL 1302">
+              </label>
+              <label class="field">Date
+                <input type="text" id="mlaPlanDate" placeholder="18 November 2026">
+              </label>
+            </div>
+            <h3 style="margin:1rem 0 0.35rem;">Primary source</h3>
+            <p class="hint-block" style="margin:0 0 0.65rem;">The story you are writing about. The download builds one MLA 9 entry from these fields. Missing pieces are flagged instead of guessed.</p>
+            <div class="field-grid">
+              <label class="field">Author
+                <input type="text" id="mlaPlanAuthor" placeholder="e.g. Edgar Allan Poe">
+              </label>
+              <label class="field">Story title
+                <input type="text" id="mlaPlanStory" placeholder='e.g. The Tell-Tale Heart'>
+              </label>
+            </div>
+            <fieldset class="field" style="margin-top:0.75rem;">
+              <legend>Where you read it</legend>
+              <label><input type="radio" name="mlaPlanKind" value="anthology" checked> Anthology or book</label>
+              <label><input type="radio" name="mlaPlanKind" value="website"> Website</label>
+            </fieldset>
+            <div id="mlaPlanAnthologyFields" class="field-grid" style="margin-top:0.75rem;">
+              <label class="field">Anthology title
+                <input type="text" id="mlaPlanAnthology" placeholder="Book title">
+              </label>
+              <label class="field">Editor
+                <input type="text" id="mlaPlanEditor" placeholder="First Last">
+              </label>
+              <label class="field">Publisher
+                <input type="text" id="mlaPlanPublisher">
+              </label>
+              <label class="field">Year
+                <input type="text" id="mlaPlanYear" placeholder="2020">
+              </label>
+              <label class="field">Pages
+                <input type="text" id="mlaPlanPages" placeholder="e.g. 88-93">
+              </label>
+            </div>
+            <div id="mlaPlanWebsiteFields" class="field-grid" style="margin-top:0.75rem;" hidden>
+              <label class="field">Website name
+                <input type="text" id="mlaPlanWebsite">
+              </label>
+              <label class="field">URL
+                <input type="url" id="mlaPlanUrl" placeholder="https://">
+              </label>
+              <label class="field">Access date <span class="hint">Optional</span>
+                <input type="text" id="mlaPlanAccess" placeholder="18 Nov. 2026">
+              </label>
+            </div>
+            <p id="mlaPlanPrimaryPreview" class="hint-block"></p>
+            <div class="callout warn" id="mlaPlanPrimaryFlag" hidden></div>
+            <label class="field" style="margin-top:0.85rem;">Works Cited entries <span class="hint">One MLA entry per line for your critics (and any other sources). They are sorted with your primary entry on download. Need help writing an entry? Open the <a href="mla-citation.html">MLA citation tool</a>.</span>
+              <textarea id="mlaPlanEntries" style="min-height:6.5rem;" placeholder="Paste one critic entry per line."></textarea>
+            </label>
+            <p class="hero-actions" style="margin-top:0.85rem;">
+              <button type="button" class="button primary" id="outlineDownloadPlan">Download plan (MLA)</button>
+            </p>
           </div>
         </div>
       </section>
@@ -88,6 +187,9 @@
     <footer class="site-footer"><p>Outline / topic-sentence practice · AI Level 2 template generator</p></footer>
     <script src="../app.js"></script>
     <script src="essay-context.js?v=p3same2"></script>
-    <script src="tools.js?v=compare10"></script>
+    <script src="p3-critic-types.js?v=1"></script>
+    <script src="tools.js?v=mla1"></script>
+    <script src="docx-writer.js?v=1"></script>
+    <script src="mla-plan.js?v=1"></script>
   </body>
 </html>

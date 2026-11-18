@@ -49,6 +49,25 @@
       .framework-line { color: #fff; }
       .framework-example, .framework-note { color: var(--cream-dim, rgba(255,248,240,0.78)); }
       .framework-note { font-size: 0.9rem; }
+
+      .p3-critic-types {
+        margin: 0.2rem 0 0.85rem;
+        padding: 0.95rem 1rem 1.05rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.18);
+        grid-column: 1 / -1;
+      }
+      .p3-critic-legend { margin: 0 0 0.55rem; }
+      .p3-canvas-rule { margin: 0.65rem 0 0; color: var(--cream-dim, rgba(255,248,240,0.78)); }
+      .p3-critic-mode { border: 0; margin: 0 0 0.75rem; padding: 0; display: grid; gap: 0.4rem; }
+      .p3-critic-mode label { display: flex; gap: 0.45rem; align-items: flex-start; }
+      .p3-type-row { display: block; margin: 0 0 0.65rem; }
+      .p3-type-custom { margin-top: 0.4rem; }
+      [data-p3-same][hidden], [data-p3-different][hidden] { display: none !important; }
+
+      .field-grid label[hidden],
+      label.field[hidden] { display: none !important; }
     </style>
   </head>
   <body>
@@ -181,6 +200,7 @@
                 <option value="">, select or leave blank: </option>
               </select>
             </label>
+            <div id="p3CriticTypes" class="p3-critic-types-host" hidden></div>
             <label class="field" data-essay-field="presentsLabel" data-essay-hint="presentsHint" data-essay-placeholder="presentsPlaceholder">
               <span data-essay-title>What sources or experience present</span> <span class="hint">Required.</span>
               <textarea id="packetArgues" style="min-height:5rem;" placeholder="Readers or sources present…"></textarea>
@@ -283,6 +303,7 @@
     <footer class="site-footer"><p>Thesis practice · AI Level 2 template generator</p></footer>
     <script src="../app.js"></script>
     <script src="essay-context.js?v=p3type2"></script>
+    <script src="p3-critic-types.js?v=1"></script>
     <script>
       /* Project 3 rule update (Nov 16, 2026): same story required; same criticism type is the default, and two different types are fine if the student wants. Thesis page only. Placeholders and cue below are also thesis-page only. */
       (function () {
@@ -301,7 +322,7 @@
         }
       })();
     </script>
-    <script src="tools.js?v=compare10"></script>
+    <script src="tools.js?v=mla1"></script>
     <script>
       (function () {
         var GOTHIC_ID = "project3-gothic-criticism";

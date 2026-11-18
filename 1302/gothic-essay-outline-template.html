@@ -36,26 +36,46 @@
       .check-list input { margin-top: 0.35rem; width: 1.1rem; height: 1.1rem; accent-color: var(--terracotta-soft, #c9a090); flex-shrink: 0; }
       .check-list label { font-weight: 400; color: var(--cream-dim); }
       @media print {
+        @page { size: letter; margin: 0.6in; }
         :root { color-scheme: light; }
-        body { background: #fff !important; color: #2a1a12 !important; }
-        .no-print { display: none !important; }
-        main, .section, .outline-block, .callout {
+        body, main, .section, .outline-block, .callout, .site-footer {
           background: #fff !important;
-          color: #2a1a12 !important;
-          border-color: #2a1a12 !important;
+          color: #000 !important;
+          font-family: Arial, Helvetica, sans-serif !important;
           box-shadow: none !important;
-        }
-        h1, h2, h3, .eyebrow, label.field, .lead, p, li, strong { color: #2a1a12 !important; }
-        label.field span.hint, .outline-meta, .hint, .cue-list { color: #4a3f2a !important; }
-        textarea, input[type="text"] {
-          background: #fbf7f0 !important;
-          color: #2a1a12 !important;
-          border: 1.5px solid #2a1a12 !important;
           border-radius: 0 !important;
+        }
+        body { font-size: 11pt !important; line-height: 1.35 !important; }
+        .topbar, .mobile-nav, .nav-toggle, .skip-link, .no-print, .hero-actions { display: none !important; }
+        h1, h2, h3, .eyebrow, label.field, .lead, p, li, strong, .hint, .outline-meta, .cue-list, .site-footer, a {
+          color: #000 !important;
+          font-family: Arial, Helvetica, sans-serif !important;
+          background: none !important;
+          letter-spacing: normal !important;
+        }
+        h1 { font-size: 16pt !important; font-weight: 700 !important; margin: 0 0 0.2rem !important; }
+        h2 { font-size: 12pt !important; font-weight: 700 !important; margin: 0.7rem 0 0.25rem !important; }
+        h3 { font-size: 11pt !important; font-weight: 700 !important; margin: 0 0 0.35rem !important; }
+        .eyebrow { font-size: 10pt !important; font-weight: 700 !important; text-transform: none !important; }
+        .outline-block, .callout {
+          border: none !important;
+          border-left: none !important;
+          padding-left: 0 !important;
+          margin-left: 0 !important;
+          background: none !important;
+        }
+        textarea, input[type="text"] {
+          background: #fff !important;
+          color: #000 !important;
+          border: 1px solid #000 !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
           break-inside: avoid;
         }
-        .outline-block, .callout { break-inside: avoid; }
-        a { color: #2a1a12 !important; text-decoration: none !important; }
+        label.field span.hint, .outline-meta, .hint { color: #000 !important; font-weight: 400 !important; }
+        a { text-decoration: none !important; }
+        .check-list input { accent-color: #000; }
+        .site-footer { border: none !important; }
       }
     </style>
   </head>
