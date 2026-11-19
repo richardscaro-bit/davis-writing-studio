@@ -71,7 +71,7 @@
       angles: [{id:"question",label:"Question"},{id:"roles",label:"Source roles"},{id:"boundaries",label:"Boundaries"},{id:"exhibit",label:"Exhibit"}],
       defaultAngles: ["question","roles","boundaries"],
       claimKind: "exposition",
-      ideaSeeds: {topics:["Heat / climate vulnerability","Campus mental health resources","Policing and data","Housing affordability metrics","AI in classrooms"],questions:["Where do sources on {topic} agree, vary, or contradict?","Which categories must the exhibit include?","What boundary should the companion name?"],ideas:["Pair two sources in every body paragraph","Exhibit must show alignment and discrepancy, not only summaries","Lateral reading checks who published what"]},
+      ideaSeeds: {topics:["Heat / climate vulnerability","Campus mental health resources","Policing and data","Housing affordability metrics","AI in classrooms"],questions:["Where do sources on {topic} agree, vary, or contradict?","Which categories must the exhibit include?","What boundary should the companion name?"],ideas:[]},
       outlineLenses: [
         {title:"I. Research question + audience",topic:"State the question and who the exhibit serves.",cues:["Question","Audience","Why it matters"]},
         {title:"II. Source map overview",topic:"Preview categories and roles.",cues:["4–6 sources","Two categories min","Roles"]},
@@ -116,7 +116,7 @@
       angles: [{id:"thesis",label:"Thesis"},{id:"close",label:"Close reading"},{id:"criticA",label:"Critic A"},{id:"criticB",label:"Critic B"}],
       defaultAngles: ["thesis","close","criticA"],
       claimKind: "argument",
-      ideaSeeds: {topics:["Poe, “The Raven”","Jackson, “The Lottery”","Faulkner, “A Rose for Emily”"],questions:["How do two critics on {topic}, usually using the same criticism type, read it differently?","What resistant evidence must your thesis face?","Which passages earn the interpretive claim?"],ideas:["Naming an approach without citing a critic does not count","Plot summary alone does not count","Map how Critic A and Critic B agree, differ, or leave a gap"]},
+      ideaSeeds: {topics:["Poe, “The Raven”","Jackson, “The Lottery”","Faulkner, “A Rose for Emily”"],questions:["How do two critics on {topic}, usually using the same criticism type, read it differently?","What resistant evidence must your thesis face?","Which passages earn the interpretive claim?"],ideas:["Map how Critic A and Critic B agree, differ, or leave a gap"]},
       outlineLenses: [
         {title:"I. Introduction & thesis",topic:"Name the text and contestable interpretive claim.",cues:["Hook","Thesis","Preview of both critics"]},
         {title:"II. Close reading 1",topic:"Develop the first textual claim.",cues:["Passage","Technique","Link to thesis"]},
@@ -161,7 +161,7 @@
       angles: [{id:"claim",label:"Claim"},{id:"sources",label:"Sources"},{id:"design",label:"Design"},{id:"counter",label:"Counter"}],
       defaultAngles: ["claim","sources","counter"],
       claimKind: "argument",
-      ideaSeeds: {topics:["Local heat safety","Campus access issue","Public health messaging","Housing / renters","Digital literacy campaign"],questions:["Who is the real audience for {topic}?","Which three scholarly sources earn distinct roles?","How will multimodal design support understanding, not decorate?"],ideas:["Multimodal choices must reason","Document an audience/usability test and revision","Seven sources need differentiated jobs"]},
+      ideaSeeds: {topics:["Local heat safety","Campus access issue","Public health messaging","Housing / renters","Digital literacy campaign"],questions:["Who is the real audience for {topic}?","Which three scholarly sources earn distinct roles?","How will multimodal design support understanding, not decorate?"],ideas:["Document an audience/usability test and revision","Seven sources need differentiated jobs"]},
       outlineLenses: [
         {title:"I. Audience + claim",topic:"Name audience, setting, and qualified claim.",cues:["Audience","Claim","Stakes"]},
         {title:"II. Evidence cluster",topic:"Deploy scholarly and public sources in roles.",cues:["Roles","Warrants","MLA"]},
@@ -206,7 +206,7 @@
       angles: [{id:"criteria",label:"Criteria"},{id:"judgment",label:"Judgment"},{id:"evidence",label:"Evidence"}],
       defaultAngles: ["criteria","judgment","evidence"],
       claimKind: "argument",
-      ideaSeeds: {topics:["Jackson, “The Lottery”","Shelley, Frankenstein","Gilman, “The Yellow Wallpaper”","King, “The Boogeyman”","La Llorona","El Cucuy","Donkey Lady","Chupacabra"],questions:["What criteria make a fair evaluation of {topic}?","Which evidence earns the judgment?","How does Cohen or King help without taking over?"],ideas:["Criteria must be explicit before the judgment","Plot summary is not evaluation","Secondary readings can sharpen criteria"]},
+      ideaSeeds: {topics:["Jackson, “The Lottery”","Shelley, Frankenstein","Gilman, “The Yellow Wallpaper”","King, “The Boogeyman”","La Llorona","El Cucuy","Donkey Lady","Chupacabra"],questions:["What criteria make a fair evaluation of {topic}?","Which evidence earns the judgment?","How does Cohen or King help without taking over?"],ideas:["Criteria must be explicit before the judgment","Plot summary is not evaluation"]},
       outlineLenses: [
         {title:"I. Introduction + judgment",topic:"Name the monster and state the evaluative thesis.",cues:["Monster","Judgment","Criteria preview"]},
         {title:"II. Criterion 1",topic:"Apply criterion 1 with evidence.",cues:["Criterion","Evidence","Warrant"]},
@@ -250,7 +250,7 @@
       angles: [{id:"focus",label:"Focus"},{id:"evidence",label:"Episode/panel"},{id:"theory",label:"Theory"},{id:"insight",label:"Insight"}],
       defaultAngles: ["focus","evidence","insight"],
       claimKind: "argument",
-      ideaSeeds: {topics:["Upside Down","Hawkins Lab","Will","Eleven","Vecna","1980s nostalgia"],questions:["How does {topic} work as symbol or structure?","What theory lens helps without flattening the show?","Where must episode/panel evidence appear?"],ideas:["Go beyond plot","Optional graphic comparison needs shared criteria","Secondary/theory should illuminate"]},
+      ideaSeeds: {topics:["Upside Down","Hawkins Lab","Will","Eleven","Vecna","1980s nostalgia"],questions:["How does {topic} work as symbol or structure?","What theory lens helps without flattening the show?","Where must episode/panel evidence appear?"],ideas:["Go beyond plot","Secondary/theory should illuminate"]},
       outlineLenses: [
         {title:"I. Introduction + thesis",topic:"Name focus and analytical claim.",cues:["Focus","Thesis","Roadmap"]},
         {title:"II. Evidence cluster 1",topic:"Close-read episode or panel evidence.",cues:["Specific moment","Analysis","Link"]},
@@ -294,7 +294,7 @@
       angles: [{id:"claim",label:"Claim"},{id:"research",label:"Research"},{id:"counter",label:"Counter"},{id:"stakes",label:"Stakes"}],
       defaultAngles: ["claim","research","counter"],
       claimKind: "argument",
-      ideaSeeds: {topics:["MK-Ultra secrecy","Satanic Panic","Institutions as monsters","Frankenstein / Lottery reframed","Moral panic and rumor"],questions:["Who benefits if the familiar monster story stays unchallenged?","What scholarly material must appear?","Where does Stranger Things stay optional and short?"],ideas:["Counterargument is required","Scholarly integration matters","ST is optional short reference only"]},
+      ideaSeeds: {topics:["MK-Ultra secrecy","Satanic Panic","Institutions as monsters","Frankenstein / Lottery reframed","Moral panic and rumor"],questions:["Who benefits if the familiar monster story stays unchallenged?","What scholarly material must appear?","Where does Stranger Things stay optional and short?"],ideas:["Counterargument is required","ST is optional short reference only"]},
       outlineLenses: [
         {title:"I. Claim",topic:"State the real-monster argument.",cues:["Claim","Stakes","Map"]},
         {title:"II. Research support",topic:"Integrate scholarly and cultural evidence.",cues:["Sources","Warrants","Roles"]},
@@ -338,7 +338,7 @@
       angles: [{id:"synthesize",label:"Synthesize"},{id:"evaluate",label:"Evaluate"},{id:"gap",label:"Gap"},{id:"case",label:"Case"}],
       defaultAngles: ["synthesize","evaluate","gap"],
       claimKind: "argument",
-      ideaSeeds: {topics:["Community fear","Institutional panics","Folklore and trauma","Nostalgia and identity","Trauma in media"],questions:["How do sources on {topic} align or conflict?","What is summary vs synthesis vs evaluation here?","Which literary/cultural text earns a case role?"],ideas:["Synthesis is not a list of summaries","Evaluate perspectives; do not only report them","Meet the 5–7 source bar with roles"]},
+      ideaSeeds: {topics:["Community fear","Institutional panics","Folklore and trauma","Nostalgia and identity","Trauma in media"],questions:["How do sources on {topic} align or conflict?","What is summary vs synthesis vs evaluation here?","Which literary/cultural text earns a case role?"],ideas:["Synthesis is not a list of summaries","Evaluate perspectives; do not only report them"]},
       outlineLenses: [
         {title:"I. Issue + claim",topic:"Frame the issue and synthesis thesis.",cues:["Issue","Claim","Source map"]},
         {title:"II. Perspective thread A",topic:"Synthesize one cluster of sources.",cues:["Agreement","Variation","Evaluation"]},
@@ -385,7 +385,7 @@
       "Other / custom"
     ],
     presentsLabel: "What sources or experience present",
-    presentsHint: "Required. 1–2 sentences in your words.",
+    presentsHint: "Required. 1 or 2 sentences in your words.",
     presentsPlaceholder: "Readers or sources present…",
     tensionLabel: "Tension, insight, or controlling idea",
     tensionHint: "Required. What you will argue, explain, or reveal.",
@@ -419,7 +419,6 @@
         "What evidence would a careful reader ask for next?"
       ],
       ideas: [
-        "Although the familiar story says X, a closer look shows Y",
         "The controlling idea is how or why this works, not which side wins",
         "The thesis names a limit, stakeholder cost, or insight worth earning",
         "Comparison or contrast reveals more than a list of traits",
@@ -541,8 +540,26 @@
       .replace(/"/g, "&quot;");
   }
 
+  /* Thesis generator page only: labels, hints, placeholders, and chip labels come from
+     tools/thesis-catalog.js. Every other page keeps the labels in this file. */
+  function thesisPageEssay(base) {
+    const engine = window.DWSThesisEngine;
+    const catalog = window.DWSThesisCatalog;
+    if (!base || !document.getElementById("claimGenerate") || !engine || !catalog) return base;
+    const copy = engine.copyFor(catalog, base.id);
+    if (!copy) return base;
+    const out = Object.assign({}, base);
+    Object.keys(copy).forEach((k) => {
+      if (k !== "chips" && copy[k]) out[k] = copy[k];
+    });
+    if (copy.chips && Array.isArray(base.angles)) {
+      out.angles = base.angles.map((a) => Object.assign({}, a, { label: copy.chips[a.id] || a.label }));
+    }
+    return out;
+  }
+
   function applyThesisLabels() {
-    const essay = getActive();
+    const essay = thesisPageEssay(getActive());
     const map = [
       ["label[for='caseName'], #caseNameLabel, .js-subject-label", "subjectLabel", "subjectHint"],
       ["#topicFolderLabel, .js-topic-label", "topicLabel", null],
@@ -612,7 +629,7 @@
       while (topicSelect.firstChild) topicSelect.removeChild(topicSelect.firstChild);
       const blank = document.createElement("option");
       blank.value = "";
-      blank.textContent = "— select or leave blank —";
+      blank.textContent = "Select or leave blank.";
       topicSelect.appendChild(blank);
       topicOpts.forEach((opt) => {
         const v = String(opt);

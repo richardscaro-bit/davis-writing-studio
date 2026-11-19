@@ -2,10 +2,10 @@
    Progress is stored only in this browser. */
 (function () {
   var STORAGE = "dws-1302-body-paragraph-v1";
-  var CHOSEN_KEY = "engl1301.tools.thesis.chosenClaim";
-  var OUTLINE_KEY = "engl1301.tools.outline.inputs";
-  var DRAFTS_KEY = "engl1301.tools.thesis.drafts";
-  var INPUTS_KEY = "engl1301.tools.thesis.inputs";
+  var CHOSEN_KEY = "engl1302.tools.thesis.chosenClaim";
+  var OUTLINE_KEY = "engl1302.tools.outline.inputs";
+  var DRAFTS_KEY = "engl1302.tools.thesis.drafts";
+  var INPUTS_KEY = "engl1302.tools.thesis.inputs";
 
   var TYPE_OPTS = [
     "Historical/cultural",

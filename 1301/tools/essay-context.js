@@ -145,7 +145,6 @@
           "What judgment should a reader reach, and why?"
         ],
         ideas: [
-          "The stronger position is X because the costs of the common view fall unevenly",
           "Even granting the other side’s best point, the evidence still favors a different judgment",
           "Treating {topic} as settled hides who pays the price",
           "Policy convenience is not the same as a fair outcome",
@@ -334,7 +333,6 @@
         ],
         ideas: [
           "Readers often treat this as mystery or myth; the process is more concrete once terms are clear",
-          "The job is to explain how X leads to Y, without taking a policy side",
           "A common oversimplification hides the mechanism that matters",
           "Understanding {topic} means tracing cause and effect, not arguing which side is right",
           "The unknown becomes teachable when scoped to one how/why question",
@@ -413,14 +411,13 @@
           "How does this place work for a named newcomer audience?",
           "Why does this practice matter to the people who use it?",
           "What does a newcomer notice first about {topic}?",
-          "Which 2–3 working parts must the plate and essay both cover?",
+          "Which 2 or 3 working parts must the plate and essay both cover?",
           "What caution or tip is useful without preaching?"
         ],
         ideas: [
           "For newcomers, the place makes sense once daily routines are explained",
           "The guide’s job is how the place works, not whether the place ought to exist",
           "Audience need + concrete parts of the system are the controlling focus",
-          "Plate labels and essay subtopics must name the same place and audience",
           "Significance for this audience comes from use and access, not policy debate",
           "A practical caution grows out of how {topic} actually operates"
         ]
@@ -481,7 +478,7 @@
         "Other / custom"
       ],
       presentsLabel: "What the packet seems to argue or present",
-      presentsHint: "Required. 1–2 sentences in your words.",
+      presentsHint: "Required. 1 or 2 sentences in your words.",
       presentsPlaceholder: "The packet presents BarkBox as a customer-loyalty success…",
       tensionLabel: "Tension / limit / stakeholder conflict / assumption",
       tensionHint: "Required. What a careful reader could push back on.",
@@ -695,7 +692,6 @@
         "What evidence would a careful reader ask for next?"
       ],
       ideas: [
-        "Although the familiar story says X, a closer look shows Y",
         "The controlling idea is how or why this works, not which side wins",
         "The thesis names a limit, stakeholder cost, or insight worth earning",
         "Comparison or contrast reveals more than a list of traits",
@@ -771,6 +767,12 @@
 
 
   function purposeInner(essay) {
+    const html = purposeInnerBase(essay);
+    return document.getElementById("claimGenerate")
+      ? html.replace(/\bpacket\b/g, "study").replace(/\bPacket\b/g, "Study")
+      : html;
+  }
+  function purposeInnerBase(essay) {
     if (essay && essay.purposeLead && Array.isArray(essay.purposeUses)) {
       const items = essay.purposeUses.map((u) => "<li>" + u + "</li>").join("");
       return (
@@ -831,8 +833,26 @@
       .replace(/"/g, "&quot;");
   }
 
+  /* Thesis generator page only: labels, hints, placeholders, and chip labels come from
+     tools/thesis-catalog.js. Every other page keeps the labels in this file. */
+  function thesisPageEssay(base) {
+    const engine = window.DWSThesisEngine;
+    const catalog = window.DWSThesisCatalog;
+    if (!base || !document.getElementById("claimGenerate") || !engine || !catalog) return base;
+    const copy = engine.copyFor(catalog, base.id);
+    if (!copy) return base;
+    const out = Object.assign({}, base);
+    Object.keys(copy).forEach((k) => {
+      if (k !== "chips" && copy[k]) out[k] = copy[k];
+    });
+    if (copy.chips && Array.isArray(base.angles)) {
+      out.angles = base.angles.map((a) => Object.assign({}, a, { label: copy.chips[a.id] || a.label }));
+    }
+    return out;
+  }
+
   function applyThesisLabels() {
-    const essay = getActive();
+    const essay = thesisPageEssay(getActive());
     const map = [
       ["label[for='caseName'], #caseNameLabel, .js-subject-label", "subjectLabel", "subjectHint"],
       ["#topicFolderLabel, .js-topic-label", "topicLabel", null],
@@ -902,7 +922,7 @@
       while (topicSelect.firstChild) topicSelect.removeChild(topicSelect.firstChild);
       const blank = document.createElement("option");
       blank.value = "";
-      blank.textContent = "— select or leave blank —";
+      blank.textContent = "Select or leave blank.";
       topicSelect.appendChild(blank);
       topicOpts.forEach((opt) => {
         const v = String(opt);

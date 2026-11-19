@@ -383,7 +383,6 @@
         "What evidence would a careful reader ask for next?"
       ],
       ideas: [
-        "Although the familiar story says X, a closer look shows Y",
         "The controlling idea is how or why this works, not which side wins",
         "The thesis names a limit, stakeholder cost, or insight worth earning",
         "Comparison or contrast reveals more than a list of traits",
@@ -505,8 +504,26 @@
       .replace(/"/g, "&quot;");
   }
 
+  /* Thesis generator page only: labels, hints, placeholders, and chip labels come from
+     tools/thesis-catalog.js. Every other page keeps the labels in this file. */
+  function thesisPageEssay(base) {
+    const engine = window.DWSThesisEngine;
+    const catalog = window.DWSThesisCatalog;
+    if (!base || !document.getElementById("claimGenerate") || !engine || !catalog) return base;
+    const copy = engine.copyFor(catalog, base.id);
+    if (!copy) return base;
+    const out = Object.assign({}, base);
+    Object.keys(copy).forEach((k) => {
+      if (k !== "chips" && copy[k]) out[k] = copy[k];
+    });
+    if (copy.chips && Array.isArray(base.angles)) {
+      out.angles = base.angles.map((a) => Object.assign({}, a, { label: copy.chips[a.id] || a.label }));
+    }
+    return out;
+  }
+
   function applyThesisLabels() {
-    const essay = getActive();
+    const essay = thesisPageEssay(getActive());
     const map = [
       ["label[for='caseName'], #caseNameLabel, .js-subject-label", "subjectLabel", "subjectHint"],
       ["#topicFolderLabel, .js-topic-label", "topicLabel", null],

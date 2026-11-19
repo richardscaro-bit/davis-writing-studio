@@ -1,8 +1,8 @@
 /* Outline helper only: primary-source form, Works Cited box, and Download plan (MLA). */
 (function (global) {
   var STORAGE = "dws1302.tools.outline.mlaPlan";
-  var SKELETON_KEY = "engl1301.tools.outline.skeleton";
-  var CHOSEN_KEY = "engl1301.tools.chosen";
+  var SKELETON_KEY = "engl1302.tools.outline.skeleton";
+  var CHOSEN_KEY = "engl1302.tools.chosen";
   var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   var SHORT_MONTHS = ["Jan.","Feb.","Mar.","Apr.","May","June","July","Aug.","Sept.","Oct.","Nov.","Dec."];
 

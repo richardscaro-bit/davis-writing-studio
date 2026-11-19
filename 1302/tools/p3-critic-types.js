@@ -45,6 +45,15 @@
     return v;
   }
 
+  /* Plain words for the thesis page plan line: "/" becomes " and ", lowercase except Gothic,
+     with "a" or "an". "Historical/cultural" becomes "a historical and cultural". */
+  function typeWords(type) {
+    var t = String(type || "").replace(/\s*\/\s*/g, " and ").replace(/\s+/g, " ").trim().toLowerCase();
+    t = t.replace(/\bgothic\b/g, "Gothic");
+    if (!t) return "";
+    return (/^[aeiou]/i.test(t) ? "an " : "a ") + t;
+  }
+
   function collect(data) {
     data = data || read();
     var mode = data.mode === "different" ? "different" : "same";
@@ -55,14 +64,16 @@
     var summary = "";
     if (mode === "different") {
       if (type1 && type2) {
-        phrase = "Critic 1 uses a " + type1 + " approach, and Critic 2 uses a " + type2 + " approach";
+        phrase = "Critic 1 uses " + typeWords(type1) + " approach, and Critic 2 uses " + typeWords(type2) + " approach.";
         summary = type1 + " (Critic 1) and " + type2 + " (Critic 2)";
       } else if (type1 || type2) {
-        phrase = "two different criticism types: " + (type1 || "Critic 1 type still needed") + " and " + (type2 || "Critic 2 type still needed");
+        phrase = type1
+          ? "Critic 1 uses " + typeWords(type1) + " approach. Choose a criticism type for Critic 2."
+          : "Critic 2 uses " + typeWords(type2) + " approach. Choose a criticism type for Critic 1.";
         summary = (type1 || "Critic 1 type still needed") + " and " + (type2 || "Critic 2 type still needed");
       }
     } else if (typeSame) {
-      phrase = "both critics use a " + typeSame + " approach";
+      phrase = "Both critics use " + typeWords(typeSame) + " approach.";
       summary = typeSame + " (same type for both critics)";
     }
     return {
@@ -88,25 +99,25 @@
     var info = collect(data);
     if (!info.topicFolder) return;
     try {
-      var rawT = localStorage.getItem("engl1301.tools.thesis.inputs");
+      var rawT = localStorage.getItem("engl1302.tools.thesis.inputs");
       var t = rawT ? JSON.parse(rawT) : {};
       t.topicFolder = info.topicFolder;
       t.criticTypeMode = info.mode;
-      localStorage.setItem("engl1301.tools.thesis.inputs", JSON.stringify(t));
+      localStorage.setItem("engl1302.tools.thesis.inputs", JSON.stringify(t));
     } catch (err) {}
     try {
-      var rawO = localStorage.getItem("engl1301.tools.outline.inputs");
+      var rawO = localStorage.getItem("engl1302.tools.outline.inputs");
       var o = rawO ? JSON.parse(rawO) : {};
       o.topicFolder = info.topicFolder;
       o.criticTypeMode = info.mode;
-      localStorage.setItem("engl1301.tools.outline.inputs", JSON.stringify(o));
+      localStorage.setItem("engl1302.tools.outline.inputs", JSON.stringify(o));
     } catch (err) {}
     try {
-      var rawC = localStorage.getItem("engl1301.tools.chosen");
+      var rawC = localStorage.getItem("engl1302.tools.chosen");
       var c = rawC ? JSON.parse(rawC) : null;
       if (c && typeof c === "object") {
         c.topicFolder = info.topicFolder;
-        localStorage.setItem("engl1301.tools.chosen", JSON.stringify(c));
+        localStorage.setItem("engl1302.tools.chosen", JSON.stringify(c));
       }
     } catch (err) {}
   }
