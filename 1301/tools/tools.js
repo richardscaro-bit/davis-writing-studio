@@ -3690,7 +3690,6 @@
       else if ($("#outlineGenerate")) cue.textContent = essay.outlineCue || cue.textContent;
       else if ($("#mlaBuild")) cue.textContent = essay.mlaCue || cue.textContent;
       else if ($("#slList")) cue.textContent = essay.sourceAim || cue.textContent;
-      else if ($("#kwGenerate")) cue.textContent = essay.thesisCue || cue.textContent;
     }
     if ($("#cqExampleBody")) renderQuestionExample(essay);
     const csBox = $("#caseStudyCriteriaBox");

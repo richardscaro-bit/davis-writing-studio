@@ -251,7 +251,12 @@
     );
   }
 
+  function pageWantsRuleBlock() {
+    return !!(document.body && document.body.hasAttribute("data-cs-rule-block"));
+  }
+
   function fillRuleHosts() {
+    if (!pageWantsRuleBlock()) return;
     var html = ruleHtml();
     document.querySelectorAll("[data-cs-rule-copy]").forEach(function (el) {
       el.innerHTML = html;

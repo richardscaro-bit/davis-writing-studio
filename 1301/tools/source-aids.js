@@ -217,7 +217,6 @@
       <details class="studio-drop" id="dwsSourceLogDrop">
         <summary>Case Study Source Log</summary>
         <div class="studio-drop-body">
-                    <div data-cs-rule-copy></div>
           <p>This log saves in this browser. You can also keep working in the <a href="${sl}">Source Log tool</a>. The two stay in sync on this device.</p>
           <p><a class="button small ghost" href="https://docs.google.com/document/d/1k5gqe177BPq79ybjit5ZJjlVF7vRxkqKXfV4D8K3iEM/copy" target="_blank" rel="noopener">Make your own copy of the Source Log</a></p>
 
@@ -321,18 +320,8 @@
 
   function fillHost(host) {
     const state = loadState();
-    const path = location.pathname || "";
-    const pageHasOwnRule = /case-study-studio\.html/.test(path) || /case-study-research-guide\.html/.test(path);
-    const ruleDrop = pageHasOwnRule ? "" : `
-      <details class="studio-drop" id="dwsCsRuleDrop">
-        <summary>The rule for this essay</summary>
-        <div class="studio-drop-body">
-          <div data-cs-rule-copy></div>
-        </div>
-      </details>`;
     host.innerHTML = `
       <div class="dws-source-aids-inner">
-        ${ruleDrop}
         ${guideHtml()}
         ${logHtml(state)}
       </div>

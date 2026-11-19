@@ -485,7 +485,7 @@
       presentsPlaceholder: "The packet presents BarkBox as a customer-loyalty success…",
       tensionLabel: "Tension / limit / stakeholder conflict / assumption",
       tensionHint: "Required. What a careful reader could push back on.",
-      questionHint: "Start with your own critical analysis question. Example questions are in your Case Brief file. Use all five lenses as body sections, in this order: Framing, Stakeholders, Evidence, Assumptions, and Limits. Your thesis answers your question and previews all five lenses, in order. Put 2 cited case study details in each section. Use exactly 2 outside sources from Google Scholar or the SAC Library. Every body section uses your packet plus one or both outside sources. You can use either outside source in any section, and as often as you need.",
+      questionHint: "Start with your own critical analysis question. Example questions are in your Case Brief file.",
       tensionPlaceholder: "It underplays how subscription fatigue…",
       questionLabel: "Your critical question",
       questionPlaceholder: "How well does the packet support its claim that ___? Example questions are in your Case Brief file.",
@@ -535,7 +535,7 @@
         { title: "VI. Limits", topic: "What can the packet tell us, and what can it not? Fold limitations and ethical tensions into this lens, not a separate section.", cues: ["Topic sentence", "Packet detail 1, cited", "Packet detail 2, cited", "Outside source, cited (one or both of your 2 outside sources)", "Your analysis, at least as long as the evidence"] },
         { title: "VII. Conclusion", topic: "State what a careful reader can now understand about the case. Do not add a new thesis.", cues: ["What a careful reader now understands", "No new thesis"] }
       ],
-      sourceAim: "Use exactly 2 outside sources total. Every body section uses your packet plus one or both outside sources. You can use either outside source in any section, and as often as you need. Every lens section uses 2 cited packet details.",
+      sourceAim: "Use exactly 2 outside sources from Google Scholar or the SAC Library.",
       sourcePacketLabel: "Packet / Case Brief",
       peerItems: [
         { id: "claim", title: "Thesis clarity", prompt: "Is the thesis one sentence that answers the critical question and previews all five lenses, in order?", placeholder: "The thesis previews… / Still missing…" },
@@ -548,7 +548,7 @@
         { id: "ai", title: "AI Level 2 honesty", prompt: "Does the writer own the claim and evidence? AI support only, not composition?", placeholder: "Disclosure / ownership looks… / Ask to clarify…" }
       ],
       // PENDING CAROLINE PICK (Poe warmer version)
-      thesisCue: "Write one sentence that answers your critical question and previews all five lenses, in order. Use all five lenses as body sections, in this order: Framing, Stakeholders, Evidence, Assumptions, and Limits. Put 2 cited case study details in each section. Use exactly 2 outside sources from Google Scholar or the SAC Library. Every body section uses your packet plus one or both outside sources. You can use either outside source in any section, and as often as you need. Find example questions in your Case Brief file.",
+      thesisCue: "Your thesis answers your question and previews all five lenses, in order.",
       outlineCue: "Your outline has five body sections, one for each lens, in this order: Framing, Stakeholders, Evidence, Assumptions, and Limits. Put 2 cited case study details in each section. Your thesis answers your question and previews all five lenses, in order. In each lens section: topic sentence, two cited packet details, one or both outside sources, then your analysis. You can use either outside source in any section, and as often as you need.",
       mlaCue: "Cite the packet and your exactly 2 outside sources. Every lens section cites two packet details and one or both outside sources."
     },
@@ -916,7 +916,9 @@
     });
 
     const cue = document.getElementById("essayToolCue");
-    if (cue) cue.textContent = essay.thesisCue || essay.outlineCue || essay.purpose;
+    if (cue && document.getElementById("claimGenerate")) {
+      cue.textContent = essay.thesisCue || cue.textContent;
+    }
 
     const eyebrow = document.querySelector("[data-essay-eyebrow]");
     if (eyebrow) {
