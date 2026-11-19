@@ -26,6 +26,49 @@
     <link rel="stylesheet" href="_design/hub-charcoal-options.css?v=crown-cutout">
       <link rel="stylesheet" href="_design/tool-theme.css?v=2">
     <link rel="stylesheet" href="_design/site-theme.css?v=3">
+    <style>
+      /* Hub home: research process visual. Matches Option C padding and type. */
+      .opt-c .hub-research {
+        width: 100%;
+        max-width: none;
+        margin: 2.5rem 0 0;
+        padding: 0 96px 2.25rem;
+        box-sizing: border-box;
+      }
+      .opt-c .hub-research h2 {
+        margin: 0 0 0.85rem;
+        font-size: clamp(1.7rem, 3.5vw, 2.25rem);
+        line-height: 1.15;
+        color: #fff;
+        font-weight: 500;
+      }
+      .opt-c .hub-research figure {
+        margin: 0;
+      }
+      .opt-c .hub-research img {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        border: 1px solid rgba(244, 241, 234, 0.14);
+        background: #f7f3eb;
+      }
+      .opt-c .hub-research figcaption {
+        margin: 0.7rem 0 0;
+        font-size: 0.92rem;
+        font-weight: 500;
+      }
+      @media (max-width: 800px) {
+        .opt-c .hub-research {
+          padding-left: 1.25rem;
+          padding-right: 1.25rem;
+        }
+      }
+      html[data-theme="light"] .opt-c .hub-research h2 {
+        color: var(--ink);
+      }
+    </style>
 </head>
   <body class="opt opt-c">
     <a class="skip-link" href="#main">Skip to main content</a>
@@ -74,6 +117,16 @@
           </div>
         </a>
 
+      </section>
+
+      <section class="hub-research" aria-labelledby="researchProcess">
+        <h2 id="researchProcess">The research process</h2>
+        <figure>
+          <a href="visuals/research-process-flow.png">
+            <img src="visuals/research-process-flow.png" alt="The research process, a flow used in the Davis Writing Studio. Seven steps in the usual order: 1. Critical question. Start with an open, arguable question. 2. Keyword generator. Build keywords, synonyms, and draft queries. 3. Google Scholar or SAC Library. Search Scholar or the SAC databases. 4. Lateral reading or CRAAP check. Judge a source before you use it. 5. Source log. Record keepers, a purpose line, and notes. 6. MLA citation generator. Practice Works Cited and in-text entries. 7. Use sources in body sections. Bring judged sources into the draft. Two dashed arrows show loops. Refine keywords leads from Google Scholar or SAC Library back to the Keyword generator. Find a better source leads from Lateral reading or CRAAP check back to Google Scholar or SAC Library." width="1600" height="1260">
+          </a>
+          <figcaption><a href="visuals/research-process-flow.png">Open full size</a></figcaption>
+        </figure>
       </section>
     </main>
 
