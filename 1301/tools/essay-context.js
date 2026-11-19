@@ -774,6 +774,9 @@
   }
   function purposeInnerBase(essay) {
     if (essay && essay.purposeLead && Array.isArray(essay.purposeUses)) {
+      if (essay.id === "case-study" && document.getElementById("claimGenerate")) {
+        return '<div class="dws-twobox dws-purpose" id="dwsEssayPurposeInner"><div class="dws-box"><h3>This essay</h3><p>' + essay.purposeLead + "</p></div></div>";
+      }
       const items = essay.purposeUses.map((u) => "<li>" + u + "</li>").join("");
       return (
         '<div class="dws-twobox dws-purpose" id="dwsEssayPurposeInner">' +

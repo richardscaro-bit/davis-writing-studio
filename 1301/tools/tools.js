@@ -281,6 +281,9 @@
     const pat = document.getElementById("caseStudyThesisPattern");
     const essay = activeEssay();
     const isCs = $("#claimGenerate") && essay && essay.id === "case-study";
+    if (pat) pat.hidden = true;
+    updateCaseStudyAnswerLead();
+    return;
     if (!isCs) {
       if (pat) pat.hidden = true;
       return;
