@@ -131,9 +131,11 @@ a:hover { color: var(--terracotta); }
 
 /* —— Main —— */
 .hub-main {
-  width: min(1080px, 100%);
+  width: 100%;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: clamp(1.5rem, 4vw, 2.75rem) clamp(1rem, 3vw, 1.5rem) 3rem;
+  padding: clamp(1.5rem, 4vw, 2.75rem) clamp(1rem, 3.5vw, 3rem) 3rem;
+  box-sizing: border-box;
 }
 
 .hub-hero {

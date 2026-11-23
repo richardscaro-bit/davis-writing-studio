@@ -1,6 +1,6 @@
 /* ENGL 1301 section styles — charcoal hub family + topic accents.
    Botanical/forest header removed; Canvas Case Study pack keeps botanical separately. */
-@import url("../_design/section-charcoal.css");
+@import url("../_design/section-charcoal.css?v=wide1");
 
 /* Per-topic accents (readable on charcoal chrome) */
 .topic-business { --topic: #4a9a9a; }

@@ -3,9 +3,11 @@
 html[data-theme] body.sqp-body { background: #ffffff; color: #2e2622; }
 .sqp-body::before, .sqp-body::after { display: none !important; }
 main.sqp {
-  max-width: 880px;
+  width: 100%;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 1.1rem 1rem 2.5rem;
+  padding: 1.1rem clamp(1rem, 3.5vw, 3rem) 2.5rem;
+  box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1rem;
   line-height: 1.5;
@@ -186,6 +188,20 @@ main.sqp .sqp-fixhead { margin: 0.6rem 0 0.2rem; font-weight: bold; color: #3548
 .sqp-part { margin-top: 0.7rem; padding-top: 0.6rem; border-top: 1px solid #C9AE7A; }
 main.sqp .sqp-parthead { margin: 0 0 0.3rem; display: flex; flex-wrap: wrap; gap: 0.4rem 0.7rem; align-items: center; }
 
+
+/* Long reading lines stay a comfortable measure. Practice cards use the full width. */
+.sqp-lead,
+.sqp-privacy,
+.sqp-end,
+.sqp-passage,
+.sqp-box > .sqp-note:first-of-type,
+.sqp-box > p:not(.sqp-example):not(.sqp-passage):not(.sqp-cite) {
+  max-width: 48rem;
+}
+.sqp-box > ol.sqp-rules,
+.sqp-box > ul.sqp-list {
+  max-width: 48rem;
+}
 @media (min-width: 720px) {
   main.sqp { padding: 1.6rem 1.5rem 3rem; }
   .sqp-twobox { grid-template-columns: 1fr 1fr; }
